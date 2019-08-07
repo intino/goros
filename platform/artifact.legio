@@ -1,0 +1,27 @@
+dsl Legio
+
+Artifact(groupId = "org.siani", version = "1.0.0") goros as Platform
+	Model(language = "Meta", version = "2.3.1", sdk = "2.6.0")
+	Box(language = "Konos", version = "6.0.0")
+
+	Imports
+		Compile("io.intino.alexandria", "core-framework", "2.0.1")
+		Compile("io.intino.alexandria", "ui-framework", "2.0.0")
+		Compile("org.siani.monet", "space", "1.0")
+		Compile("org.apache.tomcat", "catalina", "6.0.43")
+
+		Web("org.siani", "platform-ui", "1.0.0")
+
+		Test("junit", "junit", "LATEST")
+
+	Package(mode = ModulesAndLibrariesLinkedByManifest)
+	Parameter(name = "workspace")
+
+Repository(identifier = "intino-maven")
+	Language("https://artifactory.intino.io/artifactory/languages") language
+	Release("https://artifactory.intino.io/artifactory/releases")
+	Release("https://artifactory.intino.io/artifactory/snapshots")
+	Release("https://artifactory.intino.io/artifactory/release-frameworks") dist
+
+Repository(identifier = "siani-maven")
+	Release("https://artifactory.intino.io/artifactory/libs-release")

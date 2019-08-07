@@ -1,0 +1,60 @@
+dsl Meta
+
+MetaConcept BusinessUnit
+	var string label is terminal
+	var string url is terminal
+	var resource logo is terminal
+	var string federationStoreDirectory = "" is terminal
+	var boolean pushEnabled = true is terminal
+	var boolean debugMode = false is terminal
+	var integer:{Milliseconds} workQueuePeriod = 1 Milliseconds is terminal
+	var instant installed = empty
+	var instant lastReset = empty
+
+	var function:SetupFunction onInstall = @onInstall
+	var function:SetupFunction onReset = @onReset
+
+	Concept:{1..1} BusinessModel
+		var resource jarFile
+
+	Concept:{1..1} Certificate
+		var resource file
+		var string password
+		var integer:{Days} duration = 365 Days
+
+	Concept:{1..1} Database
+		var word:{Mysql Oracle} type
+		var string url
+		var string user
+		var string password
+		var integer:{Milliseconds} queryExecutionTimeWarning = 3000 Milliseconds
+
+	Concept:{1..1} Mail
+		var string host
+		var string adminFrom
+		var string adminTo
+		var string username
+		var string password
+		var integer port = 465
+		var boolean secure = true
+
+	Concept:{1..1} DocumentService
+		var string url
+
+	Concept:{1..1} Datawarehouse
+		var string url
+		var string directory
+		var integer:{am pm} syncAt = 4 am
+		var boolean syncOnStart = true
+
+	Concept:{1..1} MasterData
+		var integer:{am pm} syncAt = 3 am
+		var boolean syncOnStart = false
+
+	Concept:{0..1} Maps
+		var string googleApiKey
+
+	Concept:{0..1} Firebase
+		var resource settingsFilename
+		var string projectId
+

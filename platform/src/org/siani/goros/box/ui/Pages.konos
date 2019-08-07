@@ -1,0 +1,28 @@
+dsl Konos
+
+use Views
+
+Template page as Decorated
+	Header > Stamp(template=header)
+
+	Block(layout=Vertical Flexible)
+		//Breadcrumbs
+		Block viewList as Conditional Multiple > Stamp(template=view)
+
+	Block > Stamp(template=footer)
+
+Template header > Text(value="Coordinación")
+Template footer
+
+Template nodePage as Decorated ExtensionOf(page)
+	Selector viewSelector as Tabs
+	Block viewList as Conditional Multiple > Stamp(template=view)
+
+Template desktopPage as Decorated ExtensionOf(nodePage)
+Template containerPage as Decorated ExtensionOf(nodePage)
+Template collectionPage as Decorated ExtensionOf(nodePage)
+Template catalogPage as Decorated ExtensionOf(nodePage)
+Template documentPage as Decorated ExtensionOf(nodePage)
+Template formPage as Decorated ExtensionOf(nodePage)
+	Stamp(template=fieldView) as Multiple
+Template taskPage as Decorated ExtensionOf(page)

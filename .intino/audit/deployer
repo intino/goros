@@ -1,0 +1,6 @@
+-214822119@model#org.siani.monet:businessunit:1.0:COMPILE
+1526351909@model#io.intino.alexandria:core-framework:2.0.1:COMPILE
+510859527@model#io.intino.alexandria:ui-framework:2.0.0:COMPILE
+2032682471@model#junit:junit:LATEST:TEST
+1918705177@model#Konos:6.0.0
+690138731@model#org.apache.tomcat:catalina:6.0.43:COMPILE

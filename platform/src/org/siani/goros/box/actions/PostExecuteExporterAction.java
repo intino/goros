@@ -1,0 +1,26 @@
+package org.siani.goros.box.actions;
+
+import org.monet.space.backservice.control.actions.ActionExecuteExporter;
+import org.monet.space.backservice.control.constants.Parameter;
+import org.siani.goros.box.GorosBox;
+import io.intino.alexandria.exceptions.*;
+import java.time.*;
+import java.util.*;
+
+
+public class PostExecuteExporterAction extends Action {
+	public String exporter;
+	public String scope;
+
+	public String execute() {
+		return setup(new ActionExecuteExporter()).execute();
+	}
+
+	@Override
+	Map<String, Object> parameters() {
+		HashMap<String, Object> parameters = new HashMap<>();
+		parameters.put(Parameter.EXPORTER, exporter);
+		parameters.put(Parameter.SCOPE, scope);
+		return parameters;
+	}
+}

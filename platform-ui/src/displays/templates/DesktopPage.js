@@ -5,6 +5,7 @@ import DesktopPageNotifier from "../../../gen/displays/notifiers/DesktopPageNoti
 import DesktopPageRequester from "../../../gen/displays/requesters/DesktopPageRequester";
 import DisplayFactory from 'alexandria-ui-elements/src/displays/DisplayFactory';
 import { withSnackbar } from 'notistack';
+import Text from 'alexandria-ui-elements/src/displays/components/Text';
 
 const styles = theme => ({});
 
@@ -15,7 +16,6 @@ class DesktopPage extends AbstractDesktopPage {
 		this.notifier = new DesktopPageNotifier(this);
 		this.requester = new DesktopPageRequester(this);
 	};
-
 
 }
 

@@ -1,6 +1,7 @@
 dsl Konos
 
 Template view as Decorated
+	Text label
 
 Template nodeView as ExtensionOf(view) Decorated
 

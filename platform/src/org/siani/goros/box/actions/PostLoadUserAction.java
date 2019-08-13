@@ -2,23 +2,22 @@ package org.siani.goros.box.actions;
 
 import org.monet.space.backservice.control.actions.ActionLoadUser;
 import org.monet.space.backservice.control.constants.Parameter;
-import org.siani.goros.box.GorosBox;
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class PostLoadUserAction extends Action {
-	public String code;
+public class PostLoadUserAction extends BackServiceAction {
+    public String code;
 
-	public String execute() {
-		return setup(new ActionLoadUser()).execute();
-	}
+    public String execute() {
+        return executeServiceAction(new ActionLoadUser());
+    }
 
-	@Override
-	Map<String, Object> parameters() {
-		HashMap<String, Object> parameters = new HashMap<>();
-		parameters.put(Parameter.CODE, code);
-		return parameters;
-	}
+    @Override
+    Map<String, Object> parameters() {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put(Parameter.CODE, code);
+        return parameters;
+    }
 }

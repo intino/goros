@@ -2,25 +2,24 @@ package org.siani.goros.box.actions;
 
 import org.monet.space.backservice.control.actions.ActionGetUserNode;
 import org.monet.space.backservice.control.constants.Parameter;
-import org.siani.goros.box.GorosBox;
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class PostGetUserNodeAction extends Action {
-	public String code;
-	public String depth;
+public class PostGetUserNodeAction extends BackServiceAction {
+    public String code;
+    public String depth;
 
-	public String execute() {
-		return setup(new ActionGetUserNode()).execute();
-	}
+    public String execute() {
+        return executeServiceAction(new ActionGetUserNode());
+    }
 
-	@Override
-	Map<String, Object> parameters() {
-		HashMap<String, Object> parameters = new HashMap<>();
-		parameters.put(Parameter.CODE, code);
-		parameters.put(Parameter.DEPTH, depth);
-		return parameters;
-	}
+    @Override
+    Map<String, Object> parameters() {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put(Parameter.CODE, code);
+        parameters.put(Parameter.DEPTH, depth);
+        return parameters;
+    }
 }

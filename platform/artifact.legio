@@ -6,11 +6,11 @@ Artifact(groupId = "org.siani", version = "1.0.0") goros as Platform
 
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.1")
-		Compile("io.intino.alexandria", "ui-framework", "2.0.0")
 		Compile("io.intino.alexandria", "rest", "2.0.0")
+		Compile("io.intino.alexandria", "primitives", "1.0.3")
 		Compile("org.siani.monet", "space", "1.0")
-		Compile("org.siani.monet", "core-shared", "1.0")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
+		Compile("io.intino.alexandria", "ui-framework", "2.0.0")
 
 		Web("org.siani", "platform-ui", "1.0.0")
 
@@ -24,8 +24,10 @@ Artifact(groupId = "org.siani", version = "1.0.0") goros as Platform
 Repository(identifier = "intino-maven")
 	Language("https://artifactory.intino.io/artifactory/languages") language
 	Release("https://artifactory.intino.io/artifactory/releases")
-	Release("https://artifactory.intino.io/artifactory/snapshots")
 	Release("https://artifactory.intino.io/artifactory/release-frameworks") dist
 
 Repository(identifier = "siani-maven")
-	Release("https://artifactory.intino.io/artifactory/libs-release")
+	Release("https://artifactory.siani.es/artifactory/libs-release")
+
+Repository(identifier = "sonatype")
+	Release(url = "	https://oss.sonatype.org/content/repositories/releases/")

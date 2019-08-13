@@ -1,31 +1,29 @@
 package org.siani.goros.box.actions;
 
 import org.monet.http.Request;
-import org.monet.http.Response;
 import org.siani.goros.box.GorosBox;
 
-import java.util.HashMap;
+import java.io.InputStream;
 import java.util.Map;
 
 public abstract class Action {
+    protected org.siani.goros.box.services.Response response;
     public GorosBox box;
     public io.intino.alexandria.core.Context context = new io.intino.alexandria.core.Context();
 
-    abstract Map<String, Object> parameters();
-
-    org.monet.space.backservice.control.actions.Action setup(org.monet.space.backservice.control.actions.Action action) {
-        HashMap<String, Object> parameters = (HashMap<String, Object>) parameters();
-        action.setRequest(request(parameters));
-        action.setResponse(response());
-        action.setParameters(parameters);
-        return action;
+    Action() {
+        this.response = new org.siani.goros.box.services.Response();
     }
 
-    private Request request(Map<String, Object> parameters) {
-        return new org.siani.goros.box.Request(context, parameters);
+    protected io.intino.alexandria.Resource resource() {
+        InputStream stream = response.stream();
+        if (stream == null) return null;
+        io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(response.getContentType(), response.getFilename(), stream);
+        response.deleteTempFile();
+        return resource;
     }
 
-    private Response response() {
-        return new org.siani.goros.box.Response();
+    protected Request request(Map<String, Object> parameters) {
+        return new org.siani.goros.box.services.Request(context, parameters);
     }
 }

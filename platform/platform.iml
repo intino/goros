@@ -10,10 +10,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.0.0" level="project" />
+    <orderEntry type="module" module-name="platform-ui" />
+    <orderEntry type="library" name="Intino: io.intino.tara:magritte:2.3.1" level="project" />
+    <orderEntry type="library" name="Intino: com.esotericsoftware:kryo:4.0.0" level="project" />
+    <orderEntry type="library" name="Intino: com.esotericsoftware:reflectasm:1.11.3" level="project" />
+    <orderEntry type="library" name="Intino: org.ow2.asm:asm:5.0.4" level="project" />
+    <orderEntry type="library" name="Intino: com.esotericsoftware:minlog:1.3.0" level="project" />
+    <orderEntry type="library" name="Intino: org.objenesis:objenesis:2.2" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.tara:language:1.1.0" level="project" />
     <orderEntry type="library" name="Intino: com.google.code.gson:gson:2.8.0" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:primitives:1.0.3" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:1.0.0" level="project" />
     <orderEntry type="library" name="Intino: com.sun.xml.security:xml-security-impl:1.0" level="project" />
     <orderEntry type="library" name="Intino: com.sparkjava:spark-core:2.7.2" level="project" />
     <orderEntry type="library" name="Intino: org.slf4j:slf4j-api:1.7.13" level="project" />
@@ -36,6 +41,14 @@
     <orderEntry type="library" name="Intino: org.bouncycastle:bcmail-jdk15:1.45" level="project" />
     <orderEntry type="library" name="Intino: org.bouncycastle:bcprov-jdk15:1.45" level="project" />
     <orderEntry type="library" name="Intino: eu.medsea.mimeutil:mime-util:2.1.1" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:juli:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:annotations-api:6.0.43" level="project" />
+    <orderEntry type="library" scope="TEST" name="Intino: junit:junit:4.13-beta-3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Intino: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:space:1.0" level="project" />
     <orderEntry type="library" name="Intino: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Intino: avalon-framework:avalon-framework:4.1.5" level="project" />
     <orderEntry type="library" name="Intino: backport-util-concurrent:backport-util-concurrent:3.1" level="project" />
@@ -48,6 +61,10 @@
     <orderEntry type="library" name="Intino: com.vividsolutions:jts:1.8" level="project" />
     <orderEntry type="library" name="Intino: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:gson:2.2.4" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpcore:4.3.3" level="project" />
+    <orderEntry type="library" name="Intino: commons-logging:commons-logging:1.1.3" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
     <orderEntry type="library" name="Intino: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Intino: joda-time:joda-time:1.6.2" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:templation:1.0" level="project" />
@@ -55,10 +72,12 @@
     <orderEntry type="library" name="Intino: org.siani.monet:oracle-sdoutl:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:sumus:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.apache.velocity:velocity:1.5" level="project" />
+    <orderEntry type="library" name="Intino: commons-collections:commons-collections:3.1" level="project" />
     <orderEntry type="library" name="Intino: commons-lang:commons-lang:2.1" level="project" />
     <orderEntry type="library" name="Intino: oro:oro:2.0.8" level="project" />
     <orderEntry type="library" name="Intino: org.scribe:scribe:1.1.3" level="project" />
     <orderEntry type="library" name="Intino: org.apache.velocity:velocity-tools:1.4" level="project" />
+    <orderEntry type="library" name="Intino: commons-beanutils:commons-beanutils:1.7.0" level="project" />
     <orderEntry type="library" name="Intino: commons-digester:commons-digester:1.8" level="project" />
     <orderEntry type="library" name="Intino: commons-chain:commons-chain:1.1" level="project" />
     <orderEntry type="library" name="Intino: commons-validator:commons-validator:1.3.1" level="project" />
@@ -67,6 +86,7 @@
     <orderEntry type="library" name="Intino: antlr:antlr:2.7.2" level="project" />
     <orderEntry type="library" name="Intino: org.apache.struts:struts-taglib:1.3.8" level="project" />
     <orderEntry type="library" name="Intino: org.apache.struts:struts-tiles:1.3.8" level="project" />
+    <orderEntry type="library" name="Intino: commons-io:commons-io:1.4" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:federation-setup:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:itrules-standalone:0.7" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:jacksum:1.0" level="project" />
@@ -183,33 +203,38 @@
     <orderEntry type="library" name="Intino: io.netty:netty-resolver:4.1.22.Final" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:tomcat-dbcp:7.0.12" level="project" />
     <orderEntry type="library" name="Intino: org.tuckey:urlrewritefilter:3.2.0" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:juli:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:annotations-api:6.0.43" level="project" />
-    <orderEntry type="library" scope="TEST" name="Intino: junit:junit:4.13-beta-3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Intino: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="module" module-name="platform-ui" />
+    <orderEntry type="library" name="Intino: org.siani.monet:tomcat-shared:1.0" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:core-shared:1.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:2.0.0" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.tyrus:tyrus-client:1.8.3" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.tyrus:tyrus-core:1.8.3" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.tyrus:tyrus-spi:1.8.3" level="project" />
+    <orderEntry type="library" name="Intino: javax.websocket:javax.websocket-api:1.1" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.tyrus:tyrus-container-grizzly-client:1.8.3" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.grizzly:grizzly-framework:2.3.15-gfa" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.grizzly:grizzly-http-server:2.3.15-gfa" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.grizzly:grizzly-http:2.3.15-gfa" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:driver-shiny:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:driver:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:driver-r:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: net.rforge:rserve:0.6-8.1" level="project" />
+    <orderEntry type="library" name="Intino: net.rforge:REngine:0.6-8.1" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:proxy:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.httpcomponents:fluent-hc:4.5.7" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:logger4j:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: org.slf4j:slf4j-log4j12:1.7.25" level="project" />
+    <orderEntry type="library" name="Intino: com.opencsv:opencsv:4.1" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.commons:commons-text:1.1" level="project" />
+    <orderEntry type="library" name="Intino: org.hashids:hashids:1.0.3" level="project" />
+    <orderEntry type="library" name="Intino: org.locationtech.jts:jts-core:1.16.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:core-framework:2.0.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest:2.0.0" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:space:1.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:primitives:1.0.3" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:logger:2.0.0" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpcore:4.3.3" level="project" />
-    <orderEntry type="library" name="Intino: commons-logging:commons-logging:1.1.3" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
-    <orderEntry type="library" name="Intino: commons-collections:commons-collections:3.1" level="project" />
-    <orderEntry type="library" name="Intino: commons-beanutils:commons-beanutils:1.7.0" level="project" />
-    <orderEntry type="library" name="Intino: commons-io:commons-io:1.4" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:core-shared:1.0" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.tara:magritte:2.3.1" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.0.1" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:rest-accessor:1.0.7" level="project" />
     <orderEntry type="library" name="Intino: io.intino.tara:io:1.2.0" level="project" />
-    <orderEntry type="library" name="Intino: com.esotericsoftware:kryo:4.0.0" level="project" />
-    <orderEntry type="library" name="Intino: com.esotericsoftware:reflectasm:1.11.3" level="project" />
-    <orderEntry type="library" name="Intino: org.ow2.asm:asm:5.0.4" level="project" />
-    <orderEntry type="library" name="Intino: com.esotericsoftware:minlog:1.3.0" level="project" />
-    <orderEntry type="library" name="Intino: org.objenesis:objenesis:2.2" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.tara:language:1.1.0" level="project" />
   </component>
 </module>

@@ -8,7 +8,7 @@ import { withSnackbar } from 'notistack';
 
 const styles = theme => ({});
 
-class Page extends AbstractPage {
+export default class Page extends AbstractPage {
 
 	constructor(props) {
 		super(props);
@@ -19,5 +19,4 @@ class Page extends AbstractPage {
 
 }
 
-export default withStyles(styles, { withTheme: true })(withSnackbar(Page));
 DisplayFactory.register("Page", withStyles(styles, { withTheme: true })(withSnackbar(Page)));

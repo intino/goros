@@ -9,4 +9,8 @@ public class NodePage<DN extends NodePageNotifier, B extends Box> extends Abstra
         super(box);
     }
 
+    @Override
+    public void init() {
+        super.init();
+    }
 }

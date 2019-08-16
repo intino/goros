@@ -1,6 +1,6 @@
 dsl Konos
 
-Service fmsservice as REST(host = "{api_url}", port = "{port}")
+Service fmsservice as REST(host = "", port = "{port}")
 	title = "MailService API"
 	basePath = "/mailservice"
 

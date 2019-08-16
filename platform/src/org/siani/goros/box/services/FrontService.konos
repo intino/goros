@@ -1,13 +1,13 @@
 dsl Konos
 
-Service fmsservice as REST(host = "", port = "{port}")
-	title = "Mobile API"
-	basePath = "/mobile"
+Service frontservice as REST(host = "", port = "{port}")
+	title = "Front Service API"
+	basePath = "/front"
 
 	//AuthenticatedWithToken
 
-	Resource("/Helo") helo
-		Post(description = "Does Helo")
+	Resource("/showservices") helo
+		Post(description = "Show the available services")
 			Parameter (in=query) request as Text
 			Response as File
 

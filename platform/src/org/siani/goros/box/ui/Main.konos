@@ -2,7 +2,7 @@ dsl Konos
 
 use Pages
 
-Service PlatformUi as UI(port = "9001", title = "", favicon = "")
+Service PlatformUi as UI(port = "{port}", title = "", favicon = "")
 	Resource(path = "/") home as Page(desktopPage)
 	Resource(path = "/node/:id") node as Page(nodePage)
 	Resource(path = "/task/:id") task as Page(taskPage)

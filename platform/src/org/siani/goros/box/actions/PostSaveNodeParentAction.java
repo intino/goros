@@ -2,25 +2,24 @@ package org.siani.goros.box.actions;
 
 import org.monet.space.backservice.control.actions.ActionSaveNodeParent;
 import org.monet.space.backservice.control.constants.Parameter;
-import org.siani.goros.box.GorosBox;
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class PostSaveNodeParentAction extends Action {
-	public String id;
-	public String parent;
+public class PostSaveNodeParentAction extends BackServiceAction {
+    public String id;
+    public String parent;
 
-	public String execute() {
-		return setup(new ActionSaveNodeParent()).execute();
-	}
+    public String execute() {
+        return executeServiceAction(new ActionSaveNodeParent());
+    }
 
-	@Override
-	Map<String, Object> parameters() {
-		HashMap<String, Object> parameters = new HashMap<>();
-		parameters.put(Parameter.ID, id);
-		parameters.put(Parameter.PARENT, parent);
-		return parameters;
-	}
+    @Override
+    Map<String, Object> parameters() {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put(Parameter.ID, id);
+        parameters.put(Parameter.PARENT, parent);
+        return parameters;
+    }
 }

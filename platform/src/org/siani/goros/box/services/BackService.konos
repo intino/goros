@@ -1,10 +1,10 @@
 dsl Konos
 
-Service backservice as REST(host = "{api_url}", port = "{port}")
+Service backservice as REST(host = "", port = "{port}")
 	title = "Backservice API"
 	basePath = "/back"
 
-	AuthenticatedWithToken
+	//AuthenticatedWithToken
 
 	Resource("/adddatastorecubefact") addDatastoreCubeFact
 		Post(description = "Adds a fact to a datastore cube")
@@ -124,7 +124,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 
 	Resource("/downloaddistribution") downloadDistribution
 		Post(description = "Downloads the distribution")
-			Response as Text
+			Response as File
 
 	Resource("/emptytrash") emptyTrash
 		Post(description = "Empties the trash")
@@ -134,7 +134,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 		Post(description = "Executes an exporter")
 			Parameter(in=query) exporter as Text
 			Parameter(in=query) scope as Text
-			Response as Text
+			Response as File
 
 	Resource("/executenodecommand") executeNodeCommand
 		Post(description = "Executes a node command")
@@ -165,7 +165,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 	Resource("/getnodedocument") getNodeDocument
 		Post(description = "Gets a document for node")
 			Parameter(in=query) id as Text
-			Response as Text
+			Response as File
 
 	Resource("/getnodedocumentcontenttype") getNodeDocumentContentType
 		Post(description = "Gets the content type for a node document")
@@ -176,7 +176,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 		Post(description = "Gets a file for a node")
 			Parameter(in=query) id as Text
 			Parameter(in=query) name as Text
-			Response as Text
+			Response as File
 
 	Resource("/getnodeflags") getNodeFlags
 		Post(description = "Gets the flags for a node")
@@ -430,7 +430,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 	Resource("/savenodepartnercontext") saveNodePartnerContext
 		Post(description = "Saves the partner context in a node")
 			Parameter(in=query) id as Text
-//TODO FRAN No se puede llamar context -> Parameter(in=query) context as Text
+			// TODO Mario permitir context como nombre de parametro Parameter(in=query) context as Text
 			Response as Text
 
 	Resource("/savenodepicture") saveNodePicture

@@ -1,20 +1,19 @@
 package org.siani.goros.box.actions;
 
 import org.monet.space.backservice.control.actions.ActionDownloadDistribution;
-import org.monet.space.backservice.control.constants.Parameter;
-import org.siani.goros.box.GorosBox;
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class PostDownloadDistributionAction extends Action {
-	public String execute() {
-		return setup(new ActionDownloadDistribution()).execute();
-	}
+public class PostDownloadDistributionAction extends BackServiceAction {
+    public io.intino.alexandria.Resource execute() {
+        executeServiceAction(new ActionDownloadDistribution());
+        return resource();
+    }
 
-	@Override
-	Map<String, Object> parameters() {
-		return new HashMap<>();
-	}
+    @Override
+    Map<String, Object> parameters() {
+        return new HashMap<>();
+    }
 }

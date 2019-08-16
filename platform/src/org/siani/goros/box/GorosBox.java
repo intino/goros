@@ -1,7 +1,6 @@
 package org.siani.goros.box;
 
 import io.intino.alexandria.core.Box;
-import io.intino.alexandria.rest.security.BasicAuthenticationValidator;
 import io.intino.alexandria.ui.services.AuthService;
 import io.intino.alexandria.ui.services.EditorService;
 import org.siani.goros.graph.BusinessUnit;
@@ -25,9 +24,9 @@ public class GorosBox extends AbstractBox {
 	}
 
 	public io.intino.alexandria.core.Box open(BusinessUnit unit) {
-		Box open = super.open();
+		Box result = super.open();
 		Goros.start(unit);
-		return open;
+		return result;
 	}
 
 	public void close() {
@@ -44,8 +43,7 @@ public class GorosBox extends AbstractBox {
 		return null;
 	}
 
-	@Override
-	public BasicAuthenticationValidator authenticationValidator() {
-		return null;
+	public io.intino.alexandria.rest.security.BasicAuthenticationValidator authenticationValidator() {
+		return token -> false;
 	}
 }

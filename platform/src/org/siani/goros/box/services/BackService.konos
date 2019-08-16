@@ -430,7 +430,7 @@ Service backservice as REST(host = "{api_url}", port = "{port}")
 	Resource("/savenodepartnercontext") saveNodePartnerContext
 		Post(description = "Saves the partner context in a node")
 			Parameter(in=query) id as Text
-			Parameter(in=query) context as Text
+//TODO FRAN No se puede llamar context -> Parameter(in=query) context as Text
 			Response as Text
 
 	Resource("/savenodepicture") saveNodePicture

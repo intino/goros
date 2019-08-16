@@ -2,15 +2,14 @@ package org.siani.goros.box.actions;
 
 import org.monet.space.backservice.control.actions.ActionSaveNodePartnerContext;
 import org.monet.space.backservice.control.constants.Parameter;
-import org.siani.goros.box.GorosBox;
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PostSaveNodePartnerContextAction extends Action {
 	public String id;
-	public String context;
+//TODO FRAN no se puede llamar context -> public String context;
 
 	public String execute() {
 		return setup(new ActionSaveNodePartnerContext()).execute();

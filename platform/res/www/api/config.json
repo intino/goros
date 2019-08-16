@@ -1,0 +1,13 @@
+{
+  "urls": [
+    {
+      "url": "./data/.json",
+      "name": ""
+    }
+  ],
+  "title": "Backservice API",
+  "subtitle": "",
+  "background": "",
+  "color": "",
+  "selectorBorderColor": ""
+}

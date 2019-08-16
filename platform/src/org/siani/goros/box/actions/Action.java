@@ -15,17 +15,19 @@ public abstract class Action {
 
     org.monet.space.backservice.control.actions.Action setup(org.monet.space.backservice.control.actions.Action action) {
         HashMap<String, Object> parameters = (HashMap<String, Object>) parameters();
-        action.setRequest(request(parameters));
-        action.setResponse(response());
+//        action.setRequest(request(parameters));
+//        action.setResponse(response());
         action.setParameters(parameters);
         return action;
     }
 
     private Request request(Map<String, Object> parameters) {
-        return new org.siani.goros.box.Request(context, parameters);
+//        return new org.siani.goros.box.Request(context, parameters);
+        return null;
     }
 
     private Response response() {
-        return new org.siani.goros.box.Response();
+        return null;
+//        return new org.siani.goros.box.Response();
     }
 }

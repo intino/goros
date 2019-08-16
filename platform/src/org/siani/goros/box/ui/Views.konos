@@ -12,6 +12,7 @@ Template collectionView as ExtensionOf(nodeView) Decorated
 Template catalogView as ExtensionOf(nodeView) Decorated
 
 Template formView as ExtensionOf(nodeView) Decorated
+	Stamp(template=fieldView) as Multiple
 
 Template taskView as ExtensionOf(view) Decorated
 

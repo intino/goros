@@ -1,0 +1,98 @@
+package org.siani.goros.box;
+
+import io.intino.alexandria.rest.AlexandriaSpark;
+import org.siani.goros.box.rest.resources.*;
+import io.intino.alexandria.core.Box;
+import io.intino.alexandria.rest.security.DefaultSecurityManager;
+import io.intino.alexandria.rest.spark.SparkPushService;
+
+public class BackserviceService {
+
+	public static AlexandriaSpark setup(AlexandriaSpark server, GorosBox box) {
+		server.route("back/adddatastorecubefact").post(manager -> new PostAddDatastoreCubeFactResource(box, manager).execute());
+		server.route("back/adddatastorecubefacts").post(manager -> new PostAddDatastoreCubeFactsResource(box, manager).execute());
+		server.route("back/adddatastoredimensioncomponent").post(manager -> new PostAddDatastoreDimensionComponentResource(box, manager).execute());
+		server.route("back/addnodeflag").post(manager -> new PostAddNodeFlagResource(box, manager).execute());
+		server.route("back/addnodenote").post(manager -> new PostAddNodeNoteResource(box, manager).execute());
+		server.route("back/addsourceterm").post(manager -> new PostAddSourceTermResource(box, manager).execute());
+		server.route("back/addtaskflact").post(manager -> new PostAddTaskFactResource(box, manager).execute());
+		server.route("back/addtaskflag").post(manager -> new PostAddTaskFlagResource(box, manager).execute());
+		server.route("back/addtaskshortcut").post(manager -> new PostAddTaskShortcutResource(box, manager).execute());
+		server.route("back/consolidatenode").post(manager -> new PostConsolidateNodeResource(box, manager).execute());
+		server.route("back/createaccount").post(manager -> new PostCreateAccountResource(box, manager).execute());
+		server.route("back/createnode").post(manager -> new PostCreateNodeResource(box, manager).execute());
+		server.route("back/createtask").post(manager -> new PostCreateTaskResource(box, manager).execute());
+		server.route("back/deletenodeflag").post(manager -> new PostDeleteNodeFlagResource(box, manager).execute());
+		server.route("back/deletenodenote").post(manager -> new PostDeleteNodeNoteResource(box, manager).execute());
+		server.route("back/createtaskflag").post(manager -> new PostDeleteTaskFlagResource(box, manager).execute());
+		server.route("back/deletetaskshortcut").post(manager -> new PostDeleteTaskShortcutResource(box, manager).execute());
+		server.route("back/downloaddistribution").post(manager -> new PostDownloadDistributionResource(box, manager).execute());
+		server.route("back/emptytrash").post(manager -> new PostEmptyTrashResource(box, manager).execute());
+		server.route("back/executeexporter").post(manager -> new PostExecuteExporterResource(box, manager).execute());
+		server.route("back/executenodecommand").post(manager -> new PostExecuteNodeCommandResource(box, manager).execute());
+		server.route("back/existsnode").post(manager -> new PostExistsNodeResource(box, manager).execute());
+		server.route("back/exportnode").post(manager -> new PostExportNodeResource(box, manager).execute());
+		server.route("back/exportnodes").post(manager -> new PostExportNodesResource(box, manager).execute());
+		server.route("back/getnodeancestors").post(manager -> new PostGetNodeAncestorsResource(box, manager).execute());
+		server.route("back/getnodedocument").post(manager -> new PostGetNodeDocumentResource(box, manager).execute());
+		server.route("back/getnodedocumentcontenttype").post(manager -> new PostGetNodeDocumentContentTypeResource(box, manager).execute());
+		server.route("back/getnodefile").post(manager -> new PostGetNodeFileResource(box, manager).execute());
+		server.route("back/getnodeflags").post(manager -> new PostGetNodeFlagsResource(box, manager).execute());
+		server.route("back/getnodelocation").post(manager -> new PostGetNodeLocationResource(box, manager).execute());
+		server.route("back/getnodenotes").post(manager -> new PostGetNodeNotesResource(box, manager).execute());
+		server.route("back/getnodereference").post(manager -> new PostGetNodeReferenceResource(box, manager).execute());
+		server.route("back/getnodereferences").post(manager -> new PostGetNodeReferencesResource(box, manager).execute());
+		server.route("back/getnodereferencescount").post(manager -> new PostGetNodeReferencesCountResource(box, manager).execute());
+		server.route("back/getnodeschema").post(manager -> new PostGetNodeSchemaResource(box, manager).execute());
+		server.route("back/getnodetasks").post(manager -> new PostGetNodeTasksResource(box, manager).execute());
+		server.route("back/getsourceparentterm").post(manager -> new PostGetSourceParentTermResource(box, manager).execute());
+		server.route("back/getsourceterms").post(manager -> new PostGetSourceTermsResource(box, manager).execute());
+		server.route("back/gettaskfacts").post(manager -> new PostGetTaskFactsResource(box, manager).execute());
+		server.route("back/gettaskflags").post(manager -> new PostGetTaskFlagsResource(box, manager).execute());
+		server.route("back/gettaskprocess").post(manager -> new PostGetTaskProcessResource(box, manager).execute());
+		server.route("back/gettasks").post(manager -> new PostGetTasksResource(box, manager).execute());
+		server.route("back/gettaskshortcuts").post(manager -> new PostGetTaskShortcutsResource(box, manager).execute());
+		server.route("back/getuserlinkedtonode").post(manager -> new PostGetUserLinkedToNodeResource(box, manager).execute());
+		server.route("back/getusernode").post(manager -> new PostGetUserNodeResource(box, manager).execute());
+		server.route("back/getusertasks").post(manager -> new PostGetUserTasksResource(box, manager).execute());
+		server.route("back/gotoplaceintask").post(manager -> new PostGotoPlaceInTaskResource(box, manager).execute());
+		server.route("back/haspermissions").post(manager -> new PostHasPermissionsResource(box, manager).execute());
+		server.route("back/importnode").post(manager -> new PostImportNodeResource(box, manager).execute());
+		server.route("back/loadsource").post(manager -> new PostLoadSourceResource(box, manager).execute());
+		server.route("back/loaduser").post(manager -> new PostLoadUserResource(box, manager).execute());
+		server.route("back/locatenode").post(manager -> new PostLocateNodeResource(box, manager).execute());
+		server.route("back/locatesource").post(manager -> new PostLocateSourceResource(box, manager).execute());
+		server.route("back/makenodedeleteable").post(manager -> new PostMakeNodeDeletableResource(box, manager).execute());
+		server.route("back/makenodeeditable").post(manager -> new PostMakeNodeEditableResource(box, manager).execute());
+		server.route("back/makenodeprivate").post(manager -> new PostMakeNodePrivateResource(box, manager).execute());
+		server.route("back/makenodepublic").post(manager -> new PostMakeNodePublicResource(box, manager).execute());
+		server.route("back/makenodeundeleteable").post(manager -> new PostMakeNodeUndeletableResource(box, manager).execute());
+		server.route("back/makenodeuneditable").post(manager -> new PostMakeNodeUneditableResource(box, manager).execute());
+		server.route("back/opendatastore").post(manager -> new PostOpenDatastoreResource(box, manager).execute());
+		server.route("back/opennode").post(manager -> new PostOpenNodeResource(box, manager).execute());
+		server.route("back/opentask").post(manager -> new PostOpenTaskResource(box, manager).execute());
+		server.route("back/recovernode").post(manager -> new PostRecoverNodeResource(box, manager).execute());
+		server.route("back/removenode").post(manager -> new PostRemoveNodeResource(box, manager).execute());
+		server.route("back/removetask").post(manager -> new PostRemoveTaskResource(box, manager).execute());
+		server.route("back/resetnodeform").post(manager -> new PostResetNodeFormResource(box, manager).execute());
+		server.route("back/resumetask").post(manager -> new PostResumeTaskResource(box, manager).execute());
+		server.route("back/runtask").post(manager -> new PostRunTaskResource(box, manager).execute());
+		server.route("back/savenode").post(manager -> new PostSaveNodeResource(box, manager).execute());
+		server.route("back/savenodedocument").post(manager -> new PostSaveNodeDocumentResource(box, manager).execute());
+		server.route("back/savenodefile").post(manager -> new PostSaveNodeFileResource(box, manager).execute());
+		server.route("back/savenodeparent").post(manager -> new PostSaveNodeParentResource(box, manager).execute());
+		server.route("back/savenodepartnercontext").post(manager -> new PostSaveNodePartnerContextResource(box, manager).execute());
+		server.route("back/savenodepicture").post(manager -> new PostSaveNodePictureResource(box, manager).execute());
+		server.route("back/savenodereference").post(manager -> new PostSaveNodeReferenceResource(box, manager).execute());
+		server.route("back/savenodesattribute").post(manager -> new PostSaveNodesAttributeResource(box, manager).execute());
+		server.route("back/savetask").post(manager -> new PostSaveTaskResource(box, manager).execute());
+		server.route("back/saveuser").post(manager -> new PostSaveUserResource(box, manager).execute());
+		server.route("back/searchevent").post(manager -> new PostSearchEventResource(box, manager).execute());
+		server.route("back/searchnodes").post(manager -> new PostSearchNodesResource(box, manager).execute());
+		server.route("back/api").post(manager -> new PostShowApiResource(box, manager).execute());
+		server.route("back/subscribe").post(manager -> new PostSubscribeResource(box, manager).execute());
+		server.route("back/unlocktask").post(manager -> new PostUnlockTaskResource(box, manager).execute());
+
+		return server;
+	}
+}

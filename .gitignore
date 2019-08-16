@@ -4,3 +4,4 @@ platform/res/www/
 platform/user_data/businessmodel/
 platform/user_data/space.xml
 platform-ui/gen/
+platform-ui/node_modules

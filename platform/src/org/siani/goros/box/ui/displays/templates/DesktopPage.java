@@ -5,6 +5,8 @@ import org.siani.goros.box.ui.displays.notifiers.DesktopPageNotifier;
 
 import java.util.List;
 
+import static io.intino.alexandria.ui.displays.UserMessage.Type.Info;
+
 public class DesktopPage extends AbstractDesktopPage<DesktopPageNotifier, GorosBox> {
     private View currentView;
 
@@ -15,11 +17,16 @@ public class DesktopPage extends AbstractDesktopPage<DesktopPageNotifier, GorosB
     @Override
     public void init() {
         super.init();
-        initViewSelector();
+        initLinks();
+        initTabs();
         addViews();
     }
 
-    private void initViewSelector() {
+    private void initLinks() {
+        links.onSelect(e -> links.notifyUser("user clicked " + e.selection().get(0), Info));
+    }
+
+    private void initTabs() {
         viewSelector.add("Opción 1");
         viewSelector.add("Opción 2");
         viewSelector.onSelect(e -> {
@@ -32,8 +39,8 @@ public class DesktopPage extends AbstractDesktopPage<DesktopPageNotifier, GorosB
 
     private void showView(String option) {
         if (currentView != null) currentView.hide();
-        if (option.equals("Opción 1")) view("Vista 1").show();
-        else view("Vista 2").show();
+        if (option.equals("Opción 1")) currentView = (View) view("Vista 1").show();
+        else currentView = (View) view("Vista 2").show();
     }
 
     private void addViews() {

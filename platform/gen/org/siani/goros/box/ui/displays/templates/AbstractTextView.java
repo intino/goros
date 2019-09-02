@@ -18,13 +18,13 @@ public abstract class AbstractTextView<DN extends TextViewNotifier, B extends Bo
 
     public AbstractTextView(B box) {
         super(box);
-        id("kR5");
+        id("lY5");
     }
 
     @Override
 	public void init() {
 		super.init();
-		if (text == null) text = register(new Text(box()).<Text>id("lY5").owner(AbstractTextView.this));
+		if (text == null) text = register(new Text(box()).<Text>id("mZO").owner(AbstractTextView.this));
 	}
 
 	public class Text extends io.intino.alexandria.ui.displays.components.TextEditable<io.intino.alexandria.ui.displays.notifiers.TextEditableNotifier, B>  {

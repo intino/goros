@@ -16,8 +16,8 @@ public class PostHasPermissionsAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.USERNAME, username);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.USERNAME, username);
+        return paramMap;
     }
 }

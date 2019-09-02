@@ -21,7 +21,6 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 	public DesktopPage.DesktopPage0.Drawer.DesktopPage000. DesktopPage0001 desktopPage0001;
 	public DesktopPage.DesktopPage0.Drawer. DesktopPage001 desktopPage001;
 	public DesktopPage.DesktopPage0.Drawer. Links links;
-	public DesktopPage.DesktopPage0.Drawer.Links. DesktopPage0021 desktopPage0021;
 	public DesktopPage.DesktopPage0.Drawer.Links. SetupOption setupOption;
 	public DesktopPage.DesktopPage0.Drawer.Links.SetupOption. DesktopPage00200 desktopPage00200;
 	public DesktopPage.DesktopPage0.Drawer.Links.SetupOption. DesktopPage00201 desktopPage00201;
@@ -49,7 +48,6 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 		if (desktopPage000 != null) desktopPage0001 = desktopPage0.drawer.desktopPage000.desktopPage0001;
 		if (drawer != null) desktopPage001 = desktopPage0.drawer.desktopPage001;
 		if (drawer != null) links = desktopPage0.drawer.links;
-		if (links != null) desktopPage0021 = desktopPage0.drawer.links.desktopPage0021;
 		if (links != null) setupOption = desktopPage0.drawer.links.setupOption;
 		if (setupOption != null) desktopPage00200 = desktopPage0.drawer.links.setupOption.desktopPage00200;
 		if (setupOption != null) desktopPage00201 = desktopPage0.drawer.links.setupOption.desktopPage00201;
@@ -97,7 +95,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 				super.init();
 				if (desktopPage000 == null) desktopPage000 = register(new DesktopPage000(box()).<DesktopPage000>id("y7").owner(AbstractDesktopPage.this));
 				if (desktopPage001 == null) desktopPage001 = register(new DesktopPage001(box()).<DesktopPage001>id("BX").owner(AbstractDesktopPage.this));
-				if (links == null) links = register(new Links(box()).<Links>id("o2j").owner(AbstractDesktopPage.this));
+				if (links == null) links = register(new Links(box()).<Links>id("Dx").owner(AbstractDesktopPage.this));
 			}
 
 			public class DesktopPage000 extends io.intino.alexandria.ui.displays.components.Block<io.intino.alexandria.ui.displays.notifiers.BlockNotifier, B>  {
@@ -119,9 +117,9 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 					public DesktopPage0000(B box) {
 						super(box);
-						title("open menu");
-						mode(io.intino.alexandria.ui.displays.components.Operation.Mode.valueOf("MaterialIconButton"));
-						icon("ChevronRight");
+						_title("open menu");
+						_mode(io.intino.alexandria.ui.displays.components.Operation.Mode.valueOf("MaterialIconButton"));
+						_icon("ChevronRight");
 					}
 
 					@Override
@@ -134,9 +132,9 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 					public DesktopPage0001(B box) {
 						super(box);
-						title("minimize");
-						mode(io.intino.alexandria.ui.displays.components.Operation.Mode.valueOf("MaterialIconButton"));
-						icon("ChevronLeft");
+						_title("minimize");
+						_mode(io.intino.alexandria.ui.displays.components.Operation.Mode.valueOf("MaterialIconButton"));
+						_icon("ChevronLeft");
 					}
 
 					@Override
@@ -159,31 +157,17 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 			}
 
 			public class Links extends io.intino.alexandria.ui.displays.components.SelectorListBox<io.intino.alexandria.ui.displays.notifiers.SelectorListBoxNotifier, B>  {
-				public DesktopPage.DesktopPage0.Drawer.Links. DesktopPage0021 desktopPage0021;
 				public DesktopPage.DesktopPage0.Drawer.Links. SetupOption setupOption;
 
 				public Links(B box) {
 					super(box);
-					multipleSelection(false);
+					_multipleSelection(false);
 				}
 
 				@Override
 				public void init() {
 					super.init();
-					if (desktopPage0021 == null) desktopPage0021 = register(new DesktopPage0021(box()).<DesktopPage0021>id("qx2").owner(AbstractDesktopPage.this));
-					if (setupOption == null) setupOption = register(new SetupOption(box()).<SetupOption>id("pY2").owner(AbstractDesktopPage.this));
-				}
-
-				public class DesktopPage0021 extends io.intino.alexandria.ui.displays.components.TextEditable<io.intino.alexandria.ui.displays.notifiers.TextEditableNotifier, B>  {
-
-					public DesktopPage0021(B box) {
-						super(box);
-					}
-
-					@Override
-					public void init() {
-						super.init();
-					}
+					if (setupOption == null) setupOption = register(new SetupOption(box()).<SetupOption>id("Ev").owner(AbstractDesktopPage.this));
 				}
 
 				public class SetupOption extends io.intino.alexandria.ui.displays.components.Block<io.intino.alexandria.ui.displays.notifiers.BlockNotifier, B> implements io.intino.alexandria.ui.displays.components.selector.SelectorOption {
@@ -192,6 +176,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 					public SetupOption(B box) {
 						super(box);
+
 						name("setupOption");
 					}
 
@@ -206,7 +191,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 						public DesktopPage00200(B box) {
 							super(box);
-							icon("Build");
+							_icon("Build");
 						}
 
 						@Override
@@ -219,7 +204,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 						public DesktopPage00201(B box) {
 							super(box);
-							value("setup");
+							_value("setup");
 						}
 
 						@Override
@@ -254,7 +239,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 				public DesktopPage012(B box) {
 					super(box);
 
-					color("white");
+					_color("white");
 				}
 
 				@Override
@@ -283,7 +268,7 @@ public abstract class AbstractDesktopPage<DN extends DesktopPageNotifier, B exte
 
 					public ViewSelector(B box) {
 						super(box);
-						multipleSelection(false);
+						_multipleSelection(false);
 					}
 
 					@Override

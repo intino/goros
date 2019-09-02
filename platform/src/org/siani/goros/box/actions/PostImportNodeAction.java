@@ -18,10 +18,10 @@ public class PostImportNodeAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.IMPORTER, importer);
-        parameters.put(Parameter.ID_SCOPE, idscope);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.IMPORTER, importer);
+        paramMap.put(Parameter.ID_SCOPE, idscope);
+        paramMap.put(Parameter.DATA, data);
+        return paramMap;
     }
 }

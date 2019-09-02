@@ -16,8 +16,8 @@ public class PostCreateTaskAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.TYPE, type);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.TYPE, type);
+        return paramMap;
     }
 }

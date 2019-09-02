@@ -17,9 +17,9 @@ public class PostSaveUserAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.CODE, code);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.CODE, code);
+        paramMap.put(Parameter.DATA, data);
+        return paramMap;
     }
 }

@@ -27,9 +27,12 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 		this.configuration = configuration;
 		initJavaLogger();
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
+		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
+		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
+		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
 		this.authService = null;
 		this.editorService = null;
-		if("9001" != null && !"9001".isEmpty())io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt("9001"), "www/");
+		if(configuration().get("port") != null && !configuration().get("port").isEmpty())io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.setUI(true);
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.addParameters(this.authService, this.editorService);
 	}
@@ -98,6 +101,12 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 	private void initRESTServices() {
 		BackserviceService.setup(io.intino.alexandria.rest.AlexandriaSparkBuilder.instance(), (GorosBox) this).start();
 		Logger.info("REST service backservice: started!");
+		FrontserviceService.setup(io.intino.alexandria.rest.AlexandriaSparkBuilder.instance(), (GorosBox) this).start();
+		Logger.info("REST service frontservice: started!");
+		FmsserviceService.setup(io.intino.alexandria.rest.AlexandriaSparkBuilder.instance(), (GorosBox) this).start();
+		Logger.info("REST service fmsservice: started!");
+		FmsserviceService.setup(io.intino.alexandria.rest.AlexandriaSparkBuilder.instance(), (GorosBox) this).start();
+		Logger.info("REST service fmsservice: started!");
 	}
 
 	private void initJMSServices() {
@@ -113,7 +122,7 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 	}
 
 	private void initUI() {
-		if ("9001" == null || !io.intino.alexandria.rest.AlexandriaSparkBuilder.isUI()) return;
+		if (configuration().get("port") == null || !io.intino.alexandria.rest.AlexandriaSparkBuilder.isUI()) return;
 		io.intino.alexandria.ui.UISpark sparkInstance = (io.intino.alexandria.ui.UISpark) io.intino.alexandria.rest.AlexandriaSparkBuilder.instance();
 		io.intino.alexandria.ui.services.push.PushService pushService = new io.intino.alexandria.ui.services.push.PushService();
 		org.siani.goros.box.ui.PlatformUiService.init(sparkInstance, (GorosBox) this, pushService);
@@ -134,8 +143,6 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 
 	private void initWorkflow() {
 	}
-
-	public abstract io.intino.alexandria.rest.security.BasicAuthenticationValidator authenticationValidator();
 
 	private void initJavaLogger() {
 		final java.util.logging.Logger Logger = java.util.logging.Logger.getGlobal();

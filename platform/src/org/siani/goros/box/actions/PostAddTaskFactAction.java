@@ -20,12 +20,12 @@ public class PostAddTaskFactAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID, id);
-        parameters.put(Parameter.TITLE, title);
-        parameters.put(Parameter.SUBTITLE, subtitle);
-        parameters.put(Parameter.USER, user);
-        parameters.put(Parameter.LINKS, links);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID, id);
+        paramMap.put(Parameter.TITLE, title);
+        paramMap.put(Parameter.SUBTITLE, subtitle);
+        paramMap.put(Parameter.USER, user);
+        paramMap.put(Parameter.LINKS, links);
+        return paramMap;
     }
 }

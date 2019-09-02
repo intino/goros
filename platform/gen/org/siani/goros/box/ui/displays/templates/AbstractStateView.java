@@ -17,7 +17,7 @@ public abstract class AbstractStateView<DN extends StateViewNotifier, B extends 
 
     public AbstractStateView(B box) {
         super(box);
-        id("gJY");
+        id("jRR");
     }
 
     @Override

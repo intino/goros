@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PostSaveNodeDocumentAction extends BackServiceAction {
     public String id;
-    public String data;
+    public io.intino.alexandria.Resource data;
     public String contenttype;
 
     public String execute() {
@@ -18,10 +18,10 @@ public class PostSaveNodeDocumentAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID, id);
-        parameters.put(Parameter.DATA, data);
-        parameters.put(Parameter.CONTENT_TYPE, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID, id);
+        paramMap.put(Parameter.DATA, data.stream());
+        paramMap.put(Parameter.CONTENT_TYPE, contenttype);
+        return paramMap;
     }
 }

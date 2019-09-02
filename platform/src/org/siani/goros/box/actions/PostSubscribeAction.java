@@ -17,9 +17,9 @@ public class PostSubscribeAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.TYPE, type);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.TYPE, type);
+        paramMap.put(Parameter.DATA, data);
+        return paramMap;
     }
 }

@@ -17,9 +17,9 @@ public class PostGetUserNodeAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.CODE, code);
-        parameters.put(Parameter.DEPTH, depth);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.CODE, code);
+        paramMap.put(Parameter.DEPTH, depth);
+        return paramMap;
     }
 }

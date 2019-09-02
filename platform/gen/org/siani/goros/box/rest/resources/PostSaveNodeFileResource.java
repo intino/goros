@@ -15,17 +15,14 @@ public class PostSaveNodeFileResource implements Resource {
 
 	private GorosBox box;
 	private SparkManager<SparkPushService> manager;
-	io.intino.alexandria.rest.security.BasicAuthenticationValidator validator;
 
 	public PostSaveNodeFileResource(GorosBox box, SparkManager manager) {
 		this.box = box;
 		this.manager = manager;
-		this.validator = box.authenticationValidator();
+
 	}
 
-	public void execute() throws Unauthorized {
-		String auth = manager.fromHeader("Authorization", String.class);
-		if (auth == null || !validator.validate(auth.replace("Basic ", ""))) throw new Unauthorized("Credential not found");
+	public void execute() throws Unknown {
 		write(fill(new org.siani.goros.box.actions.PostSaveNodeFileAction()).execute());
 	}
 
@@ -33,7 +30,7 @@ public class PostSaveNodeFileResource implements Resource {
 		action.box = this.box;
 		action.context = context();
 		action.name = manager.fromQuery("name", String.class);
-		action.data = manager.fromQuery("data", String.class);
+		action.data = manager.fromForm("data", io.intino.alexandria.Resource.class);
 		return action;
 	}
 
@@ -46,7 +43,7 @@ public class PostSaveNodeFileResource implements Resource {
 		context.put("domain", manager.domain());
 		context.put("baseUrl", manager.baseUrl());
 		context.put("requestUrl", manager.baseUrl() + manager.request().pathInfo());
-		context.put("auth", manager.fromHeader("Authorization", String.class).replace("Basic ", ""));
+
 		return context;
 	}
 }

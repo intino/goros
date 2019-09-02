@@ -18,10 +18,10 @@ public class PostGetNodeReferencesCountAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.CODE, code);
-        parameters.put(Parameter.FILTER, filter);
-        parameters.put(Parameter.PARAMETERS, parameters);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.CODE, code);
+        paramMap.put(Parameter.FILTER, filter);
+        paramMap.put(Parameter.PARAMETERS, parameters);
+        return paramMap;
     }
 }

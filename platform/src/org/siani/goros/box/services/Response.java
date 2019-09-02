@@ -12,6 +12,10 @@ public class Response implements org.monet.http.Response {
     private String contentType;
     private String filename;
 
+    public Response(Context context) {
+        this.context = context;
+    }
+
     @Override
     public void setContentType(String type) {
         context.add("content-type", type);
@@ -30,12 +34,12 @@ public class Response implements org.monet.http.Response {
     }
 
     @Override
-    public OutputStream getOutputStream() throws IOException {
+    public OutputStream getOutputStream() {
         return outputStream();
     }
 
     @Override
-    public PrintWriter getWriter() throws IOException {
+    public PrintWriter getWriter() {
         return new PrintWriter(outputStream());
     }
 

@@ -17,7 +17,7 @@ public abstract class AbstractFieldView<DN extends FieldViewNotifier, B extends 
 
     public AbstractFieldView(B box) {
         super(box);
-        id("jRR");
+        id("kR5");
     }
 
     @Override

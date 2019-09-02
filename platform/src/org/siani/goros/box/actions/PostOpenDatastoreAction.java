@@ -16,8 +16,8 @@ public class PostOpenDatastoreAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.NAME, name);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.NAME, name);
+        return paramMap;
     }
 }

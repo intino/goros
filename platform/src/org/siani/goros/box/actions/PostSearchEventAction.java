@@ -18,10 +18,10 @@ public class PostSearchEventAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.TYPE, type);
-        parameters.put(Parameter.FROM, from);
-        parameters.put(Parameter.TO, to);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.TYPE, type);
+        paramMap.put(Parameter.FROM, from);
+        paramMap.put(Parameter.TO, to);
+        return paramMap;
     }
 }

@@ -65,7 +65,7 @@ public abstract class AbstractHeader<B extends Box> extends io.intino.alexandria
 
 				public Header000(B box) {
 					super(box);
-					value(AbstractHeader.class.getResource("/images/logo.png"));
+					_value(AbstractHeader.class.getResource("/images/logo.png"));
 				}
 
 				@Override
@@ -94,7 +94,7 @@ public abstract class AbstractHeader<B extends Box> extends io.intino.alexandria
 			public Header10(B box) {
 				super(box);
 
-				color("grey");
+				_color("grey");
 			}
 
 			@Override

@@ -18,10 +18,10 @@ public class PostSaveNodeReferenceAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID, id);
-        parameters.put(Parameter.CODE, code);
-        parameters.put(Parameter.ATTRIBUTES, attributes);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID, id);
+        paramMap.put(Parameter.CODE, code);
+        paramMap.put(Parameter.ATTRIBUTES, attributes);
+        return paramMap;
     }
 }

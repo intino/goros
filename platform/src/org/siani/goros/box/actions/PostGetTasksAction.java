@@ -21,13 +21,13 @@ public class PostGetTasksAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.INBOX, inbox);
-        parameters.put(Parameter.FOLDER, folder);
-        parameters.put(Parameter.CONDITION, condition);
-        parameters.put(Parameter.OWNER, owner);
-        parameters.put(Parameter.START, start);
-        parameters.put(Parameter.LIMIT, limit);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.INBOX, inbox);
+        paramMap.put(Parameter.FOLDER, folder);
+        paramMap.put(Parameter.CONDITION, condition);
+        paramMap.put(Parameter.OWNER, owner);
+        paramMap.put(Parameter.START, start);
+        paramMap.put(Parameter.LIMIT, limit);
+        return paramMap;
     }
 }

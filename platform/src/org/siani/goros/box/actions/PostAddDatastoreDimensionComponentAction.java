@@ -18,10 +18,10 @@ public class PostAddDatastoreDimensionComponentAction extends BackServiceAction 
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.NAME, name);
-        parameters.put(Parameter.DIMENSION, dimension);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.NAME, name);
+        paramMap.put(Parameter.DIMENSION, dimension);
+        paramMap.put(Parameter.DATA, data);
+        return paramMap;
     }
 }

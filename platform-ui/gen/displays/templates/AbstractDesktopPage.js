@@ -6,7 +6,6 @@ import UiOpenDrawer from "alexandria-ui-elements/src/displays/components/OpenDra
 import UiCloseDrawer from "alexandria-ui-elements/src/displays/components/CloseDrawer";
 import UiDivider from "alexandria-ui-elements/src/displays/components/Divider";
 import UiSelectorListBox from "alexandria-ui-elements/src/displays/components/SelectorListBox";
-import UiTextEditable from "alexandria-ui-elements/src/displays/components/TextEditable";
 import UiMaterialIcon from "alexandria-ui-elements/src/displays/components/MaterialIcon";
 import UiText from "alexandria-ui-elements/src/displays/components/Text";
 import UiHeader from "alexandria-ui-elements/src/displays/components/Header";
@@ -37,10 +36,8 @@ export default class AbstractDesktopPage extends DisplaysNodePage {
 						</UiBlock>
 						<UiDivider context={this._context.bind(this)} owner={this._owner.bind(this)} id="BX">
 						</UiDivider>
-						<UiSelectorListBox context={this._context.bind(this)} owner={this._owner.bind(this)} id="o2j" multipleSelection={false}>
-							<UiTextEditable context={this._context.bind(this)} owner={this._owner.bind(this)} id="qx2" mode="normal" placeholder="">
-							</UiTextEditable>
-							<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="pY2" name="setupOption" layout="horizontal" spacing="16">
+						<UiSelectorListBox context={this._context.bind(this)} owner={this._owner.bind(this)} id="Dx" multipleSelection={false}>
+							<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="Ev" name="setupOption" layout="horizontal" spacing="16">
 								<UiMaterialIcon context={this._context.bind(this)} owner={this._owner.bind(this)} id="G7" icon="Build">
 								</UiMaterialIcon>
 								<UiText context={this._context.bind(this)} owner={this._owner.bind(this)} id="J2" mode="normal" value="setup">

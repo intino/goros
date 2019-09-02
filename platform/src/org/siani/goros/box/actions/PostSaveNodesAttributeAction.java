@@ -17,9 +17,9 @@ public class PostSaveNodesAttributeAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.NODES, nodes);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.NODES, nodes);
+        paramMap.put(Parameter.DATA, data);
+        return paramMap;
     }
 }

@@ -24,7 +24,7 @@ public abstract class AbstractFormView<DN extends FormViewNotifier, B extends Bo
     @Override
 	public void init() {
 		super.init();
-		if (formView0 == null) formView0 = register(new FormView0((GorosBox)box()).<FormView0>id("rkE").owner(AbstractFormView.this));
+		if (formView0 == null) formView0 = register(new FormView0((GorosBox)box()).<FormView0>id("_0v").owner(AbstractFormView.this));
 	}
 
 	public class FormView0 extends io.intino.alexandria.ui.displays.components.Multiple<GorosBox, FieldView, java.lang.Void>  {

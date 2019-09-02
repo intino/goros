@@ -3,6 +3,7 @@ package org.siani.goros.box.actions;
 import org.monet.space.kernel.utils.PersisterHelper;
 
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
@@ -14,13 +15,13 @@ public class MobileTypedAction extends Action {
         GZIPOutputStream outputStream = new GZIPOutputStream(response.getOutputStream());
         StringWriter writer = new StringWriter();
         PersisterHelper.save(writer, result);
-        outputStream.write(writer.toString().getBytes("UTF-8"));
+        outputStream.write(writer.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     Map<String, Object> parameters(String operation, Object deserializedRequest) {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("op", operation);
-        parameters.put("request", deserializedRequest);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("op", operation);
+        paramMap.put("request", deserializedRequest);
+        return paramMap;
     }
 }

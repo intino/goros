@@ -15,7 +15,7 @@ export default class AbstractFormView extends DisplaysNodeView {
 	    const display = !this.state.visible ? {display:'none'} : undefined;
 		return(
 			<UiBlock layout="vertical" style={{...this.props.style,...display}}>
-				<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="rkE" multiple={{instances:"formView0",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
+				<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="_0v" multiple={{instances:"formView0",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
 				</UiMultiple>
 			</UiBlock>
 		);

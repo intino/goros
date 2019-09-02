@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PostSaveNodePictureAction extends BackServiceAction {
     public String name;
-    public String data;
+    public io.intino.alexandria.Resource data;
 
     public String execute() {
         return executeServiceAction(new ActionSaveNodePicture());
@@ -17,9 +17,9 @@ public class PostSaveNodePictureAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.NAME, name);
-        parameters.put(Parameter.DATA, data);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.NAME, name);
+        paramMap.put(Parameter.DATA, data.stream());
+        return paramMap;
     }
 }

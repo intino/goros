@@ -17,9 +17,9 @@ public class PostCreateNodeAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.PARENT, parent);
-        parameters.put(Parameter.TYPE, type);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.PARENT, parent);
+        paramMap.put(Parameter.TYPE, type);
+        return paramMap;
     }
 }

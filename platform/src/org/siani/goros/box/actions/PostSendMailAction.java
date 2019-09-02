@@ -17,10 +17,10 @@ public class PostSendMailAction extends MailServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("from", from);
-        parameters.put("body", body);
-        parameters.put("files", files);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("from", from);
+        paramMap.put("body", body);
+        paramMap.put("files", files);
+        return paramMap;
     }
 }

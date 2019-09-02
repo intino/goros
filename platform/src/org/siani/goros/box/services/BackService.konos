@@ -411,14 +411,14 @@ Service backservice as REST(host = "", port = "{port}")
 	Resource("/savenodedocument") saveNodeDocument
 		Post(description = "Saves a node")
 			Parameter(in=query) id as Text
-			Parameter(in=query) data as Text
+			Parameter(in=form) data as File
 			Parameter(in=query) contenttype as Text
 			Response as Text
 
 	Resource("/savenodefile") saveNodeFile
 		Post(description = "Saves a file in a node")
 			Parameter(in=query) name as Text
-			Parameter(in=query) data as Text
+			Parameter(in=form) data as File
 			Response as Text
 
 	Resource("/savenodeparent") saveNodeParent
@@ -436,7 +436,7 @@ Service backservice as REST(host = "", port = "{port}")
 	Resource("/savenodepicture") saveNodePicture
 		Post(description = "Saves a picture in a node")
 			Parameter(in=query) name as Text
-			Parameter(in=query) data as Text
+			Parameter(in=form) data as File
 			Response as Text
 
 	Resource("/savenodereference") saveNodeReference

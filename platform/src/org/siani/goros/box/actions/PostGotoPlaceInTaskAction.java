@@ -18,10 +18,10 @@ public class PostGotoPlaceInTaskAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID, id);
-        parameters.put(Parameter.PLACE, place);
-        parameters.put(Parameter.HISTORY, history);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID, id);
+        paramMap.put(Parameter.PLACE, place);
+        paramMap.put(Parameter.HISTORY, history);
+        return paramMap;
     }
 }

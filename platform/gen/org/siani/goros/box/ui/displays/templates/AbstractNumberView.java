@@ -18,22 +18,22 @@ public abstract class AbstractNumberView<DN extends NumberViewNotifier, B extend
 
     public AbstractNumberView(B box) {
         super(box);
-        id("mZO");
+        id("n5R");
     }
 
     @Override
 	public void init() {
 		super.init();
-		if (number == null) number = register(new Number(box()).<Number>id("n5R").owner(AbstractNumberView.this));
+		if (number == null) number = register(new Number(box()).<Number>id("o2j").owner(AbstractNumberView.this));
 	}
 
 	public class Number extends io.intino.alexandria.ui.displays.components.NumberEditable<io.intino.alexandria.ui.displays.notifiers.NumberEditableNotifier, B>  {
 
 		public Number(B box) {
 			super(box);
-			value(0.0);
-			min(-1.0);
-			max(-1.0);
+			_value(0.0);
+			_min(-1.0);
+			_max(-1.0);
 		}
 
 		@Override

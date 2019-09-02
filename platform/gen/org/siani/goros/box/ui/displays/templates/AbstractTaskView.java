@@ -17,7 +17,7 @@ public abstract class AbstractTaskView<DN extends TaskViewNotifier, B extends Bo
 
     public AbstractTaskView(B box) {
         super(box);
-        id("_0v");
+        id("gJY");
     }
 
     @Override

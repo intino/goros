@@ -18,10 +18,10 @@ public class PostAddNodeFlagAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID, id);
-        parameters.put(Parameter.NAME, name);
-        parameters.put(Parameter.VALUE, value);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID, id);
+        paramMap.put(Parameter.NAME, name);
+        paramMap.put(Parameter.VALUE, value);
+        return paramMap;
     }
 }

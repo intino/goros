@@ -18,9 +18,9 @@ public class PostExecuteExporterAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.EXPORTER, exporter);
-        parameters.put(Parameter.SCOPE, scope);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.EXPORTER, exporter);
+        paramMap.put(Parameter.SCOPE, scope);
+        return paramMap;
     }
 }

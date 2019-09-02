@@ -13,7 +13,7 @@ export default class AbstractTextView extends DisplaysFieldView {
 	    const display = !this.state.visible ? {display:'none'} : undefined;
 		return(
 			<UiBlock layout="vertical" style={{...this.props.style,...display}}>
-				<UiTextEditable context={this._context.bind(this)} owner={this._owner.bind(this)} id="lY5" mode="normal" placeholder="">
+				<UiTextEditable context={this._context.bind(this)} owner={this._owner.bind(this)} id="mZO" mode="normal" placeholder="">
 				</UiTextEditable>
 			</UiBlock>
 		);

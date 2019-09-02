@@ -17,9 +17,9 @@ public class PostExecuteNodeCommandAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.ID_NODE, idnode);
-        parameters.put(Parameter.COMMAND, command);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.ID_NODE, idnode);
+        paramMap.put(Parameter.COMMAND, command);
+        return paramMap;
     }
 }

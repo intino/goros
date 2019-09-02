@@ -21,13 +21,13 @@ public class PostAddSourceTermAction extends BackServiceAction {
 
     @Override
     Map<String, Object> parameters() {
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put(Parameter.CODE, code);
-        parameters.put(Parameter.PARENT, parent);
-        parameters.put(Parameter.TYPE, type);
-        parameters.put(Parameter.SOURCE, source);
-        parameters.put(Parameter.LABEL, label);
-        parameters.put(Parameter.TAGS, tags);
-        return parameters;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put(Parameter.CODE, code);
+        paramMap.put(Parameter.PARENT, parent);
+        paramMap.put(Parameter.TYPE, type);
+        paramMap.put(Parameter.SOURCE, source);
+        paramMap.put(Parameter.LABEL, label);
+        paramMap.put(Parameter.TAGS, tags);
+        return paramMap;
     }
 }

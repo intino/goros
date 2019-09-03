@@ -33,6 +33,7 @@
 -1117530137@Platform#valuesLabelFormat
 625406227@Platform#body1
 829839565@Platform#textView
+-814666225@Platform#desktopPage
 620608175@Platform#page
 1165594124@Platform#link
 1660698095@Platform#theme1
@@ -56,7 +57,6 @@
 1885454285@Platform#PlatformUi
 1517175886@Platform#secondary
 -220075471@Platform#documentPage
-1331586447@Platform#desktopPage
 1187466150@Platform#cardContent
 1194616759@Platform#h3
 738277867@Platform#containerPage

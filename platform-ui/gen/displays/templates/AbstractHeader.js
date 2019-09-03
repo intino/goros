@@ -3,6 +3,8 @@ import UiBlock from "alexandria-ui-elements/src/displays/components/Block";
 import UiImage from "alexandria-ui-elements/src/displays/components/Image";
 import UiUser from "alexandria-ui-elements/src/displays/components/User";
 import UiTemplate from "alexandria-ui-elements/src/displays/components/Template";
+import Notifier from "../notifiers/Notifier";
+import Requester from "../requesters/Requester";
 
 export default class AbstractHeader extends UiTemplate {
 

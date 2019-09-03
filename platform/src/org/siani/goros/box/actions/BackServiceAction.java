@@ -38,9 +38,7 @@ public abstract class BackServiceAction extends Action {
         Context _context = Context.getInstance();
         Long idThread = Thread.currentThread().getId();
 
-        //TODO: getRealIP
-        String realIp = "127.0.0.1";
-        _context.setApplication(idThread, realIp, ApplicationBackService.NAME, ApplicationInterface.USER);
+        _context.setApplication(idThread, context.get("realIp"), ApplicationBackService.NAME, ApplicationInterface.USER);
         URL url = null;
         try {
             url = new URL(context.get("requestUrl"));

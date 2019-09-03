@@ -17,7 +17,6 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
     protected Map<String, Soul> uiSouls = new java.util.HashMap<>();
     private java.util.List<io.intino.alexandria.ui.AlexandriaUiBox.SoulsClosed> soulsClosedListeners = new java.util.ArrayList<>();
 	private io.intino.alexandria.ui.services.AuthService authService;
-	private io.intino.alexandria.ui.services.EditorService editorService;
 
 	public AbstractBox(String[] args) {
 		this(new GorosConfiguration(args));
@@ -31,10 +30,9 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
 		this.authService = null;
-		this.editorService = null;
 		if(configuration().get("port") != null && !configuration().get("port").isEmpty())io.intino.alexandria.rest.AlexandriaSparkBuilder.setup(Integer.parseInt(configuration().get("port")), "www/");
 		io.intino.alexandria.rest.AlexandriaSparkBuilder.setUI(true);
-		io.intino.alexandria.rest.AlexandriaSparkBuilder.addParameters(this.authService, this.editorService);
+		io.intino.alexandria.rest.AlexandriaSparkBuilder.addParameters(this.authService);
 	}
 
 	public GorosConfiguration configuration() {
@@ -53,8 +51,8 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 		initJMXServices();
 		initDatalake();
 		initMessageHub();
-		initJMSServices();
-		initTasks();
+		initMessagingServices();
+		initSentinels();
 		initSlackBots();
 		initWorkflow();
 		return this;
@@ -92,12 +90,6 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 
 	protected abstract io.intino.alexandria.ui.services.AuthService authService(java.net.URL authServiceUrl);
 
-	protected abstract io.intino.alexandria.ui.services.EditorService editorService(java.net.URL editorServiceUrl);
-
-	public io.intino.alexandria.ui.services.EditorService editorService() {
-		return this.editorService;
-	}
-
 	private void initRESTServices() {
 		BackserviceService.setup(io.intino.alexandria.rest.AlexandriaSparkBuilder.instance(), (GorosBox) this).start();
 		Logger.info("REST service backservice: started!");
@@ -109,7 +101,7 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 		Logger.info("REST service fmsservice: started!");
 	}
 
-	private void initJMSServices() {
+	private void initMessagingServices() {
 
 	}
 
@@ -138,7 +130,7 @@ public abstract class AbstractBox extends io.intino.alexandria.ui.AlexandriaUiBo
 	private void initMessageHub() {
 	}
 
-	private void initTasks() {
+	private void initSentinels() {
 	}
 
 	private void initWorkflow() {

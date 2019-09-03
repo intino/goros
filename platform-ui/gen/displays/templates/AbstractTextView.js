@@ -2,6 +2,8 @@ import React from "react";
 import UiBlock from "alexandria-ui-elements/src/displays/components/Block";
 import UiTextEditable from "alexandria-ui-elements/src/displays/components/TextEditable";
 import DisplaysFieldView from "../../../src/displays/templates/FieldView";
+import Notifier from "../notifiers/Notifier";
+import Requester from "../requesters/Requester";
 
 export default class AbstractTextView extends DisplaysFieldView {
 

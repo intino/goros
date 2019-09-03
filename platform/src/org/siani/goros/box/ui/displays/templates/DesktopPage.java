@@ -50,7 +50,7 @@ public class DesktopPage extends AbstractDesktopPage<DesktopPageNotifier, GorosB
 
     private void add(String label, boolean visible) {
         View view = views.add();
-        //TODO: mario view.label.update(label);
+        view.label.value(label);
         view.visible(visible);
         if (visible) currentView = view;
     }

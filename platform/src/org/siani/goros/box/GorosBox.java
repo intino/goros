@@ -2,7 +2,6 @@ package org.siani.goros.box;
 
 import io.intino.alexandria.core.Box;
 import io.intino.alexandria.ui.services.AuthService;
-import io.intino.alexandria.ui.services.EditorService;
 import org.siani.goros.graph.BusinessUnit;
 
 import java.net.URL;
@@ -35,11 +34,6 @@ public class GorosBox extends AbstractBox {
 
 	@Override
 	protected AuthService authService(URL authServiceUrl) {
-		return null;
-	}
-
-	@Override
-	protected EditorService editorService(URL editorServiceUrl) {
 		return null;
 	}
 

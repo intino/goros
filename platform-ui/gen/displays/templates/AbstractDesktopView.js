@@ -1,6 +1,8 @@
 import React from "react";
 import UiBlock from "alexandria-ui-elements/src/displays/components/Block";
 import DisplaysNodeView from "../../../src/displays/templates/NodeView";
+import Notifier from "../notifiers/Notifier";
+import Requester from "../requesters/Requester";
 
 export default class AbstractDesktopView extends DisplaysNodeView {
 

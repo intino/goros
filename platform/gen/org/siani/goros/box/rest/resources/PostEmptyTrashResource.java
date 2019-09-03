@@ -41,6 +41,7 @@ public class PostEmptyTrashResource implements Resource {
 		context.put("domain", manager.domain());
 		context.put("baseUrl", manager.baseUrl());
 		context.put("requestUrl", manager.baseUrl() + manager.request().pathInfo());
+		context.put("realIp", manager.realIp());
 
 		return context;
 	}

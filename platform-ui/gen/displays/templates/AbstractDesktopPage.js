@@ -13,8 +13,10 @@ import UiSelectorTabs from "alexandria-ui-elements/src/displays/components/Selec
 import UiMultiple from "alexandria-ui-elements/src/displays/components/Multiple";
 import DisplaysHeader from "app-elements/src/displays/templates/Header";
 import DisplaysView from "app-elements/src/displays/templates/View";
-import DisplaysFooter from "app-elements/gen/displays/templates/Footer";
+import DisplaysFooter from "app-elements/src/displays/templates/Footer";
 import DisplaysNodePage from "../../../src/displays/templates/NodePage";
+import Notifier from "../notifiers/Notifier";
+import Requester from "../requesters/Requester";
 
 export default class AbstractDesktopPage extends DisplaysNodePage {
 

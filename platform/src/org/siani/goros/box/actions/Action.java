@@ -22,8 +22,7 @@ public abstract class Action {
     protected io.intino.alexandria.Resource resource() {
         InputStream stream = response.stream();
         if (stream == null) return null;
-        //TODO establecer el content-type correcto. El método extensionOf de resource da RuntimeException
-        io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(response.getFilename(), stream);
+        io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(response.getFilename(), response.getContentType(), stream);
         response.deleteTempFile();
         return resource;
     }

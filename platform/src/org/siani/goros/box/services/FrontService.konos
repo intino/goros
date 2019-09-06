@@ -2,11 +2,41 @@ dsl Konos
 
 Service frontservice as REST(host = "", port = "{port}")
 	title = "Front Service API"
-	basePath = "/front"
+	basePath = "/service"
 
 	//AuthenticatedWithToken
 
-	Resource("/showservices") showservices
-		Post(description = "Show the available services")
-			Parameter (in=query) request as Text
-			Response as File
+	Resource("/source/:source-name/") source
+		Post(description = "Executes an action and returns the result")
+			Parameter (in=query) action as Text
+			Parameter (in=path) source-name as Text
+			Parameter (in=query) mode as Text
+			Parameter (in=query) flatten as Text
+			Parameter (in=query) depth as Text
+			Parameter (in=query) from as Text
+			Parameter (in=query) filters as Text
+			Parameter (in=query) search-text as Text
+			Parameter (in=query) start-pos as Text
+			Parameter (in=query) count as Text
+			Response as Text
+
+	Resource("/mailbox/:address/") mailbox
+		Post(description = "Sends a message")
+			Parameter (in=path) address as Text
+			Parameter (in=query) signaling as Text
+			Parameter (in=form) message as File
+			Parameter (in=query) message-code as Text
+			Parameter (in=query) message-type as Text
+			Parameter (in=query) message-hash as Text
+			Response as Text
+
+	Resource("/business/:service-name/") business
+		Post(description = "Receives tasks from another business unit")
+			Parameter (in=path) service-name as Text
+			Parameter (in=query) source-unit as Text
+			Parameter (in=query) reply-mailbox as Text
+			Parameter (in=query) start-date as Text
+			Parameter (in=query) end-date as Text
+			Parameter (in=query) comments as Text
+			Parameter (in=query) urgent as Text
+			Response as Text

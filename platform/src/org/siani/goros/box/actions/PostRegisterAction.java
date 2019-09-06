@@ -13,12 +13,12 @@ public class PostRegisterAction extends MobileTypedAction {
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            RegisterRequest deserialized = serializer.read(RegisterRequest.class, request);
-            Response result = new Response(new ActionDoRegister().execute(request(parameters(String.valueOf(ActionCode.Register), deserialized)), response));
+            Response result = new Response(new ActionDoRegister().execute(request(parameters(String.valueOf(ActionCode.Register), request)), response));
             writeResultInResponse(result);
-        } catch (Exception ignored) {
+            return resource();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return resource();
     }
 }

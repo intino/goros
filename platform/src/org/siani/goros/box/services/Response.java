@@ -1,6 +1,6 @@
 package org.siani.goros.box.services;
 
-import io.intino.alexandria.core.Context;
+import io.intino.alexandria.Context;
 import io.intino.alexandria.logger.Logger;
 
 import java.io.*;
@@ -77,5 +77,9 @@ public class Response implements org.monet.http.Response {
 
     public String getFilename() {
         return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

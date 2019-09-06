@@ -1,12 +1,12 @@
 package org.siani.goros.box.actions;
 
-import org.monet.space.backservice.control.actions.ActionShowApi;
+import org.monet.space.setupservice.control.actions.ActionShowApi;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class PostShowApiAction extends BackServiceAction {
+public class PostShowApiAction extends SetupServiceAction {
     public String execute() {
         return executeServiceAction(new ActionShowApi());
     }

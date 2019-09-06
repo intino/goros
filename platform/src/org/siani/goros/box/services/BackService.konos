@@ -2,7 +2,7 @@ dsl Konos
 
 Service backservice as REST(host = "", port = "{port}")
 	title = "Backservice API"
-	basePath = "/back"
+	basePath = "/backservice"
 
 	//AuthenticatedWithToken
 
@@ -478,7 +478,7 @@ Service backservice as REST(host = "", port = "{port}")
 			Parameter(in=query) to as Text
 			Response as Text
 
-	Resource("/api") showApi
+	Resource("/api") api
 		Post(description = "Shows the api")
 			Response as Text
 

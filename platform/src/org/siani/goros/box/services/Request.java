@@ -1,9 +1,11 @@
 package org.siani.goros.box.services;
 
-import io.intino.alexandria.core.Context;
+import io.intino.alexandria.Context;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,17 +30,23 @@ public class Request implements org.monet.http.Request {
 
     @Override
     public String getRequestURL() {
-        return null;
+        return context.get("requestUrl");
     }
 
     @Override
     public String getContextPath() {
-        return null;
+        URL url = null;
+        try {
+            url = new URL(context.get("requestUrl"));
+        } catch (MalformedURLException ignore) {
+            return null;
+        }
+        return url.getPath();
     }
 
     @Override
-    public String getHeader(String s) {
-        return null;
+    public String getHeader(String param) {
+        return context.containsKey(param) ? context.get(param) : null;
     }
 
     @Override
@@ -47,8 +55,8 @@ public class Request implements org.monet.http.Request {
     }
 
     @Override
-    public String getParameter(String s) {
-        return null;
+    public String getParameter(String name) {
+        return parameters.containsKey(name) ? parameters.get(name).toString() : null;
     }
 
     @Override

@@ -1,0 +1,46 @@
+dsl Konos
+
+Service setupservice as REST(host = "", port = "{port}")
+	title = "Setup Service API"
+	basePath = "/setupservice"
+
+	//AuthenticatedWithToken
+
+	Resource("/showapi") showApi
+		Post(description = "Shows the api")
+			Response as Text
+
+	Resource("/getmajorversion") getMajorVersion
+		Post(description = "Gets the major version")
+			Response as Text
+
+	Resource("/getstatus") getStatus
+		Post(description = "Gets the status of the service")
+			Response as Text
+
+	Resource("/run") run
+		Post(description = "Runs the kernel")
+			Response as Text
+
+	Resource("/putlabel") putLabel
+		Post(description = "Sets the label of the business unit")
+			Parameter (in=query) label as Text
+			Response as Text
+
+	Resource("/putlogo") putLogo
+		Post(description = "Sets the logo of the business unit")
+			Parameter (in=form) logo as File
+			Response as Text
+
+	Resource("/stop") stop
+		Post(description = "Stops the kernel")
+			Response as Text
+
+	Resource("/updatemodel") updateModel
+		Post(description = "Updates the model")
+			Parameter (in=form) model as File
+			Response as Text
+
+	Resource("/executeconstructor") executeConstructor
+		Post(description = "Executes the constructor")
+			Response as Text

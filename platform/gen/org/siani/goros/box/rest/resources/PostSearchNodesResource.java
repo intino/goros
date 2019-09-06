@@ -39,12 +39,8 @@ public class PostSearchNodesResource implements Resource {
 		manager.write(object);
 	}
 
-	private io.intino.alexandria.core.Context context() {
-		io.intino.alexandria.core.Context context = new io.intino.alexandria.core.Context();
-		context.put("domain", manager.domain());
-		context.put("baseUrl", manager.baseUrl());
-		context.put("requestUrl", manager.baseUrl() + manager.request().pathInfo());
-		context.put("realIp", manager.realIp());
+	private io.intino.alexandria.rest.spark.SparkContext context() {
+		io.intino.alexandria.rest.spark.SparkContext context = new io.intino.alexandria.rest.spark.SparkContext();
 
 		return context;
 	}

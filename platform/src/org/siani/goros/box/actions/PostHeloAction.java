@@ -13,12 +13,11 @@ public class PostHeloAction extends MobileTypedAction {
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            HeloRequest deserialized = serializer.read(HeloRequest.class, request);
-            Response result = new Response(new ActionDoHelo().execute(request(parameters(String.valueOf(ActionCode.Helo), deserialized)), response));
+            Response result = new Response(new ActionDoHelo().execute(request(parameters(String.valueOf(ActionCode.Helo), request)), response));
             writeResultInResponse(result);
-        } catch (Exception ignored) {
+            return resource();
+        } catch (Exception e) {
+            return null;
         }
-        return resource();
     }
 }

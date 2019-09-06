@@ -39,7 +39,7 @@ export default class AbstractDesktopPage extends DisplaysNodePage {
 						</UiDivider>
 						<UiSelectorListBox context={this._context.bind(this)} owner={this._owner.bind(this)} id="Dx" multipleSelection={false}>
 						</UiSelectorListBox>
-						<DisplaysDrawerOption context={this._context.bind(this)} owner={this._owner.bind(this)} id="qx2">
+						<DisplaysDrawerOption context={this._context.bind(this)} owner={this._owner.bind(this)} id="Ev">
 						</DisplaysDrawerOption>
 					</UiBlockDrawer>
 					<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="G7" layout="vertical" width="100.0%" height="100.0%">

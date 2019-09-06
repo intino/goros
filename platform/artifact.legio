@@ -7,7 +7,7 @@ Artifact(groupId = "org.siani", version = "1.0.0") goros as Platform
 	Imports
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 		Compile("org.siani.monet", "space", "1.0")
-			Exclude ("org.siani.monet","servlet-api")
+//			Exclude ("org.siani.monet","servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
  		Compile("io.intino.alexandria", "rest", "2.1.0")
 		Compile("io.intino.alexandria", "core-framework", "2.0.1")

@@ -23,8 +23,8 @@ Template(layout=Vertical Flexible) desktopPage as Decorated ExtensionOf(nodePage
 				OpenDrawer(drawer=drawer, title="open menu") as MaterialIconButton(icon="ChevronRight",format=airMenuRight)
 				CloseDrawer(drawer=drawer, title = "minimize") as MaterialIconButton(icon="ChevronLeft",format=airMenuRight)
 			Divider
-			Selector links as ListBox
-				Block(layout=Horizontal,spacing=DP16) setupOption as Option > MaterialIcon(icon="Build"); Text(value="setup")
+			Selector linksSelector as ListBox
+			Stamp(template=drawerOption)
 		Block as Relative(width=100%)
 			Header(color="white", format=air, elevation=0) as Absolute(height=65px)
 				Stamp(template=header)
@@ -43,3 +43,7 @@ Template documentPage as Decorated ExtensionOf(nodePage)
 Template formPage as Decorated ExtensionOf(nodePage)
 	Stamp(template=fieldView) as Multiple
 Template taskPage as Decorated ExtensionOf(page)
+
+Template(layout=Horizontal,spacing=DP16) drawerOption as Option
+	MaterialIcon(icon = "") icon
+	Text(value="") label

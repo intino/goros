@@ -19,7 +19,7 @@
     "/adddatastorecubefact": {
       "post": {
         "description": "Adds a fact to a datastore cube",
-        "operationId": "d6fb5ac9-74f8-4e65-bad5-861c5f29cb6c",
+        "operationId": "af331bec-21e7-4130-a860-51c7273421a5",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -63,7 +63,7 @@
     "/adddatastorecubefacts": {
       "post": {
         "description": "Adds facts to a datastore cube",
-        "operationId": "0b7a91f3-6f29-450d-8293-20390eec3050",
+        "operationId": "88fc969b-68c1-44a8-ac32-76349024297f",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -107,7 +107,7 @@
     "/adddatastoredimensioncomponent": {
       "post": {
         "description": "Adds a component to a datastore dimension",
-        "operationId": "e051d0a0-e7de-4649-b92b-77d1416c271d",
+        "operationId": "6dbf450d-f3a6-4723-8245-43662133bcce",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -151,7 +151,7 @@
     "/addnodeflag": {
       "post": {
         "description": "Adds a flag to a node",
-        "operationId": "8dee4ab6-af98-4015-ab4d-c25c7b73dc82",
+        "operationId": "5917bbaf-5587-4314-a0cf-4142d00888d4",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -195,7 +195,7 @@
     "/addnodenote": {
       "post": {
         "description": "Adds a note to a node",
-        "operationId": "a84d9a20-69c0-4ec0-8bc2-81eaeb1bc528",
+        "operationId": "12d186bb-16f2-4926-8664-ee638c2cfc19",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -239,7 +239,7 @@
     "/addsourceterm": {
       "post": {
         "description": "Adds a term to a source",
-        "operationId": "aec519e7-1b68-42e3-a2ab-d67289c7b54a",
+        "operationId": "2975c33b-2fb3-40cb-a888-60f46bc6338d",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -304,7 +304,7 @@
     "/addtaskflact": {
       "post": {
         "description": "Adds a fact to a task",
-        "operationId": "775cef60-8b05-4289-b880-b7211da43287",
+        "operationId": "312c7f72-4420-4709-adc4-4baf1144a475",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -362,7 +362,7 @@
     "/addtaskflag": {
       "post": {
         "description": "Adds a flag to a task",
-        "operationId": "6d3b1548-0f5f-44ac-9622-deed7b527176",
+        "operationId": "ffc5610f-c773-4942-b083-071d5a367733",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -406,7 +406,7 @@
     "/addtaskshortcut": {
       "post": {
         "description": "Adds a shortcut to a task",
-        "operationId": "269489b5-6833-4f32-8ab8-bd40fb83829c",
+        "operationId": "a33b7b43-c9ba-42c7-acf1-90f9336bc9e1",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -450,7 +450,7 @@
     "/consolidatenode": {
       "post": {
         "description": "Consolidates a node",
-        "operationId": "75126046-c57c-4a0f-ad5f-41561a38643a",
+        "operationId": "81ab6b59-56f6-4877-8894-6d16a5be8d90",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -480,7 +480,7 @@
     "/createaccount": {
       "post": {
         "description": "Creates an account",
-        "operationId": "9eeb8c11-6468-4888-b06d-adc559a05e80",
+        "operationId": "5d937306-d6c6-4f84-9a17-38bd0c9ee606",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -531,7 +531,7 @@
     "/createnode": {
       "post": {
         "description": "Creates a node",
-        "operationId": "384f650d-a509-410e-b99d-8257ed0e845e",
+        "operationId": "35ea1ed1-2334-4ba1-8397-ead47b685444",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -568,7 +568,7 @@
     "/createtask": {
       "post": {
         "description": "Creates a task",
-        "operationId": "0ca0ba15-d199-4996-a218-4b9b9d846f54",
+        "operationId": "5cd18ad2-bc44-4964-8b5d-9bd203811a49",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -598,7 +598,7 @@
     "/deletenodeflag": {
       "post": {
         "description": "Deletes a flag for a node",
-        "operationId": "3bd04c44-30f9-4340-aa29-454a4f5fdcce",
+        "operationId": "418764f4-df2d-48c2-af76-34f124d5a4e9",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -635,7 +635,7 @@
     "/deletenodenote": {
       "post": {
         "description": "Deletes a note for a node",
-        "operationId": "72196a6e-a0c6-429e-a2c6-19c432570487",
+        "operationId": "ff877cef-a7fd-45ac-8690-5c1ed3a2e38e",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -672,7 +672,7 @@
     "/createtaskflag": {
       "post": {
         "description": "Deletes a flag for a task",
-        "operationId": "07dcee47-10c8-42fa-a3ec-7a2922ca0d95",
+        "operationId": "a9216fcb-b11c-4efe-a58e-0824b31f0899",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -709,7 +709,7 @@
     "/deletetaskshortcut": {
       "post": {
         "description": "Deletes a shortcut for a task",
-        "operationId": "8ce61bc2-7388-4954-8b28-f1c82bd4b2fc",
+        "operationId": "36866003-cef2-4923-85ae-4f242e497b87",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -746,7 +746,7 @@
     "/downloaddistribution": {
       "post": {
         "description": "Downloads the distribution",
-        "operationId": "6860f862-6587-458f-90af-447919fdec2c",
+        "operationId": "9bc17572-4623-4589-ac92-b211cb959b1e",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -767,7 +767,7 @@
     "/emptytrash": {
       "post": {
         "description": "Empties the trash",
-        "operationId": "d2f2d0c9-55ef-4d6d-882d-26fe846b6575",
+        "operationId": "0a077de3-bf49-4a9d-8f86-9e18741ff83d",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -788,7 +788,7 @@
     "/executeexporter": {
       "post": {
         "description": "Executes an exporter",
-        "operationId": "13a100b2-656a-4edc-bfb0-d329c4fe053c",
+        "operationId": "6b55806b-8312-4a8f-ba6e-50632963f53b",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -825,7 +825,7 @@
     "/executenodecommand": {
       "post": {
         "description": "Executes a node command",
-        "operationId": "7a7ef8cf-d501-4c25-b8ad-ae0706cb0a61",
+        "operationId": "2aed7b1a-fa86-4934-8337-4d75d71a28c3",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -862,7 +862,7 @@
     "/existsnode": {
       "post": {
         "description": "Checks if a node exists",
-        "operationId": "3b223f2b-a076-4ca5-afce-65394083053a",
+        "operationId": "80d1d36f-a00b-4b97-a27e-942b77894090",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -892,7 +892,7 @@
     "/exportnode": {
       "post": {
         "description": "Exports a node",
-        "operationId": "84031711-4ff4-45a0-8e0a-762089c6e9e7",
+        "operationId": "3b686f42-c31d-4f8d-996c-8451d52bed9d",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -922,7 +922,7 @@
     "/exportnodes": {
       "post": {
         "description": "Exports a set of nodes",
-        "operationId": "4b83c30a-b068-4e73-914c-84ae25cf248e",
+        "operationId": "e09c224f-0a67-4f2a-a537-7aaff4c1789a",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -952,7 +952,7 @@
     "/getnodeancestors": {
       "post": {
         "description": "Gets the ancestors for a node",
-        "operationId": "6e032cc1-4457-4d86-ab4f-16107fc37669",
+        "operationId": "7c42ddc6-50fa-4b2f-9511-9eef33485528",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -982,7 +982,7 @@
     "/getnodedocument": {
       "post": {
         "description": "Gets a document for node",
-        "operationId": "74a12c26-c4b3-4fff-83d0-f8240cc1775d",
+        "operationId": "f7c28293-b02d-460d-87d2-0fb4b31b94b7",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1012,7 +1012,7 @@
     "/getnodedocumentcontenttype": {
       "post": {
         "description": "Gets the content type for a node document",
-        "operationId": "b86efcfb-f6eb-46b9-a9cc-544be0804bd8",
+        "operationId": "ee20bdc7-6673-484f-b3f3-7d2c04150f83",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1042,7 +1042,7 @@
     "/getnodefile": {
       "post": {
         "description": "Gets a file for a node",
-        "operationId": "0c2f032b-3e2b-47d7-b352-bff7860cd357",
+        "operationId": "e8d7f32e-8a97-478e-b1c4-70266f070400",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1079,7 +1079,7 @@
     "/getnodeflags": {
       "post": {
         "description": "Gets the flags for a node",
-        "operationId": "5f385cef-ce06-49af-95de-94580bbf213c",
+        "operationId": "cc28471f-1b18-46cf-800a-916b12999ba5",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1109,7 +1109,7 @@
     "/getnodelocation": {
       "post": {
         "description": "Gets the node location",
-        "operationId": "348b99f0-c81e-4f0f-9418-00c222d74420",
+        "operationId": "92730b97-1a38-491b-9711-bfad3aefa474",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1139,7 +1139,7 @@
     "/getnodenotes": {
       "post": {
         "description": "Gets the notes for a node",
-        "operationId": "a604aa58-6601-4164-a171-df9b1ee4cd37",
+        "operationId": "df093767-64eb-4403-acd7-8c0673ba3c4b",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1169,7 +1169,7 @@
     "/getnodereference": {
       "post": {
         "description": "Gets a reference for a node",
-        "operationId": "c4e6549c-1f30-4725-9f10-9edf6d69c743",
+        "operationId": "80b3b24c-9335-4516-9757-c55772a0f7c5",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1206,7 +1206,7 @@
     "/getnodereferences": {
       "post": {
         "description": "Gets a set of filtered references for a node",
-        "operationId": "651f9bed-c8a2-4d6d-8abe-dc03a14ae223",
+        "operationId": "df119fb2-93e4-4f5c-b63d-b16d7e1abbeb",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1271,7 +1271,7 @@
     "/getnodereferencescount": {
       "post": {
         "description": "Gets the count of filtered references for a node",
-        "operationId": "c103445d-2b3c-41ef-a5de-e2d9a153daf5",
+        "operationId": "f803c9ec-12e0-4951-b974-0faff35c210a",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1315,7 +1315,7 @@
     "/getnodeschema": {
       "post": {
         "description": "Gets the schema for a node",
-        "operationId": "3a57b7d9-feba-44b2-b057-b073978980cf",
+        "operationId": "c0c763e6-2d33-4630-97c7-d6097a6f76af",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1345,7 +1345,7 @@
     "/getnodetasks": {
       "post": {
         "description": "Gets the tasks for a node",
-        "operationId": "e2d0ac88-dcf0-42dc-95da-03a905f5cbd9",
+        "operationId": "7ccc7174-299a-4863-bd41-ae4dbc4d4be9",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1375,7 +1375,7 @@
     "/getsourceparentterm": {
       "post": {
         "description": "Gets the parent term for a term of a source",
-        "operationId": "68f30d05-c360-4477-9cb2-29a2a603c60d",
+        "operationId": "e9521533-7296-4a19-838f-b4c36cc3de46",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1412,7 +1412,7 @@
     "/getsourceterms": {
       "post": {
         "description": "Gets the terms for a parent term",
-        "operationId": "4124d496-0a0d-415a-a969-65c67d0dec8c",
+        "operationId": "b6918033-ab4a-4edf-9f31-d6adf3f24538",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1449,7 +1449,7 @@
     "/gettaskfacts": {
       "post": {
         "description": "Gets the facts for a task",
-        "operationId": "d95128fd-fb68-48d3-a29d-a6ee1258c6cc",
+        "operationId": "19526b6a-30ab-4264-a1bf-673eec064cbf",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1479,7 +1479,7 @@
     "/gettaskflags": {
       "post": {
         "description": "Gets the flags for a task",
-        "operationId": "99f39a2a-edbf-4136-944f-50d418765478",
+        "operationId": "53bb40eb-d7a7-4519-ab43-c2d75a06eff4",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1509,7 +1509,7 @@
     "/gettaskprocess": {
       "post": {
         "description": "Gets the process for a task",
-        "operationId": "79fcd24a-443f-4c2e-8b17-afe4e7b0fd2b",
+        "operationId": "3491acf7-265b-46d1-814d-7f4cd129a6df",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1539,7 +1539,7 @@
     "/gettasks": {
       "post": {
         "description": "Gets a set of filtered tasks",
-        "operationId": "2e47459d-2d45-418a-b8b5-b9aa4341f135",
+        "operationId": "f5fefd82-95fc-4b1e-8db8-23030e6f7dc0",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1604,7 +1604,7 @@
     "/gettaskshortcuts": {
       "post": {
         "description": "Gets the shortcuts for a task",
-        "operationId": "756bbe51-a5fa-4989-9aee-3e1e90cff5b8",
+        "operationId": "f059a000-e10f-40f4-9bbf-26e811bb1ab4",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1634,7 +1634,7 @@
     "/getuserlinkedtonode": {
       "post": {
         "description": "Gets the user linked to a node",
-        "operationId": "8ef39858-9b3f-43b2-b5ca-72b5f8eddea6",
+        "operationId": "1dc8848e-1b5a-44b2-8675-d231fc8de1e3",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1664,7 +1664,7 @@
     "/getusernode": {
       "post": {
         "description": "Gets the environment node for a user",
-        "operationId": "68a9a99c-cb62-4c86-a2b8-f9925a48bae4",
+        "operationId": "edc4ca26-f543-4c07-9678-7c17dfe8f1f0",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1701,7 +1701,7 @@
     "/getusertasks": {
       "post": {
         "description": "Gets the tasks for a user",
-        "operationId": "b5515eac-2f76-4738-b8d0-38f2e64080f7",
+        "operationId": "89621c37-39fb-4a4b-8613-41838fce2270",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1731,7 +1731,7 @@
     "/gotoplaceintask": {
       "post": {
         "description": "Goes to a place in a task",
-        "operationId": "c652d30f-8c95-4598-83af-08be68471367",
+        "operationId": "c78fc5a7-114b-4c2e-81a6-f951a45dc195",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1775,7 +1775,7 @@
     "/haspermissions": {
       "post": {
         "description": "Checks if user has permissions",
-        "operationId": "a0eb042b-1470-4a3a-b64e-ae488a72b881",
+        "operationId": "c606b765-92bc-441b-a2ee-1eb0d1e3bbae",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1805,7 +1805,7 @@
     "/importnode": {
       "post": {
         "description": "Imports a node",
-        "operationId": "84546f5f-022d-4ba8-9622-09426b5fc7b4",
+        "operationId": "11ab1c4b-3915-4487-9c21-05833cf604d3",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1849,7 +1849,7 @@
     "/loadsource": {
       "post": {
         "description": "Loads a source",
-        "operationId": "432d48ef-4b45-4804-a617-e9267dec4235",
+        "operationId": "35f556ad-62d6-4d24-a753-7092072ef1de",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1879,7 +1879,7 @@
     "/loaduser": {
       "post": {
         "description": "Loads a user",
-        "operationId": "023a665c-724d-45e7-954d-ba82028f4e74",
+        "operationId": "1b149d28-4afd-46e9-bae5-47bb4a699cf4",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1909,7 +1909,7 @@
     "/locatenode": {
       "post": {
         "description": "Locates a node",
-        "operationId": "59d03a0a-495d-493d-8011-2b93a4016566",
+        "operationId": "9fe9249d-9147-499d-91d3-83df4946ebb8",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1946,7 +1946,7 @@
     "/locatesource": {
       "post": {
         "description": "Locates a source",
-        "operationId": "c14d42e2-8a23-4288-86a6-bd0f101c816b",
+        "operationId": "280452ee-741b-4294-a303-b0eaa04e22f9",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1983,7 +1983,7 @@
     "/makenodedeleteable": {
       "post": {
         "description": "Makes a node deletable",
-        "operationId": "b1d795d0-ff55-405b-914a-1e4789b66ba9",
+        "operationId": "66c65bbc-9648-4d95-b42f-423d7f918e35",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2013,7 +2013,7 @@
     "/makenodeeditable": {
       "post": {
         "description": "Makes a node editable",
-        "operationId": "0a1587ea-3b30-4192-bf48-375545b04571",
+        "operationId": "bfe6da70-8478-434d-9c66-5a3501d1387b",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2043,7 +2043,7 @@
     "/makenodeprivate": {
       "post": {
         "description": "Makes a node private",
-        "operationId": "6324a849-1578-41e8-af1a-678ca630352a",
+        "operationId": "1b098172-de72-4115-ab60-380964dde90b",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2073,7 +2073,7 @@
     "/makenodepublic": {
       "post": {
         "description": "Makes a node public",
-        "operationId": "5186eccf-b7be-464b-87b1-783bb89378a5",
+        "operationId": "a492e0d4-2bce-4ca1-ace7-ce61cb85650d",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2103,7 +2103,7 @@
     "/makenodeundeleteable": {
       "post": {
         "description": "Makes a node undeletable",
-        "operationId": "bc7a08d9-44a3-4a84-aa63-ad5e9ae0ddc1",
+        "operationId": "5a5da258-19cb-4fad-bb34-654b17734307",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2133,7 +2133,7 @@
     "/makenodeuneditable": {
       "post": {
         "description": "Makes a node uneditable",
-        "operationId": "00c6b073-764f-4aba-b7ef-2399caada5ca",
+        "operationId": "d303bf46-2d49-4bdb-8a1b-2672ef8823d7",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2163,7 +2163,7 @@
     "/opendatastore": {
       "post": {
         "description": "Loads a datastore",
-        "operationId": "853182c0-e308-4b44-95ed-dd2f1fea1cc5",
+        "operationId": "42e2206c-9730-4e14-aa5c-783a0c5e5a9e",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2193,7 +2193,7 @@
     "/opennode": {
       "post": {
         "description": "Loads a node",
-        "operationId": "f28016d4-7738-4ca1-93bd-09dc078f1ff1",
+        "operationId": "342c6b47-493f-41ea-9558-4612f03132e8",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2230,7 +2230,7 @@
     "/opentask": {
       "post": {
         "description": "Loads a task",
-        "operationId": "9301d129-6221-487b-aa67-084ccb058d08",
+        "operationId": "bb081852-5063-4f8b-9bb4-09e1b5bfb614",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2260,7 +2260,7 @@
     "/recovernode": {
       "post": {
         "description": "Recovers a node",
-        "operationId": "31f6b2f6-db7e-47d0-be9c-f2af9e6751ad",
+        "operationId": "da464a59-6dab-4082-a9bb-7d21f6820ba5",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2290,7 +2290,7 @@
     "/removenode": {
       "post": {
         "description": "Removes a node",
-        "operationId": "b91562cb-47ce-4ac0-8cb1-0ddbc59f4948",
+        "operationId": "0ee3a0f6-1c05-4eac-83e7-2da3f08d6206",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2320,7 +2320,7 @@
     "/removetask": {
       "post": {
         "description": "Removes a task",
-        "operationId": "e3194a3c-56e6-4d66-b993-fa2397d5f1f6",
+        "operationId": "2804f973-7af1-4134-acc7-c9bcabb67a85",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2350,7 +2350,7 @@
     "/resetnodeform": {
       "post": {
         "description": "Resets a node form",
-        "operationId": "5a499992-1149-4237-bef6-936f78be3790",
+        "operationId": "c9a1585d-c7c2-4161-862b-24402570df0b",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2380,7 +2380,7 @@
     "/resumetask": {
       "post": {
         "description": "Resumes a task",
-        "operationId": "8fdb4cd0-a108-4867-8e77-cb817b3bd2dd",
+        "operationId": "4eca39c3-3031-45ab-818e-a6b3d6baa203",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2410,7 +2410,7 @@
     "/runtask": {
       "post": {
         "description": "Runs a task",
-        "operationId": "0abc63ac-1a6e-4237-b2d2-decac6e66f32",
+        "operationId": "5f1c5cd8-0a68-498f-8620-7bf9140ee205",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2447,7 +2447,7 @@
     "/savenode": {
       "post": {
         "description": "Saves a node",
-        "operationId": "81bae118-28a4-4dbe-bb92-36162ad37e5c",
+        "operationId": "c9c25678-fe32-44a5-bbc2-b3cbb8d73bb5",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2484,7 +2484,7 @@
     "/savenodedocument": {
       "post": {
         "description": "Saves a node",
-        "operationId": "0fe93526-88ab-4ae8-89d9-87947056f6e1",
+        "operationId": "69607e26-7711-4326-a254-af5a941b24d3",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2528,7 +2528,7 @@
     "/savenodefile": {
       "post": {
         "description": "Saves a file in a node",
-        "operationId": "c6fa7281-a3f7-4bdd-88ff-a395ad293432",
+        "operationId": "d1b880c2-e957-4628-8235-16264368fcad",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2565,7 +2565,7 @@
     "/savenodeparent": {
       "post": {
         "description": "Saves the node parent",
-        "operationId": "83802d1a-9688-48ea-89e7-9e7fb0dc2ee4",
+        "operationId": "80e473ca-9755-4632-8c8b-45002c7d21b0",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2602,7 +2602,7 @@
     "/savenodepartnercontext": {
       "post": {
         "description": "Saves the partner context in a node",
-        "operationId": "c47d9849-a4e2-4463-9874-33f4d8efe7eb",
+        "operationId": "825fa1f9-3834-4736-8c91-cf55a5644381",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2632,7 +2632,7 @@
     "/savenodepicture": {
       "post": {
         "description": "Saves a picture in a node",
-        "operationId": "9755a6b9-d999-4e57-b329-9dd585d30892",
+        "operationId": "55d4b271-6013-4f0e-8d12-0af38dc79772",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2669,7 +2669,7 @@
     "/savenodereference": {
       "post": {
         "description": "Saves a node reference",
-        "operationId": "5c3f6305-0058-4ae0-9f3c-e9638c48ffed",
+        "operationId": "87cdbc90-8caf-4d72-ab45-9590629bfe73",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2713,7 +2713,7 @@
     "/savenodesattribute": {
       "post": {
         "description": "Saves nodes attribute",
-        "operationId": "7b09b06a-f9d3-415a-ba5a-14919e1ce891",
+        "operationId": "4c70bdaf-a28d-4d2d-bea6-5b4d68859231",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2750,7 +2750,7 @@
     "/savetask": {
       "post": {
         "description": "Saves a task",
-        "operationId": "d2dee7da-6ef6-445d-b67a-c593aa3ea4ac",
+        "operationId": "b728aa83-316b-4a32-9fc9-4a9c8c44b7f6",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2787,7 +2787,7 @@
     "/saveuser": {
       "post": {
         "description": "Saves a user",
-        "operationId": "3ff82388-8749-422c-a672-4a1b8e0deade",
+        "operationId": "ece3186f-ede3-4523-bfdb-ee3a25f7f179",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2824,7 +2824,7 @@
     "/searchevent": {
       "post": {
         "description": "Searches an event",
-        "operationId": "554f15bb-38d7-44ae-833a-5d400db55956",
+        "operationId": "72be424d-bdd5-43ee-9b00-4bd40e369f40",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2868,7 +2868,7 @@
     "/searchnodes": {
       "post": {
         "description": "Searches nodes",
-        "operationId": "6da37bf8-c1ce-4c97-b753-05f63f2ff8ad",
+        "operationId": "95d9db2b-6a53-4bbd-8045-01834a071ab4",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2912,7 +2912,7 @@
     "/api": {
       "post": {
         "description": "Shows the api",
-        "operationId": "e852427a-d99d-4e1e-8496-d4d9a68480ad",
+        "operationId": "30e338bf-3d00-47f3-ae9b-fe7044c3bbb7",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2933,7 +2933,7 @@
     "/subscribe": {
       "post": {
         "description": "Subscribes to an event type",
-        "operationId": "0b48ef35-be48-4360-b9c6-75ecda671899",
+        "operationId": "6cb03ee4-dc48-4f08-9eb2-7aefb487f215",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2970,7 +2970,7 @@
     "/unlocktask": {
       "post": {
         "description": "Unlocks a task",
-        "operationId": "51e44fd0-fb61-457f-a4fd-dc1afb3169af",
+        "operationId": "0d284a87-9f7a-4cd9-941d-cbc10445f4f2",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

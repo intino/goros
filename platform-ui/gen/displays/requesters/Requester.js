@@ -4,4 +4,8 @@ export default class Requester {
 		this.pushService = Application.services.pushService;
 		this.fileService = Application.services.fileService;
 	};
+
+    available = (unit) => {
+        return this.pushService.existsConnection(unit);
+    };
 }

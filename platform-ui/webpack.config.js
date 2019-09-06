@@ -32,7 +32,7 @@ module.exports = {
         'task' : './gen/apps/Task.js'
     },
     output: {
-        path: "C:\Desarrollo\goros\out\production/platform-ui/www/platform-ui",
+        path: "/Users/mcaballero/Proyectos/goros/out/production/platform-ui/www/platform-ui",
         publicPath: '/platform-ui/',
         filename: "[name].js"
     },

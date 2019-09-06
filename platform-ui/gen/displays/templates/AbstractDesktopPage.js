@@ -6,11 +6,10 @@ import UiOpenDrawer from "alexandria-ui-elements/src/displays/components/OpenDra
 import UiCloseDrawer from "alexandria-ui-elements/src/displays/components/CloseDrawer";
 import UiDivider from "alexandria-ui-elements/src/displays/components/Divider";
 import UiSelectorListBox from "alexandria-ui-elements/src/displays/components/SelectorListBox";
-import UiMaterialIcon from "alexandria-ui-elements/src/displays/components/MaterialIcon";
-import UiText from "alexandria-ui-elements/src/displays/components/Text";
 import UiHeader from "alexandria-ui-elements/src/displays/components/Header";
 import UiSelectorTabs from "alexandria-ui-elements/src/displays/components/SelectorTabs";
 import UiMultiple from "alexandria-ui-elements/src/displays/components/Multiple";
+import DisplaysDrawerOption from "app-elements/src/displays/templates/DrawerOption";
 import DisplaysHeader from "app-elements/src/displays/templates/Header";
 import DisplaysView from "app-elements/src/displays/templates/View";
 import DisplaysFooter from "app-elements/src/displays/templates/Footer";
@@ -39,27 +38,23 @@ export default class AbstractDesktopPage extends DisplaysNodePage {
 						<UiDivider context={this._context.bind(this)} owner={this._owner.bind(this)} id="BX">
 						</UiDivider>
 						<UiSelectorListBox context={this._context.bind(this)} owner={this._owner.bind(this)} id="Dx" multipleSelection={false}>
-							<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="Ev" name="setupOption" layout="horizontal" spacing="16">
-								<UiMaterialIcon context={this._context.bind(this)} owner={this._owner.bind(this)} id="G7" icon="Build">
-								</UiMaterialIcon>
-								<UiText context={this._context.bind(this)} owner={this._owner.bind(this)} id="J2" mode="normal" value="setup">
-								</UiText>
-							</UiBlock>
 						</UiSelectorListBox>
+						<DisplaysDrawerOption context={this._context.bind(this)} owner={this._owner.bind(this)} id="qx2">
+						</DisplaysDrawerOption>
 					</UiBlockDrawer>
-					<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="KR" layout="vertical" width="100.0%" height="100.0%">
-						<UiHeader context={this._context.bind(this)} owner={this._owner.bind(this)} id="Lw" format="air" color="white" position="relative" width="-1px" height="65px" elevation={0}>
-							<DisplaysHeader context={this._context.bind(this)} owner={this._owner.bind(this)} id="MA">
+					<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="G7" layout="vertical" width="100.0%" height="100.0%">
+						<UiHeader context={this._context.bind(this)} owner={this._owner.bind(this)} id="J2" format="air" color="white" position="relative" width="-1px" height="65px" elevation={0}>
+							<DisplaysHeader context={this._context.bind(this)} owner={this._owner.bind(this)} id="KR">
 							</DisplaysHeader>
 						</UiHeader>
-						<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="N6" layout="vertical flexible">
-							<UiSelectorTabs context={this._context.bind(this)} owner={this._owner.bind(this)} id="Op" multipleSelection={false}>
+						<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="Lw" layout="vertical flexible">
+							<UiSelectorTabs context={this._context.bind(this)} owner={this._owner.bind(this)} id="MA" multipleSelection={false}>
 							</UiSelectorTabs>
-							<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="Pw" multiple={{instances:"views",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
+							<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="N6" multiple={{instances:"views",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
 							</UiMultiple>
 						</UiBlock>
-						<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="Ql" layout="vertical">
-							<DisplaysFooter context={this._context.bind(this)} owner={this._owner.bind(this)} id="Rq">
+						<UiBlock context={this._context.bind(this)} owner={this._owner.bind(this)} id="Op" layout="vertical">
+							<DisplaysFooter context={this._context.bind(this)} owner={this._owner.bind(this)} id="Pw">
 							</DisplaysFooter>
 						</UiBlock>
 					</UiBlock>

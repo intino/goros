@@ -17,7 +17,7 @@ export default class AbstractFormPage extends DisplaysNodePage {
 	    const display = !this.state.visible ? {display:'none'} : undefined;
 		return(
 			<UiBlock layout="vertical" style={{...this.props.style,...display}}>
-				<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="_1R" multiple={{instances:"formPage0",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
+				<UiMultiple context={this._context.bind(this)} owner={this._owner.bind(this)} id="YK" multiple={{instances:"formPage0",arrangement:"Vertical",noItemsMessage:"",spacing:0}}>
 				</UiMultiple>
 			</UiBlock>
 		);

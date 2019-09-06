@@ -2,7 +2,7 @@ dsl Legio
 
 Artifact(groupId = "org.siani", version = "1.0.0") platform-ui
 	WebImports
-		WebArtifact("io.intino.alexandria", "ui-framework-elements", "2.0.0") alexandria-ui-elements
+		WebArtifact("io.intino.alexandria", "ui-framework-elements", "2.1.0") alexandria-ui-elements
 
 Repository("intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")

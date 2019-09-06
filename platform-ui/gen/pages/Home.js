@@ -7,6 +7,7 @@ import Page from "alexandria-ui-elements/src/displays/Page";
 import ConnectionChecker from "alexandria-ui-elements/src/displays/ConnectionChecker";
 import DesktopPage from "../../src/displays/templates/DesktopPage";
 
+
 let theme = Theme.create();
 const styles = theme => ({});
 

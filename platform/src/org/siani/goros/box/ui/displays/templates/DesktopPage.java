@@ -1,9 +1,11 @@
 package org.siani.goros.box.ui.displays.templates;
 
+import io.intino.alexandria.ui.displays.components.selector.SelectorOption;
 import org.siani.goros.box.GorosBox;
 import org.siani.goros.box.ui.displays.notifiers.DesktopPageNotifier;
 
 import java.util.List;
+import java.util.UUID;
 
 import static io.intino.alexandria.ui.displays.UserMessage.Type.Info;
 
@@ -23,7 +25,17 @@ public class DesktopPage extends AbstractDesktopPage<DesktopPageNotifier, GorosB
     }
 
     private void initLinks() {
-        links.onSelect(e -> links.notifyUser("user clicked " + e.selection().get(0), Info));
+        linksSelector.onSelect(e -> linksSelector.notifyUser("user clicked " + e.selection().get(0), Info));
+        addLink("home", "Home");
+        linksSelector.addDivider();
+        addLink("setup", "Build");
+    }
+
+    private void addLink(String label, String icon) {
+        DrawerOption link = new DrawerOption(box()).<DrawerOption>id(UUID.randomUUID().toString()).name(label);
+        linksSelector.add((SelectorOption) link);
+        link.icon.icon(icon);
+        link.label.value(label);
     }
 
     private void initTabs() {

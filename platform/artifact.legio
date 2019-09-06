@@ -2,15 +2,14 @@ dsl Legio
 
 Artifact(groupId = "org.siani", version = "1.0.0") goros as Platform
 	Model(language = "Meta", version = "2.3.1", sdk = "2.6.0")
-	Box(language = "Konos", version = "6.0.0")
+	Box(language = "Konos", version = "6.1.0")
 
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.1")
 		Compile("io.intino.alexandria", "primitives", "1.0.3")
 		Compile("org.siani.monet", "space", "1.0")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
-		Compile("io.intino.alexandria", "rest", "2.1.0")
-		Compile("io.intino.alexandria", "ui-framework", "2.0.0")
+		Compile("io.intino.alexandria", "ui-framework", "2.1.0")
 		Compile("io.intino.alexandria", "bpm-framework", "1.0.0")
 
 		Web("org.siani", "platform-ui", "1.0.0")

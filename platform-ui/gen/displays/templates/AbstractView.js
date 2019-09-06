@@ -15,7 +15,7 @@ export default class AbstractView extends UiTemplate {
 	    const display = !this.state.visible ? {display:'none'} : undefined;
 		return(
 			<UiBlock layout="vertical" style={{...this.props.style,...display}}>
-				<UiText context={this._context.bind(this)} owner={this._owner.bind(this)} id="_41" mode="normal">
+				<UiText context={this._context.bind(this)} owner={this._owner.bind(this)} id="_5B" mode="normal">
 				</UiText>
 			</UiBlock>
 		);

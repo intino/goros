@@ -15,7 +15,7 @@ export default class AbstractNumberView extends DisplaysFieldView {
 	    const display = !this.state.visible ? {display:'none'} : undefined;
 		return(
 			<UiBlock layout="vertical" style={{...this.props.style,...display}}>
-				<UiNumberEditable context={this._context.bind(this)} owner={this._owner.bind(this)} id="o2j" value={0.0} min={-1.0} max={-1.0} step={-1.0}>
+				<UiNumberEditable context={this._context.bind(this)} owner={this._owner.bind(this)} id="pY2" value={0.0} min={-1.0} max={-1.0} step={-1.0}>
 				</UiNumberEditable>
 			</UiBlock>
 		);

@@ -31,3 +31,6 @@ Repository(identifier = "siani-maven")
 
 Repository(identifier = "sonatype")
 	Release(url = "	https://oss.sonatype.org/content/repositories/releases/")
+
+Repository("bedatadriven") bedatadrivenPublic
+	Release("https://nexus.bedatadriven.com/content/groups/public/")

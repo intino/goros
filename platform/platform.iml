@@ -105,7 +105,6 @@
     <orderEntry type="library" name="Intino: org.tuckey:urlrewritefilter:3.2.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:tomcat-shared:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:core-shared:1.0" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:primitives:1.0.4" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:bpm-framework:1.0.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:message:1.0.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.0.1" level="project" />
@@ -132,11 +131,6 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-api:9.4.8.v20171121" level="project" />
     <orderEntry type="library" name="Intino: eu.medsea.mimeutil:mime-util:2.1.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:core-framework:2.0.1" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:juli:6.0.43" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:annotations-api:6.0.43" level="project" />
     <orderEntry type="library" name="Intino: com.google.inject.extensions:guice-servlet:2.0" level="project" />
     <orderEntry type="library" name="Intino: com.google.inject:guice:2.0" level="project" />
     <orderEntry type="library" name="Intino: com.google.inject.extensions:guice-multibindings:2.0" level="project" />
@@ -239,5 +233,11 @@
     <orderEntry type="library" name="Intino: io.intino.alexandria:driver-r:1.0.0" level="project" />
     <orderEntry type="library" name="Intino: net.rforge:rserve:0.6-8.1" level="project" />
     <orderEntry type="library" name="Intino: net.rforge:REngine:0.6-8.1" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:juli:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: org.apache.tomcat:annotations-api:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:primitives:1.0.4" level="project" />
   </component>
 </module>

@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.monet.services.SpaceService;
 import org.monet.v3.Space;
 
-public class Tests_ {
+public class BackServiceTest_ {
     private static String certificado ="C:/Desarrollo/fixing_fran/resources/businessunit-cctv.p12";
     private static String espacio = "http://fsantana.local.monentia.es/backservice";
 

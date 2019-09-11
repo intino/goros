@@ -1,0 +1,22 @@
+dsl Despliegue
+
+Coordinacion("Vias y Obras", url = "https://externa.ingenio.es/viasyobras", federationStoreDirectory = "", logo="images/viasyobras.png")
+	Certificate(file = "certificates/viasyobras.p12", password = "1234")
+	Database(Mysql, "jdbc:mysql://localhost:3306/viasyobras?autoReconnect=true", "root", "")
+	Mail(host = "monet.org", adminFrom = "noreply@monet.org", adminTo = "admin@monet.org", username = "admin", password = "")
+	Maps(googleApiKey="abcdefghijk")
+	Firebase
+		projectId = "externa-ingenio-abcd"
+		settingsFilename = "firebase/settings.xml"
+
+Ejecucion("Lopesan", url = "https://externa.ingenio.es/lopesan", logo="images/lopesan.png")
+	Certificate(file = "certificates/lopesan.p12", password = "1234")
+	Database(Mysql, "jdbc:mysql://localhost:3306/lumican?autoReconnect=true", "root", "")
+	Mail(host = "monet.org", adminFrom = "noreply@monet.org", adminTo = "admin@monet.org", username = "admin", password = "")
+	Maps(googleApiKey="abcdefghijk")
+
+Inspeccion("Medina Olivares", url="https://externa.ingenio.es/medinaolivares", logo="images/lopesan.png")
+	Certificate(file = "certificates/medinaolivares.p12", password = "1234")
+	Database(Mysql, "jdbc:mysql://localhost:3306/lumican?autoReconnect=true", "root", "")
+	Mail(host = "monet.org", adminFrom = "noreply@monet.org", adminTo = "admin@monet.org", username = "admin", password = "")
+	Maps(googleApiKey="abcdefghijk")

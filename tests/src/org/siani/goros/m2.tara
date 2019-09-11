@@ -1,0 +1,19 @@
+dsl Goros
+
+BusinessUnit Coordinacion
+	BusinessModel("models/coordinacion.zip")
+	MasterData(syncAt=3 am, syncOnStart=false)
+	DocumentService(url = "https://localhost:9000/documents")
+	Datawarehouse(url="http://localhost:8081/sumus", directory = "")
+
+BusinessUnit Ejecucion
+	BusinessModel("models/ejecucion.zip")
+	MasterData(syncAt=3 am, syncOnStart=false)
+	DocumentService(url = "https://localhost:9000/documents")
+	Datawarehouse(url="http://localhost:8081/sumus", directory = "")
+
+BusinessUnit Inspeccion
+	BusinessModel("models/inspeccion.zip")
+	MasterData(syncAt=3 am, syncOnStart=false)
+	DocumentService(url = "https://localhost:9000/documents")
+	Datawarehouse(url="http://localhost:8081/sumus", directory = "")

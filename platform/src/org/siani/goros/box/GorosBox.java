@@ -22,14 +22,24 @@ public class GorosBox extends AbstractBox {
 		return this;
 	}
 
-	public io.intino.alexandria.core.Box open(BusinessUnit unit) {
-		Box result = super.open();
-		Goros.start(unit);
-		return result;
+	@Override
+	public void beforeStart() {
+
 	}
 
-	public void close() {
-		super.close();
+	@Override
+	public void afterStart() {
+
+	}
+
+	@Override
+	public void beforeStop() {
+
+	}
+
+	@Override
+	public void afterStop() {
+
 	}
 
 	@Override
@@ -37,7 +47,13 @@ public class GorosBox extends AbstractBox {
 		return null;
 	}
 
-	public io.intino.alexandria.rest.security.BasicAuthenticationValidator authenticationValidator() {
+	public io.intino.alexandria.core.Box start(BusinessUnit unit) {
+		Box box = super.start();
+		Goros.start(unit);
+		return box;
+	}
+
+	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {
 		return token -> false;
 	}
 }

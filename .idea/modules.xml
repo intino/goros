@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/platform/platform.iml" filepath="$PROJECT_DIR$/platform/platform.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-ui/platform-ui.iml" filepath="$PROJECT_DIR$/platform-ui/platform-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platform-elements/platform-elements.iml" filepath="$PROJECT_DIR$/platform-elements/platform-elements.iml" />
       <module fileurl="file://$PROJECT_DIR$/tests/tests.iml" filepath="$PROJECT_DIR$/tests/tests.iml" />
     </modules>
   </component>

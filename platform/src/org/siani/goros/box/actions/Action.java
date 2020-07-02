@@ -1,5 +1,6 @@
 package org.siani.goros.box.actions;
 
+import io.intino.alexandria.http.spark.SparkContext;
 import org.monet.http.Request;
 import org.siani.goros.box.GorosBox;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 public abstract class Action {
     protected org.siani.goros.box.services.Response response;
     public GorosBox box;
-    public io.intino.alexandria.rest.spark.SparkContext context;
+    public SparkContext context;
 
     protected io.intino.alexandria.Resource resource() {
         InputStream stream = response.stream();

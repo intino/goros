@@ -1,6 +1,6 @@
 package org.siani.goros.graph;
 
-import io.intino.tara.magritte.Graph;
+import io.intino.magritte.framework.Graph;
 
 public class GorosGraph extends org.siani.goros.graph.AbstractGraph {
 
@@ -8,7 +8,7 @@ public class GorosGraph extends org.siani.goros.graph.AbstractGraph {
 		super(graph);
 	}
 
-	public GorosGraph(io.intino.tara.magritte.Graph graph, GorosGraph wrapper) {
+	public GorosGraph(io.intino.magritte.framework.Graph graph, GorosGraph wrapper) {
 	    super(graph, wrapper);
 	}
 

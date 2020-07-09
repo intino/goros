@@ -11,7 +11,8 @@ public class Main {
 		GorosBox box = new GorosBox(args);
 		GorosGraph gorosGraph = new Graph().loadStashes("Goros").as(GorosGraph.class);
 		box.put(gorosGraph);
-		box.start(gorosGraph.businessUnit(box.configuration().get("business-unit")));
+		box.start();
+		box.open(gorosGraph.businessUnit(box.configuration().get("business-unit")));
 		Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
 	}
 }

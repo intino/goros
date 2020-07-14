@@ -1,11 +1,16 @@
 package org.siani.goros.box;
 
 import io.intino.alexandria.ui.services.AuthService;
+import org.monet.space.kernel.agents.AgentNotifier;
+import org.monet.space.kernel.listeners.IListenerMonetEvent;
+import org.siani.goros.box.listeners.GorosNotifier;
+import org.siani.goros.box.listeners.ListenerGoros;
 import org.siani.goros.graph.BusinessUnit;
 
 import java.net.URL;
 
 public class GorosBox extends AbstractBox {
+	private GorosNotifier notifier;
 
 	public GorosBox(String[] args) {
 		super(args);
@@ -13,6 +18,10 @@ public class GorosBox extends AbstractBox {
 
 	public GorosBox(GorosConfiguration configuration) {
 		super(configuration);
+	}
+
+	public GorosNotifier notifier() {
+		return notifier;
 	}
 
 	@Override
@@ -23,7 +32,8 @@ public class GorosBox extends AbstractBox {
 
 	@Override
 	public void beforeStart() {
-
+		this.notifier = new GorosNotifier();
+		listenMonet();
 	}
 
 	@Override
@@ -54,4 +64,11 @@ public class GorosBox extends AbstractBox {
 	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {
 		return token -> false;
 	}
+
+	private void listenMonet() {
+		AgentNotifier.getInstance().register("Goros", ListenerGoros.class);
+		ListenerGoros listener = (ListenerGoros) AgentNotifier.getInstance().get("Goros");
+		listener.inject(notifier);
+	}
+
 }

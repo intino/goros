@@ -9,22 +9,39 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class GorosNotifier {
-	private Map<String, Consumer<Task>> stateChangeListeners = new HashMap<>();
+	private Map<String, Consumer<Task>> taskCreatedListeners = new HashMap<>();
+	private Map<String, Consumer<Task>> taskStateChangeListeners = new HashMap<>();
 
-	public GorosNotifier onStateChange(Display display, Consumer<Task> listener) {
-		stateChangeListeners.put(display.id(), listener);
+	public GorosNotifier onTaskCreated(Display display, Consumer<Task> listener) {
+		taskCreatedListeners.put(display.id(), listener);
 		return this;
 	}
 
-	public GorosNotifier unStateChange(Display display) {
-		if (!stateChangeListeners.containsKey(display.id())) return this;
-		stateChangeListeners.remove(display.id());
+	public GorosNotifier unTaskCreated(Display display) {
+		if (!taskCreatedListeners.containsKey(display.id())) return this;
+		taskCreatedListeners.remove(display.id());
 		return this;
 	}
 
-	public void notifyStateChange(Task task) {
+	public GorosNotifier onTaskStateChange(Display display, Consumer<Task> listener) {
+		taskStateChangeListeners.put(display.id(), listener);
+		return this;
+	}
+
+	public GorosNotifier unTaskStateChange(Display display) {
+		if (!taskStateChangeListeners.containsKey(display.id())) return this;
+		taskStateChangeListeners.remove(display.id());
+		return this;
+	}
+
+	public void notifyTaskCreated(Task task) {
 		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
-		stateChangeListeners.values().forEach(l -> l.accept(loadedTask));
+		taskCreatedListeners.values().forEach(l -> l.accept(loadedTask));
+	}
+
+	public void notifyTaskStateChange(Task task) {
+		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
+		taskStateChangeListeners.values().forEach(l -> l.accept(loadedTask));
 	}
 
 }

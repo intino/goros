@@ -14,7 +14,22 @@ public class ListenerGoros extends Listener {
 
 	@Override
 	public void taskStateUpdated(MonetEvent event) {
-		notifier.notifyStateChange((Task) event.getSender());
+		notifier.notifyTaskStateChange((Task) event.getSender());
+	}
+
+	@Override
+	public void taskCreated(MonetEvent event) {
+		notifier.notifyTaskCreated((Task) event.getSender());
+	}
+
+	@Override
+	public void taskFinished(MonetEvent event) {
+		notifier.notifyTaskStateChange((Task) event.getSender());
+	}
+
+	@Override
+	public void taskAborted(MonetEvent event) {
+		notifier.notifyTaskStateChange((Task) event.getSender());
 	}
 
 }

@@ -1,0 +1,65 @@
+dsl Konos
+
+// PLANTILLA DE CATÁLOGO ROOT
+
+use UI
+use CatalogFilterTypes
+use Theme
+
+Template(layout=Vertical Flexible) tasksTableCatalog as Relative(height=100%)
+	Table(itemClass="org.monet.space.kernel.model.Task", scrollingMark=false, format=bordered) tasksTable as Selectable(multiple=false)
+		noItemsMessage = "No hay tareas"
+		Mold
+			Heading tasksTableLabelHeading > Text(value="Título")
+			Item(height=55px,width=20%) tasksTableLabelItem
+				Text(value="Loading...") label
+				Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="#33942F")
+		Mold
+			Heading tasksTableDescriptionHeading > Text(value="Descripción")
+			Item(height=55px,width=30%) tasksTableDescriptionItem > Text description
+		Mold
+			Heading tasksTableOwnerHeading > Block(layout=Horizontal CenterJustified) > Text(value="Responsable")
+			Item(height=55px,width=10%) tasksTableOwnerItem > Block(layout=Horizontal CenterJustified) > Text owner
+		Mold
+			Heading tasksTableCreateDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Creada")
+			Item(height=55px,width=10%) tasksTableCreateDateItem > Block(layout=Horizontal CenterJustified) > Date createDate
+		Mold
+			Heading tasksTableUpdateDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Actualizada")
+			Item(height=55px,width=10%) tasksTableUpdateDateItem > Block(layout=Horizontal CenterJustified) > Date updateDate
+		Mold
+			Heading tasksTableCountMessagesHeading > Block(layout=Horizontal CenterJustified) > Text(value="Mensajes")
+			Item(height=55px,width=10%) tasksTableCountMessagesItem > Block(layout=Horizontal CenterJustified) > Number countMessages
+		Mold
+			Heading tasksTableOperationsHeading
+			Item(height=55px,width=10%) tasksTableOperationsItem
+				MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
+
+Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
+	List(itemClass="org.monet.space.kernel.model.Task", scrollingMark=false) tasksList as Selectable(multiple=false)
+		noItemsMessage = "No hay tareas"
+		Mold
+			Item(height=140px) tasksListItem
+				Block(layout=Vertical, format=catalogIndexReferenceStyle)
+					Block(layout=Horizontal Center)
+						Block(layout=Horizontal Flexible)
+							Text(value="Loading...", format=h4 airRight) label
+							Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="#33942F")
+						Block(layout=Horizontal EndJustified)
+							MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
+					Text(format=body2) description
+					Text(format=body2) owner as Labeled("Responsable")
+					Number(format=body2) countMessages as Labeled("Número de mensajes")
+					Block(layout=Horizontal, format=middleAirTop)
+						Date(format=body2 doubleAirRight) createDate as Labeled("Fecha creación")
+						Date(format=body2) updateDate as Labeled("Fecha actualización")
+
+Template(layout=Horizontal, format=air) tasksToolbarTemplate
+	//Button(title="Asignar...", highlight=Outline, size=Small, format=airRight) assign as Action
+	//Button(title="Desasignar...", highlight=Outline, size=Small, format=airRight) unAssign as Action
+
+Template(format=fullWidth spaced) tasksFiltersTemplate
+	Link(title="Resetear filtros", format=doubleAirBottom) reset
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) folder
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) nature
+	Block(format=doubleAirBottom) > Stamp(template=checkFilterTemplate) urgent
+

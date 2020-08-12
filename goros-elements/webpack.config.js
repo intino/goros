@@ -27,7 +27,8 @@ module.exports = {
         ]
     },
     entry : {
-
+        'home' : './gen/apps/Home.js',
+        'roles' : './gen/apps/Roles.js'
     },
     output: {
         path: "/Users/mcaballero/Proyectos/goros/out/production/goros-elements/www/goros-elements",
@@ -50,6 +51,19 @@ module.exports = {
             from: 'res',
             to: './res'
         }]),
-
+        new HtmlWebPackPlugin({
+            hash: true,
+            title: "Test UI",
+            chunks: ['home'],
+            template: "./src/home.html",
+            filename: "./home.html"
+        }),
+        new HtmlWebPackPlugin({
+            hash: true,
+            title: "Test UI",
+            chunks: ['roles'],
+            template: "./src/roles.html",
+            filename: "./roles.html"
+        })
     ]
 };

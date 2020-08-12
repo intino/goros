@@ -1,0 +1,496 @@
+dsl Konos
+
+Service backservice as REST(host = "", port = "{port}")
+	title = "Backservice API"
+	basePath = "/backservice"
+
+	//AuthenticatedWithToken
+
+	Resource("/adddatastorecubefact") addDatastoreCubeFact
+		Post(description = "Adds a fact to a datastore cube")
+			Parameter(in=query) name as Text
+			Parameter(in=query) cube as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/adddatastorecubefacts") addDatastoreCubeFacts
+		Post(description = "Adds facts to a datastore cube")
+			Parameter(in=query) name as Text
+			Parameter(in=query) cube as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/adddatastoredimensioncomponent") addDatastoreDimensionComponent
+		Post(description = "Adds a component to a datastore dimension")
+			Parameter(in=query) name as Text
+			Parameter(in=query) dimension as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/addnodeflag") addNodeFlag
+		Post(description = "Adds a flag to a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Parameter(in=query) value as Text
+			Response as Text
+
+	Resource("/addnodenote") addNodeNote
+		Post(description = "Adds a note to a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Parameter(in=query) value as Text
+			Response as Text
+
+	Resource("/addsourceterm") addSourceTerm
+		Post(description = "Adds a term to a source")
+			Parameter(in=query) code as Text
+			Parameter(in=query) parent as Text
+			Parameter(in=query) type as Text
+			Parameter(in=query) source as Text
+			Parameter(in=query) label as Text
+			Parameter(in=query) tags as Text
+			Response as Text
+
+	Resource("/addtaskflact") addTaskFact
+		Post(description = "Adds a fact to a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) title as Text
+			Parameter(in=query) subtitle as Text
+			Parameter(in=query) user as Text
+			Parameter(in=query) links as Text
+			Response as Text
+
+	Resource("/addtaskflag") addTaskFlag
+		Post(description = "Adds a flag to a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Parameter(in=query) value as Text
+			Response as Text
+
+	Resource("/addtaskshortcut") addTaskShortcut
+		Post(description = "Adds a shortcut to a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Parameter(in=query) value as Text
+			Response as Text
+
+	Resource("/consolidatenode") consolidateNode
+		Post(description = "Consolidates a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/createaccount") createAccount
+		Post(description = "Creates an account")
+			Parameter(in=query) code as Text
+			Parameter(in=query) fullname as Text
+			Parameter(in=query) email as Text
+			Parameter(in=query) roles as Text
+			Response as Text
+
+	Resource("/createnode") createNode
+		Post(description = "Creates a node")
+			Parameter(in=query) parent as Text
+			Parameter(in=query) type as Text
+			Response as Text
+
+	Resource("/createtask") createTask
+		Post(description = "Creates a task")
+			Parameter(in=query) type as Text
+			Response as Text
+
+	Resource("/deletenodeflag") deleteNodeFlag
+		Post(description = "Deletes a flag for a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/deletenodenote") deleteNodeNote
+		Post(description = "Deletes a note for a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/createtaskflag") deleteTaskFlag
+		Post(description = "Deletes a flag for a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/deletetaskshortcut") deleteTaskShortcut
+		Post(description = "Deletes a shortcut for a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/downloaddistribution") downloadDistribution
+		Post(description = "Downloads the distribution")
+			Response as File
+
+	Resource("/emptytrash") emptyTrash
+		Post(description = "Empties the trash")
+			Response as Text
+
+	Resource("/executeexporter") executeExporter
+		Post(description = "Executes an exporter")
+			Parameter(in=query) exporter as Text
+			Parameter(in=query) scope as Text
+			Response as File
+
+	Resource("/executenodecommand") executeNodeCommand
+		Post(description = "Executes a node command")
+			Parameter(in=query) idnode as Text
+			Parameter(in=query) command as Text
+			Response as Text
+
+	Resource("/existsnode") existsNode
+		Post(description = "Checks if a node exists")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/exportnode") exportNode
+		Post(description = "Exports a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/exportnodes") exportNodes
+		Post(description = "Exports a set of nodes")
+			Parameter(in=query) ids as Text
+			Response as Text
+
+	Resource("/getnodeancestors") getNodeAncestors
+		Post(description = "Gets the ancestors for a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getnodedocument") getNodeDocument
+		Post(description = "Gets a document for node")
+			Parameter(in=query) id as Text
+			Response as File
+
+	Resource("/getnodedocumentcontenttype") getNodeDocumentContentType
+		Post(description = "Gets the content type for a node document")
+    		Parameter(in=query) id as Text
+    		Response as Text
+
+	Resource("/getnodefile") getNodeFile
+		Post(description = "Gets a file for a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as File
+
+	Resource("/getnodeflags") getNodeFlags
+		Post(description = "Gets the flags for a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getnodelocation") getNodeLocation
+		Post(description = "Gets the node location")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getnodenotes") getNodeNotes
+		Post(description = "Gets the notes for a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getnodereference") getNodeReference
+		Post(description = "Gets a reference for a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/getnodereferences") getNodeReferences
+		Post(description = "Gets a set of filtered references for a node")
+			Parameter(in=query) code as Text
+			Parameter(in=query) filter as Text
+			Parameter(in=query) orderby as Text
+			Parameter(in=query) parameters as Text
+			Parameter(in=query) start as Text
+			Parameter(in=query) limit as Text
+			Response as Text
+
+	Resource("/getnodereferencescount") getNodeReferencesCount
+		Post(description = "Gets the count of filtered references for a node")
+			Parameter(in=query) code as Text
+			Parameter(in=query) filter as Text
+			Parameter(in=query) parameters as Text
+			Response as Text
+
+	Resource("/getnodeschema") getNodeSchema
+		Post(description = "Gets the schema for a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getnodetasks") getNodeTasks
+		Post(description = "Gets the tasks for a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getsourceparentterm") getSourceParentTerm
+		Post(description = "Gets the parent term for a term of a source")
+			Parameter(in=query) id as Text
+			Parameter(in=query) code as Text
+			Response as Text
+
+	Resource("/getsourceterms") getSourceTerms
+		Post(description = "Gets the terms for a parent term")
+			Parameter(in=query) id as Text
+			Parameter(in=query) parent as Text
+			Response as Text
+
+	Resource("/gettaskfacts") getTaskFacts
+		Post(description = "Gets the facts for a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/gettaskflags") getTaskFlags
+		Post(description = "Gets the flags for a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/gettaskprocess") getTaskProcess
+		Post(description = "Gets the process for a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/gettasks") getTasks
+		Post(description = "Gets a set of filtered tasks")
+			Parameter(in=query) inbox as Text
+			Parameter(in=query) folder as Text
+			Parameter(in=query) condition as Text
+			Parameter(in=query) owner as Text
+			Parameter(in=query) start as Text
+			Parameter(in=query) limit as Text
+			Response as Text
+
+	Resource("/gettaskshortcuts") getTaskShortcuts
+		Post(description = "Gets the shortcuts for a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/getuserlinkedtonode") getUserLinkedToNode
+		Post(description = "Gets the user linked to a node")
+			Parameter(in=query) idnode as Text
+			Response as Text
+
+	Resource("/getusernode") getUserNode
+		Post(description = "Gets the environment node for a user")
+			Parameter(in=query) code as Text
+			Parameter(in=query) depth as Text
+			Response as Text
+
+	Resource("/getusertasks") getUserTasks
+		Post(description = "Gets the tasks for a user")
+			Parameter(in=query) code as Text
+			Response as Text
+
+	Resource("/gotoplaceintask") gotoPlaceInTask
+		Post(description = "Goes to a place in a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) place as Text
+			Parameter(in=query) history as Text
+			Response as Text
+
+	Resource("/haspermissions") hasPermissions
+		Post(description = "Checks if user has permissions")
+			Parameter(in=query) username as Text
+			Response as Text
+
+	Resource("/importnode") importNode
+		Post(description = "Imports a node")
+			Parameter(in=query) importer as Text
+			Parameter(in=query) idscope as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/loadsource") loadSource
+		Post(description = "Loads a source")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/loaduser") loadUser
+		Post(description = "Loads a user")
+			Parameter(in=query) code as Text
+			Response as Text
+
+	Resource("/locatenode") locateNode
+		Post(description = "Locates a node")
+			Parameter(in=query) code as Text
+			Parameter(in=query) depth as Text
+			Response as Text
+
+	Resource("/locatesource") locateSource
+		Post(description = "Locates a source")
+			Parameter(in=query) code as Text
+			Parameter(in=query) url as Text
+			Response as Text
+
+	Resource("/makenodedeleteable") makeNodeDeletable
+		Post(description = "Makes a node deletable")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/makenodeeditable") makeNodeEditable
+		Post(description = "Makes a node editable")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/makenodeprivate") makeNodePrivate
+		Post(description = "Makes a node private")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/makenodepublic") makeNodePublic
+		Post(description = "Makes a node public")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/makenodeundeleteable") makeNodeUndeletable
+		Post(description = "Makes a node undeletable")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/makenodeuneditable") makeNodeUneditable
+		Post(description = "Makes a node uneditable")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/opendatastore") openDatastore
+		Post(description = "Loads a datastore")
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/opennode") openNode
+		Post(description = "Loads a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) depth as Text
+			Response as Text
+
+	Resource("/opentask") openTask
+		Post(description = "Loads a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/recovernode") recoverNode
+		Post(description = "Recovers a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/removenode") removeNode
+		Post(description = "Removes a node")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/removetask") removeTask
+		Post(description = "Removes a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/resetnodeform") resetNodeForm
+		Post(description = "Resets a node form")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/resumetask") resumeTask
+		Post(description = "Resumes a task")
+			Parameter(in=query) id as Text
+			Response as Text
+
+	Resource("/runtask") runTask
+		Post(description = "Runs a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) name as Text
+			Response as Text
+
+	Resource("/savenode") saveNode
+		Post(description = "Saves a node")
+			Parameter(in=query) id as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/savenodedocument") saveNodeDocument
+		Post(description = "Saves a node")
+			Parameter(in=query) id as Text
+			Parameter(in=form) data as File
+			Parameter(in=query) contenttype as Text
+			Response as Text
+
+	Resource("/savenodefile") saveNodeFile
+		Post(description = "Saves a file in a node")
+			Parameter(in=query) name as Text
+			Parameter(in=form) data as File
+			Response as Text
+
+	Resource("/savenodeparent") saveNodeParent
+		Post(description = "Saves the node parent")
+			Parameter(in=query) id as Text
+			Parameter(in=query) parent as Text
+			Response as Text
+
+	Resource("/savenodepartnercontext") saveNodePartnerContext
+		Post(description = "Saves the partner context in a node")
+			Parameter(in=query) id as Text
+			// TODO MC permitir context como nombre de parametro Parameter(in=query) context as Text
+			Response as Text
+
+	Resource("/savenodepicture") saveNodePicture
+		Post(description = "Saves a picture in a node")
+			Parameter(in=query) name as Text
+			Parameter(in=form) data as File
+			Response as Text
+
+	Resource("/savenodereference") saveNodeReference
+		Post(description = "Saves a node reference")
+			Parameter(in=query) id as Text
+			Parameter(in=query) code as Text
+			Parameter(in=query) attributes as Text
+			Response as Text
+
+	Resource("/savenodesattribute") saveNodesAttribute
+		Post(description = "Saves nodes attribute")
+			Parameter(in=query) nodes as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/savetask") saveTask
+		Post(description = "Saves a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/saveuser") saveUser
+		Post(description = "Saves a user")
+			Parameter(in=query) code as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/searchevent") searchEvent
+		Post(description = "Searches an event")
+			Parameter(in=query) type as Text
+			Parameter(in=query) from as Text
+			Parameter(in=query) to as Text
+			Response as Text
+
+	Resource("/searchnodes") searchNodes
+		Post(description = "Searches nodes")
+			Parameter(in=query) id as Text
+			Parameter(in=query) from as Text
+			Parameter(in=query) to as Text
+			Response as Text
+
+	Resource("/api") api
+		Post(description = "Shows the api")
+			Response as Text
+
+	Resource("/subscribe") subscribe
+		Post(description = "Subscribes to an event type")
+			Parameter(in=query) type as Text
+			Parameter(in=query) data as Text
+			Response as Text
+
+	Resource("/unlocktask") unlockTask
+		Post(description = "Unlocks a task")
+			Parameter(in=query) id as Text
+			Parameter(in=query) place as Text
+			Parameter(in=query) stop as Text
+			Response as Text

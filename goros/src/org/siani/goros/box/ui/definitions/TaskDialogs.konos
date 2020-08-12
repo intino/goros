@@ -1,0 +1,25 @@
+dsl Konos
+
+use Theme
+
+Template(layout=Horizontal) taskToolbarTemplate
+	Button(title="Actualizar", size=Small, highlight=Outline, format=airRight) update as Action
+	Button(title="Asignar...", size=Small, highlight=Outline, format=airRight, visible=false) assign as OpenDialog(dialog=assignTaskOwnerDialogBox)
+	Button(title="Desasignar", size=Small, highlight=Outline, format=airRight, visible=false) unAssign as Action Affirmed("Are you sure to unassign task?")
+	Button(title="Abortar", size=Small, highlight=Outline, visible=false) abort as Action Affirmed("Are you sure to abort task?")
+
+	Dialog(title="Asignar...") assignTaskOwnerDialogBox as Relative(height=80%, width=80%)
+		Block(layout=Vertical Flexible) content as Relative(height=100%, offsetHeight=50px)
+			Table(itemClass="org.monet.space.kernel.model.User", scrollingMark=false, format=bordered) assignTaskDialogTable as Selectable(multiple=false)
+				noItemsMessage = "No hay usuarios"
+				Mold
+					Heading assignTaskDialogTableFullnameHeading > Text(value="Fullname", translate=true)
+					Item(height=30px,width=16%) assignTaskDialogTableFullnameItem > Text(value="Loading...") fullName
+				Mold
+					Heading assignTaskDialogTableEmailHeading > Text(value="Email", translate=true)
+					Item(height=30px,width=16%) assignTaskDialogTableEmailItem > Text(value="Loading...") email
+			Text(format=doubleAirTop doubleAirBottom) reason as Memo Editable Labeled("Reason")
+		Divider
+		Block(layout=Horizontal EndJustified)
+			Button(title="Cancel", format=airRight) cancel as CloseDialog(dialog=assignTaskOwnerDialogBox)
+			Button(title="OK", highlight=Fill) accept as Action Readonly

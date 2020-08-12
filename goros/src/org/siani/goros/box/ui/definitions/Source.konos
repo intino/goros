@@ -1,0 +1,64 @@
+dsl Konos
+
+use Theme
+
+Template(layout=Horizontal Flexible) sourceEmbeddedTemplate as Relative(height=100%)
+	Block(layout=Vertical Flexible, format=autoOverflow) levelsBlock as Relative(width=100%) > Stamp(template=sourceLevelTemplate) levels as Multiple(arrangement=Horizontal, wrapItems=false)
+	Block(format=smallAirLeft leftBordered) termView as Conditional Animated Relative(width=35%)
+		Transition(direction=Left)
+	 	//Block(layout=Vertical Flexible)
+		Stamp(template=publishTermsDialog) publishTermsDialog
+		Stamp(template=sourceTermDialog) termDialog
+
+Template(layout=Vertical, format=rightBordered sourceLevelWidth) sourceLevelTemplate as Relative(height=100%)
+	List(itemClass="org.monet.space.kernel.model.Term", scrollingMark=false) sourceLevelList as Selectable(multiple=false)
+		noItemsMessage = "No existen términos"
+		Mold
+			Item(height=90px) sourceLevelListItem
+				Block(layout=Horizontal, format=termReferenceStyle)
+					Block(layout=Vertical Flexible)
+						Block(layout=Horizontal Center)
+							Text(format=middleAirRight) label
+							Text(format=body2 legendPillStyle) type as Highlighted(textColor="white", backgroundColor="transparent")
+						Text(format=body2 grey) code
+						Number(format=body2) tagsCount as Labeled("Tags count")
+					Block
+						MaterialIcon(icon="KeyboardArrowRight", visible=false) groupFlag
+
+Template(layout=Horizontal Center) sourceLegendTemplate
+	Block(layout=Horizontal Center, format=doubleAirRight) > Text(value="C", format=body2 legendPillStyle middleAirRight) as Highlighted(textColor="white", backgroundColor="#4CAF50"); Text(value="Category", format=body2, translate=true)
+	Block(layout=Horizontal Center, format=doubleAirRight) > Text(value="S", format=body2 legendPillStyle middleAirRight) as Highlighted(textColor="white", backgroundColor="#2896F3"); Text(value="Selectable", format=body2, translate=true)
+	Block(layout=Horizontal Center, format=doubleAirRight) > Text(value="T", format=body2 legendPillStyle middleAirRight) as Highlighted(textColor="white", backgroundColor="#272C34"); Text(value="Term", format=body2, translate=true)
+
+Template publishTermsDialog
+	Block(format=doubleAirBottom middleSpaced leftSpaced rightSpaced)
+		Text(value="New terms added recently that are not published yet", format=h5 airBottom, translate=true)
+		Block(format=bordered dialog)
+			Selector newTerms as CheckBox(layout=Horizontal)
+			Block(layout=Horizontal)
+				Block(format=airRight) as Absolute(width=150px) > Button(title="Publish", highlight=Outline, size=Small) publish as Action
+				Block as Absolute(width=150px) > Button(title="Publish all", highlight=Outline, size=Small) publishAll as Action
+
+Template sourceTermDialog
+	Block(format=doubleAirBottom middleSpaced leftSpaced rightSpaced) generalView
+		Text(format=h5 airBottom) title
+		Block(format=bordered dialog)
+			Text(format=doubleAirBottom) code as Editable Readonly Labeled("Code")
+			Text(format=doubleAirBottom) label as Editable Labeled("Label")
+			Selector type as ComboBox(placeholder="Select type") Labeled("Type")
+				Text(value="Term", translate=true) termType as Option
+				Text(value="Category", translate=true) categoryType as Option
+			Switch(title="Contain other terms", format=doubleAirBottom) containOtherTerms as Action
+			Text(value="Tags", translate=true, format=grey)
+			Stamp(template=sourceTermTagTemplate) tags as Multiple(noItemsMessage="No tags")
+	Block(format=middleSpaced leftSpaced rightSpaced) childrenView
+		Text(format=h5 airBottom) addTitle
+		Block(format=bordered dialog)
+			Text(format=doubleAirBottom) childCode as Editable Labeled("Code")
+			Text(format=doubleAirBottom) childLabel as Editable Labeled("Label")
+			Block as Absolute(width=150px) > Button(title="Add", highlight=Outline, size=Small) add
+
+Template(layout=Horizontal) sourceTermTagTemplate
+	Text(format=airRight) name as Editable(placeholder="Name")
+	Text value as Editable(placeholder="Value")
+	MaterialIconButton(title="Remove", icon="Clear") delete as Action

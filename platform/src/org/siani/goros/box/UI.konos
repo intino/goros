@@ -1,6 +1,0 @@
-dsl Konos
-
-Service PlatformElements as UI(port = "{port}", title = "", favicon = "")
-	Resource(path = "/goros-home") home as Page(platformTemplate) Main Confidential
-
-Template platformTemplate

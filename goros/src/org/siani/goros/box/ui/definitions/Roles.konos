@@ -1,0 +1,135 @@
+dsl Konos
+
+use UI
+use CatalogFilterTypes
+use Theme
+
+Template(layout=Vertical Flexible, format=smallAir) rolesTemplate
+	Block(layout=Horizontal, format=bordered spaced) header
+		Block(layout=Vertical Flexible)
+			Block(layout=Horizontal)
+				Text(value="Roles", format=h4 bold)
+			Text(format=body2) count
+		Block(layout=Horizontal Center) rightToolbar
+			SearchBox(collections = empty, format=airRight smallAirTop) search
+			MaterialIconButton(title="Download", icon = "Archive", format=airRight black) download
+			MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+
+	Block(layout=Horizontal Flexible, format=smallAirTop)
+		Block(layout=Vertical Flexible, format=bordered)
+			Stamp(template=rolesToolbarTemplate) toolbar
+			Block(layout=Vertical Flexible) as Relative(height=100%)
+				Block(layout=Vertical Flexible) tableView as Conditional > Stamp(template=rolesTableCatalog, format=fullHeight) tableViewStamp
+
+		Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
+			Transition(direction=Left)
+			Stamp(template=rolesFiltersTemplate, format=fullHeight) rolesFiltersStamp
+
+		Block(format=smallAirLeft middleSpaced bordered) roleView as Conditional Animated Relative(width=40%)
+			Transition(direction=Left)
+			Stamp(template=roleEmbeddedTemplate) roleStamp
+
+Template(layout=Vertical Flexible) rolesTableCatalog as Relative(height=100%)
+	Table(itemClass="org.monet.space.kernel.model.Role", scrollingMark=false, format=bordered) rolesTable as Selectable(multiple=false)
+		noItemsMessage = "No roles"
+		Mold
+			Heading rolesTableUserHeading > Text(value="User", translate=true)
+			Item(height=50px,width=20%) rolesTableUserItem
+				Block(layout=Horizontal Center)
+					Block(layout=Flexible) > Text(value="Loading...", translate=true, format=airRight) user
+					Block(layout=EndJustified) > Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="transparent")
+		Mold
+			Heading rolesTableDefinitionHeading > Block(layout=Horizontal CenterJustified) > Text(value="Class", translate=true)
+			Item(height=50px,width=20%) rolesTableDefinitionItem > Block(layout=Horizontal CenterJustified) > Text definition
+		Mold
+			Heading rolesTableTypeHeading > Block(layout=Horizontal CenterJustified) > Text(value="Type", translate=true)
+			Item(height=50px,width=10%) rolesTableTypeItem > Block(layout=Horizontal CenterJustified) > Text type
+		Mold
+			Heading rolesTableNatureHeading > Block(layout=Horizontal CenterJustified) > Text(value="Nature", translate=true)
+			Item(height=50px,width=10%) rolesTableNatureItem > Block(layout=Horizontal CenterJustified) > Text nature
+		Mold
+			Heading rolesTableStartDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Start date", translate=true)
+			Item(height=50px,width=15%) rolesTableStartDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") startDate
+		Mold
+			Heading rolesTableEndDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="End date", translate=true)
+			Item(height=50px,width=15%) rolesTableEndDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") endDate
+		Mold
+			Heading rolesTableOperationsHeading
+			Item(height=50px,width=10%) rolesTableOperationsItem
+
+Template(layout=Horizontal, format=air) rolesToolbarTemplate
+	Button(title="Add role", size=Small, highlight=Outline) as OpenDialog(dialog=addRoleDialog)
+
+	Dialog(title="Add role") addRoleDialog as Relative(width=60%, height=80%)
+		Block(layout=Vertical Flexible) content as Relative(height=100%, offsetHeight=50px)
+			Selector(format=doubleAirBottom) type as ComboBox(placeholder="Select type") Labeled("Type")
+			Selector(format=doubleAirBottom) definition as ComboBox(placeholder="Select class") Labeled("Class")
+			Block(layout=Horizontal, format=airBottom)
+				Block as Relative(width=50%) > Date(format=airRight) beginDate as Editable Labeled("Start date")
+				Block as Relative(width=50%) > Date(allowEmpty=true) endDate as Editable Labeled("End date")
+
+			Block(layout=Vertical Flexible) userRoleBlock as Conditional
+				SearchBox(collections = addRoleUserTable)
+				Table(itemClass="org.monet.space.kernel.model.User", scrollingMark=false, format=bordered) addRoleUserTable as Selectable(multiple=false)
+					noItemsMessage = "No users"
+					Mold
+						Heading addRoleUserTableFullnameHeading > Text(value="Fullname", translate=true)
+						Item(height=30px,width=40%) addRoleUserTableFullnameItem > Text(value="Loading...") fullName
+					Mold
+						Heading addRoleUserTableEmailHeading > Text(value="Email", translate=true)
+						Item(height=30px,width=60%) addRoleUserTableEmailItem > Text(value="Loading...") email
+
+			Block(layout=Vertical Flexible) serviceRoleBlock as Conditional
+				SearchBox(collections = addRoleServiceTable)
+				Table(itemClass="org.monet.space.kernel.model.FederationUnitService", scrollingMark=false, format=bordered) addRoleServiceTable as Selectable(multiple=false)
+					noItemsMessage = "No service partners available"
+					Mold
+						Heading addRoleServiceTableLabelHeading > Text(value="Name", translate=true)
+						Item(height=30px,width=40%) addRoleServiceTableLabelItem > Text(value="Loading...") label
+					Mold
+						Heading addRoleServiceTablePartnerHeading > Text(value="Partner", translate=true)
+						Item(height=30px,width=60%) addRoleServiceTablePartnerItem > Text(value="Loading...") partner
+
+			Block(layout=Vertical Flexible) feederRoleBlock as Conditional
+				SearchBox(collections = addRoleFeederTable)
+				Table(itemClass="org.monet.space.kernel.model.FederationUnitFeeder", scrollingMark=false, format=bordered) addRoleFeederTable as Selectable(multiple=false)
+					noItemsMessage = "No feeder partners available"
+					Mold
+						Heading addRoleFeederTableLabelHeading > Text(value="Name", translate=true)
+						Item(height=30px,width=40%) addRoleFeederTableLabelItem > Text(value="Loading...") label
+					Mold
+						Heading addRoleFeederTablePartnerHeading > Text(value="Partner", translate=true)
+						Item(height=30px,width=60%) addRoleFeederTablePartnerItem > Text(value="Loading...") partner
+		Divider
+		Block(layout=Horizontal EndJustified)
+			Button(title="Cancel", format=airRight) cancel as CloseDialog(dialog=addRoleDialog)
+			Button(title="OK", highlight=Fill) accept as Action
+
+
+Template(format=fullWidth spaced) rolesFiltersTemplate
+	Link(title="Resetear filtros", format=doubleAirBottom) reset
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) definition
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) type
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) nature
+	Block(format=doubleAirBottom) > Stamp(template=checkFilterTemplate) expired
+
+Template roleEmbeddedTemplate
+	Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+		Block(layout=Horizontal Flexible)
+			Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
+			Button(title="Revocar", size=Small, highlight=Outline) revoke as Action Affirmed("Are you sure to revoke role?")
+		Block(layout=Horizontal EndJustified)
+			MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight) previous as SelectPreviousItem(collection=empty)
+			MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight) next as SelectNextItem(collection=empty)
+
+	Block(layout=Vertical Flexible, format=spaced) as Relative(height=100%)
+		Block(layout=Horizontal Center)
+			Text(format=airRight) user
+			Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="transparent")
+		Text(format=grey) message
+		Block(layout=Vertical, format=doubleAirBottom doubleAirTop)
+			Text definition as Labeled("Class")
+			Text type as Labeled("Type")
+			Text nature as Labeled("Nature")
+			Date(pattern="DD/MM/YYYY HH:mm") startDate as Labeled("Start date")
+		Block as Absolute(width=300px) > Date endDate as Labeled("End date") Editable(allowEmpty=true)

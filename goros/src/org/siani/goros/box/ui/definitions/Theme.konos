@@ -1,0 +1,79 @@
+dsl Konos
+
+// FONTS
+Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'25pt'") h1
+Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'20pt'") h2
+Format("fontSize:'15pt'") h3
+Format("fontSize:'14pt',fontWeight:'400'") h4
+Format("fontSize:'13pt'") h5
+Format("lineHeight:'17pt',fontSize:'12pt'") h6
+Format("fontSize:'11pt !important'") body1
+Format("fontSize:'10pt'") body2
+Format("") subtitle1
+Format("") subtitle2
+Format("fontWeight:'bold'") bold
+Format("") secondary
+Format("color:'#000'") black
+Format("color:'#777'") grey
+Format("color:'#F44335'") red
+Format("color:'#777'") description
+
+// SPACED, AIR
+Format("margin:'3px'") smallAir
+Format("margin:'10px 20px'") air
+Format("marginTop:'20px'") doubleAirTop
+Format("marginTop:'10px'") airTop
+Format("marginTop:'5px'") middleAirTop
+Format("marginTop:'3px'") smallAirTop
+Format("marginBottom:'20px'") doubleAirBottom
+Format("marginBottom:'10px'") airBottom
+Format("marginBottom:'5px'") middleAirBottom
+Format("marginLeft:'20px'") doubleAirLeft
+Format("marginLeft:'10px'") airLeft
+Format("marginLeft:'5px'") middleAirLeft
+Format("marginLeft:'3px'") smallAirLeft
+Format("marginRight:'20px'") doubleAirRight
+Format("marginRight:'10px'") airRight
+Format("marginRight:'5px'") middleAirRight
+Format("marginRight:'3px'") smallAirRight
+
+Format("padding:'5px'") middleSpaced
+Format("padding:'10px 20px'") spaced
+Format("paddingLeft:'10px'") leftSpaced
+Format("paddingTop:'5px'") middleTopSpaced
+Format("paddingBottom:'10px'") bottomSpaced
+Format("paddingBottom:'5px'") middleBottomSpaced
+Format("paddingRight:'10px'") rightSpaced
+
+// BORDERED
+Format("border:'1px solid #e4e4e4'") bordered
+Format("borderTop:'1px solid #e4e4e4'") topBordered
+Format("borderTop:'1px dotted #ddd'") topLightDottedBordered
+Format("borderBottom:'1px solid #e4e4e4'") bottomBordered
+Format("borderBottom:'1px dotted #ddd'") bottomLightDottedBordered
+Format("borderRight:'1px solid #e4e4e4'") rightBordered
+Format("borderLeft:'1px solid #e4e4e4'") leftBordered
+
+// COMMON
+Format("zIndex:'1'") visible
+Format("position:'relative'") relative
+Format("minWidth:'72px'") minLogoSize
+Format("width:'100% !important'") fullWidth
+Format("height:'100% !important'") fullHeight
+Format("minWidth:'48px'") minDrawerButtonSize
+Format("overflow:'auto'") autoOverflow
+Format("background:'white',padding:'10px'") dialog
+
+// OTHER
+Format("background:'white',padding:'10px 15px',borderRadius:'10px'") catalogIndexReferenceStyle
+Format("borderTop:'1px solid #eee',marginTop:'6px',paddingTop:'6px'") catalogIndexFooterItemStyle
+Format("background:'white',padding:'10px 15px',borderRadius:'10px'") catalogMapItemStyle
+Format("borderTop:'1px solid #eee',marginTop:'6px',paddingTop:'6px'") catalogMapFooterItemStyle
+Format("background:'white',padding:'2px 0 2px 5px',borderRadius:'10px'") termReferenceStyle
+Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") compositeFieldStyle
+Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
+Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-5px',marginRight:'2px'") editDocumentButtonStyle
+Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
+Format("height:'20px'") pillStyle
+Format("minWidth:'230px'") sourceLevelWidth
+Format("borderRadius:'10px',padding:'0 4px',fontSize:'8pt'") legendPillStyle

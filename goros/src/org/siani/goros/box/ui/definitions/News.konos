@@ -1,0 +1,20 @@
+dsl Konos
+
+// PLANTILLA DE CATÁLOGO ROOT
+
+use Activity1
+use Formulario1
+use UI
+use CatalogFilterTypes
+use Theme
+
+Template(layout=Vertical Flexible, format=smallAir) newsTemplate
+	Block(layout=Horizontal, format=bordered spaced) header
+		Block(layout=Vertical Flexible)
+			Block(layout=Horizontal)
+				Text(value="News", format=h4 bold) label
+			Text(format=body2) count
+
+	Block(layout=Horizontal Flexible, format=smallAirTop)
+		Block(layout=Vertical Flexible, format=bordered)
+			Block(layout=Vertical Flexible CenterCenter) > Text(value="Pendiente de implementar")

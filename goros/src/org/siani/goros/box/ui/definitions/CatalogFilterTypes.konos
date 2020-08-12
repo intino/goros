@@ -1,0 +1,24 @@
+dsl Konos
+
+use Theme
+
+Template searchFilterTemplate
+	Text(format=body2) label
+	Text search as Editable(placeholder="Indique un texto a buscar")
+
+Template listFilterTemplate
+	Text(format=body2) label
+	Selector options as ListBox(multipleSelection=true)
+
+Template comboFilterTemplate
+	Text(format=body2) label
+	Selector options as ComboBox(multipleSelection=true, placeholder="Seleccione una opción")
+
+Template checkFilterTemplate
+	Selector(format=body2) selector as CheckBox
+
+Template dateRangeFilterTemplate
+	Text(format=body2) label
+	Block(layout=Horizontal Flexible)
+		Date(format=airRight, allowEmpty=true) from as Editable Labeled("Desde")
+		Date(allowEmpty=true) to as Editable Labeled("Hasta")

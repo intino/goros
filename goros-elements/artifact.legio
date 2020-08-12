@@ -1,26 +1,17 @@
 dsl Legio
 
-Artifact(groupId = "org.siani", version = "1.0.0") goros-elements
+Artifact(groupId = "org.siani", version = "1.0.0-SNAPSHOT") goros-elements
 	WebImports
-		WebArtifact("io.intino.alexandria", "ui-framework-elements", "LATEST") alexandria-ui-elements
+		WebArtifact("io.intino.alexandria", "ui-framework-elements", "4.3.20") alexandria-ui-elements
 
 Repository("monentia-maven")
 	Release("https://artifactory.monentia.es/artifactory/libs-release-local")
-
-Repository("monentia-maven")
 	Release("https://artifactory.monentia.es/artifactory/releases")
 
 Repository("intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")
-
-Repository("intino-maven")
 	Release("https://artifactory.intino.io/artifactory/release-frameworks")
-
-Repository("siani-maven")
 	Release("https://artifactory.siani.es/artifactory/libs-release")
-
-Repository("siani-maven")
-	Release("https://artifactory.siani.es/artifactory/releases")
 
 Repository("sonatype")
 	Release("https://oss.sonatype.org/content/repositories/releases/")

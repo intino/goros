@@ -1,0 +1,51 @@
+dsl Konos
+
+use UI
+use CatalogFilterTypes
+use Theme
+
+Template(layout=Vertical Flexible, format=smallAir) trashTemplate
+	Block(layout=Horizontal, format=bordered spaced) header
+		Block(layout=Vertical Flexible)
+			Block(layout=Horizontal)
+				Text(value="Trash", format=h4 bold, translate=true) label
+			Text(format=body2) count
+		Block(layout=Horizontal Center) rightToolbar
+			SearchBox(collections = empty, format=airRight smallAirTop) search
+			//MaterialIconToggle(title="Filter", icon = "FilterList", format=airRight, size=Small) filters as Option
+
+	Block(layout=Horizontal Flexible, format=smallAirTop)
+		Block(layout=Vertical Flexible, format=bordered)
+			Stamp(template=trashToolbarTemplate) toolbar
+			Block(layout=Vertical Flexible) as Relative(height=100%)
+				Block(layout=Vertical Flexible) tableView > Stamp(template=trashTableCatalog, format=fullHeight) tableViewStamp
+
+		Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
+			Transition(direction=Left)
+			Block(layout=Vertical Flexible) tableFilters > Stamp(template=trashTableFilters, format=fullHeight) tableFiltersStamp
+
+Template(layout=Horizontal, format=air) trashToolbarTemplate
+	Button(title="Empty trash", size=Small, highlight=Outline) emptyTrash as Action Affirmed("Are you sure you want to empty the trash?")
+
+Template(layout=Vertical Flexible) trashTableCatalog as Relative(height=100%)
+	Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, format=bordered) trashTable
+		noItemsMessage = "No elements"
+		Mold
+			Heading trashTableTypeHeading > Text(value="Type", translate=true)
+			Item(height=30px,width=30%) trashTableTypeItem > Text(value="Loading...", translate=true) type
+		Mold
+			Heading trashTableLabelHeading > Text(value="Title", translate=true)
+			Item(height=30px,width=40%) trashTableLabelItem > Text label
+		Mold
+			Heading trashTableDeleteDateHeading > Text(value="Delete date", translate=true)
+			Item(height=30px,width=20%) trashTableDeleteDateItem > Date(pattern="DD/MM/YYYY HH:mm:ss") deleteDate
+		Mold
+			Heading trashTableOperationsHeading
+			Item(height=30px,width=10%) trashTableOperationsItem
+				Block(layout=Horizontal EndJustified)
+					MaterialIconButton(title = "Restore", icon = "RestoreFromTrash", size=Small) restore as Action Affirmed(affirmText = "Are you sure you want to restore element from trash?")
+
+Template(format=fullWidth spaced) trashTableFilters
+	Link(title="Reset filters", format=doubleAirBottom) reset
+	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) type
+	Block(format=doubleAirBottom) > Stamp(template=dateRangeFilterTemplate) deleteDate

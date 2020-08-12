@@ -1,0 +1,612 @@
+{
+  "swagger": "2.0",
+  "host": "",
+  "basePath": "/mobileservice",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "paths": {
+    "/Helo": {
+      "post": {
+        "description": "Does Helo",
+        "operationId": "MobileService_10_2_1810810118",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/Register": {
+      "post": {
+        "description": "Registers a device",
+        "operationId": "MobileService_15_2_12138872856",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/Unregister": {
+      "post": {
+        "description": "Unregisters a device",
+        "operationId": "MobileService_20_2_01409577089",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadNewDefinitions": {
+      "post": {
+        "description": "Loads the new defintitions",
+        "operationId": "MobileService_25_2_1129944629",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadNewGlossaries": {
+      "post": {
+        "description": "Loads the new glossaries",
+        "operationId": "MobileService_30_2_11063147673",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/DownloadGlossary": {
+      "post": {
+        "description": "Downloads the glossary",
+        "operationId": "MobileService_35_2_1495817563",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadNewAssignedTasks": {
+      "post": {
+        "description": "Loads the new assigned tasks",
+        "operationId": "MobileService_40_2_0975731269",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadNewAvailableTasks": {
+      "post": {
+        "description": "Loads the new available tasks",
+        "operationId": "MobileService_45_2_1278759600",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadAssignedTasksToDelete": {
+      "post": {
+        "description": "Loads the assigned tasks to delete",
+        "operationId": "MobileService_50_2_11931699087",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadFinishedTasksToDelete": {
+      "post": {
+        "description": "Loads the finished tasks to delete",
+        "operationId": "MobileService_55_2_01558035277",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/LoadUnassignedTasksToDelete": {
+      "post": {
+        "description": "Loads the unassigned tasks to delete",
+        "operationId": "MobileService_60_2_0703076472",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/AssignTask": {
+      "post": {
+        "description": "Assigns a task",
+        "operationId": "MobileService_65_2_0773573603",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/UnassignTask": {
+      "post": {
+        "description": "Unassigns a task",
+        "operationId": "MobileService_70_2_1389739268",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/DownloadTaskPacked": {
+      "post": {
+        "description": "Downloads a task packed",
+        "operationId": "MobileService_75_2_11908975564",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/UploadTaskPacked": {
+      "post": {
+        "description": "Uploads a task packed",
+        "operationId": "MobileService_80_2_0792218930",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/PrepareUploadTask": {
+      "post": {
+        "description": "Prepares an upload task",
+        "operationId": "MobileService_85_2_0787331743",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/UploadTaskFile": {
+      "post": {
+        "description": "Uploads a task file",
+        "operationId": "MobileService_90_2_196976969",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "extra",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/UploadTaskSchema": {
+      "post": {
+        "description": "Uploads a task schema",
+        "operationId": "MobileService_97_2_11226916632",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/SyncChats": {
+      "post": {
+        "description": "Synchronizes chats",
+        "operationId": "MobileService_103_2_1310142593",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

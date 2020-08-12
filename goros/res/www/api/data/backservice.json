@@ -1,0 +1,3016 @@
+{
+  "swagger": "2.0",
+  "host": "",
+  "basePath": "/backservice",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "paths": {
+    "/adddatastorecubefact": {
+      "post": {
+        "description": "Adds a fact to a datastore cube",
+        "operationId": "BackService_10_2_11289260438",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cube",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/adddatastorecubefacts": {
+      "post": {
+        "description": "Adds facts to a datastore cube",
+        "operationId": "BackService_17_2_1810473616",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cube",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/adddatastoredimensioncomponent": {
+      "post": {
+        "description": "Adds a component to a datastore dimension",
+        "operationId": "BackService_24_2_11582763927",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dimension",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addnodeflag": {
+      "post": {
+        "description": "Adds a flag to a node",
+        "operationId": "BackService_31_2_01904406801",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addnodenote": {
+      "post": {
+        "description": "Adds a note to a node",
+        "operationId": "BackService_38_2_01795721931",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addsourceterm": {
+      "post": {
+        "description": "Adds a term to a source",
+        "operationId": "BackService_45_2_01156532150",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addtaskflact": {
+      "post": {
+        "description": "Adds a fact to a task",
+        "operationId": "BackService_55_2_0660853360",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "subtitle",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "links",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addtaskflag": {
+      "post": {
+        "description": "Adds a flag to a task",
+        "operationId": "BackService_64_2_02144371220",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/addtaskshortcut": {
+      "post": {
+        "description": "Adds a shortcut to a task",
+        "operationId": "BackService_71_2_1528074246",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/consolidatenode": {
+      "post": {
+        "description": "Consolidates a node",
+        "operationId": "BackService_78_2_01200687373",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/createaccount": {
+      "post": {
+        "description": "Creates an account",
+        "operationId": "BackService_83_2_0168862038",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fullname",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roles",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/createnode": {
+      "post": {
+        "description": "Creates a node",
+        "operationId": "BackService_91_2_0859474299",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/createtask": {
+      "post": {
+        "description": "Creates a task",
+        "operationId": "BackService_97_2_0524727396",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/deletenodeflag": {
+      "post": {
+        "description": "Deletes a flag for a node",
+        "operationId": "BackService_102_2_0470065358",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/deletenodenote": {
+      "post": {
+        "description": "Deletes a note for a node",
+        "operationId": "BackService_108_2_1552239148",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/createtaskflag": {
+      "post": {
+        "description": "Deletes a flag for a task",
+        "operationId": "BackService_114_2_057172625",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/deletetaskshortcut": {
+      "post": {
+        "description": "Deletes a shortcut for a task",
+        "operationId": "BackService_120_2_01515384811",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/downloaddistribution": {
+      "post": {
+        "description": "Downloads the distribution",
+        "operationId": "BackService_126_2_01120599960",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/emptytrash": {
+      "post": {
+        "description": "Empties the trash",
+        "operationId": "BackService_130_2_043731039",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/executeexporter": {
+      "post": {
+        "description": "Executes an exporter",
+        "operationId": "BackService_134_2_1108562539",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "exporter",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/executenodecommand": {
+      "post": {
+        "description": "Executes a node command",
+        "operationId": "BackService_140_2_0162976447",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "idnode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "command",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/existsnode": {
+      "post": {
+        "description": "Checks if a node exists",
+        "operationId": "BackService_146_2_01533428335",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/exportnode": {
+      "post": {
+        "description": "Exports a node",
+        "operationId": "BackService_151_2_11731949072",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/exportnodes": {
+      "post": {
+        "description": "Exports a set of nodes",
+        "operationId": "BackService_156_2_11640490859",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodeancestors": {
+      "post": {
+        "description": "Gets the ancestors for a node",
+        "operationId": "BackService_161_2_0375089390",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodedocument": {
+      "post": {
+        "description": "Gets a document for node",
+        "operationId": "BackService_166_2_0851436247",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodedocumentcontenttype": {
+      "post": {
+        "description": "Gets the content type for a node document",
+        "operationId": "BackService_171_2_0812690604",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodefile": {
+      "post": {
+        "description": "Gets a file for a node",
+        "operationId": "BackService_176_2_0589315142",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodeflags": {
+      "post": {
+        "description": "Gets the flags for a node",
+        "operationId": "BackService_182_2_156919609",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodelocation": {
+      "post": {
+        "description": "Gets the node location",
+        "operationId": "BackService_187_2_1381804549",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodenotes": {
+      "post": {
+        "description": "Gets the notes for a node",
+        "operationId": "BackService_192_2_02084171981",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodereference": {
+      "post": {
+        "description": "Gets a reference for a node",
+        "operationId": "BackService_197_2_08777104",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodereferences": {
+      "post": {
+        "description": "Gets a set of filtered references for a node",
+        "operationId": "BackService_203_2_0313112390",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderby",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodereferencescount": {
+      "post": {
+        "description": "Gets the count of filtered references for a node",
+        "operationId": "BackService_213_2_0568508045",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodeschema": {
+      "post": {
+        "description": "Gets the schema for a node",
+        "operationId": "BackService_220_2_01647049623",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getnodetasks": {
+      "post": {
+        "description": "Gets the tasks for a node",
+        "operationId": "BackService_225_2_0690046368",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getsourceparentterm": {
+      "post": {
+        "description": "Gets the parent term for a term of a source",
+        "operationId": "BackService_230_2_1376547032",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getsourceterms": {
+      "post": {
+        "description": "Gets the terms for a parent term",
+        "operationId": "BackService_236_2_0532988399",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gettaskfacts": {
+      "post": {
+        "description": "Gets the facts for a task",
+        "operationId": "BackService_242_2_01384890020",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gettaskflags": {
+      "post": {
+        "description": "Gets the flags for a task",
+        "operationId": "BackService_247_2_01331537828",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gettaskprocess": {
+      "post": {
+        "description": "Gets the process for a task",
+        "operationId": "BackService_252_2_11175164420",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gettasks": {
+      "post": {
+        "description": "Gets a set of filtered tasks",
+        "operationId": "BackService_257_2_01329538568",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "inbox",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "folder",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "condition",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gettaskshortcuts": {
+      "post": {
+        "description": "Gets the shortcuts for a task",
+        "operationId": "BackService_267_2_1737345410",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getuserlinkedtonode": {
+      "post": {
+        "description": "Gets the user linked to a node",
+        "operationId": "BackService_272_2_0487283014",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "idnode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getusernode": {
+      "post": {
+        "description": "Gets the environment node for a user",
+        "operationId": "BackService_277_2_0448495049",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getusertasks": {
+      "post": {
+        "description": "Gets the tasks for a user",
+        "operationId": "BackService_283_2_11869894199",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gotoplaceintask": {
+      "post": {
+        "description": "Goes to a place in a task",
+        "operationId": "BackService_288_2_11962630593",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "place",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "history",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/haspermissions": {
+      "post": {
+        "description": "Checks if user has permissions",
+        "operationId": "BackService_295_2_11843458350",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/importnode": {
+      "post": {
+        "description": "Imports a node",
+        "operationId": "BackService_300_2_11011744049",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "importer",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "idscope",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/loadsource": {
+      "post": {
+        "description": "Loads a source",
+        "operationId": "BackService_307_2_01682162565",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/loaduser": {
+      "post": {
+        "description": "Loads a user",
+        "operationId": "BackService_312_2_11968773913",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/locatenode": {
+      "post": {
+        "description": "Locates a node",
+        "operationId": "BackService_317_2_01014123339",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/locatesource": {
+      "post": {
+        "description": "Locates a source",
+        "operationId": "BackService_323_2_0526627838",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodedeleteable": {
+      "post": {
+        "description": "Makes a node deletable",
+        "operationId": "BackService_329_2_1317266896",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodeeditable": {
+      "post": {
+        "description": "Makes a node editable",
+        "operationId": "BackService_334_2_1952956078",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodeprivate": {
+      "post": {
+        "description": "Makes a node private",
+        "operationId": "BackService_339_2_1700370527",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodepublic": {
+      "post": {
+        "description": "Makes a node public",
+        "operationId": "BackService_344_2_1523308755",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodeundeleteable": {
+      "post": {
+        "description": "Makes a node undeletable",
+        "operationId": "BackService_349_2_0702924489",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/makenodeuneditable": {
+      "post": {
+        "description": "Makes a node uneditable",
+        "operationId": "BackService_354_2_11474236007",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/opendatastore": {
+      "post": {
+        "description": "Loads a datastore",
+        "operationId": "BackService_359_2_179649965",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/opennode": {
+      "post": {
+        "description": "Loads a node",
+        "operationId": "BackService_364_2_131221915",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/opentask": {
+      "post": {
+        "description": "Loads a task",
+        "operationId": "BackService_370_2_1755115493",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/recovernode": {
+      "post": {
+        "description": "Recovers a node",
+        "operationId": "BackService_375_2_01782358098",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/removenode": {
+      "post": {
+        "description": "Removes a node",
+        "operationId": "BackService_380_2_02043236128",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/removetask": {
+      "post": {
+        "description": "Removes a task",
+        "operationId": "BackService_385_2_1863273731",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/resetnodeform": {
+      "post": {
+        "description": "Resets a node form",
+        "operationId": "BackService_390_2_01763107843",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/resumetask": {
+      "post": {
+        "description": "Resumes a task",
+        "operationId": "BackService_395_2_11267311564",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/runtask": {
+      "post": {
+        "description": "Runs a task",
+        "operationId": "BackService_400_2_1110068229",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenode": {
+      "post": {
+        "description": "Saves a node",
+        "operationId": "BackService_406_2_0959583899",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodedocument": {
+      "post": {
+        "description": "Saves a node",
+        "operationId": "BackService_412_2_051685985",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "form",
+            "description": "",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "contenttype",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodefile": {
+      "post": {
+        "description": "Saves a file in a node",
+        "operationId": "BackService_419_2_01966261346",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "form",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodeparent": {
+      "post": {
+        "description": "Saves the node parent",
+        "operationId": "BackService_425_2_0539240277",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodepartnercontext": {
+      "post": {
+        "description": "Saves the partner context in a node",
+        "operationId": "BackService_431_2_01819617322",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodepicture": {
+      "post": {
+        "description": "Saves a picture in a node",
+        "operationId": "BackService_437_2_11548891428",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "form",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodereference": {
+      "post": {
+        "description": "Saves a node reference",
+        "operationId": "BackService_443_2_01090169458",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "attributes",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savenodesattribute": {
+      "post": {
+        "description": "Saves nodes attribute",
+        "operationId": "BackService_450_2_01516360223",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "nodes",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/savetask": {
+      "post": {
+        "description": "Saves a task",
+        "operationId": "BackService_456_2_0546691166",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/saveuser": {
+      "post": {
+        "description": "Saves a user",
+        "operationId": "BackService_462_2_11359049390",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/searchevent": {
+      "post": {
+        "description": "Searches an event",
+        "operationId": "BackService_468_2_0907680607",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/searchnodes": {
+      "post": {
+        "description": "Searches nodes",
+        "operationId": "BackService_475_2_01339180828",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api": {
+      "post": {
+        "description": "Shows the api",
+        "operationId": "BackService_482_2_01338873132",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/subscribe": {
+      "post": {
+        "description": "Subscribes to an event type",
+        "operationId": "BackService_486_2_1613506080",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/unlocktask": {
+      "post": {
+        "description": "Unlocks a task",
+        "operationId": "BackService_492_2_11341790932",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "place",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stop",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

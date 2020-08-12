@@ -1,0 +1,237 @@
+{
+  "swagger": "2.0",
+  "host": "",
+  "basePath": "/setupservice",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "text/plain; charset\u003dutf-8",
+    " application/json",
+    "multipart/form-data"
+  ],
+  "paths": {
+    "/showapi": {
+      "post": {
+        "description": "Shows the api",
+        "operationId": "SetupService_10_2_01338873132",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getmajorversion": {
+      "post": {
+        "description": "Gets the major version",
+        "operationId": "SetupService_14_2_0844401408",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/getstatus": {
+      "post": {
+        "description": "Gets the status of the service",
+        "operationId": "SetupService_18_2_1993116306",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/run": {
+      "post": {
+        "description": "Runs the kernel",
+        "operationId": "SetupService_22_2_11857264205",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/putlabel": {
+      "post": {
+        "description": "Sets the label of the business unit",
+        "operationId": "SetupService_26_2_0205905391",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/putlogo": {
+      "post": {
+        "description": "Sets the logo of the business unit",
+        "operationId": "SetupService_31_2_1443538538",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "logo",
+            "in": "form",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stop": {
+      "post": {
+        "description": "Stops the kernel",
+        "operationId": "SetupService_36_2_12006011588",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/updatemodel": {
+      "post": {
+        "description": "Updates the model",
+        "operationId": "SetupService_40_2_1495305381",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "form",
+            "description": "",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/executeconstructor": {
+      "post": {
+        "description": "Executes the constructor",
+        "operationId": "SetupService_45_2_11243925856",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

@@ -102,7 +102,7 @@ Template(format=nodeFieldStyle) fieldNodeTemplate
 				Block(format=airTop) as Absolute(width=175px)
 					Button(title="Add element", highlight=Outline, visible=false) addType as Action
 					Button(title="Add element", highlight=Outline, visible=false) selectType as OpenDialog(selectNodeTypeDialog)
-			Frame(display=empty) nodeFrame
+			DisplayStamp(display=empty) nodeFrame
 
 	DecisionDialog(title="Select element type") selectNodeTypeDialog
 		Selector nodeTypeSeletor as ListBox

@@ -29,7 +29,7 @@ public class ListenerGoros extends Listener {
 
 	@Override
 	public void taskAborted(MonetEvent event) {
-		notifier.notifyTaskStateChange((Task) event.getSender());
+		notifier.notifyTaskStateChange((String) event.getSender());
 	}
 
 }

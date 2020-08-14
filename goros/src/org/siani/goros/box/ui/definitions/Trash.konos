@@ -16,13 +16,13 @@ Template(layout=Vertical Flexible, format=smallAir) trashTemplate
 
 	Block(layout=Horizontal Flexible, format=smallAirTop)
 		Block(layout=Vertical Flexible, format=bordered)
-			Stamp(template=trashToolbarTemplate) toolbar
+			TemplateStamp(template=trashToolbarTemplate) toolbar
 			Block(layout=Vertical Flexible) as Relative(height=100%)
-				Block(layout=Vertical Flexible) tableView > Stamp(template=trashTableCatalog, format=fullHeight) tableViewStamp
+				Block(layout=Vertical Flexible) tableView > TemplateStamp(template=trashTableCatalog, format=fullHeight) tableViewStamp
 
 		Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
 			Transition(direction=Left)
-			Block(layout=Vertical Flexible) tableFilters > Stamp(template=trashTableFilters, format=fullHeight) tableFiltersStamp
+			Block(layout=Vertical Flexible) tableFilters > TemplateStamp(template=trashTableFilters, format=fullHeight) tableFiltersStamp
 
 Template(layout=Horizontal, format=air) trashToolbarTemplate
 	Button(title="Empty trash", size=Small, highlight=Outline) emptyTrash as Action Affirmed("Are you sure you want to empty the trash?")
@@ -47,5 +47,5 @@ Template(layout=Vertical Flexible) trashTableCatalog as Relative(height=100%)
 
 Template(format=fullWidth spaced) trashTableFilters
 	Link(title="Reset filters", format=doubleAirBottom) reset
-	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) type
-	Block(format=doubleAirBottom) > Stamp(template=dateRangeFilterTemplate) deleteDate
+	Block(format=doubleAirBottom) > TemplateStamp(template=comboFilterTemplate) type
+	Block(format=doubleAirBottom) > TemplateStamp(template=dateRangeFilterTemplate) deleteDate

@@ -59,7 +59,7 @@ Template(layout=Horizontal, format=air) tasksToolbarTemplate
 
 Template(format=fullWidth spaced) tasksFiltersTemplate
 	Link(title="Resetear filtros", format=doubleAirBottom) reset
-	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) folder
-	Block(format=doubleAirBottom) > Stamp(template=comboFilterTemplate) nature
-	Block(format=doubleAirBottom) > Stamp(template=checkFilterTemplate) urgent
+	Block(format=doubleAirBottom) > TemplateStamp(template=comboFilterTemplate) folder
+	Block(format=doubleAirBottom) > TemplateStamp(template=comboFilterTemplate) nature
+	Block(format=doubleAirBottom) > TemplateStamp(template=checkFilterTemplate) urgent
 

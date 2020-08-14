@@ -3,12 +3,12 @@ dsl Konos
 use Theme
 
 Template(layout=Horizontal Flexible) sourceEmbeddedTemplate as Relative(height=100%)
-	Block(layout=Vertical Flexible, format=autoOverflow) levelsBlock as Relative(width=100%) > Stamp(template=sourceLevelTemplate) levels as Multiple(arrangement=Horizontal, wrapItems=false)
+	Block(layout=Vertical Flexible, format=autoOverflow) levelsBlock as Relative(width=100%) > TemplateStamp(template=sourceLevelTemplate) levels as Multiple(arrangement=Horizontal, wrapItems=false)
 	Block(format=smallAirLeft leftBordered) termView as Conditional Animated Relative(width=35%)
 		Transition(direction=Left)
 	 	//Block(layout=Vertical Flexible)
-		Stamp(template=publishTermsDialog) publishTermsDialog
-		Stamp(template=sourceTermDialog) termDialog
+		TemplateStamp(template=publishTermsDialog) publishTermsDialog
+		TemplateStamp(template=sourceTermDialog) termDialog
 
 Template(layout=Vertical, format=rightBordered sourceLevelWidth) sourceLevelTemplate as Relative(height=100%)
 	List(itemClass="org.monet.space.kernel.model.Term", scrollingMark=false) sourceLevelList as Selectable(multiple=false)
@@ -50,7 +50,7 @@ Template sourceTermDialog
 				Text(value="Category", translate=true) categoryType as Option
 			Switch(title="Contain other terms", format=doubleAirBottom) containOtherTerms as Action
 			Text(value="Tags", translate=true, format=grey)
-			Stamp(template=sourceTermTagTemplate) tags as Multiple(noItemsMessage="No tags")
+			TemplateStamp(template=sourceTermTagTemplate) tags as Multiple(noItemsMessage="No tags")
 	Block(format=middleSpaced leftSpaced rightSpaced) childrenView
 		Text(format=h5 airBottom) addTitle
 		Block(format=bordered dialog)

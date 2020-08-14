@@ -4,7 +4,7 @@ use UI
 use Theme
 
 Template(layout=Vertical Flexible) taskStateViewTemplate as Relative(height=100%)
-	Stamp(template=taskOrderTemplate, visible=false) // Always needed to import template in client
+	TemplateStamp(template=taskOrderTemplate, visible=false) // Always needed to import template in client
 
 	Text(format=grey doubleAirBottom) assignMessage
 
@@ -20,16 +20,16 @@ Template(layout=Vertical Flexible) taskStateViewTemplate as Relative(height=100%
 
 	Block(layout=Vertical) activityView
 		Block stateDueView as Conditional Relative(height=100%) > Text(value="Task is finished") stateDueMessage
-		Block delegationView as Conditional Relative(height=100%) > Stamp(template=taskPlaceDelegationTemplate) delegationViewStamp
-		Block sendJobView as Conditional Relative(height=100%) > Stamp(template=taskPlaceSendJobTemplate) sendJobViewStamp
-		Block lineView as Conditional Relative(height=100%) > Stamp(template=taskPlaceLineTemplate) lineViewStamp
-		Block editionView as Conditional Relative(height=100%) > Stamp(template=taskPlaceEditionTemplate) editionViewStamp
-		Block enrollView as Conditional Relative(height=100%) > Stamp(template=taskPlaceEnrollTemplate) enrollViewStamp
-		Block waitView as Conditional Relative(height=100%) > Stamp(template=taskPlaceWaitTemplate) waitViewStamp
-		Block sendRequestView as Conditional Relative(height=100%) > Stamp(template=taskPlaceSendRequestTemplate) sendRequestViewStamp
-		Block sendResponseView as Conditional Relative(height=100%) > Stamp(template=taskPlaceSendResponseTemplate) sendResponseViewStamp
+		Block delegationView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceDelegationTemplate) delegationViewStamp
+		Block sendJobView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceSendJobTemplate) sendJobViewStamp
+		Block lineView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceLineTemplate) lineViewStamp
+		Block editionView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceEditionTemplate) editionViewStamp
+		Block enrollView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceEnrollTemplate) enrollViewStamp
+		Block waitView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceWaitTemplate) waitViewStamp
+		Block sendRequestView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceSendRequestTemplate) sendRequestViewStamp
+		Block sendResponseView as Conditional Relative(height=100%) > TemplateStamp(template=taskPlaceSendResponseTemplate) sendResponseViewStamp
 
-	Block(format=doubleAirTop) > Stamp(template=taskHistoryTemplate) historyViewStamp
+	Block(format=doubleAirTop) > TemplateStamp(template=taskHistoryTemplate) historyViewStamp
 
 Template(layout=Vertical Flexible) taskPlaceDelegationTemplate as Relative(height=100%)
 	Text(format=h5) label
@@ -39,9 +39,9 @@ Template(layout=Vertical Flexible) taskPlaceDelegationTemplate as Relative(heigh
 	Block pendingView as Conditional
 		Text(format=grey) pendingMessage
 		Link(title="Ver roles") openRoles as Action Addressable(GorosElements.roles)
-		Stamp(template=taskPlaceRoleTemplate) roles as Multiple
+		TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
 		Block(format=doubleAirTop) setupBlock
-			Frame(display=empty) setupFrame
+			DisplayStamp(display=empty) setupFrame
 			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
 	Block failureView as Conditional
 		Block(layout=Horizontal)
@@ -59,10 +59,10 @@ Template(layout=Vertical Flexible) taskPlaceSendJobTemplate as Relative(height=1
 	Block pendingView as Conditional
 		Text(format=grey) pendingMessage
 		Link(title="Ver roles") openRoles as Action Addressable(GorosElements.roles)
-		Stamp(template=taskPlaceRoleTemplate) roles as Multiple
+		TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
 		Link(title="Unassigned", format=middleAirTop middleAirBottom doubleAirLeft) unAssignedRole as Action
 		Block(format=doubleAirTop) setupBlock
-			Frame(display=empty) setupFrame
+			DisplayStamp(display=empty) setupFrame
 			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
 	Block failureView as Conditional
 		Block(layout=Horizontal)
@@ -73,14 +73,14 @@ Template(layout=Vertical Flexible) taskPlaceLineTemplate as Relative(height=100%
 		Text label
 		Text(visible=false) timeoutMessage
 	Block loadingStops > Spinner
-	Block stopsBlock > Stamp(template=taskPlaceLineStopTemplate) stops as Multiple(arrangement=Vertical)
+	Block stopsBlock > TemplateStamp(template=taskPlaceLineStopTemplate) stops as Multiple(arrangement=Vertical)
 
 Template taskPlaceLineStopTemplate
 	Link(title="", format=middleAirTop middleAirBottom doubleAirLeft) label as Action
 
 Template(layout=Vertical Flexible) taskPlaceEditionTemplate as Relative(height=100%)
 	Text(format=h5) label
-	Frame(display=empty) formFrame
+	DisplayStamp(display=empty) formFrame
 	Block(visible=false) noEditionBlock > Text(value="No form defined", translate=true)
 	Block(visible=false, format=airTop) solveErrorMessageBlock > Text solveErrorMessage
 	Block as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solve as Action
@@ -116,7 +116,7 @@ Template(layout=Vertical Flexible) taskPlaceSendResponseTemplate as Relative(hei
 		Link(title="Retry") retry as Action
 
 Template(layout=Vertical Flexible) taskHistoryTemplate as Relative(height=100%)
-	Block entriesBlock > Stamp(template=taskHistoryEntryTemplate) entries as Multiple(arrangement=Vertical)
+	Block entriesBlock > TemplateStamp(template=taskHistoryEntryTemplate) entries as Multiple(arrangement=Vertical)
 	Link(title="Ver más...", visible=false) moreEntries as Action
 
 Template(layout=Vertical Flexible, format=middleTopSpaced middleBottomSpaced topLightDottedBordered) taskHistoryEntryTemplate as Relative(height=100%)

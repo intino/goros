@@ -41,7 +41,11 @@ public class GorosNotifier {
 	}
 
 	public void notifyTaskStateChange(Task task) {
-		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
+		notifyTaskStateChange(task.getId());
+	}
+
+	public void notifyTaskStateChange(String task) {
+		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task);
 		taskStateChangeListeners.values().forEach(l -> l.accept(loadedTask));
 	}
 

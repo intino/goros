@@ -1,0 +1,68 @@
+def type(box)
+    package $package.box;
+
+    import $package.graph.$module+firstUpperCase~Graph;
+    import io.intino.alexandria.core.Box;
+    import io.intino.alexandria.ui.services.AuthService;
+    import io.intino.magritte.framework.Graph;
+    import org.siani.goros.box.GorosBox;
+    import org.siani.goros.box.listeners.GorosNotifier;
+    import org.siani.goros.graph.BusinessUnit;
+    import org.siani.goros.graph.GorosGraph;
+
+    import java.net.URL;
+
+    public class $module+firstUpperCase~Box extends AbstractBox {
+        private $module+firstUpperCase~Graph graph;
+
+        public $module+firstUpperCase~Box(String$[$] args) {
+            super(args);
+        }
+
+        public $module+firstUpperCase~Box($module+firstUpperCase~Configuration configuration) {
+            super(configuration);
+        }
+
+        @Override
+        public io.intino.alexandria.core.Box put(Object o) {
+            super.put(o);
+            if (o instanceof Graph) graph = ((Graph) o).as($module+firstUpperCase~Graph.class);
+            return this;
+        }
+
+        public void beforeStart() {
+        }
+
+        public void afterStart() {
+        }
+
+        public void beforeStop() {
+        }
+
+        public void afterStop() {
+        }
+
+        public GorosBox goros() {
+            return ((GorosBox)owner);
+        }
+
+        public CoordinacionBox open(String businessUnit) {
+            open(graph.a$$(GorosGraph.class).businessUnitList().stream().filter(b -> b.name$$().equals(businessUnit)).findFirst().orElse(null));
+            return this;
+        }
+
+        public Box open(BusinessUnit businessUnit) {
+            goros().open(businessUnit);
+            return this;
+        }
+
+        public GorosNotifier notifier() {
+            return ((GorosBox)owner()).notifier();
+        }
+
+        @Override
+        protected AuthService authService(URL authServiceUrl) {
+            return null;
+        }
+    }
+end

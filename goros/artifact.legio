@@ -17,6 +17,7 @@ Artifact(groupId = "io.intino", version = "1.0.0-SNAPSHOT") goros as Platform
 		Web("io.intino", "goros-elements", "1.0.0-SNAPSHOTº")
 
 		Test("junit", "junit", "LATEST")
+		Web(groupId = "io.intino", artifactId = "goros-elements", version = "1.0.0-SNAPSHOT")
 	Package(mode = ModulesAndLibrariesLinkedByManifest)
 
 	Parameter(name = "workspace")

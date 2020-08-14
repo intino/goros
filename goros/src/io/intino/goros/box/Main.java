@@ -1,7 +1,6 @@
-package io.intino.goros;
+package io.intino.goros.box;
 
 import io.intino.magritte.framework.Graph;
-import io.intino.goros.box.GorosBox;
 import io.intino.goros.graph.GorosGraph;
 
 import java.util.Arrays;
@@ -13,7 +12,7 @@ public class Main {
 		GorosGraph gorosGraph = new Graph().loadStashes("Goros").as(GorosGraph.class);
 		box.put(gorosGraph);
 		box.start();
-		box.open(gorosGraph.businessUnit("viasyobras"));
+		box.open(gorosGraph.businessUnit(box.configuration().get("business-unit")));
 		Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
 	}
 }

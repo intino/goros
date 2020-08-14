@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact(groupId = "org.siani", version = "1.0.0-SNAPSHOT") goros as Platform
+Artifact(groupId = "io.intino", version = "1.0.0-SNAPSHOT") goros as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
 	Box(language = "Konos", version = "8.8.20")
 
@@ -14,12 +14,9 @@ Artifact(groupId = "org.siani", version = "1.0.0-SNAPSHOT") goros as Platform
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 
-		Web("org.siani", "goros-elements", "1.0.0")
+		Web("io.intino", "goros-elements", "1.0.0-SNAPSHOTº")
 
 		Test("junit", "junit", "LATEST")
-		Web(groupId = "org.siani", artifactId = "goros-elements", version = "1.0.0-SNAPSHOT")
-		Web(groupId = "org.siani", artifactId = "goros-elements", version = "1.0.0-SNAPSHOT")
-		Web(groupId = "org.siani", artifactId = "goros-elements", version = "1.0.0-SNAPSHOT")
 	Package(mode = ModulesAndLibrariesLinkedByManifest)
 
 	Parameter(name = "workspace")

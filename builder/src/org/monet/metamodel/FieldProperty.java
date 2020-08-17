@@ -3,6 +3,10 @@ package org.monet.metamodel;
 // FieldProperty
 // Declaración abstracta que se utiliza para  modelar un campo de un formulario
 
+import org.monet.space.kernel.model.DefinitionType;
+
+import java.awt.*;
+
 public abstract class FieldProperty extends FieldPropertyBase {
 
 	public String getType() {

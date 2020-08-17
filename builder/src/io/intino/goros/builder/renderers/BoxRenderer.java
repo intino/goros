@@ -1,6 +1,7 @@
 package io.intino.goros.builder.renderers;
 
 import io.intino.goros.builder.Modernization;
+import io.intino.goros.builder.monet.Dictionary;
 import io.intino.itrules.FrameBuilder;
 import io.intino.goros.builder.renderers.templates.java.BoxTemplate;
 import io.intino.goros.builder.util.StringUtil;
@@ -9,8 +10,8 @@ import java.io.File;
 
 public class BoxRenderer extends Renderer {
 
-	public BoxRenderer(Modernization modernization) {
-		super(modernization);
+	public BoxRenderer(Dictionary dictionary, Modernization modernization) {
+		super(dictionary, modernization);
 	}
 
 	@Override

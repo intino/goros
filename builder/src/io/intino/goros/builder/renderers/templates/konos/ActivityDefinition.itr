@@ -1,0 +1,34 @@
+def type(activity)
+    dsl Konos
+
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+lowerCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    Link(title="Tareas", format=h4 middleAirRight, visible=false) tasks as Action Addressable(CoordinacionElements.taskBoard)
+                    Link(title="Mis tareas", format=h4 middleAirRight, visible=false) myTasks as Action Addressable(CoordinacionElements.taskTray)
+                    Text(value="/", format=h4 middleAirRight)
+                    Text(format=h4 bold) label
+
+        Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+lowerCase~EmbeddedTemplate) content
+
+    Template(layout=Vertical Flexible) $name+lowerCase~EmbeddedTemplate as Relative(height=100%)
+        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+            Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=CoordinacionElements.goros) toolbar
+            Block(layout=Horizontal EndJustified)
+                MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
+                MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
+                MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable(CoordinacionElements.$name+lowerCase)
+
+        Selector viewSelector as Tabs
+            Text(value="Estado") state as Option
+
+        Block(layout=Vertical Flexible)
+            Block(layout=Vertical Flexible) stateView as Conditional(viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+lowerCase~StateViewTemplate) stateViewStamp
+
+    Template(format=spaced) $name+lowerCase~StateViewTemplate as Relative(height=100%)
+        OwnerTemplateStamp(template="TaskStateViewTemplate", owner=CoordinacionElements.goros) state
+end

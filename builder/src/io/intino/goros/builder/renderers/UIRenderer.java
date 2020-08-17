@@ -1,13 +1,10 @@
 package io.intino.goros.builder.renderers;
 
 import io.intino.goros.builder.Modernization;
-import io.intino.itrules.FrameBuilder;
-import org.monet.bpi.Exporter;
-import org.monet.metamodel.Definition;
+import io.intino.goros.builder.monet.Dictionary;
 import io.intino.goros.builder.renderers.templates.konos.UITemplate;
-import org.monet.metamodel.ExporterDefinition;
-import org.monet.metamodel.NodeDefinition;
-import org.monet.metamodel.RoleDefinition;
+import io.intino.itrules.FrameBuilder;
+import org.monet.metamodel.Definition;
 
 import java.io.File;
 import java.util.List;
@@ -15,8 +12,8 @@ import java.util.List;
 public class UIRenderer extends Renderer {
 	private final List<Definition> definitionList;
 
-	public UIRenderer(Modernization modernization, List<Definition> definitionList) {
-		super(modernization);
+	public UIRenderer(Dictionary dictionary, Modernization modernization, List<Definition> definitionList) {
+		super(dictionary, modernization);
 		this.definitionList = definitionList;
 	}
 
@@ -29,14 +26,18 @@ public class UIRenderer extends Renderer {
 	private FrameBuilder buildFrame() {
 		FrameBuilder result = baseFrame();
 		result.add("ui");
-		addRootDefinitions();
+		addRootDefinitions(result);
 		return result;
 	}
 
-	private void addRootDefinitions() {
-		definitionList.forEach(d -> {
-			FrameBuilder result = new FrameBuilder("resource");
-		});
+	private void addRootDefinitions(FrameBuilder builder) {
+		definitionList.forEach(d -> builder.add("definition", definitionFrame(d)));
+	}
+
+	private FrameBuilder definitionFrame(Definition definition) {
+		FrameBuilder result = new FrameBuilder("definition");
+		result.add("name", nameOf(definition));
+		return result;
 	}
 
 	private File file() {

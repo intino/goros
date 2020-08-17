@@ -1,6 +1,7 @@
 package io.intino.goros.builder;
 
 import io.intino.alexandria.logger.Logger;
+import io.intino.goros.builder.monet.Dictionary;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +45,8 @@ public class Modernization {
 	}
 
 	public String sourceUiDirectory() {
-		return sourceBoxDirectory() + File.separator + "ui";
+		return "./temp/ui"; // TESTING
+//		return sourceBoxDirectory() + File.separator + "ui";
 	}
 
 	public String projectName() {

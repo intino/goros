@@ -1,0 +1,5 @@
+def type(translations)
+    dsl Konos
+
+    Translator(language = Spanish)
+end

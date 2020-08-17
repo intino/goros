@@ -15,14 +15,14 @@ import static java.util.stream.Collectors.toList;
 public class GorosBuilder {
     private final Modernization modernization;
     private Dictionary dictionary;
-    private RendererFactory factory = new RendererFactory();
+    private DefinitionRendererFactory factory = new DefinitionRendererFactory();
 
     public GorosBuilder(Modernization modernization) {
         this.modernization = modernization;
     }
 
-    public void compile(File businessModelFile) {
-        prepareModel(businessModelFile);
+    public void compile() {
+        loadDictionary();
         createProjectSkeleton();
         compileDefinitions();
     }
@@ -32,40 +32,27 @@ public class GorosBuilder {
         if (projectDir.exists()) return;
         projectDir.mkdirs();
         ZipUtil.decompress(GorosBuilder.class.getResourceAsStream("/skeleton.zip"), projectDir.getAbsolutePath());
-        new ArtifactRenderer(modernization).write();
-        new MainRenderer(modernization).write();
-        new BoxRenderer(modernization).write();
+        new ArtifactRenderer(dictionary, modernization).write();
+        new MainRenderer(dictionary, modernization).write();
+        new BoxRenderer(dictionary, modernization).write();
     }
 
     private void compileDefinitions() {
-        new UIRenderer(modernization, definitions().collect(toList())).write();
+        new UIRenderer(dictionary, modernization, definitions().collect(toList())).write();
+        new ThemeRenderer(dictionary, modernization).write();
+        new TranslationsRenderer(dictionary, modernization).write();
         definitions().forEach(this::compileDefinition);
     }
 
     private void compileDefinition(Definition definition) {
         if (definition.getType() == null) return;
-        factory.renderer(modernization, definition).write();
+        factory.renderer(dictionary, modernization, definition).write();
     }
 
-    private void prepareModel(File businessModelFile) {
-        decompressBusinessModel(businessModelFile);
-        loadDictionary(businessModelFile);
-    }
-
-    private void loadDictionary(File businessModelFile) {
+    private void loadDictionary() {
         dictionary = new Dictionary();
         org.monet.metamodel.Dictionary.injectCurrentInstance(dictionary);
-        dictionary.initialize(businessModelDir(businessModelFile).getAbsolutePath());
-    }
-
-    private void decompressBusinessModel(File businessModelFile) {
-        File sourceDir = businessModelDir(businessModelFile);
-        if (sourceDir.exists()) return;
-        ZipUtil.decompress(businessModelFile, sourceDir.getAbsoluteFile().getAbsolutePath());
-    }
-
-    private File businessModelDir(File businessModelFile) {
-        return new File(businessModelFile.getParentFile() + "/" + businessModelFile.getName().substring(0, businessModelFile.getName().lastIndexOf(".")));
+        dictionary.initialize(modernization.businessModel().getAbsolutePath());
     }
 
     private Stream<Definition> definitions() {

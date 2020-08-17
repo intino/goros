@@ -1,0 +1,253 @@
+def type(activity & embedded)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.Collection;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource.Inbox;
+    import io.intino.goros.util.DisplayHelper;
+
+    import java.util.List;
+    import java.util.function.Consumer;
+
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+        private Task task;
+        private Inbox inbox;
+        private boolean readonly = true;
+        private Consumer<Task> changeListener;
+        private Consumer<Task> abortListener;
+
+        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate task(Task task) {
+            this.task = task;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate inbox(Inbox inbox) {
+            this.inbox = inbox;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate onChange(Consumer<Task> listener) {
+            this.changeListener = listener;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate onAbort(Consumer<Task> listener) {
+            this.abortListener = listener;
+            return this;
+        }
+
+        public String selectedView() {
+            List<String> selection = viewSelector.selection();
+            return selection.size() > 0 ? selection.get(0) : null;
+        }
+
+        public void selectDefaultView() {
+            DisplayHelper.selectDefaultView(viewSelector, task);
+        }
+
+        public void bindTo(Collection collection) {
+            previous.bindTo(collection);
+            previous.visible(collection != null);
+            next.bindTo(collection);
+            next.visible(collection != null);
+            open.visible(collection != null);
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            box().notifier().onTaskStateChange(this, this::notifyResume);
+            initToolbar();
+            initViews();
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            box().notifier().unTaskStateChange(this);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshToolbar();
+            refreshView();
+        }
+
+        private void initToolbar() {
+            toolbar.onUpdate(task -> task(task).refresh());
+            toolbar.onChange(this::notifyChange);
+            toolbar.onAbort(this::notifyAbort);
+        }
+
+        private void initViews() {
+            stateView.onShow(e -> refreshStateView());
+        }
+
+        private void refreshToolbar() {
+            open.address(path -> path.replace(":task", task.getId()).replace(":inbox", inboxPath()));
+            toolbar.task(task);
+            toolbar.readonly(readonly);
+            toolbar.refresh();
+        }
+
+        private String inboxPath() {
+            return inbox != null ? inbox.value(language()) : "tareas";
+        }
+
+        private void refreshView() {
+            if (stateView.isVisible()) refreshStateView();
+        }
+
+        private void refreshStateView() {
+            if (task == null) return;
+            stateView.stateViewStamp.task(task);
+            stateView.stateViewStamp.readonly(readonly);
+            stateView.stateViewStamp.refresh();
+        }
+
+        private void notifyResume(Task task) {
+            if (changeListener != null) changeListener.accept(task);
+        }
+
+        private void notifyAbort(Task task) {
+            task(task).refresh();
+            if (abortListener != null) abortListener.accept(task);
+        }
+
+        private void notifyChange(Task task) {
+            task(task).refresh();
+            if (changeListener != null) changeListener.accept(task);
+        }
+
+    }
+end
+
+def type(activity & stateview)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.Display;
+    import org.monet.metamodel.NodeViewProperty;
+    import org.monet.metamodel.internal.TaskOrderDefinition;
+    import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.box.ui.DisplayProvider;
+    import io.intino.goros.box.ui.displays.templates.TaskOrderTemplate;
+
+    public class $name+firstUpperCase~StateViewTemplate extends Abstract$name+firstUpperCase~StateViewTemplate<$module+firstUpperCase~Box> implements DisplayProvider {
+        private Task task;
+        private boolean readonly = true;
+
+        public $name+firstUpperCase~StateViewTemplate(CoordinacionBox box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~StateViewTemplate task(Task task) {
+            this.task = task;
+            return this;
+        }
+
+        public $name+firstUpperCase~StateViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            state.task(task);
+            state.displayProvider(this);
+            state.refresh();
+        }
+
+        @Override
+        public Display displayFor(Node node, NodeViewProperty view) {
+            [$display...[$NL]]
+            if (node.getDefinition().getCode().equals(TaskOrderDefinition.CODE)) {
+                TaskOrderTemplate result = new TaskOrderTemplate(box().goros());
+                result.node(node);
+                return result;
+            }
+            return null;
+        }
+
+    }
+end
+
+def type(activity)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource.Inbox;
+    import io.intino.goros.util.LayerHelper;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Task task;
+        private Inbox inbox;
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~Template task(Task task) {
+            this.task = task;
+            return this;
+        }
+
+        public $name+firstUpperCase~Template inbox(Inbox inbox) {
+            this.inbox = inbox;
+            return this;
+        }
+
+        public void open(String id) {
+            task(LayerHelper.taskLayer().loadTask(id));
+            refresh();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (task == null) return;
+            refreshHeader();
+            refreshContent();
+        }
+
+        private void refreshHeader() {
+            label.value(task.getLabel());
+            tasks.address(p -> p.replace(":folder", "default"));
+            tasks.visible(inbox == Inbox.TaskBoard);
+            myTasks.address(p -> p.replace(":folder", "default"));
+            myTasks.visible(inbox == Inbox.TaskTray);
+        }
+
+        private void refreshContent() {
+            content.inbox(inbox);
+            content.task(task);
+            content.readonly(false);
+            content.refresh();
+            if (content.selectedView() == null) content.selectDefaultView();
+        }
+    }
+end
+
+def type(display)
+    if (node.getDefinition().getCode().equals("$code") && view.getCode().equals("$viewCode")) {
+        $package.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
+        result.node(node);
+        result.readonly(false);
+        return result;
+    }
+end

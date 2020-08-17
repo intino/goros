@@ -1,5 +1,6 @@
 package io.intino.goros.builder.util;
 
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -9,6 +10,47 @@ public class StringUtil {
 
     public static String firstUpperCase(String value) {
         return value.substring(0, 1).toUpperCase() + value.substring(1);
+    }
+
+    public static String stripAccents(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
+    }
+
+    public static String firstLowerCase(String value) {
+        return value.substring(0, 1).toLowerCase() + value.substring(1);
+    }
+
+    public static String camelCaseToSnakeCase(String string) {
+        if (string.isEmpty()) {
+            return string;
+        } else {
+            String result = String.valueOf(Character.toLowerCase(string.charAt(0)));
+
+            for(int i = 1; i < string.length(); ++i) {
+                result = result + (Character.isUpperCase(string.charAt(i)) ? "-" + Character.toLowerCase(string.charAt(i)) : string.charAt(i));
+            }
+
+            return result;
+        }
+    }
+
+    public static String snakeCaseToCamelCase(String string) {
+        if (string.isEmpty()) {
+            return string;
+        } else {
+            String result = "";
+            String[] var2 = string.replace("_", "-").split("-");
+            int var3 = var2.length;
+
+            for(int var4 = 0; var4 < var3; ++var4) {
+                String part = var2[var4];
+                result = result + String.valueOf(Character.toUpperCase(part.charAt(0))) + part.substring(1);
+            }
+
+            return result;
+        }
     }
 
     public static String replaceSpecialChars(String sData, String sReplacement) {

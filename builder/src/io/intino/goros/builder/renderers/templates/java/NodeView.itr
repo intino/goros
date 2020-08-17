@@ -1,0 +1,141 @@
+def type(nodeview) trigger(initCall)
+    $name+lowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
+end
+
+def type(nodeview) trigger(refreshCall)
+    if ($name+lowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+end
+
+def type(nodeview) trigger(refreshMethod)
+    private void refresh$name+firstUpperCase~View() {
+        if (node == null) return;
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+end
+
+def type(nodeView)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.CoordinacionBox;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import org.monet.bpi.*;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.box.ui.datasources.FormDatasource;
+    import io.intino.goros.util.LayerHelper;
+    import io.intino.goros.util.NodeHelper;
+
+    import java.util.function.Consumer;
+
+    import static java.util.stream.Collectors.toList;
+
+    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box>[ implements $implements] {
+        private Node node;
+        private NodeViewProperty view;
+        private boolean readonly = false;
+        $show+declaration
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate(CoordinacionBox box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate node(Node node) {
+            this.node = node;
+            updateFields();
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate view(NodeViewProperty view) {
+            this.view = view;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        $show
+        [$displayProvider]
+    }
+end
+
+def type(show & recenttask) trigger(declaration)
+end
+
+def type(show & recenttask)
+    @Override
+    public void init() {
+        super.init();
+        initToolbar();
+    }
+
+	private void initToolbar() {
+		toolbar.onUpdate(task -> refresh());
+		toolbar.onChange(e -> refresh());
+		toolbar.onAbort(e -> refresh());
+	}
+
+	@Override
+	public void refresh() {
+		super.refresh();
+		Task task = NodeHelper.recentTask(node, view);
+		noTaskMessage.visible(task == null);
+		refreshToolbar(task);
+		refreshActivity1View(task);
+	}
+
+	private void refreshToolbar(Task task) {
+		toolbarBlock.visible(task != null);
+		toolbar.task(task);
+		toolbar.readonly(readonly);
+		toolbar.refresh();
+	}
+
+	private void refresh$taskName+firstUpperCase~View(Task task) {
+		boolean visible = task != null && task.getDefinition().getCode().equals("$taskCode");
+		$taskName+firstLowerCase~View.visible(visible);
+		if (!visible) return;
+		$taskName+firstLowerCase~View.task(task);
+		$taskName+firstLowerCase~View.readonly(readonly);
+		$taskName+firstLowerCase~View.refresh();
+	}
+end
+
+def type(show & fields) trigger(declaration)
+    [$field+declaration...[$NL]]
+end
+
+def type(show & fields)
+    @Override
+    public void init() {
+        super.init();
+        [$field+init...[$NL]]
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        [$field+refresh...[$NL]]
+    }
+
+    private void save(Consumer<Boolean> consumer) {
+        consumer.accept(true);
+        LayerHelper.nodeLayer().saveNode(node);
+        updateFields();
+    }
+
+    private void updateFields() {
+        FormDatasource datasource = new FormDatasource(box().goros(), session(), node);
+        [$field+update...[$NL]]
+    }
+end
+
+def type(displayProvider)
+    @Override
+    public Display displayFor(Node node, NodeViewProperty view) {
+        [$display...[$NL]]
+        return null;
+    }
+end

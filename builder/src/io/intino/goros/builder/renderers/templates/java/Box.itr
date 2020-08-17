@@ -5,10 +5,10 @@ def type(box)
     import io.intino.alexandria.core.Box;
     import io.intino.alexandria.ui.services.AuthService;
     import io.intino.magritte.framework.Graph;
-    import org.siani.goros.box.GorosBox;
-    import org.siani.goros.box.listeners.GorosNotifier;
-    import org.siani.goros.graph.BusinessUnit;
-    import org.siani.goros.graph.GorosGraph;
+    import io.intino.goros.box.GorosBox;
+    import io.intino.goros.box.listeners.GorosNotifier;
+    import io.intino.goros.graph.BusinessUnit;
+    import io.intino.goros.graph.GorosGraph;
 
     import java.net.URL;
 

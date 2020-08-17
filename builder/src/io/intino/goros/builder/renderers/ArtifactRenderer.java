@@ -1,6 +1,7 @@
 package io.intino.goros.builder.renderers;
 
 import io.intino.goros.builder.Modernization;
+import io.intino.goros.builder.monet.Dictionary;
 import io.intino.itrules.FrameBuilder;
 import io.intino.goros.builder.renderers.templates.konos.ArtifactTemplate;
 
@@ -8,8 +9,8 @@ import java.io.File;
 
 public class ArtifactRenderer extends Renderer {
 
-	public ArtifactRenderer(Modernization modernization) {
-		super(modernization);
+	public ArtifactRenderer(Dictionary dictionary, Modernization modernization) {
+		super(dictionary, modernization);
 	}
 
 	@Override

@@ -16,8 +16,9 @@ public class Main {
             return;
         }
         Modernization modernization = Modernization.load(new File(args[0]));
+        clear(new File(modernization.projectDirectory().getAbsolutePath() + "/../ui"));
         clear(modernization.projectDirectory());
-        new GorosBuilder(modernization).compile(modernization.businessModel());
+        new GorosBuilder(modernization).compile();
     }
 
     private static void clear(File projectDirectory) throws IOException {

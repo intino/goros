@@ -7,18 +7,20 @@ import io.intino.goros.builder.renderers.templates.java.FormTemplate;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import org.monet.metamodel.*;
+import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty.ShowProperty;
 import org.monet.metamodel.internal.Ref;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.intino.goros.builder.util.StringUtil.firstUpperCase;
 
-public class FormRenderer extends DefinitionRenderer<FormDefinition> {
+public class FormRenderer extends NodeRenderer<FormDefinition> {
 
 	public FormRenderer(Dictionary dictionary, Modernization modernization, FormDefinition definition) {
 		super(dictionary, modernization, definition);
@@ -27,47 +29,56 @@ public class FormRenderer extends DefinitionRenderer<FormDefinition> {
 	@Override
 	public void write() {
 		super.write();
-		writeEmbeddedTemplate();
-		writeViewsTemplate();
 		writeCompositeFieldsTemplate();
 	}
 
 	@Override
 	protected FrameBuilder buildFrame() {
-		FrameBuilder result = baseDefinitionFrame().add("form");
-		if (definition().isSingleton()) result.add("singleton");
-		addViews(result);
+		FrameBuilder result = super.buildFrame().add("formdefinition");
 		addCompositeViews(result);
 		return result;
 	}
 
-	private void writeEmbeddedTemplate() {
-		resetAddedDisplays();
-		FrameBuilder builder = buildFrame().add("embedded");
-		File file = new File(javaPackage() + nameOf(definition()) + "EmbeddedTemplate.java");
-		writeFrame(file, new FormTemplate().render(builder.toFrame()));
+	@Override
+	protected FrameBuilder viewFrame(NodeViewProperty viewProperty) {
+		FrameBuilder result = baseFrame().add("nodeview");
+		result.add(typeOf(viewProperty));
+		NodeDefinition definition = definition();
+		result.add("definition", nameOf(definition));
+		result.add("label", viewProperty.getLabel());
+		result.add("name", nameOf(viewProperty));
+		result.add("code", viewProperty.getCode());
+		addShow((FormViewProperty) viewProperty, result);
+		addDisplayProvider((FormViewProperty) viewProperty, result);
+		return result;
 	}
 
-	private void writeViewsTemplate() {
-		definition().getViewList().stream().filter(this::hasTemplate).forEach(this::writeViewTemplate);
-	}
-
-	private boolean hasTemplate(FormDefinitionBase.FormViewProperty viewProperty) {
-		ShowProperty showProperty = viewProperty.getShow();
-		if (showProperty.getField() != null) return true;
+	@Override
+	protected boolean hasTemplate(NodeViewProperty viewProperty) {
+		ShowProperty showProperty = ((FormViewProperty)viewProperty).getShow();
+		if (showProperty.getField().size() > 0) return true;
 		else if (showProperty.getAttachments() != null) return true;
 		else if (showProperty.getRecentTask() != null) return true;
 		else if (showProperty.getLayout() != null) return true;
-		else if (showProperty.getLayoutExtended() != null) return true;
-		else if (showProperty.getTasks() != null) return true;
-		return false;
+		else if (showProperty.getRevisions() != null) return true;
+		else return showProperty.getLayoutExtended() != null;
 	}
 
-	private void writeViewTemplate(FormDefinitionBase.FormViewProperty view) {
-		resetAddedDisplays();
-		FrameBuilder viewFrame = viewFrame(view);
-		File file = new File(javaPackage() + nameOf(definition()) + nameOf(view) + "ViewTemplate.java");
-		writeFrame(file, new FormTemplate().render(viewFrame.toFrame()));
+	@Override
+	protected boolean isVisibleOnRevision(NodeViewProperty viewProperty) {
+		ShowProperty showProperty = ((FormViewProperty)viewProperty).getShow();
+		return showProperty.getLayout() != null || showProperty.getLayoutExtended() != null ||
+				showProperty.getAttachments() != null || showProperty.getField().size() > 0;
+	}
+
+	@Override
+	protected Template konosTemplate() {
+		return new io.intino.goros.builder.renderers.templates.konos.FormTemplate();
+	}
+
+	@Override
+	protected Template javaTemplate() {
+		return new io.intino.goros.builder.renderers.templates.java.FormTemplate();
 	}
 
 	private void writeCompositeFieldsTemplate() {
@@ -88,12 +99,8 @@ public class FormRenderer extends DefinitionRenderer<FormDefinition> {
 		field.getAllFieldPropertyList().stream().filter(FieldProperty::isComposite).forEach(f -> writeCompositeFieldTemplate((CompositeFieldProperty) f));
 	}
 
-	private void addViews(FrameBuilder builder) {
-		definition().getViewList().forEach(v -> addView(v, builder));
-	}
-
 	private void addCompositeViews(FrameBuilder builder) {
-		definition().getViewList().stream().filter(v -> v.getShow().getField() != null).forEach(v -> {
+		definition().getViewList().stream().filter(v -> v.getShow().getField().size() > 0).forEach(v -> {
 			ArrayList<Ref> fieldList = v.getShow().getField();
 			fieldList.stream().filter(r -> fieldProperty(r) instanceof CompositeFieldProperty).map(this::fieldProperty).forEach(f -> addCompositeView((CompositeFieldProperty) f, builder));
 		});
@@ -121,23 +128,25 @@ public class FormRenderer extends DefinitionRenderer<FormDefinition> {
 		return result;
 	}
 
-	private void addView(FormDefinitionBase.FormViewProperty viewProperty, FrameBuilder builder) {
-		builder.add("view", viewFrame(viewProperty));
+	private FieldProperty fieldProperty(Ref ref) {
+		return definition().getAllFieldPropertyList().stream().filter(fd -> {
+			String key = ref.getValue();
+			return fd.getCode().equals(key) || fd.getName().equals(key);
+		}).findFirst().orElse(null);
 	}
 
-	private FrameBuilder viewFrame(FormDefinitionBase.FormViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("nodeview");
-		result.add(typeOf(viewProperty));
-		FormDefinition definition = definition();
-		result.add("definition", nameOf(definition));
-		result.add("label", viewProperty.getLabel());
-		result.add("name", nameOf(viewProperty));
-		addShow(viewProperty, result);
-		addDisplayProvider(viewProperty, result);
-		return result;
+	private void addShow(FormViewProperty viewProperty, FrameBuilder builder) {
+		ShowProperty showProperty = viewProperty.getShow();
+		FrameBuilder result = baseFrame().add("show");
+		result.add(typeOf(showProperty));
+		result.add("view", nameOf(viewProperty));
+		result.add("definition", nameOf(definition()));
+		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
+		else if (showProperty.getField().size() > 0) addFieldShow(viewProperty, showProperty, result);
+		builder.add("show", result);
 	}
 
-	private void addDisplayProvider(FormDefinitionBase.FormViewProperty viewProperty, FrameBuilder builder) {
+	private void addDisplayProvider(FormViewProperty viewProperty, FrameBuilder builder) {
 		resetAddedDisplays();
 		if (!isDisplayProvider(viewProperty)) return;
 		FrameBuilder result = new FrameBuilder("displayProvider");
@@ -147,37 +156,13 @@ public class FormRenderer extends DefinitionRenderer<FormDefinition> {
 		builder.add("displayProvider", result);
 	}
 
-	private void addDisplayFor(FieldProperty field, FrameBuilder builder) {
-		if (field instanceof CompositeFieldProperty) ((CompositeFieldProperty)field).getAllFieldPropertyList().forEach(f -> addDisplayFor(f, builder));
-		else if (field instanceof NodeFieldProperty) {
-			List<NodeDefinition> nodeDefinitionList = nodeDefinitions(((NodeFieldProperty)field));
-			nodeDefinitionList.forEach(definition -> addDisplayFor(definition, (NodeViewProperty)null, builder));
-		}
-	}
-
-	private List<NodeDefinition> nodeDefinitions(NodeFieldProperty field) {
-		List<NodeDefinition> result = new ArrayList<>();
-		if (field.getContain() != null) result.add(dictionary.getNodeDefinition(field.getContain().getNode().getValue()));
-		if (field.getAdd() != null) field.getAdd().getNode().forEach(ref -> result.add(dictionary.getNodeDefinition(ref.getValue())));
-		return result;
-	}
-
-	private boolean isDisplayProvider(FormDefinitionBase.FormViewProperty viewProperty) {
-		ShowProperty showProperty = viewProperty.getShow();
-		if (showProperty.getField() == null || showProperty.getField().size() <= 0) return false;
+	private boolean isDisplayProvider(FormViewProperty viewProperty) {
+		ShowProperty showProperty = ((FormViewProperty)viewProperty).getShow();
+		if (showProperty.getField().size() <= 0) return false;
 		return showProperty.getField().stream().anyMatch(ref -> fieldProperty(ref).isComposite() || fieldProperty(ref).isNode());
 	}
 
-	private void addShow(FormDefinitionBase.FormViewProperty viewProperty, FrameBuilder builder) {
-		ShowProperty showProperty = viewProperty.getShow();
-		FrameBuilder result = new FrameBuilder("show");
-		result.add(typeOf(showProperty));
-		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
-		else if (showProperty.getField() != null) addFieldShow(viewProperty, showProperty, result);
-		builder.add("show", result);
-	}
-
-	private void addRecentTaskShow(FormDefinitionBase.FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
+	private void addRecentTaskShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
 		ArrayList<Ref> taskList = showProperty.getRecentTask().getTask();
 		if (taskList.size() <= 0) return;
 		TaskDefinition definition = dictionary.getTaskDefinition(taskList.get(0).getValue());
@@ -185,30 +170,13 @@ public class FormRenderer extends DefinitionRenderer<FormDefinition> {
 		builder.add("taskCode", definition.getCode());
 	}
 
-	private void addFieldShow(FormDefinitionBase.FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
+	private void addFieldShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
 		ArrayList<Ref> fieldList = showProperty.getField();
 		fieldList.forEach(ref -> addField(fieldProperty(ref), builder));
 	}
 
 	private void addField(FieldProperty fieldProperty, FrameBuilder builder) {
 		builder.add("field", new FieldRenderer(dictionary, modernization, fieldProperty).buildFrame().add("definition", nameOf(definition())));
-	}
-
-	private FieldProperty fieldProperty(Ref ref) {
-		return definition().getAllFieldPropertyList().stream().filter(fd -> {
-			String key = ref.getValue();
-			return fd.getCode().equals(key) || fd.getName().equals(key);
-		}).findFirst().orElse(null);
-	}
-
-	@Override
-	protected Template konosTemplate() {
-		return new io.intino.goros.builder.renderers.templates.konos.FormTemplate();
-	}
-
-	@Override
-	protected Template javaTemplate() {
-		return new io.intino.goros.builder.renderers.templates.java.FormTemplate();
 	}
 
 }

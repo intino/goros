@@ -20,7 +20,7 @@ public class FieldRenderer extends Renderer {
 	}
 
 	protected FrameBuilder buildFrame() {
-		FrameBuilder result = new FrameBuilder("field");
+		FrameBuilder result = baseFrame().add("field");
 		result.add("code", fieldProperty.getCode());
 		result.add("name", fieldProperty.getName());
 		result.add("label", fieldProperty.getLabel());

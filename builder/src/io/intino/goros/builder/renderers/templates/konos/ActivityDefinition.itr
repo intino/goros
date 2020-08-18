@@ -8,8 +8,8 @@ def type(activity)
         Block(layout=Horizontal, format=bordered spaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
-                    Link(title="Tareas", format=h4 middleAirRight, visible=false) tasks as Action Addressable(CoordinacionElements.taskBoard)
-                    Link(title="Mis tareas", format=h4 middleAirRight, visible=false) myTasks as Action Addressable(CoordinacionElements.taskTray)
+                    Link(title="Tareas", format=h4 middleAirRight, visible=false) tasks as Action Addressable($module+firstUpperCase~Elements.taskBoard)
+                    Link(title="Mis tareas", format=h4 middleAirRight, visible=false) myTasks as Action Addressable($module+firstUpperCase~Elements.taskTray)
                     Text(value="/", format=h4 middleAirRight)
                     Text(format=h4 bold) label
 
@@ -17,11 +17,11 @@ def type(activity)
 
     Template(layout=Vertical Flexible) $name+lowerCase~EmbeddedTemplate as Relative(height=100%)
         Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
-            Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=CoordinacionElements.goros) toolbar
+            Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
             Block(layout=Horizontal EndJustified)
                 MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
                 MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-                MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable(CoordinacionElements.$name+lowerCase)
+                MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
 
         Selector viewSelector as Tabs
             Text(value="Estado") state as Option
@@ -30,5 +30,5 @@ def type(activity)
             Block(layout=Vertical Flexible) stateView as Conditional(viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+lowerCase~StateViewTemplate) stateViewStamp
 
     Template(format=spaced) $name+lowerCase~StateViewTemplate as Relative(height=100%)
-        OwnerTemplateStamp(template="TaskStateViewTemplate", owner=CoordinacionElements.goros) state
+        OwnerTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
 end

@@ -1,33 +1,6 @@
-def type(form)
-    dsl Konos
-
-    use Indice1
-    use UI
-    use Theme
-
-    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
-        Block(layout=Horizontal, format=bordered spaced) header
-            Block(layout=Vertical Flexible)
-                Block(layout=Horizontal)
-                    Link(title="Inicio", format=h4 middleAirRight) as Action Addressable(CoordinacionElements.inicio)
-                    Text(value="/", format=h4 middleAirRight)
-                    Text(value="$label", format=h4 bold)
-
-        Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
-
-    Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
-        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
-            Block(layout=Horizontal Flexible)
-                Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
-
-        Selector viewSelector as Tabs
-            [$view+declaration...[$NL]]
-
-        Block(layout=Vertical Flexible)
-            [$view+page...[$NL]]
-
-    [$view...[$NL]]
-    [$compositeView...[$NL]]
+def type(show & fields)
+    Block content as Relative(width=90%)
+        [$field...[$NL]]
 end
 
 def type(field & text & multiple)
@@ -119,11 +92,11 @@ def type(field & composite)
 end
 
 def type(field & node & multiple)
-    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=CoordinacionElements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
+    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
 end
 
 def type(field & node)
-    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=CoordinacionElements.goros) $name+firstLowerCase
+    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
 end
 
 def type(compositeView)

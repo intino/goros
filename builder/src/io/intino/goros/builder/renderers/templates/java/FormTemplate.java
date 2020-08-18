@@ -8,8 +8,8 @@ public class FormTemplate extends Template {
 	@Override
 	protected RuleSet ruleSet() {
 		RuleSet result = new RuleSet();
-		new NodeViewTemplate().ruleSet().forEach(result::add);
 		new FormDefinitionTemplate().ruleSet().forEach(result::add);
+		new NodeDefinitionTemplate().ruleSet().forEach(result::add);
 		return result;
 	}
 

@@ -1,0 +1,464 @@
+def type(nodedefinition & embedded)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.CoordinacionBox;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.util.DisplayHelper;
+
+    import java.util.List;
+
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = false;
+        [$toolbar+editableDeclaration]
+
+        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        [$toolbar+editableEvents]
+        [$toolbar+navigableMethods]
+
+        public String selectedView() {
+            List<String> selection = viewSelector.selection();
+            return selection.size() > 0 ? selection.get(0) : null;
+        }
+
+        public void selectDefaultView() {
+            DisplayHelper.selectDefaultView(viewSelector, node);
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            initToolbar();
+            initViews();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshToolbar();
+            refreshView();
+        }
+
+        private void refreshToolbar() {
+            edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.visible(!node.getDefinition().isReadonly());
+            [$toolbar+editableRefreshCall]
+            [$toolbar+navigableRefreshCall]
+        }
+
+        private void refreshView() {
+            [$view+refreshCall...[$NL]]
+        }
+
+        private void initToolbar() {
+            edit.onExecute(e -> toggleEdition());
+            [$toolbar+editableInitCall]
+        }
+
+        private void initViews() {
+            [$view+initCall...[$NL]]
+        }
+
+        [$view+refreshMethod...[$NL]]
+
+        private void toggleEdition() {
+            readonly(!readonly);
+            [$toolbar+editableCall]
+            refresh();
+        }
+
+        [$toolbar+editableMethods]
+    }
+end
+
+def type(nodedefinition & revision)
+    package $package.box.ui.displays.templates;
+
+    import io.intino.goros.util.DisplayHelper;
+    import io.intino.goros.util.LayerHelper;
+
+    import $package.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Revision;
+    import io.intino.goros.util.NodeHelper;
+
+    import static io.intino.goros.util.DictionaryHelper.view;
+
+    public class $name+firstUpperCase~RevisionTemplate extends Abstract$name+firstUpperCase~RevisionTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private Revision revision;
+        private boolean readonly = true;
+
+        public $name+firstUpperCase~RevisionTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~RevisionTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~RevisionTemplate revision(Revision revision) {
+            this.revision = revision;
+            return this;
+        }
+
+        public $name+firstUpperCase~RevisionTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            restore.onExecute(e -> restore());
+            initViews();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            restore.readonly(readonly);
+            DisplayHelper.selectNotSystemView(viewSelector, node);
+            refreshView();
+        }
+
+        private void initViews() {
+            [$view+initCall...[$NL]]
+        }
+
+        private void refreshView() {
+            [$view+refreshCall...[$NL]]
+        }
+
+        [$view+revisionRefreshMethod...[$NL]]
+
+        private void restore() {
+            LayerHelper.nodeLayer().restoreNode(revision);
+            notifier.redirect(session().browser().requestUrl());
+        }
+    }
+end
+
+def type(nodedefinition & singleton)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.CoordinacionBox;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.util.NodeHelper;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = true;
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            node = NodeHelper.singleton("$code");
+            content.node(node);
+            content.readonly(readonly);
+            content.refresh();
+            [$toolbar+removeListener]
+            if (content.selectedView() == null) content.selectDefaultView();
+        }
+    }
+end
+
+def type(nodedefinition)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.components.ComponentPersistence;
+    import org.monet.space.kernel.model.Node;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Node node;
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public void open(String id) {
+            node(ComponentPersistence.getInstance().getNodeLayer().loadNode(id));
+            refresh();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (node == null) return;
+            refreshHeader(node);
+            refreshContent(node);
+        }
+
+        private void refreshHeader(Node node) {
+            label.value(node.getLabel());
+        }
+
+        private void refreshContent(Node node) {
+            content.node(node);
+            content.refresh();
+            if (content.selectedView() == null) content.selectDefaultView();
+        }
+    }
+end
+
+def type(toolbar & singleton) trigger(editableInitCall)
+end
+
+def type(toolbar & singleton) trigger(editableRefreshCall)
+end
+
+def type(toolbar & singleton) trigger(editableEvents)
+    public Formulario1EmbeddedTemplate onFinishEdition(Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar & singleton) trigger(editableMethods)
+end
+
+def type(toolbar & singleton) trigger(removeListener)
+end
+
+def type(toolbar & singleton) trigger(editableDeclaration)
+    private Consumer<Node> finishEditionListener;
+end
+
+def type(toolbar) trigger(editableDeclaration)
+    private Consumer<Node> finishEditionListener;
+    private Consumer<Node> removeListener;
+end
+
+def type(toolbar) trigger(editableInitCall)
+    remove.onExecute(e -> removeNode());
+end
+
+def type(toolbar) trigger(editableRefreshCall)
+    remove.visible(!readonly && !node.isSingleton() && !node.getDefinition().isReadonly());
+end
+
+def type(toolbar) trigger(editableCall)
+    if (readonly && finishEditionListener != null) finishEditionListener.accept(node);
+end
+
+def type(toolbar) trigger(removeListener)
+    content.onRemove(e -> PathHelper.dispatch(box().routeManager(), soul(), node.getMainNode()));
+end
+
+def type(toolbar) trigger(editableEvents)
+    public Formulario1EmbeddedTemplate onRemove(Consumer<Node> listener) {
+        this.removeListener = listener;
+        return this;
+    }
+
+    public Formulario1EmbeddedTemplate onFinishEdition(Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar) trigger(editableMethods)
+    private void removeNode() {
+        String message = NodeHelper.canRemove(node);
+        if (message != null) {
+            notifyUser(message, UserMessage.Type.Error);
+            return;
+        }
+        LayerHelper.nodeLayer().deleteNode(node);
+        if (removeListener != null) removeListener.accept(node);
+    }
+end
+
+def type(toolbar & collectable) trigger(navigableRefreshCall)
+    open.address(path -> path.replace(":$definition+lowerCase", node.getId()));
+end
+
+def type(toolbar) trigger(navigableRefreshCall)
+end
+
+def type(toolbar & collectable) trigger(navigableMethods)
+    public void bindTo(Collection collection) {
+        previous.bindTo(collection);
+        previous.visible(collection != null);
+        next.bindTo(collection);
+        next.visible(collection != null);
+        open.visible(collection != null);
+    }
+end
+
+def type(toolbar) trigger(navigableMethods)
+end
+
+def type(nodeview) trigger(initCall)
+    $name+lowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
+end
+
+def type(nodeview) trigger(refreshCall)
+    if ($name+lowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+end
+
+def type(nodeview) trigger(revisionRefreshMethod)
+    private void refresh$name+firstUpperCase~View() {
+        if (node == null) return;
+        Node revisionNode = LayerHelper.nodeLayer().loadNodeRevision(node.getId(), revision.getId());
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(revisionNode);
+        [$contain+revision]
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view(view(revisionNode,"myvznaw"));
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+end
+
+def type(nodeview) trigger(refreshMethod)
+    private void refresh$name+firstUpperCase~View() {
+        if (node == null) return;
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        [$contain]
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view(view(node, "$code"));
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+end
+
+def type(contain) trigger(revision)
+    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(LayerHelper.nodeLayer().loadNodeRevision(NodeHelper.getContainerContain(revisionNode, "$contain"), revision.getId()));
+end
+
+def type(contain)
+    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(LayerHelper.nodeLayer().loadNode(NodeHelper.getContainerContain(node,"$contain")));
+end
+
+def type(nodeView)
+    package $package.box.ui.displays.templates;
+
+    import $package.box.CoordinacionBox;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import org.monet.bpi.*;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.box.ui.datasources.FormDatasource;
+    import io.intino.goros.util.LayerHelper;
+    import io.intino.goros.util.NodeHelper;
+
+    import java.util.function.Consumer;
+
+    import static java.util.stream.Collectors.toList;
+
+    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box>[ implements $implements] {
+        private Node node;
+        private NodeViewProperty view;
+        private boolean readonly = false;
+        $show+declaration
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate(CoordinacionBox box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate node(Node node) {
+            this.node = node;
+            updateFields();
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate view(NodeViewProperty view) {
+            this.view = view;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        $show
+        [$displayProvider]
+    }
+end
+
+def type(show & recenttask) trigger(declaration)
+end
+
+def type(show & recenttask)
+    @Override
+    public void init() {
+        super.init();
+        initToolbar();
+    }
+
+	private void initToolbar() {
+		toolbar.onUpdate(task -> refresh());
+		toolbar.onChange(e -> refresh());
+		toolbar.onAbort(e -> refresh());
+	}
+
+	@Override
+	public void refresh() {
+		super.refresh();
+		Task task = NodeHelper.recentTask(node, view);
+		noTaskMessage.visible(task == null);
+		refreshToolbar(task);
+		refreshActivity1View(task);
+	}
+
+	private void refreshToolbar(Task task) {
+		toolbarBlock.visible(task != null);
+		toolbar.task(task);
+		toolbar.readonly(readonly);
+		toolbar.refresh();
+	}
+
+	private void refresh$taskName+firstUpperCase~View(Task task) {
+		boolean visible = task != null && task.getDefinition().getCode().equals("$taskCode");
+		$taskName+firstLowerCase~View.visible(visible);
+		if (!visible) return;
+		$taskName+firstLowerCase~View.task(task);
+		$taskName+firstLowerCase~View.readonly(readonly);
+		$taskName+firstLowerCase~View.refresh();
+	}
+end
+
+def type(show & revisions) trigger(declaration)
+end
+
+def type(show & revisions)
+	@Override
+	public void refresh() {
+		super.refresh();
+		revisionsStamp.node(node);
+		revisionsStamp.readonly(readonly);
+		revisionsStamp.onSelect(this::openRevision);
+		revisionsStamp.refresh();
+	}
+
+	private void openRevision(Revision revision) {
+		selectRevisionPage.visible(false);
+		revisionPage.visible(true);
+		currentRevisionStamp.node(node);
+		currentRevisionStamp.revision(revision);
+		currentRevisionStamp.readonly(readonly);
+		currentRevisionStamp.refresh();
+	}
+end

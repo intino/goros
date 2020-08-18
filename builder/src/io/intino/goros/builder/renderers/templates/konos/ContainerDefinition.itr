@@ -1,0 +1,7 @@
+def type(show & components)
+    [$component...[$NL]]
+end
+
+def type(component)
+    TemplateStamp(template=$name+firstUpperCase~$view+firstUpperCase~Template) $name+firstLowerCase~$view+firstUpperCase~Stamp
+end

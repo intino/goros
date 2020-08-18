@@ -21,14 +21,14 @@ def type(ui)
 
     Template(layout=Horizontal Flexible) appTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
-            Block(layout=Horizontal Center) inicio > MaterialIconButton(title="Inicio", icon="Home", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable(CoordinacionElements.inicio); Text(value="Inicio")
-            Block(layout=Horizontal Center) cuadroMando > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable(CoordinacionElements.cuadroMando); Text(value="Cuadro de mando")
+            Block(layout=Horizontal Center) inicio > MaterialIconButton(title="Inicio", icon="Home", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.inicio); Text(value="Inicio")
+            Block(layout=Horizontal Center) cuadroMando > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.cuadroMando); Text(value="Cuadro de mando")
             Divider
-            Block(layout=Horizontal Center) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable(CoordinacionElements.roles); Text(value="Permisos")
-            Block(layout=Horizontal Center) taskTray > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayLink as Action Addressable(CoordinacionElements.taskTray); Text(value="Mis tareas")
-            Block(layout=Horizontal Center) taskBoard > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardLink as Action Addressable(CoordinacionElements.taskBoard); Text(value="Tareas")
-            Block(layout=Horizontal Center) news > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable(CoordinacionElements.news); Text(value="Noticias")
-            Block(layout=Horizontal Center) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable(CoordinacionElements.trash); Text(value="Papelera")
+            Block(layout=Horizontal Center) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Text(value="Permisos")
+            Block(layout=Horizontal Center) taskTray > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Text(value="Mis tareas")
+            Block(layout=Horizontal Center) taskBoard > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardLink as Action Addressable($module+firstUpperCase~Elements.taskBoard); Text(value="Tareas")
+            Block(layout=Horizontal Center) news > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.news); Text(value="Noticias")
+            Block(layout=Horizontal Center) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Text(value="Papelera")
 
         Block(layout=Vertical Flexible)
             Header(color="white", elevation=0, format=spaced bottomBordered) as Absolute(height=80px)
@@ -42,11 +42,11 @@ def type(ui)
 
             Block(layout=Vertical Flexible) inicioPage as Conditional > TemplateStamp(template=inicioTemplate) inicioStamp
             Block(layout=Vertical Flexible) cuadroMandoPage as Conditional > TemplateStamp(template=cuadroMandoTemplate) cuadroMandoStamp
-            Block(layout=Vertical Flexible) rolesPage as Conditional > OwnerTemplateStamp(template="RolesTemplate", owner=CoordinacionElements.goros) rolesStamp
+            Block(layout=Vertical Flexible) rolesPage as Conditional > OwnerTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
             Block(layout=Vertical Flexible) taskTrayPage as Conditional > TemplateStamp(template=taskTrayTemplate) taskTrayStamp
             Block(layout=Vertical Flexible) taskBoardPage as Conditional > TemplateStamp(template=taskBoardTemplate) taskBoardStamp
-            Block(layout=Vertical Flexible) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=CoordinacionElements.goros) newsStamp
-            Block(layout=Vertical Flexible) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=CoordinacionElements.goros) trashStamp
+            Block(layout=Vertical Flexible) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
+            Block(layout=Vertical Flexible) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
             [$definition+page...[$NL]]
 
     Template(layout=Horizontal Flexible) headerTemplate
@@ -60,7 +60,7 @@ def type(ui)
             User(mode=OnlyPhoto)
 
             Block(format=air) businessUnitsBlock as Popover Absolute(width=400px)
-                OwnerTemplateStamp(template="BusinessUnitsTemplate", owner=CoordinacionElements.goros) businessUnitsStamp
+                OwnerTemplateStamp(template="BusinessUnitsTemplate", owner=$module+firstUpperCase~Elements.goros) businessUnitsStamp
 
     Template(layout=Horizontal Flexible) cuadroMandoTemplate
         Text(value="Cuadro Mando")

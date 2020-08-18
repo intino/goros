@@ -1,0 +1,176 @@
+def type(collectiondefinition)
+    dsl Konos
+
+    use UI
+    use Theme
+    [$add+import...[$NL]]
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    Link(title="Inicio", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.inicio)
+                    Text(value="/", format=h4 middleAirRight)
+                    $parent
+                    Text(value="$label", format=h4 bold)
+                Text(format=body2) count
+            Block(layout=Horizontal Center) rightToolbar
+                SearchBox(collections = empty, format=airRight smallAirTop) search
+                MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
+                Selector(format=airRight) viewSelector as ToggleBox(size=Small)
+                    [$view+selector...[$NL]]
+                MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+
+        Block(layout=Horizontal Flexible, format=smallAirTop)
+            Block(layout=Vertical Flexible, format=bordered)
+                TemplateStamp(template=$name+firstUpperCase~ToolbarTemplate) toolbar
+                Block(layout=Vertical Flexible) as Relative(height=100%)
+                    [$view+page...[$NL]]
+
+            Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
+                Transition(direction=Left)
+                [$view+filter...[$NL]]
+
+            [$add+block...[$NL]]
+
+    [$view+template...[$NL]]
+
+    Template(layout=Horizontal, format=air) $name+firstUpperCase~ToolbarTemplate
+        Toolbar toolbar
+            Button(title="Editar", highlight=Outline, size=Small, format=airRight) edit as Action
+            Button(title="Eliminar seleccionados", highlight=Outline, size=Small, format=airRight, visible=false) removeSelection as Action(context=Selection) Affirmed("Are you sure you want to remove selection?")
+            SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) add as Action
+
+    [$view+filterTemplate...[$NL]]
+end
+
+def type(nodeview & items) trigger(template)
+    Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, format=bordered) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+            noItemsMessage = "No hay elementos"
+            [$attribute+mold...[$NL]]
+end
+
+def type(nodeview & index) trigger(template)
+    Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+            noItemsMessage = "No hay elementos"
+            Mold
+                Item(height=165px) $definition+firstLowerCase~$name+firstUpperCase~Item
+                    Block(layout=Vertical, format=catalogIndexReferenceStyle)
+                        Block(layout=Horizontal Flexible)
+                            [$picture]
+                            Block(layout=Horizontal Flexible, format=airLeft)
+                                Block(layout=Vertical Flexible)
+                                    [$title]
+                                    Block(layout=Vertical Flexible)
+                                        Block(layout=Horizontal, format=middleAirTop) lineBlock
+                                            [$line+labeled...[$NL]]
+                                        Block(layout=Horizontal, format=middleAirTop) lineBelowBlock
+                                            [$lineBelow+labeled...[$NL]]
+                                        Block(layout=Horizontal, format=middleAirTop) highlightBlock
+                                            [$highlight+highlight...[$NL]]
+                                Block(layout=Vertical End) as Relative(width=5%)
+                                    [$icon]
+                        Block(format=catalogIndexFooterItemStyle) footerBlock
+                            [$footer+labeled...[$NL]]
+end
+
+def type(nodeview & locations) trigger(template)
+    Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+            Zoom(defaultZoom = 6, min = 1, max = 18)
+            Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
+            noItemsMessage = "No hay elementos"
+            Mold
+                Item(height=165px) $definition+firstLowerCase~$name+firstUpperCase~Item
+                    Block(layout=Vertical, format=catalogMapItemStyle)
+                        Block(layout=Horizontal Flexible)
+                            [$picture]
+                            Block(layout=Horizontal Flexible, format=airLeft)
+                                Block(layout=Vertical Flexible)
+                                    [$title]
+                                    Block(layout=Vertical Flexible)
+                                        Block(layout=Horizontal, format=middleAirTop) lineBlock
+                                            [$line+labeled...[$NL]]
+                                        Block(layout=Horizontal, format=middleAirTop) lineBelowBlock
+                                            [$lineBelow+labeled...[$NL]]
+                                        Block(layout=Horizontal, format=middleAirTop) highlightBlock
+                                            [$highlight+highlight...[$NL]]
+                                Block(layout=Vertical End) as Relative(width=5%)
+                                    [$icon]
+                        Block(format=catalogIndexFooterItemStyle) footerBlock
+                            [$footer+labeled...[$NL]]
+end
+
+def type(nodeview) trigger(template)
+    Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        Text(value="NOT IMPLEMENTED!!!")
+end
+
+def type(nodeview) trigger(filterTemplate)
+    Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate
+        Link(title="Resetear filtros", format=doubleAirBottom) reset
+        [$dimension...[$NL]]
+end
+
+def type(dimension)
+    Block(format=doubleAirBottom) > OwnerTemplateStamp(template="$type+firstUpperCase~FilterTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
+end
+
+def type(nodeview) trigger(filterTemplate)
+    Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate
+        Text(value="NOT IMPLEMENTED!!!")
+end
+
+def type(nodeview) trigger(page)
+    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(header.rightToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate, format=fullHeight) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview) trigger(filter)
+    Block(layout=Vertical Flexible) $name+firstLowerCase~Filters as Conditional(selected=header.rightToolbar.viewSelector.$name+firstLowerCase) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate, format=fullHeight) $name+firstLowerCase~FiltersStamp
+end
+
+def type(nodeview) trigger(selector)
+    MaterialIconButton(title="$label", icon="$materialIcon", size=Small) $name+firstLowerCase as Option
+end
+
+def type(attribute) trigger(mold)
+    Mold
+        Heading $definition+firstLowerCase~$view+firstUpperCase~$name+firstUpperCase~Heading > Text(value="$label")
+        Item(height=50px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~$name+firstUpperCase~Item > Text(value="Loading...") $name+firstLowerCase
+end
+
+def type(attribute) trigger(title)
+    $type+firstUpperCase~(value="Cargando...", format=h4) $name+firstLowerCase
+end
+
+def type(attribute) trigger(labeled)
+    $type+firstUpperCase~(format=body2 doubleAirRight) $name+firstLowerCase as Labeled("$label")
+end
+
+def type(attribute) trigger(highlight)
+    $type+firstUpperCase(format=body2 doubleAirRight) $name+firstLowerCase as Highlighted(backgroundColor="#CD3E2D", textColor="white")
+end
+
+def type(attribute) trigger(picture)
+    Block > Image(defaultValue="images/no-picture.jpg") $name+firstLowerCase as Absolute(width=96px,height=96px)
+end
+
+def type(attribute) trigger(icon)
+    Icon(icon=empty, format=doubleAirRight) $name+firstLowerCase
+end
+
+def type(add) trigger(import)
+    use $name+firstUpperCase
+end
+
+def type(add) trigger(option)
+    "Añadir $label"
+end
+
+def type(add) trigger(block)
+    Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) $name+firstLowerCase~View as Conditional Animated Relative(width=55%)
+        Transition(direction=Left)
+        TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~Stamp
+end

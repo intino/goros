@@ -57,7 +57,7 @@ public class Shifter {
 
 	private static List<File> find(String artifact) throws DependencyResolutionException {
 		Aether aether = new Aether(artifactories(), new File(System.getProperty("user.home") + File.separator + ".m2" + File.separator + "repository"));
-		return aether.resolve(new DefaultArtifact(artifact.toLowerCase()), JavaScopes.COMPILE).stream().map(Artifact::getFile).collect(Collectors.toList());
+		return aether.resolve(new DefaultArtifact(artifact), JavaScopes.COMPILE).stream().map(Artifact::getFile).collect(Collectors.toList());
 	}
 
 	private static Collection<RemoteRepository> artifactories() {

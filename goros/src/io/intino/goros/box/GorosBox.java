@@ -1,13 +1,14 @@
 package io.intino.goros.box;
 
 import io.intino.alexandria.ui.services.AuthService;
-import org.monet.space.kernel.agents.AgentNotifier;
-import org.monet.space.kernel.listeners.IListenerMonetEvent;
 import io.intino.goros.box.listeners.GorosNotifier;
 import io.intino.goros.box.listeners.ListenerGoros;
-import io.intino.goros.graph.BusinessUnit;
+import org.monet.space.kernel.agents.AgentNotifier;
 
 import java.net.URL;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 public class GorosBox extends AbstractBox {
 	private GorosNotifier notifier;
@@ -38,7 +39,7 @@ public class GorosBox extends AbstractBox {
 
 	@Override
 	public void afterStart() {
-
+		Goros.open(normalize(configuration.args()));
 	}
 
 	@Override
@@ -56,11 +57,6 @@ public class GorosBox extends AbstractBox {
 		return null;
 	}
 
-	public GorosBox open(BusinessUnit unit) {
-		Goros.open(unit);
-		return this;
-	}
-
 	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {
 		return token -> false;
 	}
@@ -69,6 +65,19 @@ public class GorosBox extends AbstractBox {
 		AgentNotifier.getInstance().register("Goros", ListenerGoros.class);
 		ListenerGoros listener = (ListenerGoros) AgentNotifier.getInstance().get("Goros");
 		listener.inject(notifier);
+	}
+
+	private Map<String, String> normalize(Map<String, String> parameters) {
+		return parameters.entrySet().stream().collect(toMap(e -> normalizeParameterName(e.getKey()), Map.Entry::getValue));
+	}
+
+	private String normalizeParameterName(String key) {
+		if (key.equals("jdbc-datasource")) return "Jdbc.DataSource";
+		if (key.equals("jdbc-type")) return "Jdbc.Type";
+		if (key.equals("jdbc-url")) return "Jdbc.Url";
+		if (key.equals("jdbc-user")) return "Jdbc.User";
+		if (key.equals("jdbc-password")) return "Jdbc.Password";
+		return "MONET_" + key.toUpperCase().replace("-", "_");
 	}
 
 }

@@ -5,6 +5,7 @@ import io.intino.goros.builder.monet.Dictionary;
 import io.intino.goros.builder.renderers.templates.konos.UITemplate;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.Definition;
+import org.monet.metamodel.NodeDefinition;
 
 import java.io.File;
 import java.util.List;
@@ -20,6 +21,8 @@ public class UIRenderer extends Renderer {
 	@Override
 	public void write() {
 		FrameBuilder builder = buildFrame();
+		writeAppTemplate();
+		writeHeaderTemplate();
 		writeFrame(file(), new UITemplate().render(builder.toFrame()));
 	}
 
@@ -36,12 +39,26 @@ public class UIRenderer extends Renderer {
 
 	private FrameBuilder definitionFrame(Definition definition) {
 		FrameBuilder result = new FrameBuilder("definition");
+		result.add(definition.getType().name().toLowerCase());
+		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isSingleton()) result.add("singleton");
 		result.add("name", nameOf(definition));
 		return result;
 	}
 
 	private File file() {
 		return new File(modernization.sourceUiDirectory() + File.separator + "UI.konos");
+	}
+
+	private void writeAppTemplate() {
+		FrameBuilder builder = buildFrame().add("app");
+		File file = new File(modernization.sourceUiDirectory() + File.separator + "displays" + File.separator + "templates" + File.separator + "AppTemplate.java");
+		writeFrame(file, new io.intino.goros.builder.renderers.templates.java.UITemplate().render(builder.toFrame()));
+	}
+
+	private void writeHeaderTemplate() {
+		FrameBuilder builder = buildFrame().add("header");
+		File file = new File(modernization.sourceUiDirectory() + File.separator + "displays" + File.separator + "templates" + File.separator + "HeaderTemplate.java");
+		writeFrame(file, new io.intino.goros.builder.renderers.templates.java.UITemplate().render(builder.toFrame()));
 	}
 
 }

@@ -21,11 +21,7 @@ public class BoxRenderer extends Renderer {
 	}
 
 	private FrameBuilder buildFrame() {
-		FrameBuilder result = baseFrame();
-		result.add("box");
-		result.add("package", modernization.projectPackage());
-		result.add("module", modernization.moduleName());
-		return result;
+		return baseFrame().add("box");
 	}
 
 	private File file() {

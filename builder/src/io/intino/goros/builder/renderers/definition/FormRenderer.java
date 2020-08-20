@@ -142,7 +142,10 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));
 		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
-		else if (showProperty.getField().size() > 0) addFieldShow(viewProperty, showProperty, result);
+		else if (showProperty.getField().size() > 0) {
+			builder.add("updateFields", baseFrame().add("updateFields"));
+			addFieldShow(viewProperty, showProperty, result);
+		}
 		builder.add("show", result);
 	}
 

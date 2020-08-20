@@ -3,13 +3,14 @@ package io.intino.goros.box;
 import org.monet.space.kernel.Kernel;
 import org.monet.space.kernel.configuration.ConfigurationMap;
 import org.monet.space.kernel.configuration.DatabaseConfiguration;
-import io.intino.goros.graph.BusinessUnit;
+
+import java.util.Map;
 
 public class Goros {
 
-	public static void open(BusinessUnit unit) {
-		DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.fromXml(Goros.class.getResource("/monet.config").getFile());
-		ConfigurationMap configuration = ConfigurationMap.fromXml(Goros.class.getResource("/monet.config").getFile());
+	public static void open(Map<String, String> parameters) {
+		DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.fromMap(parameters);
+		ConfigurationMap configuration = ConfigurationMap.fromMap(parameters);
 		Kernel.getInstance().run(configuration, databaseConfiguration);
 	}
 

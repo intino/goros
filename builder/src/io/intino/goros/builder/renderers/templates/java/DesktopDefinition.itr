@@ -1,0 +1,61 @@
+def type(desktopdefinition)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.util.AccountHelper;
+    import io.intino.goros.util.NodeHelper;
+
+    public class $name+firstUpperCase~Template extends AbstractInicioTemplate<$module+firstUpperCase~Box> {
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshLabels();
+        }
+
+        private void refreshLabels() {
+            [$view+refreshCall...[$NL]]
+        }
+
+        [$view+refreshMethod...[$NL]]
+    }
+end
+
+def type(nodeview) trigger(refreshCall)
+    $show+refreshCall
+end
+
+def type(nodeview) trigger(refreshMethod)
+    $show+refreshMethod
+end
+
+def type(show) trigger(refreshCall)
+    [$item+refreshCall...[$NL]]
+end
+
+def type(show) trigger(refreshMethod)
+    [$item+refreshMethod...[$NL]]
+end
+
+def type(item & thesaurus) trigger(refreshCall)
+end
+
+def type(item) trigger(refreshCall)
+    refresh$name+firstUpperCase();
+end
+
+def type(item & thesaurus) trigger(refreshMethod)
+end
+
+def type(item) trigger(refreshMethod)
+    private void refresh$name+firstUpperCase() {
+        Node node = io.intino.goros.util.NodeHelper.singleton("$code");
+        $name+firstLowerCase.visible(AccountHelper.hasRoles(node.getDefinition(), session()));
+        $name+firstLowerCase~Link.title(node.getLabel());
+    }
+end

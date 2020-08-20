@@ -15,7 +15,7 @@ end
 
 def type(show)
     public void select(Node node) {
-        DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
+        io.intino.goros.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
     }
 
     public void refresh(Node node) {
@@ -27,7 +27,7 @@ def type(show)
         super.init();
         $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
             Node node = e.item();
-            Reference reference = node.getReference("$reference");
+            org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
             [$attribute...[$NL]]
         });
@@ -37,74 +37,78 @@ def type(show)
     public void refresh() {
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
-        $definition+firstLowerCase~$view+firstUpperCase.source(new CollectionDatasource(box().goros(), session(), node));
+        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.box.ui.datasources.CollectionDatasource(box().goros(), session(), node));
         $definition+firstLowerCase~$view+firstUpperCase.reload();
     }
 end
 
 def type(componentType & items)
-    $definition+firstUpperCase~$view+firstUpperCase~Row row = e.component();
+    $package.$module+lowerCase.box.ui.displays.rows.$definition+firstUpperCase~$view+firstUpperCase~Row row = e.component();
 end
 
 def type(componentType)
-    $definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
+    $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
 end
 
 def type(attribute & items & date)
-    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(NodeHelper.instantOf(reference, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.instantOf(reference, "$code"));
 end
 
 def type(attribute & items & picture)
-    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(NodeHelper.urlOf(reference, "$code", true));
+    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
 end
 
 def type(attribute & items)
-    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(NodeHelper.valueOf(reference, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
 end
 
 def type(attribute & date)
-    item.$name+firstLowerCase.value(NodeHelper.instantOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.instantOf(reference, "$code"));
+end
+
+def type(attribute & icon)
+    item.$name+firstLowerCase.icon(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
 end
 
 def type(attribute & picture)
-    item.$name+firstLowerCase.value(NodeHelper.urlOf(reference, "$code", true));
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
 end
 
 def type(attribute)
-    item.$name+firstLowerCase.value(NodeHelper.valueOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
 end
 
 def type(attribute)
-    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(NodeHelper.valueOf(reference, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
 end
 
 def type(collectionview & filter)
-    package $package.box.ui.displays.templates;
+    package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.Collection;
     import org.monet.space.kernel.model.Node;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~FilterTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~FilterTemplate<$module+firstUpperCase~Box> {
+    public class $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate<$module+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = true;
         private Collection collection;
 
-        public $definition+firstUpperCase~$name+firstUpperCase~FilterTemplate($module+firstUpperCase~Box box) {
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate($module+firstUpperCase~Box box) {
             super(box);
         }
 
-        public $definition+firstUpperCase~$name+firstUpperCase~FilterTemplate node(Node node) {
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate node(Node node) {
             this.node = node;
             return this;
         }
 
-        public $definition+firstUpperCase~$name+firstUpperCase~FilterTemplate readonly(boolean readonly) {
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
         }
 
-        public $definition+firstUpperCase~$name+firstUpperCase~FilterTemplate bindTo(Collection collection) {
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             this.collection = collection;
             updateFilters();
             return this;
@@ -146,10 +150,10 @@ def type(dimension) trigger(clearCall)
     $name+firstLowerCase.clearSelection();
 end
 
-def type(collectiondefinition & toolbar)
-    package $package.box.ui.displays.templates;
+def type(setdefinition & toolbar)
+    package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.Collection;
     import io.intino.alexandria.ui.displays.components.collection.Selectable;
     import io.intino.alexandria.ui.displays.events.ActionListener;
@@ -162,8 +166,8 @@ def type(collectiondefinition & toolbar)
     public class $name+firstUpperCase~ToolbarTemplate extends Abstract$name+firstUpperCase~ToolbarTemplate<$module+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = false;
-        private Consumer<Node> addListener;
-        private Consumer<Boolean> toggleEditionListener;
+        private java.util.function.Consumer<Node> addListener;
+        private java.util.function.Consumer<Boolean> toggleEditionListener;
         private ActionListener removeSelectionListener;
 
         public $name+firstUpperCase~ToolbarTemplate($module+firstUpperCase~Box box) {
@@ -180,12 +184,12 @@ def type(collectiondefinition & toolbar)
             return this;
         }
 
-        public $name+firstUpperCase~ToolbarTemplate onAdd(Consumer<Node> listener) {
+        public $name+firstUpperCase~ToolbarTemplate onAdd(java.util.function.Consumer<Node> listener) {
             this.addListener = listener;
             return this;
         }
 
-        public $name+firstUpperCase~ToolbarTemplate onToggleEdition(Consumer<Boolean> listener) {
+        public $name+firstUpperCase~ToolbarTemplate onToggleEdition(java.util.function.Consumer<Boolean> listener) {
             this.toggleEditionListener = listener;
             return this;
         }
@@ -195,7 +199,7 @@ def type(collectiondefinition & toolbar)
             return this;
         }
 
-        public $name+firstUpperCase~ToolbarTemplate bindTo(Collection collection) {
+        public $name+firstUpperCase~ToolbarTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             this.toolbar.bindTo((Selectable)collection);
             return this;
         }
@@ -234,13 +238,13 @@ def type(collectiondefinition & toolbar)
 end
 
 def type(add) trigger(toolbarTemplate)
-    if (option.equals("Añadir $label")) result = LayerHelper.nodeLayer().addNode("$code", node);
+    if (option.equals("Añadir $label")) result = io.intino.goros.util.LayerHelper.nodeLayer().addNode("$code", node);
 end
 
-def type(collectiondefinition & singleton)
-    package $package.box.ui.displays.templates;
+def type(setdefinition)
+    package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.BlockConditional;
     import io.intino.alexandria.ui.displays.components.Collection;
     import io.intino.alexandria.ui.displays.events.Event;
@@ -268,7 +272,7 @@ def type(collectiondefinition & singleton)
         @Override
         public void init() {
             super.init();
-            node = NodeHelper.singleton("$code");
+            node = io.intino.goros.util.NodeHelper.singleton("$code");
             initToolbars();
             initViews();
         }
@@ -339,7 +343,7 @@ def type(collectiondefinition & singleton)
 
         private void removeSelection(Event event) {
             if (selection == null) return;
-            NodeLayer nodeLayer = LayerHelper.nodeLayer();
+            NodeLayer nodeLayer = io.intino.goros.util.LayerHelper.nodeLayer();
             selection.forEach(nodeLayer::deleteNode);
             refresh();
         }
@@ -349,17 +353,18 @@ def type(collectiondefinition & singleton)
             [$view+refreshFiltersCall...[$NL]]
         }
 
-        private void bindCurrentViewTo(Collection collection) {
+        private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             [$add+bindCall...[$NL]]
         }
 
-        private void bindToolbarsTo(Collection collection) {
+        private void bindToolbarsTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             toolbar.bindTo(collection);
             search.bindTo(collection);
         }
 
         private Collection currentCollection() {
             [$view+collection...[$NL]]
+            return null;
         }
 
         private void toggleFiltersViewVisibility(ToggleEvent.State state) {
@@ -423,7 +428,7 @@ def type(collectiondefinition & singleton)
 
         private Node reloadSelected() {
             if (selectedChild == null) return null;
-            return LayerHelper.nodeLayer().loadNode(selectedChild.getId());
+            return io.intino.goros.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId());
         }
 
     }

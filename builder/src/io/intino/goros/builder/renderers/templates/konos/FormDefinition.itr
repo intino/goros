@@ -1,6 +1,17 @@
+def type(show & fields) trigger(use)
+    [$field+use...[$NL]]
+end
+
 def type(show & fields)
     Block content as Relative(width=90%)
         [$field...[$NL]]
+end
+
+def type(field & link) trigger(use)
+    use $index+firstUpperCase
+end
+
+def type(field) trigger(use)
 end
 
 def type(field & text & multiple)

@@ -1,5 +1,6 @@
 package io.intino.goros.box.ui.displays.templates;
 
+import io.intino.goros.util.DictionaryHelper;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.Node;
 import io.intino.goros.box.GorosBox;
@@ -21,8 +22,8 @@ public class NodeLinksInTemplate extends AbstractNodeLinksInTemplate<GorosBox> {
         return this;
     }
 
-    public NodeLinksInTemplate view(NodeViewProperty view) {
-        this.view = view;
+    public NodeLinksInTemplate view(String view) {
+        this.view = view != null ? DictionaryHelper.view(node, view) : null;
         return this;
     }
 

@@ -37,16 +37,20 @@ public class Modernization {
 	}
 
 	public String sourceDirectory() {
-		return moduleDirectory() + File.separator + "src" + File.separator + projectPackageDirectory();
+		return moduleDirectory() + File.separator + "src" + File.separator + projectPackageDirectory() + File.separator + moduleName();
 	}
 
 	public String sourceBoxDirectory() {
 		return sourceDirectory() + File.separator + "box";
 	}
 
+	public String sourceGraphDirectory() {
+		return sourceDirectory() + File.separator + "graph";
+	}
+
 	public String sourceUiDirectory() {
-		return "./temp/ui"; // TESTING
-//		return sourceBoxDirectory() + File.separator + "ui";
+//		return "./temp/ui"; // TESTING
+		return sourceBoxDirectory() + File.separator + "ui";
 	}
 
 	public String projectName() {

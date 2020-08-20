@@ -2,6 +2,7 @@ package io.intino.goros.builder.renderers;
 
 import io.intino.goros.builder.Modernization;
 import io.intino.goros.builder.monet.Dictionary;
+import io.intino.goros.builder.renderers.templates.konos.TranslationsTemplate;
 import io.intino.goros.builder.renderers.templates.konos.UITemplate;
 import io.intino.itrules.FrameBuilder;
 
@@ -16,7 +17,7 @@ public class TranslationsRenderer extends Renderer {
 	@Override
 	public void write() {
 		FrameBuilder builder = buildFrame();
-		writeFrame(file(), new UITemplate().render(builder.toFrame()));
+		writeFrame(file(), new TranslationsTemplate().render(builder.toFrame()));
 	}
 
 	private FrameBuilder buildFrame() {

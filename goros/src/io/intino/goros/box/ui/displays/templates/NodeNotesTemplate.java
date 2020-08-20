@@ -1,6 +1,8 @@
 package io.intino.goros.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.UserMessage;
+import io.intino.goros.util.DictionaryHelper;
+import io.intino.goros.util.DisplayHelper;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.Node;
 import io.intino.goros.box.GorosBox;
@@ -23,8 +25,8 @@ public class NodeNotesTemplate extends AbstractNodeNotesTemplate<GorosBox> {
         return this;
     }
 
-    public NodeNotesTemplate view(NodeViewProperty view) {
-        this.view = view;
+    public NodeNotesTemplate view(String view) {
+        this.view = view != null ? DictionaryHelper.view(node, view) : null;
         return this;
     }
 

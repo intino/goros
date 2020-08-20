@@ -20,10 +20,7 @@ public class ArtifactRenderer extends Renderer {
 	}
 
 	private FrameBuilder buildFrame() {
-		FrameBuilder result = baseFrame();
-		result.add("artifact");
-		result.add("package", modernization.projectPackage());
-		return result;
+		return baseFrame().add("artifact");
 	}
 
 	private File file() {

@@ -1,5 +1,6 @@
 package io.intino.goros.box.ui.displays.templates;
 
+import io.intino.goros.util.DictionaryHelper;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.Revision;
@@ -25,8 +26,8 @@ public class NodeRevisionsTemplate extends AbstractNodeRevisionsTemplate<GorosBo
         return this;
     }
 
-    public NodeRevisionsTemplate view(NodeViewProperty view) {
-        this.view = view;
+    public NodeRevisionsTemplate view(String view) {
+        this.view = view != null ? DictionaryHelper.view(node, view) : null;
         return this;
     }
 

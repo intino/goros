@@ -6,6 +6,7 @@ import com.vividsolutions.jts.io.WKTReader;
 import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.alexandria.ui.model.Geometry;
+import io.intino.goros.util.DictionaryHelper;
 import org.monet.metamodel.AbstractManifestBase;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.BusinessUnit;
@@ -28,8 +29,8 @@ public class NodeLocationTemplate extends AbstractNodeLocationTemplate<GorosBox>
         return this;
     }
 
-    public NodeLocationTemplate view(NodeViewProperty view) {
-        this.view = view;
+    public NodeLocationTemplate view(String view) {
+        this.view = view != null ? DictionaryHelper.view(node, view) : null;
         return this;
     }
 

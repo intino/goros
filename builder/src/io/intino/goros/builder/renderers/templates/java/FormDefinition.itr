@@ -15,9 +15,9 @@ def type(show & fields)
         [$field+refresh...[$NL]]
     }
 
-    private void save(Consumer<Boolean> consumer) {
+    private void save(java.util.function.Consumer<Boolean> consumer) {
         consumer.accept(true);
-        LayerHelper.nodeLayer().saveNode(node);
+        io.intino.goros.util.LayerHelper.nodeLayer().saveNode(node);
         updateFields();
     }
 
@@ -29,7 +29,7 @@ end
 
 def type(displayProvider)
     @Override
-    public Display displayFor(Node node, NodeViewProperty view) {
+    public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
         [$display...[$NL]]
         return null;
     }
@@ -60,7 +60,7 @@ end
 
 def type(field & link) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-    $name+firstLowerCase~.source(new io.intino.goros.box.ui.datasources.FieldLinkDatasource(box().goros(), session(), Dictionary.getInstance().getIndexDefinition("$index")));
+    $name+firstLowerCase~.source(new io.intino.goros.box.ui.datasources.FieldLinkDatasource(box().goros(), session(), org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$index")));
 end
 
 def type(field) trigger(update)
@@ -121,7 +121,7 @@ def type(field & boolean) trigger(refresh)
 end
 
 def type(field & date & multiple) trigger(init)
-    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(NodeHelper.dateOf(e.item()))));
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.util.NodeHelper.dateOf(e.item()))));
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
 end
 
@@ -134,11 +134,11 @@ def type(field & date & multiple) trigger(refresh)
 end
 
 def type(field & date) trigger(init)
-    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(NodeHelper.dateOf(e.value()))));
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.dateOf(e.value()))));
 end
 
 def type(field & date) trigger(refresh)
-    $name+firstLowerCase~.value(NodeHelper.instantOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.value(io.intino.goros.util.NodeHelper.instantOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
@@ -174,8 +174,8 @@ end
 
 def type(field & file & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
-        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(NodeHelper.fileOf(e.item())));
-        ((Content.$name+firstUpperCase~.FileEditable)e.component()).value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.util.NodeHelper.fileOf(e.item())));
+        ((Content.$name+firstUpperCase~.FileEditable)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
 end
@@ -183,27 +183,27 @@ end
 def type(field & file & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
-    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? NodeHelper.alexandriaFileOf(f) : null).collect(toList()));
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.util.NodeHelper.alexandriaFileOf(f) : null).collect(toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & file) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
-        save(b -> $name+firstLowerCase~Field.set(NodeHelper.fileOf(e.value())));
-        $name+firstLowerCase~.value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.fileOf(e.value())));
+        $name+firstLowerCase~.value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
     });
 end
 
 def type(field & file) trigger(refresh)
-    $name+firstLowerCase~.value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & picture & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
-        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(NodeHelper.pictureOf(e.item())));
-        ((Content.$name+firstUpperCase~.ImageEditable)e.component()).value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.util.NodeHelper.pictureOf(e.item())));
+        ((Content.$name+firstUpperCase~.ImageEditable)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
 end
@@ -211,90 +211,90 @@ end
 def type(field & picture & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
-    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? NodeHelper.alexandriaFileOf(f) : null).collect(toList()));
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.util.NodeHelper.alexandriaFileOf(f) : null).collect(toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & picture) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
-        save(b -> $name+firstLowerCase~Field.set(NodeHelper.pictureOf(e.value())));
-        $name+firstLowerCase~.value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.pictureOf(e.value())));
+        $name+firstLowerCase~.value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
     });
 end
 
 def type(field & picture) trigger(refresh)
-    $name+firstLowerCase~.value(NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & check) trigger(init)
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(NodeHelper.checkListOf($name+firstLowerCase~Field.get(), e.selection()))));
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.checkListOf($name+firstLowerCase~Field.get(), e.selection()))));
 end
 
 def type(field & check) trigger(refresh)
     $name+firstLowerCase~.clear();
     new io.intino.goros.box.ui.datasources.FieldCheckDatasource(box().goros(), session(), node, $name+firstLowerCase~Field).items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
-    $name+firstLowerCase~.selection(NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.selection(io.intino.goros.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & link & multiple) trigger(init)
-    $name+firstLowerCase~.valueProvider(DisplayHelper.linkValueProvider());
+    $name+firstLowerCase~.valueProvider(io.intino.goros.util.DisplayHelper.linkValueProvider());
     $name+firstLowerCase~.onSelect(e -> save(b -> {
         $name+firstLowerCase~Field.removeAll();
-        $name+firstLowerCase~Field.addNewAll(NodeHelper.linksOf(e.selection()));
+        $name+firstLowerCase~Field.addNewAll(io.intino.goros.util.NodeHelper.linksOf(e.selection()));
     }));
 end
 
 def type(field & link & multiple) trigger(refresh)
-    $name+firstLowerCase~Multiple.selection(NodeHelper.nodeItemsOf($name+firstLowerCase~MultipleField.getAll()));
-    $name+firstLowerCase~Multiple.readonly(readonly);
+    $name+firstLowerCase.selection(io.intino.goros.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
+    $name+firstLowerCase.readonly(readonly);
 end
 
 def type(field & link) trigger(init)
-    $name+firstLowerCase~.valueProvider(DisplayHelper.linkValueProvider());
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(NodeHelper.linkOf(e.selection()))));
+    $name+firstLowerCase~.valueProvider(io.intino.goros.util.DisplayHelper.linkValueProvider());
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.linkOf(e.selection()))));
 end
 
 def type(field & link) trigger(refresh)
-    if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
+    if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & select & multiple) trigger(init)
     $name+firstLowerCase~.onSelect(e -> save(b -> {
         $name+firstLowerCase~Field.removeAll();
-        $name+firstLowerCase~Field.addNewAll(NodeHelper.termsOf($name+firstLowerCase~Source, e.selection()));
+        $name+firstLowerCase~Field.addNewAll(io.intino.goros.util.NodeHelper.termsOf($name+firstLowerCase~Source, e.selection()));
     }));
 end
 
 def type(field & select & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
-    $name+firstLowerCase~.selection(NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
+    $name+firstLowerCase~.selection(io.intino.goros.util.NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & select & inline) trigger(init)
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
 end
 
 def type(field & select & inline) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
-    $name+firstLowerCase~.selection(NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.selection(io.intino.goros.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
 def type(field & select) trigger(init)
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
 end
 
 def type(field & select) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
-    $name+firstLowerCase~.selection(NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.selection(io.intino.goros.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly(readonly);
 end
 
@@ -371,9 +371,9 @@ def type(field & node) trigger(refresh)
 end
 
 def type(compositeView)
-    package $package.box.ui.displays.templates;
+    package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.events.ChangeEvent;
     import io.intino.alexandria.ui.displays.events.ChangeListener;
     import org.monet.bpi.FieldComposite;
@@ -388,7 +388,7 @@ def type(compositeView)
         private ChangeListener changeListener;
         [$field+declaration...[$NL]]
 
-        public $definition+firstUpperCase~$name+firstUpperCase~Template(CoordinacionBox box) {
+        public $definition+firstUpperCase~$name+firstUpperCase~Template($module+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -423,7 +423,7 @@ def type(compositeView)
             [$field+refresh...[$NL]]
         }
 
-        private void notifyChange(Consumer<Boolean> consumer) {
+        private void save(java.util.function.Consumer<Boolean> consumer) {
             consumer.accept(true);
             changeListener.accept(new ChangeEvent(this, field));
             updateFields();
@@ -437,8 +437,8 @@ def type(compositeView)
 end
 
 def type(display)
-    if (node.getDefinition().getCode().equals("$code") && view.getCode().equals("$viewCode")) {
-        $package.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
+    if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
+        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
         result.node(node);
         result.readonly(false);
         return result;

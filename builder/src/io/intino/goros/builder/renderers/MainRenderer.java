@@ -20,11 +20,7 @@ public class MainRenderer extends Renderer {
 	}
 
 	private FrameBuilder buildFrame() {
-		FrameBuilder result = baseFrame();
-		result.add("main");
-		result.add("package", modernization.projectPackage());
-		result.add("module", modernization.moduleName());
-		return result;
+		return baseFrame().add("main");
 	}
 
 	private File file() {

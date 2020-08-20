@@ -48,20 +48,12 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		return result;
 	}
 
-	protected String javaPackage() {
-		return modernization.sourceUiDirectory() + File.separator + "displays" + File.separator + "templates" + File.separator;
-	}
-
-	protected String konosPackage() {
-		return modernization.sourceUiDirectory() + File.separator + "definitions" + File.separator;
-	}
-
 	protected void addDisplayFor(NodeDefinition definition, String view, FrameBuilder builder) {
 		addDisplayFor(definition, definition.getNodeView(view), builder);
 	}
 
 	protected void addDisplayFor(NodeDefinition definition, NodeViewProperty view, FrameBuilder builder) {
-		FrameBuilder result = new FrameBuilder().add("display").add("package", modernization.projectPackage());
+		FrameBuilder result = baseFrame().add("display");
 		NodeViewProperty viewProperty = view != null ? view : findEmbeddedView(definition);
 		String key = definition.getCode() + viewProperty.getCode();
 		if (addedDisplays.contains(key)) return;
@@ -73,20 +65,20 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		builder.add("display", result);
 	}
 
-	private NodeViewProperty findEmbeddedView(NodeDefinition definition) {
-		NodeViewProperty defaultView = definition.getDefaultView();
-		if (defaultView.isVisibleWhenEmbedded()) return defaultView;
-		return definition.getViewDefinitionList().stream().filter(NodeViewProperty::isVisibleWhenEmbedded).findFirst().orElse(definition.getDefaultView());
-	}
-
-	private void writeJava(FrameBuilder builder) {
+	protected void writeJava(FrameBuilder builder) {
 		File file = new File(javaPackage() + nameOf(definition) + "Template.java");
 		writeFrame(file, javaTemplate().render(builder.toFrame()));
 	}
 
-	private void writeKonos(FrameBuilder builder) {
+	protected void writeKonos(FrameBuilder builder) {
 		File file = new File(konosPackage() + nameOf(definition) + ".konos");
 		writeFrame(file, konosTemplate().render(builder.toFrame()));
+	}
+
+	private NodeViewProperty findEmbeddedView(NodeDefinition definition) {
+		NodeViewProperty defaultView = definition.getDefaultView();
+		if (defaultView.isVisibleWhenEmbedded()) return defaultView;
+		return definition.getViewDefinitionList().stream().filter(NodeViewProperty::isVisibleWhenEmbedded).findFirst().orElse(definition.getDefaultView());
 	}
 
 }

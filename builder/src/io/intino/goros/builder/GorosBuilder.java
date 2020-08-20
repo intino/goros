@@ -35,12 +35,14 @@ public class GorosBuilder {
         new ArtifactRenderer(dictionary, modernization).write();
         new MainRenderer(dictionary, modernization).write();
         new BoxRenderer(dictionary, modernization).write();
+        new GraphRenderer(dictionary, modernization).write();
     }
 
     private void compileDefinitions() {
         new UIRenderer(dictionary, modernization, definitions().collect(toList())).write();
         new ThemeRenderer(dictionary, modernization).write();
         new TranslationsRenderer(dictionary, modernization).write();
+        new TasksRenderer(dictionary, modernization).write();
         definitions().forEach(this::compileDefinition);
     }
 
@@ -62,7 +64,7 @@ public class GorosBuilder {
     private boolean isRoot(Definition definition) {
         if (definition instanceof TaskOrderDefinition) return false;
         if (definition instanceof NodeDefinition) return true;
-        if (definition instanceof TaskDefinition) return true;
+        if (definition instanceof ActivityDefinition) return true;
         if (definition instanceof SourceDefinition) return true;
         return definition instanceof IndexDefinition;
     }

@@ -16,8 +16,8 @@ public class Main {
             return;
         }
         Modernization modernization = Modernization.load(new File(args[0]));
-        clear(new File(modernization.projectDirectory().getAbsolutePath() + "/../ui"));
-        clear(modernization.projectDirectory());
+        //clear(new File(modernization.projectDirectory().getAbsolutePath() + "/../ui"));
+        //clear(modernization.projectDirectory());
         new GorosBuilder(modernization).compile();
     }
 

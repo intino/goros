@@ -13,7 +13,7 @@ def type(artifact)
 
             Test(groupId = "junit", artifactId = "junit", version = "LATEST")
 
-        Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable(mainClass="$package.box.Main")
+        Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable(mainClass="$package.$module+lowerCase.box.Main")
 
         Parameter("home")
         Parameter("port")

@@ -1,6 +1,7 @@
 def type(nodedefinition)
     dsl Konos
 
+    [$view+use...[$NL]]
     use UI
     use Theme
 
@@ -11,7 +12,7 @@ def type(nodedefinition)
                     Link(title="Inicio", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.inicio)
                     Text(value="/", format=h4 middleAirRight)
                     $parent
-                    Text(value="$label", format=h4 bold)
+                    Text(value="$label", format=h4 bold) label
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
@@ -60,7 +61,7 @@ end
 def type(toolbar & collectable) trigger(navigable)
     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.formulario1)
+    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$definition+firstLowerCase)
 end
 
 def type(toolbar) trigger(navigable)
@@ -127,7 +128,7 @@ def type(nodeview & tasks) trigger(revisionPage)
 end
 
 def type(nodeview & tasks) trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=nodeTasksTemplate) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=NodeTasksTemplate) $name+firstLowerCase~ViewStamp
 end
 
 def type(nodeview & recenttask) trigger(revisionPage)
@@ -140,6 +141,33 @@ def type(nodeview & locations) trigger(revisionPage)
 end
 
 def type(nodeview & revisions) trigger(revisionPage)
+end
+
+def type(nodeview & linksin) trigger(use)
+end
+
+def type(nodeview & linksout) trigger(use)
+end
+
+def type(nodeview & location) trigger(use)
+end
+
+def type(nodeview & locations) trigger(use)
+end
+
+def type(nodeview & revisions) trigger(use)
+end
+
+def type(nodeview & tasks) trigger(use)
+    use Tasks
+end
+
+def type(nodeview) trigger(use)
+    $show+use
+end
+
+def type(nodeview) trigger(revisionPage)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
 end
 
 def type(nodeview) trigger(page)
@@ -169,10 +197,20 @@ def type(nodeview)
         $show
 end
 
+def type(show & recenttask & container) trigger(use)
+end
+
+def type(show & recenttask) trigger(use)
+    use $taskName+firstUpperCase
+end
+
+def type(show & recenttask & container)
+end
+
 def type(show & recenttask)
 	Block(layout=Vertical Flexible CenterCenter, visible=false) noTaskMessage as Relative(height=100%)> Text(value="No hay tareas pendientes", format=h5, translate=true)
 	Block(format=dialog bordered) toolbarBlock > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
-	TemplateStamp(template=$taskName+lowerCase~StateViewTemplate) $taskName+lowerCase~View
+	TemplateStamp(template=$taskName+firstUpperCase~StateViewTemplate) $taskName+firstLowerCase~View
 end
 
 def type(show & revisions)
@@ -184,4 +222,7 @@ def type(show & revisions)
 	Block(format=smallAirLeft middleSpaced bordered, visible=false) revisionPage as Animated Relative(width=55%)
 		Transition(direction=Left)
 		TemplateStamp(template=$definition+firstUpperCase~RevisionTemplate) currentRevisionStamp
+end
+
+def type(show) trigger(use)
 end

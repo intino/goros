@@ -3,12 +3,12 @@ package io.intino.goros.builder.renderers.templates.java;
 import io.intino.itrules.RuleSet;
 import io.intino.itrules.Template;
 
-public class CollectionTemplate extends Template {
+public class IndexTemplate extends Template {
 
 	@Override
 	protected RuleSet ruleSet() {
 		RuleSet result = new RuleSet();
-		new CollectionDefinitionTemplate().ruleSet().forEach(result::add);
+		new IndexDefinitionTemplate().ruleSet().forEach(result::add);
 		new NodeDefinitionTemplate().ruleSet().forEach(result::add);
 		return result;
 	}

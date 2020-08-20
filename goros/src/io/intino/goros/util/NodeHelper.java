@@ -45,6 +45,10 @@ public class NodeHelper {
         return InternalFormat.format(java.util.Date.from(instant));
     }
 
+    public static Task recentTask(Node node, String view) {
+        return recentTask(node, node.getDefinition().getNodeView(view));
+    }
+
     public static Task recentTask(Node node, NodeViewProperty view) {
         List<Task> taskList = new ArrayList<>(node.getLinkedTasks().get().values());
         if (taskList.size() <= 0) return null;

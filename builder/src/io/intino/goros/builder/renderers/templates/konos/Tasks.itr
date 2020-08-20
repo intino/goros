@@ -1,0 +1,57 @@
+def type(tasks)
+    dsl Konos
+
+    [$activity+use...[$NL]]
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) TaskTrayTemplate
+        Block(layout=Vertical Flexible) > TemplateStamp(template=TasksTemplate) tasks
+
+    Template(layout=Vertical Flexible, format=smallAir) TaskBoardTemplate
+        Block(layout=Vertical Flexible) > TemplateStamp(template=TasksTemplate) tasks
+
+    Template(layout=Vertical Flexible, format=smallAir) TasksTemplate
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    Text(value="Tareas", format=h4 bold) label
+                Text(format=body2) count
+            Block(layout=Horizontal Center) rightToolbar
+                SearchBox(collections = empty, format=airRight smallAirTop) search
+                MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
+                Selector(selected="tableView", format=airRight) viewSelector as ToggleBox(size=Small)
+                    MaterialIconButton(title="Tabla", icon="ViewHeadline", size=Small) table as Option
+                    MaterialIconButton(title="Listado", icon="ViewList", size=Small) list as Option
+                MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+
+        Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=TasksEmbeddedTemplate) content
+
+    Template(layout=Vertical Flexible) TasksEmbeddedTemplate as Relative(height=100%)
+
+        Block(layout=Horizontal Flexible, format=smallAirTop)
+            Block(layout=Vertical Flexible, format=bordered)
+                OwnerTemplateStamp(template="TasksToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+                Block(layout=Vertical Flexible) as Relative(height=100%)
+                    Block(layout=Vertical Flexible) tableView as Conditional > OwnerTemplateStamp(template="TasksTableCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tableViewStamp
+                    Block(layout=Vertical Flexible) listView as Conditional > OwnerTemplateStamp(template="TasksListCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) listViewStamp
+
+            Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
+                Transition(direction=Left)
+                OwnerTemplateStamp(template="TasksFiltersTemplate", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tasksFiltersStamp
+
+            [$activity+block...[$NL]]
+
+    Template NodeTasksTemplate as Relative(height=100%)
+        TemplateStamp(template=TasksEmbeddedTemplate) tasks
+end
+
+def type(activity) trigger(use)
+    use $name+firstUpperCase
+end
+
+def type(activity) trigger(block)
+    Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) $name+firstLowerCase~View as Conditional Animated Relative(width=55%)
+        Transition(direction=Left)
+        TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~Stamp
+end

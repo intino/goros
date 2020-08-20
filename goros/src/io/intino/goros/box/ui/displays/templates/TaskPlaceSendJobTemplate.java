@@ -1,6 +1,7 @@
 package io.intino.goros.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
+import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.RoleDefinition;
 import org.monet.metamodel.SendJobActionProperty;
 import org.monet.space.kernel.model.*;
@@ -111,7 +112,8 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<G
     private void refreshSetupForm(Node form) {
         pendingView.setupBlock.setupFrame.clear();
         if (form == null) return;
-        Display display = displayProvider.displayFor(form, DisplayHelper.defaultView(form));
+        NodeViewProperty viewProperty = DisplayHelper.defaultView(form);
+        Display display = displayProvider.displayFor(form, viewProperty != null ? viewProperty.getCode() : null);
         if (display == null) return;
         pendingView.setupBlock.setupFrame.display(display);
         display.refresh();

@@ -1,4 +1,4 @@
-def type(collectiondefinition)
+def type(setdefinition)
     dsl Konos
 
     use UI
@@ -12,7 +12,7 @@ def type(collectiondefinition)
                     Link(title="Inicio", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.inicio)
                     Text(value="/", format=h4 middleAirRight)
                     $parent
-                    Text(value="$label", format=h4 bold)
+                    Text(value="$label", format=h4 bold) label
                 Text(format=body2) count
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search

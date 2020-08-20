@@ -7,7 +7,10 @@ public class FormDefinitionTemplate extends Template {
 
 	public RuleSet ruleSet() {
 		return new RuleSet().add(
+			rule().condition((allTypes("show","fields")), (trigger("use"))).output(expression().output(mark("field", "use").multiple("\n"))),
 			rule().condition((allTypes("show","fields"))).output(literal("Block content as Relative(width=90%)\n    ")).output(expression().output(mark("field").multiple("\n"))),
+			rule().condition((allTypes("field","link")), (trigger("use"))).output(literal("use ")).output(mark("index", "firstUpperCase")),
+			rule().condition((type("field")), (trigger("use"))),
 			rule().condition((allTypes("field","text","multiple"))).output(literal("Text(format=doubleAirBottom) ")).output(mark("name", "firstLowerCase")).output(literal(" as Editable Multiple(noItemsMessage=\"No hay elementos\") Labeled(\"")).output(mark("label")).output(literal("\") Readonly > Count(min=")).output(mark("min")).output(literal(", max=")).output(mark("max")).output(literal(")")),
 			rule().condition((allTypes("field","text"))).output(literal("Text(format=doubleAirBottom, mode=Lowercase) ")).output(mark("name", "firstLowerCase")).output(literal(" as Editable(helperText=\"Rellene aquí el valor del campo\") Labeled(\"")).output(mark("label")).output(literal("\") Readonly")),
 			rule().condition((allTypes("field","number","multiple"))).output(literal("Number(format=doubleAirBottom, min=")).output(mark("min")).output(literal(", max=")).output(mark("max")).output(literal(") ")).output(mark("name", "firstLowerCase")).output(literal(" as Editable Multiple(noItemsMessage=\"No hay medidas\") Labeled(\"")).output(mark("label")).output(literal("\") Readonly")),

@@ -60,6 +60,24 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		}
 	}
 
+	protected void writeEmbeddedTemplate() {
+		resetAddedDisplays();
+		FrameBuilder builder = buildFrame().add("embedded");
+		File file = new File(javaPackage() + nameOf(definition()) + "EmbeddedTemplate.java");
+		writeFrame(file, javaTemplate().render(builder.toFrame()));
+	}
+
+	protected void writeRevisionTemplate() {
+		resetAddedDisplays();
+		FrameBuilder builder = buildFrame(true);
+		File file = new File(javaPackage() + nameOf(definition()) + "RevisionTemplate.java");
+		writeFrame(file, javaTemplate().render(builder.toFrame()));
+	}
+
+	protected void writeViewsTemplate() {
+		definition().getViewDefinitionList().stream().filter(this::hasTemplate).forEach(this::writeViewTemplate);
+	}
+
 	private FrameBuilder buildFrame(boolean revision) {
 		FrameBuilder result = baseDefinitionFrame().add("nodedefinition");
 		if (revision) result.add("revision");
@@ -87,29 +105,11 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	}
 
 	private void addViews(FrameBuilder builder, boolean revision) {
-		definition().getViewDefinitionList().stream().filter(v -> !v.isVisibleWhenEmbedded() && (!revision || isVisibleOnRevision(v))).forEach(v -> addView(v, builder));
+		definition().getViewDefinitionList().stream().filter(v -> !revision || isVisibleOnRevision(v)).forEach(v -> addView(v, builder));
 	}
 
 	private void addView(NodeViewProperty viewProperty, FrameBuilder builder) {
 		builder.add("view", viewFrame(viewProperty));
-	}
-
-	private void writeEmbeddedTemplate() {
-		resetAddedDisplays();
-		FrameBuilder builder = buildFrame().add("embedded");
-		File file = new File(javaPackage() + nameOf(definition()) + "EmbeddedTemplate.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
-	}
-
-	private void writeRevisionTemplate() {
-		resetAddedDisplays();
-		FrameBuilder builder = buildFrame(true);
-		File file = new File(javaPackage() + nameOf(definition()) + "RevisionTemplate.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
-	}
-
-	private void writeViewsTemplate() {
-		definition().getViewDefinitionList().stream().filter(this::hasTemplate).forEach(this::writeViewTemplate);
 	}
 
 	private void writeViewTemplate(NodeViewProperty view) {

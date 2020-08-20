@@ -8,6 +8,7 @@ import org.monet.bpi.FieldNode;
 import org.monet.bpi.types.Link;
 import org.monet.metamodel.NodeDefinition;
 import org.monet.metamodel.NodeFieldProperty;
+import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Language;
 import org.monet.space.kernel.model.Node;
@@ -113,7 +114,8 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> imple
     private void refreshNode(Node node) {
         nodeFrame.clear();
         if (node == null) return;
-        Display display = displayProvider.displayFor(node, DisplayHelper.defaultView(node));
+        NodeViewProperty viewProperty = DisplayHelper.defaultView(node);
+        Display display = displayProvider.displayFor(node, viewProperty != null ? viewProperty.getCode() : null);
         if (display == null) return;
         nodeFrame.display(display);
         display.refresh();

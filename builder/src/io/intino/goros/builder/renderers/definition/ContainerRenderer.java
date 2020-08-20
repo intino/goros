@@ -75,6 +75,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 	private void addShow(ContainerDefinitionBase.ViewProperty viewProperty, FrameBuilder builder) {
 		ContainerDefinitionBase.ViewProperty.ShowProperty showProperty = viewProperty.getShow();
 		FrameBuilder result = baseFrame().add("show");
+		result.add(definition().getType().name().toLowerCase());
 		result.add(typeOf(showProperty));
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));

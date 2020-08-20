@@ -69,7 +69,7 @@ public class TaskPlaceEditionTemplate extends AbstractTaskPlaceEditionTemplate<G
         EditionActionProperty.UseProperty use = property.getUse();
         FormDefinition definition = Dictionary.getInstance().getFormDefinition(use.getForm().getValue());
         FormDefinitionBase.FormViewProperty view = definition.getViewMap().get(use.getWithView().getValue());
-        Display display = displayProvider.displayFor(form, view);
+        Display display = displayProvider.displayFor(form, view != null ? view.getCode() : null);
         if (display == null) return;
         formFrame.display(display);
         display.refresh();

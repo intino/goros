@@ -1,7 +1,16 @@
+def type(show & components) trigger(use)
+    [$component+use...[$NL]]
+end
+
 def type(show & components)
     [$component...[$NL]]
 end
 
-def type(component)
-    TemplateStamp(template=$name+firstUpperCase~$view+firstUpperCase~Template) $name+firstLowerCase~$view+firstUpperCase~Stamp
+def type(component) trigger(use)
+    use $name+firstUpperCase
 end
+
+def type(component)
+    TemplateStamp(template=$name+firstUpperCase~$view+firstUpperCase~ViewTemplate) $name+firstLowerCase~$view+firstUpperCase~Stamp
+end
+

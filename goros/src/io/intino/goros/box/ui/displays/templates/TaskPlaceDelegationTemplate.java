@@ -1,10 +1,7 @@
 package io.intino.goros.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
-import org.monet.metamodel.DelegationActionProperty;
-import org.monet.metamodel.ProcessDefinition;
-import org.monet.metamodel.RoleDefinition;
-import org.monet.metamodel.TaskProviderProperty;
+import org.monet.metamodel.*;
 import org.monet.space.kernel.machines.ttm.behavior.ProviderBehavior;
 import org.monet.space.kernel.model.*;
 import io.intino.goros.box.GorosBox;
@@ -12,6 +9,7 @@ import io.intino.goros.box.ui.DisplayProvider;
 import io.intino.goros.util.AccountHelper;
 import io.intino.goros.util.DisplayHelper;
 import io.intino.goros.util.LayerHelper;
+import org.monet.space.kernel.model.Dictionary;
 
 import java.util.Date;
 
@@ -125,7 +123,8 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private void refreshSetupForm(Node form) {
         pendingView.setupBlock.setupFrame.clear();
         if (form == null) return;
-        Display display = displayProvider.displayFor(form, DisplayHelper.defaultView(form));
+        NodeViewProperty viewProperty = DisplayHelper.defaultView(form);
+        Display display = displayProvider.displayFor(form, viewProperty != null ? viewProperty.getCode() : null);
         if (display == null) return;
         pendingView.setupBlock.setupFrame.display(display);
         display.refresh();

@@ -1,7 +1,7 @@
 def type(box)
-    package $package.box;
+    package $package.$module+lowerCase.box;
 
-    import $package.graph.$module+firstUpperCase~Graph;
+    import $package.$module+lowerCase.graph.$module+firstUpperCase~Graph;
     import io.intino.alexandria.core.Box;
     import io.intino.alexandria.ui.services.AuthService;
     import io.intino.magritte.framework.Graph;
@@ -46,7 +46,7 @@ def type(box)
             return ((GorosBox)owner);
         }
 
-        public CoordinacionBox open(String businessUnit) {
+        public $module+firstUpperCase~Box open(String businessUnit) {
             open(graph.a$$(GorosGraph.class).businessUnitList().stream().filter(b -> b.name$$().equals(businessUnit)).findFirst().orElse(null));
             return this;
         }

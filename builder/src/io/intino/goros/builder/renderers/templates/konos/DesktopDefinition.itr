@@ -1,0 +1,29 @@
+def type(desktopdefinition)
+    dsl Konos
+
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    Text(value="$label", format=h4 bold) label
+
+        [$view...[$NL]]
+end
+
+def type(nodeview)
+    Block(layout=Vertical Flexible, format=smallAirTop spaced)
+        $show
+end
+
+def type(show)
+    [$item...[$NL]]
+end
+
+def type(item)
+    Block(format=doubleAirBottom, visible=false) $name+firstLowerCase
+        Link(title="$label", format=h5) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$name+firstLowerCase)
+        Text(value="$description", format=description)
+end

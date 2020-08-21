@@ -47,15 +47,17 @@ public class Shifter {
 	}
 
 	private static void execute(List<File> libraries, File file) throws IOException {
+		File logFile = new File(file.getParentFile(), "modernization.log");
+		if (logFile.exists()) logFile.delete();
 		List<String> commandParameters = new ArrayList<>();
 		String javaBin = java.lang.System.getProperty("java.home") + separator + "bin" + separator + "java";
 		commandParameters.add(javaBin);
 		commandParameters.add("-Dfile.encoding=UTF-8");
-		commandParameters.addAll(Arrays.asList("-jar", libraries.get(0).getAbsolutePath()));
+		commandParameters.addAll(Arrays.asList("-cp", libraries.get(0).getAbsolutePath()));
 		commandParameters.add(file.getAbsolutePath());
 		try {
-			new ProcessBuilder(commandParameters).redirectErrorStream(true).start().waitFor();
-		} catch (InterruptedException e) {
+			new ProcessBuilder(commandParameters).redirectErrorStream(true).redirectOutput(logFile).redirectError(logFile).start().waitFor();
+		} catch (InterruptedException ignored) {
 		}
 	}
 

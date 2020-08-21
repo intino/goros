@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact("io.intino.goros", "1.0.2") shifter
+Artifact("io.intino.goros", "1.0.3") shifter
 	Imports
 		Test("junit", "junit", "4.13")
 		Provided("com.jcabi", "jcabi-aether", "0.10.1")

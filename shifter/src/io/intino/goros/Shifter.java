@@ -53,7 +53,7 @@ public class Shifter {
 		String javaBin = java.lang.System.getProperty("java.home") + separator + "bin" + separator + "java";
 		commandParameters.add(javaBin);
 		commandParameters.add("-Dfile.encoding=UTF-8");
-		commandParameters.addAll(Arrays.asList("-cp", libraries.get(0).getAbsolutePath()));
+		commandParameters.addAll(Arrays.asList("-jar", libraries.get(0).getAbsolutePath()));
 		commandParameters.add(file.getAbsolutePath());
 		try {
 			new ProcessBuilder(commandParameters).redirectErrorStream(true).redirectOutput(logFile).redirectError(logFile).start().waitFor();

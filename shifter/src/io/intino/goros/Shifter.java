@@ -26,8 +26,9 @@ import static org.sonatype.aether.repository.RepositoryPolicy.UPDATE_POLICY_ALWA
 import static org.sonatype.aether.repository.RepositoryPolicy.UPDATE_POLICY_DAILY;
 
 public class Shifter {
-	public static final String INTINO_RELEASES = "https://artifactory.intino.io/artifactory/releases";
-	public static final String INTINO_SNAPSHOTS = "https://artifactory.intino.io/artifactory/snapshots";
+	private static final String MAVEN_URL = "https://repo1.maven.org/maven2/";
+	private static final String INTINO_RELEASES = "https://artifactory.intino.io/artifactory/releases";
+	private static final String INTINO_SNAPSHOTS = "https://artifactory.intino.io/artifactory/snapshot-libraries";
 
 	public static final String GROUP_ID = "io.intino.goros.builders";
 
@@ -41,7 +42,7 @@ public class Shifter {
 		Node platform = nodeList.item(0);
 		String artifactId = platform.getTextContent().substring(0, platform.getTextContent().indexOf("-"));
 		String version = platform.getTextContent().substring(platform.getTextContent().indexOf("-") + 1);
-		List<File> libraries = find(GROUP_ID + ":" + artifactId + ":" + version);
+		List<File> libraries = find(GROUP_ID, artifactId, version);
 		execute(libraries, file);
 	}
 
@@ -52,18 +53,22 @@ public class Shifter {
 		commandParameters.add("-Dfile.encoding=UTF-8");
 		commandParameters.addAll(Arrays.asList("-jar", libraries.get(0).getAbsolutePath()));
 		commandParameters.add(file.getAbsolutePath());
-		new ProcessBuilder(commandParameters).redirectErrorStream(true).start();
+		try {
+			new ProcessBuilder(commandParameters).redirectErrorStream(true).start().waitFor();
+		} catch (InterruptedException e) {
+		}
 	}
 
-	private static List<File> find(String artifact) throws DependencyResolutionException {
+	private static List<File> find(String groupId, String artifact, String version) throws DependencyResolutionException {
 		Aether aether = new Aether(artifactories(), new File(System.getProperty("user.home") + File.separator + ".m2" + File.separator + "repository"));
-		return aether.resolve(new DefaultArtifact(artifact), JavaScopes.COMPILE).stream().map(Artifact::getFile).collect(Collectors.toList());
+		return aether.resolve(new DefaultArtifact(groupId, artifact, "jar", version), JavaScopes.COMPILE).stream().map(Artifact::getFile).collect(Collectors.toList());
 	}
 
 	private static Collection<RemoteRepository> artifactories() {
 		List<RemoteRepository> remotes = new ArrayList<>();
-		remotes.add(new RemoteRepository("intino-maven", "default", INTINO_RELEASES).setPolicy(false, new RepositoryPolicy().setEnabled(true).setUpdatePolicy(UPDATE_POLICY_DAILY)));
 		remotes.add(new RemoteRepository("intino-maven", "default", INTINO_SNAPSHOTS).setPolicy(true, new RepositoryPolicy().setEnabled(true).setUpdatePolicy(UPDATE_POLICY_ALWAYS)));
+		remotes.add(new RemoteRepository("intino-maven", "default", INTINO_RELEASES).setPolicy(false, new RepositoryPolicy().setEnabled(true).setUpdatePolicy(UPDATE_POLICY_ALWAYS)));
+		remotes.add(new RemoteRepository("maven-central", "default", MAVEN_URL).setPolicy(false, new RepositoryPolicy().setEnabled(true).setUpdatePolicy(UPDATE_POLICY_DAILY)));
 		return remotes;
 	}
 }

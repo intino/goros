@@ -1,11 +1,11 @@
 dsl Legio
 
-Artifact("io.intino.goros", "1.0.1") shifter
+Artifact("io.intino.goros", "1.0.2") shifter
 	Imports
 		Test("junit", "junit", "4.13")
 		Provided("com.jcabi", "jcabi-aether", "0.10.1")
 		Provided("org.apache.maven", "maven-project", "3.0-alpha-2")
-	Package(mode = ModulesAndLibrariesLinkedByManifest)
+	Package(mode = ModulesAndLibrariesLinkedByManifest, attachSources = true)
 	Distribution(identifier = "intino-maven")
 		Release("https://artifactory.intino.io/artifactory/release-libraries")
 Repository("intino-maven")

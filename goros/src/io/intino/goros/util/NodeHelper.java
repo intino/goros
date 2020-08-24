@@ -11,6 +11,7 @@ import org.monet.bpi.FieldLink;
 import org.monet.bpi.FieldPicture;
 import org.monet.bpi.types.*;
 import org.monet.bpi.types.Date;
+import org.monet.bpi.types.Number;
 import org.monet.bpi.types.Term;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
@@ -63,6 +64,20 @@ public class NodeHelper {
 
     public static String valueOf(NodeItem node, String attribute) {
         return node.getAttribute(attribute);
+    }
+
+    public static Double numberOf(Reference reference, String attribute) {
+        Object value = reference.getAttribute(attribute).getValue();
+        if (value instanceof Double) return (Double)value;
+        if (value instanceof Number) return ((Number)value).doubleValue();
+        return null;
+    }
+
+    public static Double numberOf(NodeItem node, String attribute) {
+
+        String value = node.getAttribute(attribute);
+        if (value == null || value.isEmpty()) return null;
+        return Double.valueOf(value);
     }
 
     public static Node nodeOf(Link link) {
@@ -213,7 +228,13 @@ public class NodeHelper {
     }
 
     public static String contentTypeOf(String id) {
-        return ComponentDocuments.getInstance().getDocumentContentType(id);
+        try {
+            return ComponentDocuments.getInstance().getDocumentContentType(id);
+        }
+        catch (Throwable ex) {
+            Logger.error(ex);
+            return null;
+        }
     }
 
     public static Picture pictureOf(Resource value) {

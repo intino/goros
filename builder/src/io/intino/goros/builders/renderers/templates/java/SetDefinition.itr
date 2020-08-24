@@ -1,0 +1,597 @@
+def type(show & items) trigger(declaration)
+end
+
+def type(show & ownedprototypes)
+end
+
+def type(show & sharedprototypes)
+end
+
+def type(show & report)
+end
+
+def type(show) trigger(declaration)
+end
+
+def type(show)
+    public void select(Node node) {
+        io.intino.goros.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
+    }
+
+    public void refresh(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId())), node);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
+            Node node = e.item();
+            org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
+            $componentType
+            [$attribute...[$NL]]
+        });
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
+        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.box.ui.datasources.Collection$datasourceType~Datasource(box().goros(), session(), node));
+        $definition+firstLowerCase~$view+firstUpperCase.reload();
+    }
+end
+
+def type(componentType & items)
+    $package.$module+lowerCase.box.ui.displays.rows.$definition+firstUpperCase~$view+firstUpperCase~Row row = e.component();
+end
+
+def type(componentType)
+    $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
+end
+
+def type(attribute & items & date)
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.instantOf(reference, "$code"));
+end
+
+def type(attribute & items & picture)
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
+end
+
+def type(attribute & items)
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
+end
+
+def type(attribute & date)
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.instantOf(reference, "$code"));
+end
+
+def type(attribute & icon)
+    item.$name+firstLowerCase.icon(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
+end
+
+def type(attribute & picture)
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.urlOf(reference, "$code", true));
+end
+
+def type(attribute & real)
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.numberOf(reference, "$code"));
+end
+
+def type(attribute & integer)
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.numberOf(reference, "$code"));
+end
+
+def type(attribute)
+    item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
+end
+
+def type(attribute)
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.util.NodeHelper.valueOf(reference, "$code"));
+end
+
+def type(collectionview & filter)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.Collection;
+    import org.monet.space.kernel.model.Node;
+
+    public class $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = true;
+        private Collection collection;
+
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+            this.collection = collection;
+            updateFilters();
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            reset.onExecute(e -> resetFilters());
+        }
+
+        private void updateFilters() {
+            [$dimension+updateCall...[$NL]]
+        }
+
+        private void resetFilters() {
+            [$dimension+clearCall...[$NL]]
+            collection.clearFilters();
+        }
+
+        [$dimension+updateMethod...[$NL]]
+    }
+end
+
+def type(dimension) trigger(updateCall)
+    udpate$name+firstUpperCase();
+end
+
+def type(dimension) trigger(updateMethod)
+    private void udpate$name+firstUpperCase() {
+        $name+firstLowerCase.label("$label");
+        $name+firstLowerCase.attribute("$code");
+        $name+firstLowerCase.bindTo(collection);
+        $name+firstLowerCase.refresh();
+    }
+end
+
+def type(dimension) trigger(clearCall)
+    $name+firstLowerCase.clearSelection();
+end
+
+def type(setdefinition & toolbar)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.Collection;
+    import io.intino.alexandria.ui.displays.components.collection.Selectable;
+    import io.intino.alexandria.ui.displays.events.ActionListener;
+    import io.intino.alexandria.ui.displays.events.Event;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.util.LayerHelper;
+
+    import java.util.function.Consumer;
+
+    public class $name+firstUpperCase~ToolbarTemplate extends Abstract$name+firstUpperCase~ToolbarTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = false;
+        private java.util.function.Consumer<Node> addListener;
+        private java.util.function.Consumer<Boolean> toggleEditionListener;
+        private ActionListener removeSelectionListener;
+
+        public $name+firstUpperCase~ToolbarTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate onAdd(java.util.function.Consumer<Node> listener) {
+            this.addListener = listener;
+            return this;
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate onToggleEdition(java.util.function.Consumer<Boolean> listener) {
+            this.toggleEditionListener = listener;
+            return this;
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate onRemoveSelection(ActionListener listener) {
+            this.removeSelectionListener = listener;
+            return this;
+        }
+
+        public $name+firstUpperCase~ToolbarTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+            this.toolbar.bindTo((Selectable)collection);
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            [$addList+execute]
+            edit.onExecute(e -> toggleEdition());
+            removeSelection.onExecute(e -> removeSelectionListener.accept(new Event(this)));
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.visible(!node.getDefinition().isReadonly());
+            removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
+            [$addList+refresh]
+        }
+
+        private void addNode(String option) {
+            Node result = null;
+            [$add+toolbarTemplate...[$NL]]
+            if (result == null) return;
+            addListener.accept(result);
+        }
+
+        private void toggleEdition() {
+            readonly(!readonly);
+            toggleEditionListener.accept(!readonly);
+            refresh();
+        }
+
+    }
+end
+
+def type(addList) trigger(execute)
+    add.onExecute(e -> addNode(e.option()));
+end
+
+def type(addList) trigger(visible)
+    add.visible(readonly && !node.getDefinition().isReadonly());
+end
+
+def type(add) trigger(toolbarTemplate)
+    if (option.equals("Añadir $label")) result = io.intino.goros.util.LayerHelper.nodeLayer().addNode("$code", node);
+end
+
+def type(setdefinition)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.BlockConditional;
+    import io.intino.alexandria.ui.displays.components.Collection;
+    import io.intino.alexandria.ui.displays.events.Event;
+    import io.intino.alexandria.ui.displays.events.SelectionEvent;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import io.intino.alexandria.ui.displays.events.collection.RefreshCountEvent;
+    import org.monet.space.kernel.components.layers.NodeLayer;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.util.*;
+
+    import java.util.Collections;
+    import java.util.List;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Node node;
+        private Node selectedChild;
+        private boolean readonly = true;
+        private boolean nodeAdded = false;
+        private List<Node> selection = Collections.emptyList();
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public void open(String id) {}
+
+        @Override
+        public void init() {
+            super.init();
+            node = io.intino.goros.util.NodeHelper.singleton("$code");
+            initToolbars();
+            initViews();
+        }
+
+        private void initToolbars() {
+            filters.onToggle(e -> toggleFiltersViewVisibility(e.state()));
+            toolbar.onAdd(node -> { nodeAdded = true; refresh(); select(node); });
+            toolbar.onToggleEdition(this::toggleEdition);
+            toolbar.onRemoveSelection(this::removeSelection);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshToolbars();
+            refreshView();
+            refreshFilters();
+            if (viewSelector.selection().size() <= 0) DisplayHelper.selectDefaultView(viewSelector, node);
+        }
+
+        private void initViews() {
+            [$view+initCall...[$NL]]
+            filtersView.onInit(e -> initFilters());
+            filtersView.onShow(e -> showFilters());
+            [$add+initCall...[$NL]]
+        }
+
+        private void updateSelection(SelectionEvent selectionEvent) {
+            this.selection = selectionEvent.selection();
+            open(selectionEvent);
+        }
+
+        private void initFilters() {
+            [$view+filter...[$NL]]
+        }
+
+        private void showFilters() {
+            [$view+showFilterCall...[$NL]]
+        }
+
+        private void showFilters(BlockConditional filtersBlock) {
+            if (!filtersView.isVisible()) return;
+            [$view+hideFilterCall...[$NL]]
+            filtersBlock.show();
+            filtersBlock.refresh();
+        }
+
+        private void refreshToolbars() {
+            toolbar.node(node);
+            toolbar.readonly(readonly);
+            toolbar.refresh();
+        }
+
+        private void refreshCount(RefreshCountEvent event) {
+            String label = DictionaryHelper.referenceLabel(node);
+            count.value(Formatters.countMessage(event.count(), label, label + " " + translate("available")));
+        }
+
+        private void refreshView() {
+            [$view+refreshCall...[$NL]]
+        }
+
+        private void toggleEdition(boolean value) {
+            readonly = !value;
+            if (!readonly) hideChildViews();
+            [$view+readonlyCall...[$NL]]
+        }
+
+        private void removeSelection(Event event) {
+            if (selection == null) return;
+            NodeLayer nodeLayer = io.intino.goros.util.LayerHelper.nodeLayer();
+            selection.forEach(nodeLayer::deleteNode);
+            refresh();
+        }
+
+        private void refreshFilters() {
+            if (!filtersView.isVisible()) return;
+            [$view+refreshFiltersCall...[$NL]]
+        }
+
+        private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+            [$add+bindCall...[$NL]]
+        }
+
+        private void bindToolbarsTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+            toolbar.bindTo(collection);
+            search.bindTo(collection);
+        }
+
+        private Collection currentCollection() {
+            [$view+collection...[$NL]]
+            return null;
+        }
+
+        private void toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            hideChildViews();
+            if (state == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On) filtersView.show();
+            else filtersView.hide();
+        }
+
+        private void updateSelectedNodeViewVisibility(boolean visible) {
+            if (visible) {
+                if (filtersView.isVisible()) filters.toggle(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
+                showSelectedNodeView();
+            }
+            else hideChildViews();
+        }
+
+        private void refresh(Node node) {
+            [$view+refreshNodeCall...[$NL]]
+        }
+
+        private void select(Node node) {
+            [$view+selectNodeCall...[$NL]]
+        }
+
+        private void open(SelectionEvent event) {
+            if (!readonly) return;
+            List<Node> selection = event.selection();
+            open(selection.size() > 0 ? selection.get(0) : null);
+        }
+
+        private $name+firstUpperCase~Template open(Node node) {
+            BlockConditional selectedView = selectedNodeView();
+            selectedChild = selectedView != null && selectedView.isVisible() && node == null ? null : node;
+            updateSelectedNodeViewVisibility(selectedChild != null);
+            return this;
+        }
+
+        private $name+firstUpperCase~Template close() {
+            selectedChild = null;
+            updateSelectedNodeViewVisibility(false);
+            return this;
+        }
+
+        private void showSelectedNodeView() {
+            if (selectedChild == null) return;
+            BlockConditional selectedView = selectedNodeView();
+            if (selectedView == null) return;
+            if (!selectedView.isVisible()) hideChildViews();
+            selectedView.show();
+        }
+
+        private BlockConditional selectedNodeView() {
+            if (selectedChild == null) return null;
+            [$add+equals...[$NL]]
+            return null;
+        }
+
+        private void hideChildViews() {
+            [$add+hideCall...[$NL]]
+        }
+
+        private Node reloadSelected() {
+            if (selectedChild == null) return null;
+            return io.intino.goros.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId());
+        }
+
+    }
+end
+
+def type(collectionview & ownedprototypes) trigger(initCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(initCall)
+end
+
+def type(collectionview) trigger(initCall)
+    $name+firstLowerCase~View.onInit(e -> {
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onRefreshItemCount(this::refreshCount);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onSelect(this::updateSelection);
+    });
+    $name+firstLowerCase~View.onShow(e -> {
+        bindCurrentViewTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
+        bindToolbarsTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+        showFilters(filtersView.$name+firstLowerCase~Filters);
+    });
+end
+
+def type(collectionview & ownedprototypes) trigger(filter)
+end
+
+def type(collectionview & sharedprototypes) trigger(filter)
+end
+
+def type(collectionview) trigger(filter)
+    filtersView.$name+firstLowerCase~Filters.onShow(e -> {
+        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.node(node);
+        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.readonly(readonly);
+        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.bindTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
+        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
+    });
+end
+
+def type(collectionview & ownedprototypes) trigger(showFilterCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(showFilterCall)
+end
+
+def type(collectionview) trigger(showFilterCall)
+    if ($name+firstLowerCase~View.isVisible()) showFilters(filtersView.$name+firstLowerCase~Filters);
+end
+
+def type(collectionview & ownedprototypes) trigger(hideFilterCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(hideFilterCall)
+end
+
+def type(collectionview) trigger(hideFilterCall)
+    filtersView.$name+firstLowerCase~Filters.hide();
+end
+
+def type(collectionview & ownedprototypes) trigger(refreshCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(refreshCall)
+end
+
+def type(collectionview) trigger(refreshCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+end
+
+def type(collectionview & ownedprototypes) trigger(refreshFiltersCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(refreshFiltersCall)
+end
+
+def type(collectionview) trigger(refreshFiltersCall)
+    if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
+end
+
+def type(collectionview & ownedprototypes) trigger(refreshNodeCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(refreshNodeCall)
+end
+
+def type(collectionview) trigger(refreshNodeCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh(node);
+end
+
+def type(collectionview & ownedprototypes) trigger(selectNodeCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(selectNodeCall)
+end
+
+def type(collectionview) trigger(selectNodeCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
+end
+
+def type(collectionview & ownedprototypes) trigger(readonlyCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(readonlyCall)
+end
+
+def type(collectionview) trigger(readonlyCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly).refresh();
+end
+
+def type(collectionview & ownedprototypes) trigger(collection)
+end
+
+def type(collectionview & sharedprototypes) trigger(collection)
+end
+
+def type(collectionview) trigger(collection)
+    if ($name+firstLowerCase~View.isVisible()) return $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase;
+end
+
+def type(add) trigger(initCall)
+    $name+firstLowerCase~View.onInit(e -> bindCurrentViewTo(currentCollection()));
+    $name+firstLowerCase~View.onShow(e -> {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.node(reloadSelected());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.readonly(!nodeAdded && readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onRemove(e1 -> {
+            refresh();
+            close();
+        });
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onFinishEdition(this::refresh);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+        if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
+        nodeAdded = false;
+    });
+end
+
+def type(add) trigger(bindCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
+end
+
+def type(add) trigger(equals)
+    if (selectedChild.getCode().equals("$code")) return $name+firstLowerCase~View;
+end
+
+def type(add) trigger(hideCall)
+    $name+firstLowerCase~View.hide();
+end

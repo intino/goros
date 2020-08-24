@@ -24,6 +24,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> implements Editable<FieldNodeTemplateNotifier, GorosBox> {
+    private Node node;
     private FieldNode field;
     private boolean readonly;
     private DisplayProvider displayProvider;
@@ -33,11 +34,15 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> imple
         super(box);
     }
 
+    public FieldNodeTemplate node(Node node) {
+        this.node = node;
+        return this;
+    }
+
     public FieldNodeTemplate field(FieldNode field) {
         this.field = field;
         return this;
     }
-
 
     @Override
     public boolean readonly() {
@@ -114,7 +119,7 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> imple
     private void refreshNode(Node node) {
         nodeFrame.clear();
         if (node == null) return;
-        NodeViewProperty viewProperty = DisplayHelper.defaultView(node);
+        NodeViewProperty viewProperty = DisplayHelper.defaultEmbeddedView(node);
         Display display = displayProvider.displayFor(node, viewProperty != null ? viewProperty.getCode() : null);
         if (display == null) return;
         nodeFrame.display(display);

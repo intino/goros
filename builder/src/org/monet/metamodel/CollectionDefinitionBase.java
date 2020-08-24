@@ -21,7 +21,11 @@ public  class CollectionDefinitionBase extends SetDefinition {
 		return DefinitionType.collection;
 	}
 
-	public static class IsComponent  {protected void copy(IsComponent instance) {}protected void merge(IsComponent child) {}}protected IsComponent _isComponent;public boolean isComponent() { return (_isComponent != null); }public IsComponent getIsComponent() { return _isComponent; }public void setIsComponent(boolean value) { if(value) _isComponent = new IsComponent(); else {_isComponent = null;}}public static class AddProperty  {protected ArrayList<org.monet.metamodel.internal.Ref> _node = new ArrayList<org.monet.metamodel.internal.Ref>();public ArrayList<org.monet.metamodel.internal.Ref> getNode() { return _node; }public void setNode(ArrayList<org.monet.metamodel.internal.Ref> value) { _node = value; }protected void copy(AddProperty instance) {this._node.addAll(instance._node);
+	public static class IsComponent  {protected void copy(IsComponent instance) {}protected void merge(IsComponent child) {}}protected IsComponent _isComponent;public boolean isComponent() { return (_isComponent != null); }public IsComponent getIsComponent() { return _isComponent; }public void setIsComponent(boolean value) { if(value) _isComponent = new IsComponent(); else {_isComponent = null;}}public static class AddProperty  {
+		protected ArrayList<org.monet.metamodel.internal.Ref> _node = new ArrayList<org.monet.metamodel.internal.Ref>();public ArrayList<org.monet.metamodel.internal.Ref> getNode() { return _node; }public void setNode(ArrayList<org.monet.metamodel.internal.Ref> value) {
+			_node = value;
+		}
+		protected void copy(AddProperty instance) {this._node.addAll(instance._node);
 }protected void merge(AddProperty child) {if(child._node != null)this._node.addAll(child._node);
 }}protected AddProperty _addProperty;public AddProperty getAdd() { return _addProperty; }public void setAdd(AddProperty value) { if(_addProperty!=null) _addProperty.merge(value); else {_addProperty = value;} }public static class ToolbarProperty  {public static class AddOperationProperty  {protected ArrayList<org.monet.metamodel.internal.Ref> _enable = new ArrayList<org.monet.metamodel.internal.Ref>();public ArrayList<org.monet.metamodel.internal.Ref> getEnable() { return _enable; }public void setEnable(ArrayList<org.monet.metamodel.internal.Ref> value) { _enable = value; }protected void copy(AddOperationProperty instance) {this._enable.addAll(instance._enable);
 }protected void merge(AddOperationProperty child) {if(child._enable != null)this._enable.addAll(child._enable);

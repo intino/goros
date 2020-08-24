@@ -1,0 +1,237 @@
+def type(nodedefinition)
+    dsl Konos
+
+    [$view+use...[$NL]]
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    [$desktop]
+                    [$parent]
+                    Text(value="$label", format=h4 bold) label
+
+        Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
+
+    Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
+        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+            Block(layout=Horizontal Flexible)
+                $toolbar+editable
+            Block(layout=Horizontal EndJustified)
+                $toolbar+navigable
+
+        Selector viewSelector as Tabs
+            [$view+declaration...[$NL]]
+
+        Block(layout=Vertical Flexible)
+            [$view+page...[$NL]]
+
+    Template(layout=Vertical Flexible) $name+firstUpperCase~RevisionTemplate as Relative(height=100%)
+        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+            Block(layout=Horizontal Flexible)
+                Button(title="Restaurar", size=Small, highlight=Outline) restore as Action Affirmed("¿Está seguro que quiere restaurar esta revisión?")
+
+        Selector viewSelector as Tabs
+            [$view+revisionDeclaration...[$NL]]
+
+        Block(layout=Vertical Flexible)
+            [$view+revisionPage...[$NL]]
+
+    [$view...[$NL]]
+    [$compositeView...[$NL]]
+end
+
+def type(desktop)
+    Link(title="$label", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+    Text(value="/", format=h4 middleAirRight)
+end
+
+def type(parent)
+    Link(title="$label", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+    Text(value="/", format=h4 middleAirRight)
+end
+
+def type(toolbar & singleton) trigger(editable)
+    Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
+end
+
+def type(toolbar) trigger(editable)
+    Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
+    Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
+end
+
+def type(toolbar & collectable) trigger(navigable)
+    MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
+    MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
+    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$definition+lowerCase)
+end
+
+def type(toolbar) trigger(navigable)
+end
+
+def type(nodeview & linksin) trigger(revisionDeclaration)
+end
+
+def type(nodeview & linksout) trigger(revisionDeclaration)
+end
+
+def type(nodeview & notes) trigger(revisionDeclaration)
+end
+
+def type(nodeview & location) trigger(revisionDeclaration)
+end
+
+def type(nodeview & revisions) trigger(revisionDeclaration)
+end
+
+def type(nodeview & tasks) trigger(revisionDeclaration)
+end
+
+def type(nodeview & recenttask) trigger(revisionDeclaration)
+end
+
+def type(nodeview) trigger(revisionDeclaration)
+    Text(value="$label") $name+firstLowerCase as Option
+end
+
+def type(nodeview) trigger(declaration)
+    Text(value="$label") $name+firstLowerCase as Option
+end
+
+def type(nodeview & linksin) trigger(revisionPage)
+end
+
+def type(nodeview & linksin) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksInTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & linksout) trigger(revisionPage)
+end
+
+def type(nodeview & linksout) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksOutTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & notes) trigger(revisionPage)
+end
+
+def type(nodeview & notes) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeNotesTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & location) trigger(revisionPage)
+end
+
+def type(nodeview & location) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & tasks) trigger(revisionPage)
+end
+
+def type(nodeview & tasks) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=NodeTasksTemplate) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & recenttask) trigger(revisionPage)
+end
+
+def type(nodeview & location) trigger(revisionPage)
+end
+
+def type(nodeview & locations) trigger(revisionPage)
+end
+
+def type(nodeview & revisions) trigger(revisionPage)
+end
+
+def type(nodeview & linksin) trigger(use)
+end
+
+def type(nodeview & linksout) trigger(use)
+end
+
+def type(nodeview & location) trigger(use)
+end
+
+def type(nodeview & locations) trigger(use)
+end
+
+def type(nodeview & revisions) trigger(use)
+end
+
+def type(nodeview & tasks) trigger(use)
+    use Tasks
+end
+
+def type(nodeview) trigger(use)
+    $show+use
+end
+
+def type(nodeview) trigger(revisionPage)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & linksin)
+end
+
+def type(nodeview & linksout)
+end
+
+def type(nodeview & tasks)
+end
+
+def type(nodeview & notes)
+end
+
+def type(nodeview & location)
+end
+
+def type(nodeview & locations)
+end
+
+def type(nodeview & recenttask)
+    Template(layout=Vertical CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        $show
+end
+
+def type(nodeview)
+    Template(layout=Horizontal CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        $show
+end
+
+def type(show & recenttask & container) trigger(use)
+end
+
+def type(show & recenttask) trigger(use)
+    [use $taskName+firstUpperCase]
+end
+
+def type(show & recenttask & container)
+end
+
+def type(show & recenttask)
+	Block(layout=Vertical Flexible CenterCenter, visible=false) noTaskMessage as Relative(height=100%)> Text(value="No hay tareas pendientes", format=h5, translate=true)
+	Block(format=dialog bordered) toolbarBlock > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+	TemplateStamp(template=$taskName+firstUpperCase~StateViewTemplate) $taskName+firstLowerCase~View
+end
+
+def type(show & revisions)
+	Block(layout=Vertical Flexible, format=bordered)
+		OwnerTemplateStamp(template="NodeRevisionsTemplate", owner=$module+firstUpperCase~Elements.goros) revisionsStamp
+
+	Block(layout=Vertical CenterCenter) selectRevisionPage as Relative(width=55%) > Text(value="Seleccione una revisión para ver su contenido", format=h5)
+
+	Block(format=smallAirLeft middleSpaced bordered, visible=false) revisionPage as Animated Relative(width=55%)
+		Transition(direction=Left)
+		TemplateStamp(template=$definition+firstUpperCase~RevisionTemplate) currentRevisionStamp
+end
+
+def type(show) trigger(use)
+end

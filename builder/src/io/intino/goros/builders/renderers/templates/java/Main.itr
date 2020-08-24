@@ -1,0 +1,13 @@
+def type(main)
+    package $package.$module+lowerCase.box;
+
+    public class Main {
+
+        public static void main(String$[$] args) {
+            $module+firstUpperCase~Box box = new $module+firstUpperCase~Box(args);
+            box.start();
+            Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
+        }
+
+    }
+end

@@ -1,0 +1,25 @@
+def type(documentdefinition)
+    dsl Konos
+
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    [$desktop]
+                    [$parent]
+                    Text(value="$label", format=h4 bold) label
+
+        Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
+
+    Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
+        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+            Block(layout=Horizontal Flexible)
+                $toolbar+editable
+            Block(layout=Horizontal EndJustified)
+                $toolbar+navigable
+
+        Block(layout=Vertical Flexible, format=spaced) previewView as Relative(height=100%) > OwnerTemplateStamp(template="NodeDocumentTemplate", owner=$module+firstUpperCase~Elements.goros) previewStamp
+end

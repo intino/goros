@@ -13,8 +13,14 @@ import java.util.List;
 public class AccountHelper {
 
 	public static boolean hasRoles(NodeDefinition definition, UISession session) {
+		if (definition instanceof DesktopDefinition) return hasRoles((DesktopDefinition) definition, session);
 		if (definition instanceof ContainerDefinition) return hasRoles((ContainerDefinition)definition, session);
-		return false;
+		return true;
+	}
+
+	public static boolean hasRoles(DesktopDefinition definition, UISession session) {
+		if (definition.getFor() == null) return true;
+		return hasRoles(definition.getFor().getRole(), session);
 	}
 
 	public static boolean hasRoles(ContainerDefinition definition, UISession session) {

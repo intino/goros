@@ -123,7 +123,7 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private void refreshSetupForm(Node form) {
         pendingView.setupBlock.setupFrame.clear();
         if (form == null) return;
-        NodeViewProperty viewProperty = DisplayHelper.defaultView(form);
+        NodeViewProperty viewProperty = DisplayHelper.defaultEmbeddedView(form);
         Display display = displayProvider.displayFor(form, viewProperty != null ? viewProperty.getCode() : null);
         if (display == null) return;
         pendingView.setupBlock.setupFrame.display(display);

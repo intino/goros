@@ -1,0 +1,409 @@
+def type(tasks & nodetasks)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource;
+
+    public class NodeTasksTemplate extends AbstractNodeTasksTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = true;
+        private String view;
+
+        public NodeTasksTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public NodeTasksTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public NodeTasksTemplate view(String view) {
+            this.view = view;
+            return this;
+        }
+
+        public NodeTasksTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            tasks.inbox(TaskListDatasource.Inbox.TaskBoard);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            tasks.refresh();
+        }
+
+    }
+end
+
+def type(tasks & inbox)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource;
+
+    public class $inboxType+firstUpperCase~Template extends Abstract$inboxType+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private String folder;
+
+        public $inboxType+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $inboxType+firstUpperCase~Template folder(String folder) {
+            this.folder = folder;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            tasks.inbox(TaskListDatasource.Inbox.$inboxType+firstUpperCase);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            tasks.folder(folder);
+            tasks.readonly(false);
+            tasks.refresh();
+        }
+
+    }
+end
+
+def type(tasks & embedded)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.BlockConditional;
+    import io.intino.alexandria.ui.displays.components.Collection;
+    import io.intino.alexandria.ui.displays.components.SearchBox;
+    import io.intino.alexandria.ui.displays.events.SelectionEvent;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import io.intino.alexandria.ui.displays.events.collection.RefreshCountEvent;
+    import org.monet.space.kernel.components.ComponentPersistence;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource;
+
+    import java.util.List;
+    import java.util.function.Consumer;
+
+    public class TasksEmbeddedTemplate extends AbstractTasksEmbeddedTemplate<$module+firstUpperCase~Box> {
+        private String view;
+        private TaskListDatasource.Inbox inbox;
+        private Task selectedTask;
+        private boolean readonly = true;
+        private java.util.function.Consumer<Long> itemsCountListener;
+        private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
+        private SearchBox searchBox;
+
+        public TasksEmbeddedTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public TasksEmbeddedTemplate view(String view) {
+            this.view = view;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate inbox(TaskListDatasource.Inbox inbox) {
+            this.inbox = inbox;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate bindTo(SearchBox search) {
+            this.searchBox = search;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            toggleFiltersViewVisibility(state);
+            return this;
+        }
+
+        public TasksEmbeddedTemplate onToggleFilters(java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> listener) {
+            this.toggleFiltersListener = listener;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate onItemsCountChange(java.util.function.Consumer<Long> listener) {
+            this.itemsCountListener = listener;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            box().notifier().onTaskCreated(this, task -> refresh());
+            initViews();
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            box().notifier().unTaskCreated(this);
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshView();
+        }
+
+        private void initViews() {
+            tableView.onInit(e -> {
+                tableView.tableViewStamp.tasksTable.onRefreshItemCount(this::refreshCount);
+                tableView.tableViewStamp.tasksTable.onSelect(this::open);
+            });
+            tableView.onShow(e -> {
+                bindCurrentViewTo(tableView.tableViewStamp.tasksTable);
+                if (searchBox != null) searchBox.bindTo(tableView.tableViewStamp.tasksTable);
+                tableView.tableViewStamp.inbox(inbox);
+                tableView.tableViewStamp.readonly(readonly);
+                tableView.tableViewStamp.refresh();
+            });
+            listView.onInit(e -> {
+                listView.listViewStamp.tasksList.onRefreshItemCount(this::refreshCount);
+                listView.listViewStamp.tasksList.onSelect(this::open);
+            });
+            listView.onShow(e -> {
+                bindCurrentViewTo(listView.listViewStamp.tasksList);
+                if (searchBox != null) searchBox.bindTo(listView.listViewStamp.tasksList);
+                listView.listViewStamp.inbox(inbox);
+                listView.listViewStamp.readonly(readonly);
+                listView.listViewStamp.refresh();
+            });
+            filtersView.onInit(e -> initFilters());
+            [$activity+init...[$NL]]
+        }
+
+        private void refreshView() {
+            if (view == null) view = "list";
+            if (view.equals("table")) {
+                listView.hide();
+                tableView.show();
+            }
+            else if (view.equals("list")) {
+                tableView.hide();
+                listView.show();
+            }
+            selectedTask = null;
+        }
+
+        private void refresh(Task task) {
+            if (tableView.isVisible()) tableView.tableViewStamp.refresh(task);
+            if (listView.isVisible()) listView.listViewStamp.refresh(task);
+        }
+
+        private void refreshCount(RefreshCountEvent event) {
+            if (itemsCountListener != null) itemsCountListener.accept(event.count());
+        }
+
+        private void toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            hideChildViews();
+            if (state == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On) filtersView.show();
+            else filtersView.hide();
+        }
+
+        private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+            [$activity+bind...[$NL]]
+        }
+
+        private void initFilters() {
+            filtersView.tasksFiltersStamp.readonly(readonly);
+            filtersView.tasksFiltersStamp.bindTo(currentCollection());
+            filtersView.tasksFiltersStamp.refresh();
+        }
+
+        private Collection currentCollection() {
+            if (tableView.isVisible()) return tableView.tableViewStamp.tasksTable;
+            return listView.listViewStamp.tasksList;
+        }
+
+        private Task reloadSelected() {
+            if (selectedTask == null) return null;
+            return ComponentPersistence.getInstance().getTaskLayer().loadTask(selectedTask.getId());
+        }
+
+        private void open(SelectionEvent event) {
+            List<Task> selection = event.selection();
+            open(selection.size() > 0 ? selection.get(0) : null);
+        }
+
+        private void open(Task task) {
+            io.intino.alexandria.ui.displays.components.BlockConditional selectedView = selectedTaskView();
+            selectedTask = selectedView != null && selectedView.isVisible() && task == null ? null : task;
+            updateSelectedTaskViewVisibility(selectedTask != null);
+        }
+
+        private BlockConditional selectedTaskView() {
+            if (selectedTask == null) return null;
+            [$activity+selectedView...[$NL]]
+            return null;
+        }
+
+        private void close() {
+            selectedTask = null;
+            updateSelectedTaskViewVisibility(false);
+        }
+
+        private void updateSelectedTaskViewVisibility(boolean visible) {
+            if (visible) {
+                if (filtersView.isVisible()) {
+                    toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
+                    if (toggleFiltersListener != null) toggleFiltersListener.accept(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
+                }
+                showSelectedTaskView();
+            }
+            else hideChildViews();
+        }
+
+        private void showFilters() {
+            if (!filtersView.isVisible()) return;
+            filtersView.show();
+            filtersView.refresh();
+        }
+
+        private void showSelectedTaskView() {
+            if (selectedTask == null) return;
+            BlockConditional selectedView = selectedTaskView();
+            if (selectedView == null) return;
+            if (!selectedView.isVisible()) hideChildViews();
+            selectedView.show();
+        }
+
+        private void hideChildViews() {
+            [$activity+hide...[$NL]]
+        }
+
+    }
+end
+
+def type(tasks)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.events.SelectionEvent;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import io.intino.goros.box.ui.datasources.TaskListDatasource;
+    import io.intino.goros.util.Formatters;
+
+    public class TasksTemplate extends AbstractTasksTemplate<$module+firstUpperCase~Box> {
+        private String view;
+        private String folder;
+        private TaskListDatasource.Inbox inbox;
+        private boolean readonly = true;
+
+        public TasksTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public TasksTemplate folder(String folder) {
+            this.folder = folder;
+            return this;
+        }
+
+        public TasksTemplate inbox(TaskListDatasource.Inbox inbox) {
+            this.inbox = inbox;
+            return this;
+        }
+
+        public TasksTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            initToolbar();
+            initContent();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            label.value(translate(inbox == TaskListDatasource.Inbox.TaskBoard ? "Tasks" : "My tasks"));
+            refreshContent();
+            viewSelector.select(view);
+        }
+
+        private void initToolbar() {
+            if (view == null) view = "list";
+            viewSelector.onSelect(this::selectView);
+            filters.onToggle(e -> toggleFilters(e.state()));
+        }
+
+        private void initContent() {
+            content.onItemsCountChange(this::refreshCount);
+            content.onToggleFilters(this::refreshToggleFiltersButton);
+            content.bindTo(search);
+        }
+
+        private void refreshCount(long countValue) {
+            count.value(Formatters.countMessage(countValue, translate("Task").toLowerCase(), translate("Tasks").toLowerCase()));
+        }
+
+        private void refreshContent() {
+            content.view(view);
+            content.inbox(inbox);
+            content.readonly(readonly);
+            content.refresh();
+        }
+
+        private void selectView(SelectionEvent e) {
+            content.view((String) e.selection().get(0));
+            content.refresh();
+        }
+
+        private void toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            content.toggleFilters(state);
+        }
+
+        private void refreshToggleFiltersButton(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            filters.state(state);
+        }
+
+    }
+end
+
+def type(activity) trigger(init)
+    $name+firstLowerCase~View.onInit(e -> bindCurrentViewTo(currentCollection()));
+    $name+firstLowerCase~View.onShow(e -> {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.task(reloadSelected());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.inbox(inbox);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onChange(this::refresh);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onAbort(e1 -> {
+            close();
+            refresh();
+        });
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+        if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
+    });
+end
+
+def type(activity) trigger(hide)
+    $name+firstLowerCase~View.hide();
+end
+
+def type(activity) trigger(bind)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
+end
+
+def type(activity) trigger(selectedView)
+    if (selectedTask.getCode().equals("$code")) return $name+firstLowerCase~View;
+end

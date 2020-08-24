@@ -20,11 +20,11 @@ public class PathHelper {
 
 	public static String pathOf(Node node) {
 		String result = subPathOf(node);
-		Node parent = node.getParent();
-		while (parent != null) {
-			result = subPathOf(parent) + "/" + result;
-			parent = parent.getParent();
-		}
+//		Node parent = node.getParent();
+//		while (parent != null) {
+//			result = subPathOf(parent) + "/" + result;
+//			parent = parent.getParent();
+//		}
 		return result;
 	}
 

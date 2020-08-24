@@ -1,0 +1,24 @@
+def type(source)
+    dsl Konos
+
+    use UI
+    use Theme
+
+    Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
+        Block(layout=Horizontal, format=bordered spaced) header
+            Block(layout=Vertical Flexible)
+                Block(layout=Horizontal)
+                    [$desktop]
+                    Text(value="$label", format=h4 bold) label
+                Text(format=body2) count
+                OwnerTemplateStamp(template="SourceLegendTemplate", owner=$module+firstUpperCase~Elements.goros)
+
+        Block(layout=Horizontal Flexible, format=smallAirTop)
+            Block(layout=Vertical Flexible, format=bordered)
+                OwnerTemplateStamp(template="SourceEmbeddedTemplate", owner=$module+firstUpperCase~Elements.goros) content
+end
+
+def type(desktop)
+    Link(title="$label", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+    Text(value="/", format=h4 middleAirRight)
+end

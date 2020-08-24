@@ -55,6 +55,13 @@ public class DisplayHelper {
 		return defaultView != null ? defaultView : (viewList.size() > 0 ? viewList.get(0) : null);
 	}
 
+	public static NodeViewProperty defaultEmbeddedView(Node node) {
+		NodeDefinition definition = node.getDefinition();
+		NodeViewProperty defaultView = definition.getDefaultView();
+		if (defaultView.isVisibleWhenEmbedded()) return defaultView;
+		return definition.getViewDefinitionList().stream().filter(NodeViewProperty::isVisibleWhenEmbedded).findFirst().orElse(definition.getDefaultView());
+	}
+
 	public static void selectNotSystemView(SelectorTabs selector, Node node) {
 		NodeViewProperty view = node.getDefinition().getDefaultView();
 		if (view != null && !DictionaryHelper.isSystemView(view)) {

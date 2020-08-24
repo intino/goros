@@ -1,0 +1,19 @@
+def type(indexdefinition)
+    dsl Konos
+
+    use Theme
+
+    [$indexview...[$NL]]
+end
+
+def type(indexview)
+    Table(itemClass="org.monet.space.kernel.model.NodeItem", scrollingMark=false, format=bordered) $definition+firstUpperCase~$name+firstUpperCase~Table as Selectable(multiple=false)
+        noItemsMessage = "No hay elementos"
+        [$attribute...[$NL]]
+end
+
+def type(attribute)
+    Mold
+        Heading $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Heading > Text(value="$label")
+        Item(height=50px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Item > $type+firstUpperCase[(value="$value")] $name+firstLowerCase
+end

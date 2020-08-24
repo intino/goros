@@ -1,0 +1,45 @@
+def type(box)
+    package $package.$module+lowerCase.box;
+
+    import io.intino.alexandria.ui.services.AuthService;
+    import io.intino.goros.box.GorosBox;
+    import io.intino.goros.box.listeners.GorosNotifier;
+
+    import java.net.URL;
+
+    public class $module+firstUpperCase~Box extends AbstractBox {
+
+        public $module+firstUpperCase~Box(String$[$] args) {
+            super(args);
+        }
+
+        public $module+firstUpperCase~Box($module+firstUpperCase~Configuration configuration) {
+            super(configuration);
+        }
+
+        public void beforeStart() {
+        }
+
+        public void afterStart() {
+        }
+
+        public void beforeStop() {
+        }
+
+        public void afterStop() {
+        }
+
+        public GorosBox goros() {
+            return ((GorosBox)owner);
+        }
+
+        public GorosNotifier notifier() {
+            return ((GorosBox)owner()).notifier();
+        }
+
+        @Override
+        protected AuthService authService(URL authServiceUrl) {
+            return null;
+        }
+    }
+end

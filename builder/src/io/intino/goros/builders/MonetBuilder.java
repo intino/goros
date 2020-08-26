@@ -42,7 +42,7 @@ public class MonetBuilder {
         new ThemeRenderer(dictionary, modernization).write();
         new TranslationsRenderer(dictionary, modernization).write();
         new TasksRenderer(dictionary, modernization).write();
-        definitions().forEach(this::compileDefinition);
+        definitions().filter(d -> !(d instanceof SourceDefinition)).forEach(this::compileDefinition);
     }
 
     private void compileDefinition(Definition definition) {

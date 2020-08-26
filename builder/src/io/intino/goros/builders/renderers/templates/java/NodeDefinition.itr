@@ -169,6 +169,8 @@ def type(nodedefinition & singleton)
         @Override
         public void init() {
             super.init();
+            [$desktop]
+            [$parent]
             node = io.intino.goros.util.NodeHelper.singleton("$code");
             content.node(node);
             content.readonly(readonly);
@@ -176,6 +178,7 @@ def type(nodedefinition & singleton)
             [$toolbar+removeListener]
             if (content.selectedView() == null) content.selectDefaultView();
         }
+
     }
 end
 
@@ -292,7 +295,7 @@ def type(toolbar) trigger(editableMethods)
 end
 
 def type(toolbar & collectable) trigger(navigableRefreshCall)
-    open.address(path -> path.replace(":id", node.getId()));
+    open.address(path -> path.replace(":name", "$definition").replace(":id", node.getId()));
 end
 
 def type(toolbar) trigger(navigableRefreshCall)
@@ -466,4 +469,12 @@ def type(show & revisions)
 		currentRevisionStamp.readonly(readonly);
 		currentRevisionStamp.refresh();
 	}
+end
+
+def type(desktop)
+    desktopLink.address(path -> path.replace(":name", "$name+lowerCase"));
+end
+
+def type(parent)
+    parentLink.address(path -> path.replace(":name", "$name+lowerCase"));
 end

@@ -1,9 +1,6 @@
 package io.intino.goros.box.ui.pages;
 
-import io.intino.alexandria.exceptions.*;
-import java.time.*;
-import java.util.*;
-import io.intino.goros.box.ui.displays.templates.*;
+import io.intino.goros.box.ui.displays.templates.GorosAppTemplate;
 
 public class RolesPage extends AbstractRolesPage {
 

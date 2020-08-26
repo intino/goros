@@ -5,6 +5,7 @@ import io.intino.alexandria.ui.model.datasource.Group;
 import io.intino.alexandria.ui.model.datasource.PageDatasource;
 import io.intino.alexandria.ui.services.push.UISession;
 import org.monet.metamodel.SetDefinition;
+import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.NodeDataRequest;
 import io.intino.goros.box.GorosBox;
@@ -60,7 +61,8 @@ public class CollectionDatasource extends PageDatasource<Node> {
 
     private static NodeDataRequest request(Node set) {
         NodeDataRequest request = new NodeDataRequest();
-        request.setCodeReference(((SetDefinition)set.getDefinition()).getIndex().getValue());
+        request.setCodeDomainNode(set.getCode());
+        request.setCodeReference(Dictionary.getInstance().getDefinitionCode(((SetDefinition)set.getDefinition()).getIndex().getValue()));
         return request;
     }
 

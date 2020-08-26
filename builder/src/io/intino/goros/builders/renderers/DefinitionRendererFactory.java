@@ -21,8 +21,6 @@ public class DefinitionRendererFactory {
 		renderers.put(DefinitionType.index, (dictionary, modernization, definition) -> new IndexRenderer(dictionary, modernization, (IndexDefinition) definition));
 		renderers.put(DefinitionType.document, (dictionary, modernization, definition) -> new DocumentRenderer(dictionary, modernization, (DocumentDefinition) definition));
 		renderers.put(DefinitionType.desktop, (dictionary, modernization, definition) -> new DesktopRenderer(dictionary, modernization, (DesktopDefinition) definition));
-		renderers.put(DefinitionType.thesaurus, (dictionary, modernization, definition) -> new SourceRenderer(dictionary, modernization, (ThesaurusDefinition) definition));
-		renderers.put(DefinitionType.glossary, (dictionary, modernization, definition) -> new SourceRenderer(dictionary, modernization, (GlossaryDefinition) definition));
 	}
 
 	public DefinitionRenderer renderer(Dictionary dictionary, Modernization modernization, Definition definition) {

@@ -44,12 +44,12 @@ def type(nodedefinition)
 end
 
 def type(desktop)
-    Link(title="$label", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+    Link(title="$label", format=h4 middleAirRight) desktopLink as Action Addressable($module+firstUpperCase~Elements.$resourceType)
     Text(value="/", format=h4 middleAirRight)
 end
 
 def type(parent)
-    Link(title="$label", format=h4 middleAirRight) as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+    Link(title="$label", format=h4 middleAirRight) parentLink as Action Addressable($module+firstUpperCase~Elements.$resourceType)
     Text(value="/", format=h4 middleAirRight)
 end
 
@@ -65,7 +65,7 @@ end
 def type(toolbar & collectable) trigger(navigable)
     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$definition+lowerCase)
+    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$resourceType)
 end
 
 def type(toolbar) trigger(navigable)

@@ -3,11 +3,14 @@ package io.intino.goros.util;
 import io.intino.alexandria.ui.displays.components.SelectorCollectionBox;
 import io.intino.alexandria.ui.displays.components.SelectorTabs;
 import io.intino.alexandria.ui.displays.components.SelectorToggleBox;
+import io.intino.alexandria.ui.services.push.UISession;
+import io.intino.goros.box.GorosBox;
 import org.monet.metamodel.*;
-import org.monet.space.kernel.model.Language;
-import org.monet.space.kernel.model.Node;
-import org.monet.space.kernel.model.NodeItem;
-import org.monet.space.kernel.model.Task;
+import org.monet.space.kernel.agents.AgentSession;
+import org.monet.space.kernel.constants.ApplicationInterface;
+import org.monet.space.kernel.constants.Database;
+import org.monet.space.kernel.model.*;
+import org.monet.space.office.ApplicationOffice;
 
 import java.util.List;
 import java.util.Timer;
@@ -15,6 +18,23 @@ import java.util.TimerTask;
 import java.util.function.Consumer;
 
 public class DisplayHelper {
+
+	public static void initAgentSession(UISession uiSession) {
+		String sessionId = uiSession.id();
+		AgentSession agentSession = AgentSession.getInstance();
+		Session session = agentSession.get(sessionId);
+		if (session != null) return;
+		agentSession.add(sessionId);
+		agentSession.get(sessionId).setAccount(LayerHelper.federationLayer(uiSession).loadAccount("1"));
+	}
+
+	public static void initContext(GorosBox box, UISession session, long thread) {
+		Context context = Context.getInstance();
+		context.setApplication(thread, "127.0.0.1", ApplicationOffice.NAME, ApplicationInterface.USER);
+		context.setUserServerConfig(thread, "localhost", "", Integer.valueOf(box.configuration().port()));
+		context.setSessionId(thread, session.id());
+		context.setDatabaseConnectionType(thread, Database.ConnectionTypes.AUTO_COMMIT);
+	}
 
 	public static void executeDelayed(Consumer<Boolean> consumer) {
 		executeDelayed(consumer, 1000);
@@ -33,7 +53,9 @@ public class DisplayHelper {
 	public static void selectDefaultView(SelectorTabs selector, Node node) {
 		NodeViewProperty defaultView = node.getDefinition().getDefaultView();
 		if (defaultView == null) selector.select(0);
-		else selector.select(StringHelper.validName(Language.getInstance().getModelResource(defaultView.getLabel())));
+		if (defaultView == null) return;
+		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		selector.select(StringHelper.validName(name));
 	}
 
 	public static void selectDefaultView(SelectorTabs selector, Task task) {
@@ -41,12 +63,14 @@ public class DisplayHelper {
 		if (task.getDefinition().isActivity()) defaultView = ((ActivityDefinition)task.getDefinition()).getDefaultView();
 		else if (task.getDefinition().isService()) defaultView = ((ServiceDefinition)task.getDefinition()).getDefaultView();
 		if (defaultView == null) selector.select(0);
-		else selector.select(StringHelper.validName(Language.getInstance().getModelResource(defaultView.getLabel())));
+		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		selector.select(StringHelper.validName(name));
 	}
 
 	public static void selectDefaultView(SelectorToggleBox selector, Node node) {
 		NodeViewProperty defaultView = defaultView(node);
-		selector.select(StringHelper.validName(Language.getInstance().getModelResource(defaultView.getLabel())));
+		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		selector.select(StringHelper.validName(name));
 	}
 
 	public static NodeViewProperty defaultView(Node node) {

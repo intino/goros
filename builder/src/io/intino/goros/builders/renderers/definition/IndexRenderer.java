@@ -39,7 +39,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	}
 
 	private void addView(IndexDefinitionBase.IndexViewProperty viewProperty, FrameBuilder builder) {
-		builder.add("indexview", viewFrame(viewProperty));
+		builder.add("view", viewFrame(viewProperty));
 	}
 
 	private void addAttributes(IndexDefinitionBase.IndexViewProperty viewProperty, FrameBuilder builder) {
@@ -95,7 +95,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	}
 
 	private FrameBuilder viewFrame(IndexDefinitionBase.IndexViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("indexview");
+		FrameBuilder result = baseFrame().add("view");
 		result.add("definition", RendererHelper.nameOf(definition(), dictionary.basePackage()));
 		result.add("name", RendererHelper.nameOf(viewProperty));
 		result.add("code", viewProperty.getCode());

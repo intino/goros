@@ -30,6 +30,12 @@ public class RolesTemplate extends AbstractRolesTemplate<GorosBox> {
     }
 
     @Override
+    public void didMount() {
+        super.didMount();
+        tableView.show();
+    }
+
+    @Override
     public void refresh() {
         super.refresh();
         refreshToolbars();

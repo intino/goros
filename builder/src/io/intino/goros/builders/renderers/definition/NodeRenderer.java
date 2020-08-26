@@ -43,6 +43,8 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		FrameBuilder result = baseFrame().add("parent");
 		result.add("name", nameOf(parent));
 		result.add("label", parent.getLabel());
+		if (parent.isSingleton()) result.add("singleton");
+		addResourceType(parent, result);
 		builder.add("parent", result);
 	}
 
@@ -89,6 +91,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (definition().isSingleton()) result.add("singleton");
 		boolean collectable = findParentDefinition() != null;
 		if (collectable) result.add("collectable");
+		addResourceType(definition(), result);
 		builder.add("toolbar", result);
 	}
 

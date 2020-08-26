@@ -7,6 +7,7 @@ import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.Definition;
 import org.monet.metamodel.DesktopDefinition;
 import org.monet.metamodel.NodeDefinition;
+import org.monet.metamodel.SourceDefinition;
 
 import java.io.File;
 import java.util.List;
@@ -44,10 +45,28 @@ public class UIRenderer extends Renderer {
 	private FrameBuilder definitionFrame(Definition definition) {
 		FrameBuilder result = baseFrame().add("definition");
 		result.add(definition.getType().name().toLowerCase());
+		if (definition instanceof SourceDefinition) result.add("source");
 		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isSingleton()) result.add("singleton");
+		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isComponent()) result.add("component");
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
 		result.add("label", definition.getLabel());
+		addResourceType(definition, result);
+		addSourceDesktop(definition, result);
+		return result;
+	}
+
+	private void addSourceDesktop(Definition definition, FrameBuilder builder) {
+		DesktopDefinition desktopDefinition = desktopWithDefinition(definition);
+		if (desktopDefinition == null) return;
+		builder.add("sourceDesktop", desktopFrame(definition, desktopDefinition));
+	}
+
+	private FrameBuilder desktopFrame(Definition definition, DesktopDefinition desktopDefinition) {
+		FrameBuilder result = new FrameBuilder("sourceDesktop");
+		result.add("name", nameOf(definition));
+		result.add("desktop", nameOf(desktopDefinition));
+		result.add("desktopLabel", desktopDefinition.getLabel());
 		return result;
 	}
 

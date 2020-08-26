@@ -3,10 +3,10 @@ def type(indexdefinition)
 
     use Theme
 
-    [$indexview...[$NL]]
+    [$view...[$NL]]
 end
 
-def type(indexview)
+def type(view)
     Table(itemClass="org.monet.space.kernel.model.NodeItem", scrollingMark=false, format=bordered) $definition+firstUpperCase~$name+firstUpperCase~Table as Selectable(multiple=false)
         noItemsMessage = "No hay elementos"
         [$attribute...[$NL]]

@@ -24,6 +24,6 @@ end
 
 def type(item)
     Block(format=doubleAirBottom, visible=false) $name+firstLowerCase
-        Link(title="$label", format=h5) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$name+lowerCase)
+        Link(title="$label", format=h5) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType)
         Text(value="$description", format=description)
 end

@@ -23,7 +23,7 @@ public class RendererHelper {
 		if (!prefix.contains(".")) return "";
 		prefix = prefix.substring(0, prefix.lastIndexOf("."));
 		prefix = prefix.replace(basePackage + ".", "").replace(basePackage, "").replace(".", "-");
-		return snakeCaseToCamelCase(shortName(prefix));
+		return snakeCaseToCamelCase(/*shortName(*/prefix/*)*/);
 	}
 
 	public static String nameOf(IndexDefinitionBase.IndexViewProperty viewProperty) {
@@ -40,8 +40,8 @@ public class RendererHelper {
 		return label != null ? normalize(label) : viewProperty.getCode();
 	}
 
-	public static String shortName(String name) {
-		return Arrays.stream(name.split("-")).map(s -> initials(s)).collect(Collectors.joining("-"));
+	public static String shortName(String snakeName) {
+		return Arrays.stream(snakeName.split("-")).map(RendererHelper::initials).collect(Collectors.joining("-"));
 	}
 
 	public static String initials(String name) {

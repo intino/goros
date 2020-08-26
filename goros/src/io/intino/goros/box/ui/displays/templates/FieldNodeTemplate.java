@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.displays.Display;
 import io.intino.alexandria.ui.displays.components.editable.Editable;
 import io.intino.alexandria.ui.displays.events.ChangeEvent;
 import io.intino.alexandria.ui.displays.events.ChangeListener;
+import io.intino.alexandria.ui.displays.notifiers.TemplateNotifier;
 import org.monet.bpi.FieldNode;
 import org.monet.bpi.types.Link;
 import org.monet.metamodel.NodeDefinition;
@@ -14,7 +15,6 @@ import org.monet.space.kernel.model.Language;
 import org.monet.space.kernel.model.Node;
 import io.intino.goros.box.GorosBox;
 import io.intino.goros.box.ui.DisplayProvider;
-import io.intino.goros.box.ui.displays.notifiers.FieldNodeTemplateNotifier;
 import io.intino.goros.util.DisplayHelper;
 import io.intino.goros.util.LayerHelper;
 import io.intino.goros.util.NodeHelper;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> implements Editable<FieldNodeTemplateNotifier, GorosBox> {
+public class FieldNodeTemplate extends AbstractFieldNodeTemplate<GorosBox> implements Editable<TemplateNotifier, GorosBox> {
     private Node node;
     private FieldNode field;
     private boolean readonly;

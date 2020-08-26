@@ -10,7 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.logging.Logger;
+
+import static java.util.stream.Collectors.toList;
 
 public abstract class Renderer {
 	protected final Dictionary dictionary;
@@ -37,6 +40,15 @@ public abstract class Renderer {
 		} catch (IOException e) {
 			Logger.getGlobal().severe(e.getMessage());
 		}
+	}
+
+	protected void addResourceType(Definition definition, FrameBuilder result) {
+		if (definition instanceof NodeDefinition) result.add("resourceType", ((NodeDefinition)definition).isSingleton() ? "singleton" : "instance");
+		else result.add("resourceType", "singleton");
+	}
+
+	protected DesktopDefinition desktopWithDefinition(Definition definition) {
+		return dictionary.getDesktopDefinitionList().stream().filter(d -> d.getViewList().stream().anyMatch(v -> containsDefinition(definition, v))).findFirst().orElse(null);
 	}
 
 	protected String javaPackage() {
@@ -85,6 +97,11 @@ public abstract class Renderer {
 
 	protected String typeOf(FormViewProperty.ShowProperty showProperty) {
 		return RendererHelper.typeOf(showProperty);
+	}
+
+	private boolean containsDefinition(Definition definition, DesktopDefinitionBase.ViewProperty viewProperty) {
+		DesktopDefinitionBase.ViewProperty.ShowProperty show = viewProperty.getShow();
+		return show.getLink().stream().anyMatch(l -> dictionary.getDefinition(l.getValue()).getCode().equals(definition.getCode()));
 	}
 
 }

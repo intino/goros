@@ -68,15 +68,17 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 	}
 
 	protected void addDesktop(FrameBuilder result) {
-		List<DesktopDefinition> desktopList = dictionary.getDesktopDefinitionList().stream().filter(d -> d.getViewList().stream().anyMatch(this::containsDefinition)).collect(toList());
-		if (desktopList.size() <= 0) return;
-		result.add("desktop", desktopFrame(desktopList.get(0)));
+		DesktopDefinition desktop = desktopWithDefinition(definition());
+		if (desktop == null) return;
+		result.add("desktop", desktopFrame(desktop));
 	}
 
 	protected FrameBuilder desktopFrame(DesktopDefinition desktopDefinition) {
 		FrameBuilder result = baseFrame().add("desktop");
+		if (desktopDefinition.isSingleton()) result.add("singleton");
 		result.add("name", nameOf(desktopDefinition));
 		result.add("label", desktopDefinition.getLabel());
+		addResourceType(desktopDefinition, result);
 		return result;
 	}
 

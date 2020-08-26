@@ -290,6 +290,8 @@ def type(setdefinition)
         @Override
         public void init() {
             super.init();
+            [$desktop]
+            [$parent]
             node = io.intino.goros.util.NodeHelper.singleton("$code");
             initToolbars();
             initViews();

@@ -2,6 +2,20 @@ dsl Konos
 
 use Theme
 
+Template(layout=Vertical Flexible, format=smallAir) sourceTemplate
+    Block(layout=Horizontal, format=bordered spaced) header
+        Block(layout=Vertical Flexible)
+            Block(layout=Horizontal)
+                Link(title="", format=h4 middleAirRight, visible=false) desktopLink as Action Addressable(empty)
+                Text(value="/", format=h4 middleAirRight, visible=false) desktopLinkSeparator
+                Text(format=h4 bold) label
+            Text(format=body2) count
+            TemplateStamp(template=sourceLegendTemplate)
+
+    Block(layout=Horizontal Flexible, format=smallAirTop)
+        Block(layout=Vertical Flexible, format=bordered)
+            TemplateStamp(template=sourceEmbeddedTemplate) content
+
 Template(layout=Horizontal Flexible) sourceEmbeddedTemplate as Relative(height=100%)
 	Block(layout=Vertical Flexible, format=autoOverflow) levelsBlock as Relative(width=100%) > TemplateStamp(template=sourceLevelTemplate) levels as Multiple(arrangement=Horizontal, wrapItems=false)
 	Block(format=smallAirLeft leftBordered) termView as Conditional Animated Relative(width=35%)
@@ -18,9 +32,9 @@ Template(layout=Vertical, format=rightBordered sourceLevelWidth) sourceLevelTemp
 				Block(layout=Horizontal, format=termReferenceStyle)
 					Block(layout=Vertical Flexible)
 						Block(layout=Horizontal Center)
-							Text(format=middleAirRight) label
+							Text(format=middleAirRight, cropWithEllipsis=20Chars) label
 							Text(format=body2 legendPillStyle) type as Highlighted(textColor="white", backgroundColor="transparent")
-						Text(format=body2 grey) code
+						Text(format=body2 grey, cropWithEllipsis=26Chars) code
 						Number(format=body2) tagsCount as Labeled("Tags count")
 					Block
 						MaterialIcon(icon="KeyboardArrowRight", visible=false) groupFlag

@@ -15,16 +15,22 @@ def type(ui & routedispatcher)
         public void dispatchError(Soul soul) {
         }
 
-        [$definition+dispatch...[$NL]]
-
         @Override
-        public void dispatchRoles(Soul soul) {
-            soul.display(AppTemplate.class).openRoles();
+        public void dispatchSingleton(Soul soul, String name) {
+            AppTemplate display = soul.display(AppTemplate.class);
+            [$definition+dispatchSingleton...[$NL]]
         }
 
         @Override
-        public void dispatchDashboard(Soul soul) {
-            soul.display(AppTemplate.class).openDashboard();
+        public void dispatchInstance(Soul soul, String name, String id) {
+            AppTemplate display = soul.display(AppTemplate.class);
+            [$definition+dispatchInstance...[$NL]]
+        }
+
+        @Override
+        public void dispatchTask(Soul soul, String name, String inbox, String task) {
+            AppTemplate display = soul.display(AppTemplate.class);
+            [$definition+dispatchTask...[$NL]]
         }
 
         @Override
@@ -38,8 +44,8 @@ def type(ui & routedispatcher)
         }
 
         @Override
-        public void dispatchNews(Soul soul) {
-            soul.display(AppTemplate.class).openNews();
+        public void dispatchRoles(Soul soul) {
+            soul.display(AppTemplate.class).openRoles();
         }
 
         @Override
@@ -89,9 +95,9 @@ def type(ui & app)
             taskTrayLink.address(path -> path.replace(":view", "activas"));
             taskBoardLink.address(path -> path.replace(":view", "activas"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
-            initAgentSession();
-            initContext(Thread.currentThread().getId());
-            box().pushService().onLinkedToThread(session().client(), this::initContext);
+            io.intino.goros.util.DisplayHelper.initAgentSession(session());
+            io.intino.goros.util.DisplayHelper.initContext(box().goros(), session(), Thread.currentThread().getId());
+            box().pushService().onLinkedToThread(session().client(), threadId -> io.intino.goros.util.DisplayHelper.initContext(box().goros(), session(), threadId));
             refresh();
         }
 
@@ -147,22 +153,6 @@ def type(ui & app)
             if (trashPage.trashStamp != null) trashPage.trashStamp.refresh();
         }
 
-        private void initAgentSession() {
-            AgentSession agentSession = AgentSession.getInstance();
-            Session session = agentSession.get(session().id());
-            if (session != null) return;
-            agentSession.add(session().id());
-            agentSession.get(session().id()).setAccount(LayerHelper.federationLayer(session()).loadAccount("1"));
-        }
-
-        private void initContext(long thread) {
-            Context context = Context.getInstance();
-            context.setApplication(thread, "127.0.0.1", ApplicationOffice.NAME, ApplicationInterface.USER);
-            context.setUserServerConfig(thread, "localhost", "", Integer.valueOf(box().configuration().port()));
-            context.setSessionId(thread, session().id());
-            context.setDatabaseConnectionType(thread, Database.ConnectionTypes.AUTO_COMMIT);
-        }
-
         private void refreshDrawer() {
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
@@ -198,7 +188,7 @@ def type(ui & app)
         }
 
         private List<Ref> dashboardRoles(Distribution.ShowProperty showProperty, String name) {
-            DashboardDefinition definition = showProperty.getTabDashboard().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getDashboardDefinition(te.getValue())).filter(d -> d.getName().equals(name)).findFirst().orElse(null);
+            DashboardDefinition definition = showProperty.getTabDashboard().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getDashboardDefinition(te.getDefinition())).filter(d -> d.getName().equals(name)).findFirst().orElse(null);
             if (definition == null) return null;
             return definition.getFor() != null ? definition.getFor().getRole() : emptyList();
         }
@@ -286,6 +276,7 @@ def type(ui & header)
 end
 
 def type(definition & desktop) trigger(refreshDrawer)
+    $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase"));
     $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
 end
 
@@ -326,12 +317,18 @@ end
 def type(definition & index) trigger(method)
 end
 
-def type(definition & thesaurus) trigger(method)
+def type(definition & source) trigger(method)
     public void open$name+firstUpperCase() {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
-        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.refresh();
+        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp == null) return;
+        [$sourceDesktop]
+        $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code");
     }
+end
+
+def type(sourceDesktop)
+    $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.desktop("$desktopLabel", "/elemento/$desktop+lowerCase");
 end
 
 def type(definition & activity) trigger(taskInitialization)
@@ -359,35 +356,38 @@ def type(definition) trigger(method)
     }
 end
 
-def type(definition & activity) trigger(dispatch)
-    @Override
-    public void dispatch$name+lowerCase+firstUpperCase(Soul soul, String inbox, String task) {
-        soul.display(AppTemplate.class).open$name+firstUpperCase(task, inbox);
-    }
+def type(definition & activity) trigger(dispatchTask)
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(task, inbox);
 end
 
-def type(definition & index) trigger(dispatch)
+def type(definition) trigger(dispatchTask)
 end
 
-def type(definition & thesaurus) trigger(dispatch)
-    @Override
-    public void dispatch$name+lowerCase+firstUpperCase(Soul soul) {
-        soul.display(AppTemplate.class).open$name+firstUpperCase();
-    }
+def type(definition & source) trigger(dispatchSingleton)
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase();
 end
 
-def type(definition & singleton) trigger(dispatch)
-    @Override
-    public void dispatch$name+lowerCase+firstUpperCase(Soul soul) {
-        soul.display(AppTemplate.class).open$name+firstUpperCase();
-    }
+def type(definition & singleton) trigger(dispatchSingleton)
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase();
 end
 
-def type(definition) trigger(dispatch)
-    @Override
-    public void dispatch$name+lowerCase+firstUpperCase(Soul soul, String id) {
-        soul.display(AppTemplate.class).open$name+firstUpperCase(id);
-    }
+def type(definition) trigger(dispatchSingleton)
+end
+
+def type(definition & source) trigger(dispatchInstance)
+end
+
+def type(definition & activity) trigger(dispatchInstance)
+end
+
+def type(definition & singleton) trigger(dispatchInstance)
+end
+
+def type(definition & index) trigger(dispatchInstance)
+end
+
+def type(definition) trigger(dispatchInstance)
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id);
 end
 
 def type(definition & index) trigger(block)

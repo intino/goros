@@ -1,11 +1,17 @@
 package io.intino.goros.util;
 
+import org.monet.metamodel.Definition;
+import org.monet.metamodel.DesktopDefinition;
 import org.monet.metamodel.SourceDefinition;
+import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Source;
 import org.monet.space.kernel.model.Term;
+import org.siani.itrules.framebuilder.FrameBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class SourceHelper {
 

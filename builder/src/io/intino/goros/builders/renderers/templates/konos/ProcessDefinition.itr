@@ -1,4 +1,4 @@
-def type(activity)
+def type(process)
     dsl Konos
 
     use UI

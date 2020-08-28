@@ -5,11 +5,13 @@ import io.intino.goros.builders.monet.Dictionary;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import org.monet.metamodel.*;
+import org.monet.metamodel.internal.Ref;
 
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,7 +47,10 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
 		result.add("label", definition().getLabel());
-		if (definition.getType() != null) result.add(definition.getType().name());
+		if (definition.getType() != null) {
+			result.add(definition.getType().name());
+			if (definition instanceof ProcessDefinition) result.add("process");
+		}
 		return result;
 	}
 
@@ -80,6 +85,23 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		result.add("label", desktopDefinition.getLabel());
 		addResourceType(desktopDefinition, result);
 		return result;
+	}
+
+	protected void addRecentTaskType(TaskDefinition definition, FrameBuilder builder) {
+		FrameBuilder result = baseFrame().add("tasktype");
+		result.add("name", nameOf(definition));
+		result.add("code", definition.getCode());
+		builder.add("tasktype", result);
+	}
+
+	protected List<TaskDefinition> findTaskDefinitionsWith(Definition definition) {
+		return dictionary.getTaskDefinitionList().stream().filter(d -> contains(d, definition)).collect(Collectors.toList());
+	}
+
+	private boolean contains(TaskDefinition taskDefinition, Definition definition) {
+		if (taskDefinition.isJob()) return false;
+		Ref target = taskDefinition.isActivity() ? ((ActivityDefinition)taskDefinition).getTarget() : ((ServiceDefinition)taskDefinition).getTarget();
+		return target != null && dictionary.getDefinitionCode(target.getValue()).equals(definition.getCode());
 	}
 
 	private boolean containsDefinition(DesktopDefinitionBase.ViewProperty viewProperty) {

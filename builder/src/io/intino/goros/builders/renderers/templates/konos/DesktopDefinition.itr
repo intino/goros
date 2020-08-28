@@ -10,11 +10,13 @@ def type(desktopdefinition)
                 Block(layout=Horizontal)
                     Text(value="$label", format=h4 bold) label
 
-        [$view...[$NL]]
+        Block(layout=Vertical Wrap)
+            [$view...[$NL]]
 end
 
 def type(nodeview)
-    Block(layout=Vertical Flexible, format=smallAirTop spaced)
+    Block(layout=Vertical Flexible, format=smallAirTop spaced desktopBlockStyle)
+        Text(value="$label", format=h4 airBottom)
         $show
 end
 

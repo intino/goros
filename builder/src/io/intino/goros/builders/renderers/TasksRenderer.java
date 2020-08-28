@@ -3,7 +3,7 @@ package io.intino.goros.builders.renderers;
 import io.intino.goros.builders.Modernization;
 import io.intino.goros.builders.monet.Dictionary;
 import io.intino.itrules.FrameBuilder;
-import org.monet.metamodel.ActivityDefinition;
+import org.monet.metamodel.ProcessDefinition;
 import org.monet.metamodel.TaskDefinition;
 
 import java.io.File;
@@ -37,14 +37,14 @@ public class TasksRenderer extends Renderer {
 	}
 
 	private void addTasks(FrameBuilder builder) {
-		dictionary.getTaskDefinitionList().stream().filter(t -> t instanceof ActivityDefinition).forEach(d -> addTask(d, builder));
+		dictionary.getTaskDefinitionList().stream().filter(t -> t instanceof ProcessDefinition).forEach(d -> addTask(d, builder));
 	}
 
 	private void addTask(TaskDefinition definition, FrameBuilder builder) {
-		FrameBuilder result = baseFrame().add("activity");
+		FrameBuilder result = baseFrame().add("process");
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
-		builder.add("activity", result);
+		builder.add("process", result);
 	}
 
 	protected void writeJava(FrameBuilder builder) {

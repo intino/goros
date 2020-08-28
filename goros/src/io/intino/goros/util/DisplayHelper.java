@@ -52,9 +52,11 @@ public class DisplayHelper {
 
 	public static void selectDefaultView(SelectorTabs selector, Node node) {
 		NodeViewProperty defaultView = node.getDefinition().getDefaultView();
-		if (defaultView == null) selector.select(0);
-		if (defaultView == null) return;
-		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		if (defaultView == null) {
+			selector.select(0);
+			return;
+		}
+		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
 		selector.select(StringHelper.validName(name));
 	}
 
@@ -62,14 +64,18 @@ public class DisplayHelper {
 		ProcessDefinitionBase.ViewProperty defaultView = null;
 		if (task.getDefinition().isActivity()) defaultView = ((ActivityDefinition)task.getDefinition()).getDefaultView();
 		else if (task.getDefinition().isService()) defaultView = ((ServiceDefinition)task.getDefinition()).getDefaultView();
-		if (defaultView == null) selector.select(0);
-		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		if (defaultView == null) {
+			selector.select(0);
+			return;
+		}
+		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
 		selector.select(StringHelper.validName(name));
 	}
 
 	public static void selectDefaultView(SelectorToggleBox selector, Node node) {
 		NodeViewProperty defaultView = defaultView(node);
-		String name = defaultView.getLabel() != null ? Language.getInstance().getModelResource(defaultView.getLabel()) : defaultView.getName();
+		if (defaultView == null) return;
+		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
 		selector.select(StringHelper.validName(name));
 	}
 

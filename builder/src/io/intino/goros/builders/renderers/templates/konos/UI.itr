@@ -51,7 +51,7 @@ def type(ui)
 
     Template(layout=Horizontal Flexible) HeaderTemplate
         Block(layout=Horizontal Flexible Center)
-            Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=60px, width=72px)
+            Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=60px)
             Block
                 Text(format=h3 bold) title
                 Text(format=body2) subtitle

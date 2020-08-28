@@ -37,7 +37,7 @@ def type(show)
     public void refresh() {
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
-        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.box.ui.datasources.Collection$datasourceType~Datasource(box().goros(), session(), node));
+        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.box.ui.datasources.Collection$datasourceType~Datasource(box().goros(), session(), node, view));
         $definition+firstLowerCase~$view+firstUpperCase.reload();
     }
 end
@@ -246,15 +246,29 @@ def type(setdefinition & toolbar)
 end
 
 def type(addList) trigger(execute)
-    add.onExecute(e -> addNode(e.option()));
+    add.onExecute(e -> addNode($defaultAdd+option));
+    addSplit.onExecute(e -> addNode(e.option()));
 end
 
-def type(addList) trigger(visible)
-    add.visible(readonly && !node.getDefinition().isReadonly());
+def type(addList) trigger(refresh)
+    add.visible($addVisibility);
+    addSplit.visible($addSplitVisibility);
+end
+
+def type(addVisibility & visible)
+    readonly && !node.getDefinition().isReadonly()
+end
+
+def type(addVisibility)
+    false
 end
 
 def type(add) trigger(toolbarTemplate)
     if (option.equals("Añadir $label")) result = io.intino.goros.util.LayerHelper.nodeLayer().addNode("$code", node);
+end
+
+def type(add) trigger(option)
+    "Añadir $label"
 end
 
 def type(setdefinition)
@@ -460,6 +474,9 @@ end
 def type(collectionview & sharedprototypes) trigger(initCall)
 end
 
+def type(collectionview & visibleWhenEmbedded) trigger(initCall)
+end
+
 def type(collectionview) trigger(initCall)
     $name+firstLowerCase~View.onInit(e -> {
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onRefreshItemCount(this::refreshCount);
@@ -469,6 +486,7 @@ def type(collectionview) trigger(initCall)
         bindCurrentViewTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         bindToolbarsTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
         showFilters(filtersView.$name+firstLowerCase~Filters);
@@ -479,6 +497,9 @@ def type(collectionview & ownedprototypes) trigger(filter)
 end
 
 def type(collectionview & sharedprototypes) trigger(filter)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(filter)
 end
 
 def type(collectionview) trigger(filter)
@@ -496,6 +517,9 @@ end
 def type(collectionview & sharedprototypes) trigger(showFilterCall)
 end
 
+def type(collectionview & visibleWhenEmbedded) trigger(showFilterCall)
+end
+
 def type(collectionview) trigger(showFilterCall)
     if ($name+firstLowerCase~View.isVisible()) showFilters(filtersView.$name+firstLowerCase~Filters);
 end
@@ -504,6 +528,9 @@ def type(collectionview & ownedprototypes) trigger(hideFilterCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(hideFilterCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(hideFilterCall)
 end
 
 def type(collectionview) trigger(hideFilterCall)
@@ -516,6 +543,9 @@ end
 def type(collectionview & sharedprototypes) trigger(refreshCall)
 end
 
+def type(collectionview & visibleWhenEmbedded) trigger(refreshCall)
+end
+
 def type(collectionview) trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
 end
@@ -524,6 +554,9 @@ def type(collectionview & ownedprototypes) trigger(refreshFiltersCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshFiltersCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(refreshFiltersCall)
 end
 
 def type(collectionview) trigger(refreshFiltersCall)
@@ -536,6 +569,9 @@ end
 def type(collectionview & sharedprototypes) trigger(refreshNodeCall)
 end
 
+def type(collectionview & visibleWhenEmbedded) trigger(refreshNodeCall)
+end
+
 def type(collectionview) trigger(refreshNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh(node);
 end
@@ -544,6 +580,9 @@ def type(collectionview & ownedprototypes) trigger(selectNodeCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(selectNodeCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(selectNodeCall)
 end
 
 def type(collectionview) trigger(selectNodeCall)
@@ -556,6 +595,9 @@ end
 def type(collectionview & sharedprototypes) trigger(readonlyCall)
 end
 
+def type(collectionview & visibleWhenEmbedded) trigger(readonlyCall)
+end
+
 def type(collectionview) trigger(readonlyCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly).refresh();
 end
@@ -564,6 +606,9 @@ def type(collectionview & ownedprototypes) trigger(collection)
 end
 
 def type(collectionview & sharedprototypes) trigger(collection)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(collection)
 end
 
 def type(collectionview) trigger(collection)

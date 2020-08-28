@@ -54,10 +54,12 @@ def type(parent)
 end
 
 def type(toolbar & singleton) trigger(editable)
+    [$operation...[$NL]]
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
 end
 
 def type(toolbar) trigger(editable)
+    [$operation...[$NL]]
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
 end
@@ -69,6 +71,10 @@ def type(toolbar & collectable) trigger(navigable)
 end
 
 def type(toolbar) trigger(navigable)
+end
+
+def type(operation)
+    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Action[ as Affirmed("$confirmText")]
 end
 
 def type(nodeview & linksin) trigger(revisionDeclaration)
@@ -92,8 +98,14 @@ end
 def type(nodeview & recenttask) trigger(revisionDeclaration)
 end
 
+def type(nodeview & visibleWhenEmbedded) trigger(revisionDeclaration)
+end
+
 def type(nodeview) trigger(revisionDeclaration)
     Text(value="$label") $name+firstLowerCase as Option
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(declaration)
 end
 
 def type(nodeview) trigger(declaration)
@@ -101,6 +113,9 @@ def type(nodeview) trigger(declaration)
 end
 
 def type(nodeview & linksin) trigger(revisionPage)
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(page)
 end
 
 def type(nodeview & linksin) trigger(page)
@@ -170,6 +185,9 @@ def type(nodeview) trigger(use)
     $show+use
 end
 
+def type(nodeview & visibleWhenEmbedded) trigger(revisionPage)
+end
+
 def type(nodeview) trigger(revisionPage)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
 end
@@ -206,20 +224,23 @@ def type(nodeview)
         $show
 end
 
-def type(show & recenttask & container) trigger(use)
-end
-
 def type(show & recenttask) trigger(use)
-    [use $taskName+firstUpperCase]
+    [$tasktype+use...[$NL]]
 end
 
-def type(show & recenttask & container)
+def type(tasktype) trigger(use)
+    use $name+firstUpperCase...[$NL]
 end
 
 def type(show & recenttask)
 	Block(layout=Vertical Flexible CenterCenter, visible=false) noTaskMessage as Relative(height=100%)> Text(value="No hay tareas pendientes", format=h5, translate=true)
 	Block(format=dialog bordered) toolbarBlock > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
-	TemplateStamp(template=$taskName+firstUpperCase~StateViewTemplate) $taskName+firstLowerCase~View
+	Block(layout=Vertical Flexible, visible=false) viewsBlock
+        [$tasktype...[$NL]]
+end
+
+def type(tasktype)
+    Block $name+firstLowerCase~View as Conditional > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) $name+firstLowerCase~ViewStamp
 end
 
 def type(show & revisions)

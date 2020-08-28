@@ -63,7 +63,7 @@ public class MonetBuilder {
     private boolean isRoot(Definition definition) {
         if (definition instanceof TaskOrderDefinition) return false;
         if (definition instanceof NodeDefinition) return true;
-        if (definition instanceof ActivityDefinition) return true;
+        if (definition instanceof ProcessDefinition) return true;
         if (definition instanceof SourceDefinition) return true;
         return definition instanceof IndexDefinition;
     }

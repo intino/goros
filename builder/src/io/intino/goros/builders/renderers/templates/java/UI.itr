@@ -299,7 +299,7 @@ def type(definition) trigger(declaration)
     $name+firstUpperCase
 end
 
-def type(definition & activity) trigger(method)
+def type(definition & process) trigger(method)
     public void open$name+firstUpperCase(String task, String inbox) {
         if (openInitializationTask(task, inbox)) return;
         open$name+firstUpperCase(LayerHelper.taskLayer().loadTask(task), inbox);
@@ -331,7 +331,7 @@ def type(sourceDesktop)
     $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.desktop("$desktopLabel", "/elemento/$desktop+lowerCase");
 end
 
-def type(definition & activity) trigger(taskInitialization)
+def type(definition & process) trigger(taskInitialization)
     if (task.getDefinition().getCode().equals("$code")) open$name+firstUpperCase(task, inbox);
 end
 
@@ -356,7 +356,7 @@ def type(definition) trigger(method)
     }
 end
 
-def type(definition & activity) trigger(dispatchTask)
+def type(definition & process) trigger(dispatchTask)
     if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(task, inbox);
 end
 
@@ -377,7 +377,7 @@ end
 def type(definition & source) trigger(dispatchInstance)
 end
 
-def type(definition & activity) trigger(dispatchInstance)
+def type(definition & process) trigger(dispatchInstance)
 end
 
 def type(definition & singleton) trigger(dispatchInstance)

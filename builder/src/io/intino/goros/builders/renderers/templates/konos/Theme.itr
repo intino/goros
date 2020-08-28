@@ -60,7 +60,7 @@ def type(theme)
     // COMMON
     Format("zIndex:'1'") visible
     Format("position:'relative'") relative
-    Format("minWidth:'72px'") minLogoSize
+    Format("minWidth:'72px',width:'auto !important',marginRight:'15px'") minLogoSize
     Format("width:'100% !important'") fullWidth
     Format("height:'100% !important'") fullHeight
     Format("minWidth:'48px'") minDrawerButtonSize
@@ -76,6 +76,7 @@ def type(theme)
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") compositeFieldStyle
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
     Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-5px',marginRight:'2px'") editDocumentButtonStyle
+    Format("background:'white',border:'1px solid #e4e4e4'") desktopBlockStyle
     Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
     Format("height:'20px'") pillStyle
     Format("minWidth:'320px'") sourceLevelWidth

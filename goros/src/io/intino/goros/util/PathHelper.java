@@ -19,7 +19,7 @@ public class PathHelper {
 	}
 
 	public static String pathOf(Node node) {
-		String result = subPathOf(node);
+		String result = "/" + subPathOf(node);
 //		Node parent = node.getParent();
 //		while (parent != null) {
 //			result = subPathOf(parent) + "/" + result;
@@ -30,15 +30,11 @@ public class PathHelper {
 
 	private static String subPathOf(Node node) {
 		String pathId = pathIdOf(node);
-		return pathNameOf(node.getDefinition()) + (pathId.isEmpty() ? "" : "/" + pathId);
+		return (node.isSingleton() ? "elemento/" : "instancia/") + NodeHelper.nameOf(node) + (pathId.isEmpty() ? "" : "/" + pathId);
 	}
 
 	private static String pathIdOf(Node node) {
 		return node.isSingleton() ? "" : node.getId();
 	}
 
-	private static String pathNameOf(Definition definition) {
-		String name = definition.getName();
-		return name.contains(".") ? name.substring(name.lastIndexOf(".")+1).toLowerCase() : name.toLowerCase();
-	}
 }

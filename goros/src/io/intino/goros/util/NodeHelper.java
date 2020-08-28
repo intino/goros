@@ -2,9 +2,12 @@ package io.intino.goros.util;
 
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
+import io.intino.alexandria.ui.displays.UserMessage;
+import io.intino.alexandria.ui.displays.components.Actionable;
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.model.datasource.filters.RangeFilter;
+import io.intino.goros.box.I18n;
 import org.monet.bpi.FieldDate;
 import org.monet.bpi.FieldFile;
 import org.monet.bpi.FieldLink;
@@ -16,7 +19,10 @@ import org.monet.bpi.types.Term;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.internal.Ref;
+import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.components.ComponentDocuments;
+import org.monet.space.kernel.components.ComponentPersistence;
+import org.monet.space.kernel.library.LibraryEncoding;
 import org.monet.space.kernel.model.*;
 import org.monet.space.kernel.model.Dictionary;
 import io.intino.goros.box.ui.datasources.FieldSelectDatasource;
@@ -41,9 +47,23 @@ public class NodeHelper {
         return LayerHelper.nodeLayer().locateNode(code);
     }
 
+    public static String nameOf(Node node) {
+        return nameOf(node.getDefinition());
+    }
+
     public static String internalValueOf(Instant instant) {
         if (instant == null) return null;
         return InternalFormat.format(java.util.Date.from(instant));
+    }
+
+    public static void executeOperation(Actionable actionable, Node node, String operation, String successMessage) {
+        actionable.readonly(true);
+        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
+        event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
+        AgentNotifier.getInstance().notify(event);
+        actionable.readonly(false);
+        actionable.notifyUser(successMessage, UserMessage.Type.Info);
     }
 
     public static Task recentTask(Node node, String view) {
@@ -415,6 +435,21 @@ public class NodeHelper {
             }
         }
         return taskTypes;
+    }
+
+    private static String nameOf(Definition definition) {
+        String prefix = prefixOf(definition, Dictionary.getInstance().basePackage());
+        String name = definition.getName();
+        name = name.contains(".") ? name.substring(name.lastIndexOf(".")+1) : name;
+        return prefix + name;
+    }
+
+    private static String prefixOf(Definition definition, String basePackage) {
+        String prefix = definition.getName();
+        if (!prefix.contains(".")) return "";
+        prefix = prefix.substring(0, prefix.lastIndexOf("."));
+        prefix = prefix.replace(basePackage + ".", "").replace(basePackage, "").replace(".", "-");
+        return StringHelper.snakeCaseToCamelCase(/*shortName(*/prefix/*)*/);
     }
 
 }

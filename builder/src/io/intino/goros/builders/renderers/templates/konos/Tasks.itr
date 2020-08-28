@@ -1,7 +1,7 @@
 def type(tasks)
     dsl Konos
 
-    [$activity+use...[$NL]]
+    [$process+use...[$NL]]
     use UI
     use Theme
 
@@ -40,17 +40,17 @@ def type(tasks)
                 Transition(direction=Left)
                 OwnerTemplateStamp(template="TasksFiltersTemplate", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tasksFiltersStamp
 
-            [$activity+block...[$NL]]
+            [$process+block...[$NL]]
 
     Template NodeTasksTemplate as Relative(height=100%)
         TemplateStamp(template=TasksEmbeddedTemplate) tasks
 end
 
-def type(activity) trigger(use)
+def type(process) trigger(use)
     use $name+firstUpperCase
 end
 
-def type(activity) trigger(block)
+def type(process) trigger(block)
     Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) $name+firstLowerCase~View as Conditional Animated Relative(width=55%)
         Transition(direction=Left)
         TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~Stamp

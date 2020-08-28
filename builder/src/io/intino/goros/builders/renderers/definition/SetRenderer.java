@@ -7,11 +7,11 @@ import io.intino.goros.builders.renderers.templates.java.SetTemplate;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import org.monet.metamodel.*;
+import org.monet.metamodel.SetDefinitionBase.SetViewPropertyBase.ShowProperty.LocationsProperty;
 import org.monet.metamodel.internal.DescriptorDefinition;
 import org.monet.metamodel.internal.Ref;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -55,18 +55,50 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	@Override
 	protected FrameBuilder viewFrame(NodeViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("nodeview").add("collectionview");
-		result.add(typeOf(viewProperty));
-		NodeDefinition definition = definition();
-		result.add("definition", nameOf(definition));
-		result.add("code", viewProperty.getCode());
-		result.add("name", nameOf(viewProperty));
-		result.add("label", labelOf(viewProperty));
+		FrameBuilder result = baseViewFrame(viewProperty).add("collectionview");
 		result.add("materialIcon", materialIcon(viewProperty));
+		result.add("height", calculateHeight((SetDefinition.SetViewProperty)viewProperty));
+		addFacets((SetDefinition.SetViewProperty) viewProperty, result);
 		addShow((SetDefinition.SetViewProperty) viewProperty, result);
 		addAttributes((SetDefinition.SetViewProperty)viewProperty, result);
 		addAnalyze((SetDefinition.SetViewProperty)viewProperty, result);
 		return result;
+	}
+
+	protected void addFacets(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
+		LocationsProperty locations = viewProperty.getShow().getLocations();
+		if (locations == null) return;
+		if (locations.getLayer() == LocationsProperty.LayerEnumeration.HEAT) builder.add("heatmap", "Heatmap");
+	}
+
+	private int calculateHeight(SetDefinition.SetViewProperty viewProperty) {
+		SetDefinitionBase.SetViewPropertyBase.ShowProperty show = viewProperty.getShow();
+		if (show.getItems() != null) return 50;
+		if (show.getIndex() != null) return calculateIndexHeight(viewProperty);
+		if (show.getLocations() != null) return calculateLocationsHeight(viewProperty);
+		return 165;
+	}
+
+	private int calculateIndexHeight(SetDefinition.SetViewProperty viewProperty) {
+		SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty index = viewProperty.getShow().getIndex();
+		return calculateAttributesHeight(viewProperty, index.getWithView());
+	}
+
+	private int calculateLocationsHeight(SetDefinition.SetViewProperty viewProperty) {
+		LocationsProperty locations = viewProperty.getShow().getLocations();
+		return calculateAttributesHeight(viewProperty, locations.getWithView());
+	}
+
+	protected int calculateAttributesHeight(SetDefinition.SetViewProperty viewProperty, Ref withView) {
+		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
+		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
+		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
+		if (show.getPicture() != null) return 165;
+		int size = 100;
+		size += show.getLineBelow().size() > 0 ? 20 : 0;
+		size += show.getHighlight().size() > 0 ? 20 : 0;
+		size += show.getFooter().size() > 0 ? 20 : 0;
+		return size;
 	}
 
 	@Override
@@ -127,10 +159,10 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	}
 
 	private void addItemsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 20));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_DESCRIPTION, "Descripción", 20));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_CREATE_DATE, "Fecha creación", 20));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_UPDATE_DATE, "Fecha actualización", 20));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 30));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_DESCRIPTION, "Descripción", 30));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_CREATE_DATE, "Fecha creación", 15));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_UPDATE_DATE, "Fecha actualización", 15));
 	}
 
 	private void addIndexAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
@@ -139,7 +171,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	}
 
 	private void addLocationsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
-		SetDefinitionBase.SetViewPropertyBase.ShowProperty.LocationsProperty locations = viewProperty.getShow().getLocations();
+		LocationsProperty locations = viewProperty.getShow().getLocations();
 		addIndexViewAttributes(viewProperty, locations.getWithView(), builder);
 	}
 

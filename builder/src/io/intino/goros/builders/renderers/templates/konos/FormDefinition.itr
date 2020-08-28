@@ -7,6 +7,54 @@ def type(show & fields)
         [$field...[$NL]]
 end
 
+def type(show & layout) trigger(use)
+    [$row+use...[$NL]]
+end
+
+def type(show & layout)
+    Block[ $absoluteFacet][ $relativeFacet]
+        [$row...[$NL]]
+end
+
+def type(layoutRow) trigger(use)
+    [$element+use...[$NL]]
+end
+
+def type(layoutRow)
+    Block(layout=Horizontal Flexible)
+        [$element...[$NL]]
+end
+
+def type(layoutElement) trigger(use)
+    [$field+use]
+end
+
+def type(layoutElement & section)
+    Block(layout=Horizontal Flexible)
+        [Text(value="$label")]
+        [$row...[$NL]]
+end
+
+def type(layoutElement & space)
+    Text(value=" ")
+end
+
+def type(layoutElement)
+    Block(format=airRight)[ $absoluteFacet][ $relativeFacet]
+        $field
+end
+
+def type(absoluteFacet)
+    as Absolute([width=$width~px][$width+empty,][height=$height~px])
+end
+
+def type(relativeFacet)
+    as Relative([width=$width~%][$width+empty,][height=$height~%])
+end
+
+def trigger(empty)
+end
+
 def type(field & link) trigger(use)
     use $index+firstUpperCase
 end

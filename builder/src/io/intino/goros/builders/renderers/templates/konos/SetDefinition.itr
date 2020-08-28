@@ -16,9 +16,10 @@ def type(setdefinition)
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search
                 MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
-                Selector(format=airRight) viewSelector as ToggleBox(size=Small)
-                    [$view+selector...[$NL]]
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+
+        Selector viewSelector as Tabs
+            [$view+selector...[$NL]]
 
         Block(layout=Horizontal Flexible, format=smallAirTop)
             Block(layout=Vertical Flexible, format=bordered)
@@ -55,7 +56,7 @@ def type(nodeview & index) trigger(template)
         List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
             Mold
-                Item(height=165px) $definition+firstLowerCase~$name+firstUpperCase~Item
+                Item(height=$height~px) $definition+firstLowerCase~$name+firstUpperCase~Item
                     Block(layout=Vertical, format=catalogIndexReferenceStyle)
                         Block(layout=Horizontal Flexible)
                             [$picture]
@@ -77,12 +78,12 @@ end
 
 def type(nodeview & locations) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase]
             Zoom(defaultZoom = 6, min = 1, max = 18)
             Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
             noItemsMessage = "No hay elementos"
             Mold
-                Item(height=165px) $definition+firstLowerCase~$name+firstUpperCase~Item
+                Item(height=$height~px) $definition+firstLowerCase~$name+firstUpperCase~Item
                     Block(layout=Vertical, format=catalogMapItemStyle)
                         Block(layout=Horizontal Flexible)
                             [$picture]
@@ -122,16 +123,25 @@ def type(nodeview) trigger(filterTemplate)
         Text(value="NOT IMPLEMENTED!!!")
 end
 
+def type(nodeview & visibleWhenEmbedded) trigger(page)
+end
+
 def type(nodeview) trigger(page)
-    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(header.rightToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate, format=fullHeight) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate, format=fullHeight) $name+firstLowerCase~ViewStamp
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(filter)
 end
 
 def type(nodeview) trigger(filter)
-    Block(layout=Vertical Flexible) $name+firstLowerCase~Filters as Conditional(selected=header.rightToolbar.viewSelector.$name+firstLowerCase) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate, format=fullHeight) $name+firstLowerCase~FiltersStamp
+    Block(layout=Vertical Flexible) $name+firstLowerCase~Filters as Conditional(selected=viewSelector.$name+firstLowerCase) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate, format=fullHeight) $name+firstLowerCase~FiltersStamp
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(selector)
 end
 
 def type(nodeview) trigger(selector)
-    MaterialIconButton(title="$label", icon="$materialIcon", size=Small) $name+firstLowerCase as Option
+    Block(layout=Horizontal Center) $name+firstLowerCase as Option > MaterialIcon(icon="$materialIcon", format=airRight middleAirTop); Text(value="$label")
 end
 
 def type(attribute) trigger(mold)
@@ -169,7 +179,8 @@ def type(add) trigger(import)
 end
 
 def type(addList) trigger(option)
-    SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) add as Action
+    SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addSplit as Action
+    Button(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, visible=false) add as Action
 end
 
 def type(add) trigger(option)

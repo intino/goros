@@ -210,6 +210,7 @@ def type(nodedefinition)
         public void refresh() {
             super.refresh();
             if (node == null) return;
+            [$parent+refresh]
             refreshHeader(node);
             refreshContent(node);
         }
@@ -227,9 +228,11 @@ def type(nodedefinition)
 end
 
 def type(toolbar & singleton) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
 end
 
 def type(toolbar & singleton) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
 end
 
 def type(toolbar & singleton) trigger(editableEvents)
@@ -255,10 +258,12 @@ def type(toolbar) trigger(editableDeclaration)
 end
 
 def type(toolbar) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
     remove.onExecute(e -> removeNode());
 end
 
 def type(toolbar) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
     remove.visible(!readonly && !node.isSingleton() && !node.getDefinition().isReadonly());
 end
 
@@ -314,12 +319,28 @@ end
 def type(toolbar) trigger(navigableMethods)
 end
 
+def type(operation) trigger(editableInitCall)
+    $name+lowerCase.onExecute(e -> io.intino.goros.util.NodeHelper.executeOperation($name+lowerCase, node, "$name", translate("Operation executed")));
+end
+
+def type(operation) trigger(editableRefreshCall)
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(initCall)
+end
+
 def type(nodeview) trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
 end
 
+def type(nodeview & visibleWhenEmbedded) trigger(refreshCall)
+end
+
 def type(nodeview) trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(revisionRefreshMethod)
 end
 
 def type(nodeview) trigger(revisionRefreshMethod)
@@ -332,6 +353,9 @@ def type(nodeview) trigger(revisionRefreshMethod)
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(refreshMethod)
 end
 
 def type(nodeview) trigger(refreshMethod)
@@ -402,9 +426,7 @@ def type(updateFields) trigger(call)
 end
 
 def type(show & recenttask) trigger(declaration)
-end
-
-def type(show & recenttask & container)
+    private org.monet.space.kernel.model.Task<?> task;
 end
 
 def type(show & recenttask)
@@ -412,6 +434,7 @@ def type(show & recenttask)
     public void init() {
         super.init();
         initToolbar();
+        initViews();
     }
 
 	private void initToolbar() {
@@ -420,16 +443,21 @@ def type(show & recenttask)
 		toolbar.onAbort(e -> refresh());
 	}
 
+	private void initViews() {
+	    [$tasktype+initCall...[$NL]]
+	}
+
 	@Override
 	public void refresh() {
 		super.refresh();
-		org.monet.space.kernel.model.Task task = io.intino.goros.util.NodeHelper.recentTask(node, view);
+		task = io.intino.goros.util.NodeHelper.recentTask(node, view);
 		noTaskMessage.visible(task == null);
-		refreshToolbar(task);
-		refreshActivity1View(task);
+		viewsBlock.visible(task != null);
+		refreshToolbar();
+		showView();
 	}
 
-	private void refreshToolbar(org.monet.space.kernel.model.Task task) {
+	private void refreshToolbar() {
 		boolean visible = task != null;
 		toolbarBlock.visible(visible);
 		if (!visible) return;
@@ -438,13 +466,37 @@ def type(show & recenttask)
 		toolbar.refresh();
 	}
 
-	private void refresh$taskName+firstUpperCase~View(org.monet.space.kernel.model.Task task) {
-		boolean visible = task != null && task.getDefinition().getCode().equals("$taskCode");
-		$taskName+firstLowerCase~View.visible(visible);
-		if (!visible) return;
-		$taskName+firstLowerCase~View.task(task);
-		$taskName+firstLowerCase~View.readonly(readonly);
-		$taskName+firstLowerCase~View.refresh();
+	private void showView() {
+	    hideViews();
+	    if (task == null) return;
+	    String code = task.getCode();
+	    [$tasktype+showCall...[$NL]]
+	}
+
+	private void hideViews() {
+        [$tasktype+hideCall...[$NL]]
+	}
+
+    [$tasktype+refreshMethod...[$NL]]
+end
+
+def type(tasktype) trigger(initCall)
+    $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View(task));
+end
+
+def type(tasktype) trigger(showCall)
+    if (code.equals("$code")) $name+firstLowerCase~View.show();
+end
+
+def type(tasktype) trigger(hideCall)
+    $name+firstLowerCase~View.hide();
+end
+
+def type(tasktype) trigger(refreshMethod)
+	private void refresh$name+firstUpperCase~View(org.monet.space.kernel.model.Task<?> task) {
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
 	}
 end
 
@@ -473,6 +525,11 @@ end
 
 def type(desktop)
     desktopLink.address(path -> path.replace(":name", "$name+lowerCase"));
+end
+
+def type(parent) trigger(refresh)
+    parentLink.address(path -> path.replace(":name", io.intino.goros.util.NodeHelper.nameOf(node.getParent())));
+    parentLink.title(node.getParent() != null ? node.getParent().getLabel() : "Inicio");
 end
 
 def type(parent)

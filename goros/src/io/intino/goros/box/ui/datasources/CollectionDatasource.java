@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.Group;
 import io.intino.alexandria.ui.model.datasource.PageDatasource;
 import io.intino.alexandria.ui.services.push.UISession;
+import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.SetDefinition;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Node;
@@ -22,11 +23,13 @@ public class CollectionDatasource extends PageDatasource<Node> {
     private final GorosBox box;
     private final UISession session;
     private final Node set;
+    private final NodeViewProperty view;
 
-    public CollectionDatasource(GorosBox box, UISession session, Node set) {
+    public CollectionDatasource(GorosBox box, UISession session, Node set, String view) {
         this.box = box;
         this.session = session;
         this.set = set;
+        this.view = set.getDefinition().getNodeView(view);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class CollectionDatasource extends PageDatasource<Node> {
         NodeDataRequest request = request(set);
         request.setCondition(condition);
         request.setGroupsBy(NodeHelper.groupsByOf(filters));
+        request.setCodeView(view.getCode());
         return request;
     }
 

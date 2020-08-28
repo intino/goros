@@ -1,4 +1,4 @@
-def type(activity & embedded)
+def type(process & embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
@@ -134,7 +134,7 @@ def type(activity & embedded)
     }
 end
 
-def type(activity & stateview)
+def type(process & stateview)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
@@ -185,7 +185,7 @@ def type(activity & stateview)
     }
 end
 
-def type(activity)
+def type(process)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$module+firstUpperCase~Box;

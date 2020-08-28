@@ -17,6 +17,7 @@ end
 
 def type(component)
     $name+firstLowerCase~$view+firstUpperCase~Stamp.node(contain);
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.view("$viewCode");
     $name+firstLowerCase~$view+firstUpperCase~Stamp.readonly(readonly);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.refresh();
 end

@@ -22,5 +22,12 @@
     <orderEntry type="library" name="Intino: io.intino.alexandria:logger:2.1.0" level="project" />
     <orderEntry type="library" name="Intino: commons-io:commons-io:2.7" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:xml:1.0.0" level="project" />
+    <orderEntry type="library" name="Intino: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.jaxb:jaxb-runtime:2.3.0-b170127.1453" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.jaxb:jaxb-core:2.3.0-b170127.1453" level="project" />
+    <orderEntry type="library" name="Intino: org.glassfish.jaxb:txw2:2.3.0-b170127.1453" level="project" />
+    <orderEntry type="library" name="Intino: com.sun.istack:istack-commons-runtime:3.0.4" level="project" />
+    <orderEntry type="library" name="Intino: org.jvnet.staxex:stax-ex:1.7.8" level="project" />
+    <orderEntry type="library" name="Intino: com.sun.xml.fastinfoset:FastInfoset:1.2.13" level="project" />
   </component>
 </module>

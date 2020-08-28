@@ -28,14 +28,7 @@ public class DocumentRenderer extends NodeRenderer<DocumentDefinition> {
 
 	@Override
 	protected FrameBuilder viewFrame(NodeViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("nodeview");
-		result.add(typeOf(viewProperty));
-		NodeDefinition definition = definition();
-		result.add("definition", nameOf(definition));
-		result.add("code", viewProperty.getCode());
-		result.add("name", nameOf(viewProperty));
-		result.add("label", labelOf(viewProperty));
-		return result;
+		return baseViewFrame(viewProperty);
 	}
 
 	@Override

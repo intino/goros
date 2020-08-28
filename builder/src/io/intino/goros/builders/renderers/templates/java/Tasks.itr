@@ -187,7 +187,7 @@ def type(tasks & embedded)
                 listView.listViewStamp.refresh();
             });
             filtersView.onInit(e -> initFilters());
-            [$activity+init...[$NL]]
+            [$process+init...[$NL]]
         }
 
         private void refreshView() {
@@ -219,7 +219,7 @@ def type(tasks & embedded)
         }
 
         private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            [$activity+bind...[$NL]]
+            [$process+bind...[$NL]]
         }
 
         private void initFilters() {
@@ -251,7 +251,7 @@ def type(tasks & embedded)
 
         private BlockConditional selectedTaskView() {
             if (selectedTask == null) return null;
-            [$activity+selectedView...[$NL]]
+            [$process+selectedView...[$NL]]
             return null;
         }
 
@@ -286,7 +286,7 @@ def type(tasks & embedded)
         }
 
         private void hideChildViews() {
-            [$activity+hide...[$NL]]
+            [$process+hide...[$NL]]
         }
 
     }
@@ -380,7 +380,7 @@ def type(tasks)
     }
 end
 
-def type(activity) trigger(init)
+def type(process) trigger(init)
     $name+firstLowerCase~View.onInit(e -> bindCurrentViewTo(currentCollection()));
     $name+firstLowerCase~View.onShow(e -> {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.task(reloadSelected());
@@ -396,14 +396,14 @@ def type(activity) trigger(init)
     });
 end
 
-def type(activity) trigger(hide)
+def type(process) trigger(hide)
     $name+firstLowerCase~View.hide();
 end
 
-def type(activity) trigger(bind)
+def type(process) trigger(bind)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
 end
 
-def type(activity) trigger(selectedView)
+def type(process) trigger(selectedView)
     if (selectedTask.getCode().equals("$code")) return $name+firstLowerCase~View;
 end

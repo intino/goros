@@ -22,6 +22,7 @@
 
 package io.intino.goros.builders.monet;
 
+import io.intino.alexandria.logger.Logger;
 import io.intino.goros.builders.util.FileUtil;
 import io.intino.goros.builders.util.StringUtil;
 import io.intino.goros.builders.util.ZipUtil;
@@ -37,6 +38,9 @@ import org.monet.space.kernel.model.BusinessModelClassLoader;
 import org.monet.space.kernel.model.Replacer;
 
 import javax.security.auth.login.Configuration;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.InputStream;
 import java.util.*;
@@ -107,6 +111,7 @@ public class Dictionary extends org.monet.metamodel.Dictionary {
 	private HashMap<String, ArrayList<String>> ontologiesMap = new HashMap<String, ArrayList<String>>();
 	private HashMap<String, ArrayList<ThesaurusDefinition>> selfGeneratedThesaurus = new HashMap<String, ArrayList<ThesaurusDefinition>>();
 	private String basePackage = null;
+	private String businessModelDir;
 
 	public Dictionary() {
 		super();
@@ -544,7 +549,22 @@ public class Dictionary extends org.monet.metamodel.Dictionary {
 	}
 
 	public LayoutDefinition getLayoutDefinition(String key) {
-		return null;
+		LayoutDefinition layoutDefinition = null;
+
+		if (this.layoutDefinitionMap.containsKey(key))
+			return this.layoutDefinitionMap.get(key);
+
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(LayoutDefinition.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			File layoutFile = new File(businessModelDir+ File.separator + "res" + File.separator + key);
+			layoutDefinition = (LayoutDefinition) unmarshaller.unmarshal(layoutFile);
+			this.layoutDefinitionMap.put(key, layoutDefinition);
+		} catch (JAXBException exception) {
+			Logger.error(exception);
+		}
+
+		return layoutDefinition;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -767,6 +787,8 @@ public class Dictionary extends org.monet.metamodel.Dictionary {
 		String librariesDir = businessModelDir + "/classes_libraries";
 		PackageReader reader = new PackageReader(classesDir);
 		ClassLoader classLoader = new BusinessModelClassLoader(classesDir, librariesDir);
+
+		this.businessModelDir = businessModelDir;
 
 		try {
 			this.clean();

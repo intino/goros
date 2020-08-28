@@ -50,7 +50,8 @@ end
 def type(item & thesaurus) trigger(refreshMethod)
     private void refresh$name+firstUpperCase() {
         Source<?> source = io.intino.goros.util.SourceHelper.locateSource("$code");
-        $name+firstLowerCase.visible(true);
+        $name+firstLowerCase.visible(source != null);
+        if (source == null) return;
         $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase"));
         $name+firstLowerCase~Link.title(source.getLabel());
     }
@@ -59,7 +60,8 @@ end
 def type(item) trigger(refreshMethod)
     private void refresh$name+firstUpperCase() {
         Node node = io.intino.goros.util.NodeHelper.singleton("$code");
-        $name+firstLowerCase.visible(AccountHelper.hasRoles(node.getDefinition(), session()));
+        $name+firstLowerCase.visible(node != null && AccountHelper.hasRoles(node.getDefinition(), session()));
+        if (node == null) return;
         $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase"));
         $name+firstLowerCase~Link.title(node.getLabel());
     }

@@ -9,6 +9,8 @@ import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 
@@ -18,13 +20,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 
 	@Override
 	protected FrameBuilder viewFrame(NodeViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("nodeview");
-		result.add(typeOf(viewProperty));
-		NodeDefinition definition = definition();
-		result.add("definition", nameOf(definition));
-		result.add("code", viewProperty.getCode());
-		result.add("name", nameOf(viewProperty));
-		result.add("label", labelOf(viewProperty));
+		FrameBuilder result = baseViewFrame(viewProperty);
 		addContain((ContainerDefinitionBase.ViewProperty) viewProperty, result);
 		addShow((ContainerDefinitionBase.ViewProperty) viewProperty, result);
 		return result;
@@ -71,8 +67,13 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 		result.add(typeOf(showProperty));
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));
-		if (showProperty.getComponent().size() > 0) addComponentShow(viewProperty, showProperty, result);
+		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
+		else if (showProperty.getComponent().size() > 0) addComponentShow(viewProperty, showProperty, result);
 		builder.add("show", result);
+	}
+
+	private void addRecentTaskShow(ContainerDefinitionBase.ViewProperty viewProperty, ContainerDefinitionBase.ViewProperty.ShowProperty showProperty, FrameBuilder builder) {
+		findTaskDefinitionsWith(definition()).forEach(d -> addRecentTaskType(d, builder));
 	}
 
 	private void addComponentShow(ContainerDefinitionBase.ViewProperty viewProperty, ContainerDefinitionBase.ViewProperty.ShowProperty showProperty, FrameBuilder builder) {
@@ -88,6 +89,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 		FrameBuilder result = baseFrame().add("component");
 		result.add("name", nameOf(definition));
 		result.add("view", nameOf(viewProperty));
+		result.add("viewCode", viewProperty.getCode());
 		builder.add("component", result);
 	}
 

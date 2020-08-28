@@ -37,6 +37,18 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		return buildFrame(false);
 	}
 
+	protected FrameBuilder baseViewFrame(NodeViewProperty viewProperty) {
+		FrameBuilder result = baseFrame().add("nodeview");
+		NodeDefinition definition = definition();
+		result.add(typeOf(viewProperty));
+		result.add("definition", nameOf(definition));
+		result.add("code", viewProperty.getCode());
+		result.add("name", nameOf(viewProperty));
+		result.add("label", labelOf(viewProperty));
+		if (viewProperty.isVisibleWhenEmbedded()) result.add("visibleWhenEmbedded");
+		return result;
+	}
+
 	protected void addParent(FrameBuilder builder) {
 		NodeDefinition parent = findParentDefinition();
 		if (parent == null) return;
@@ -91,8 +103,21 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (definition().isSingleton()) result.add("singleton");
 		boolean collectable = findParentDefinition() != null;
 		if (collectable) result.add("collectable");
+		addOperations(definition(), result);
 		addResourceType(definition(), result);
 		builder.add("toolbar", result);
+	}
+
+	protected void addOperations(D definition, FrameBuilder result) {
+		definition.getOperationList().forEach(o -> addOperation(o, result));
+	}
+
+	protected void addOperation(NodeDefinitionBase.OperationProperty operation, FrameBuilder builder) {
+		FrameBuilder result = new FrameBuilder("operation");
+		result.add("name", operation.getName());
+		result.add("label", operation.getLabel());
+		if (operation.getConfirmation() != null) result.add("confirmText", operation.getConfirmation().getDescription());
+		builder.add("operation", result);
 	}
 
 	private NodeDefinition findParentDefinition() {
@@ -103,7 +128,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	}
 
 	private void addViews(FrameBuilder builder, boolean revision) {
-		definition().getViewDefinitionList().stream().filter(v -> !revision || isVisibleOnRevision(v)).forEach(v -> addView(v, builder));
+		definition().getViewDefinitionList().stream().filter(v -> (!revision || isVisibleOnRevision(v))).forEach(v -> addView(v, builder));
 	}
 
 	private void addView(NodeViewProperty viewProperty, FrameBuilder builder) {

@@ -2,6 +2,67 @@ def type(show & fields) trigger(declaration)
     [$field+declaration...[$NL]]
 end
 
+def type(show & layout) trigger(declaration)
+    [$row+declaration...[$NL]]
+end
+
+def type(layoutRow) trigger(declaration)
+    [$element+declaration...[$NL]]
+end
+
+def type(layoutElement) trigger(declaration)
+    [$field+declaration]
+end
+
+def type(show & layout)
+    @Override
+    public void init() {
+        super.init();
+        [$row+init...[$NL]]
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        [$row+refresh...[$NL]]
+    }
+
+    private void save(java.util.function.Consumer<Boolean> consumer) {
+        consumer.accept(true);
+        io.intino.goros.util.LayerHelper.nodeLayer().saveNode(node);
+        updateFields();
+    }
+
+    private void updateFields() {
+        FormDatasource datasource = new FormDatasource(box().goros(), session(), node);
+        [$row+update...[$NL]]
+    }
+end
+
+def type(layoutRow) trigger(init)
+    [$element+init...[$NL]]
+end
+
+def type(layoutRow) trigger(refresh)
+    [$element+refresh...[$NL]]
+end
+
+def type(layoutRow) trigger(update)
+    [$element+update...[$NL]]
+end
+
+def type(layoutElement) trigger(init)
+    $field+init
+end
+
+def type(layoutElement) trigger(refresh)
+    $field+refresh
+end
+
+def type(layoutElement) trigger(update)
+    $field+update
+end
+
 def type(show & fields)
     @Override
     public void init() {
@@ -174,7 +235,7 @@ end
 def type(field & file & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.util.NodeHelper.fileOf(e.item())));
-        ((Content.$name+firstUpperCase~.FileEditable)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+        ((io.intino.alexandria.ui.displays.components.FileEditable<?,?>)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
 end
@@ -202,7 +263,7 @@ end
 def type(field & picture & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.util.NodeHelper.pictureOf(e.item())));
-        ((Content.$name+firstUpperCase~.ImageEditable)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+        ((io.intino.alexandria.ui.displays.components.ImageEditable<?,?>)e.component()).value(io.intino.goros.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
 end

@@ -10,6 +10,7 @@ import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.box.GorosBox;
 import io.intino.goros.util.LayerHelper;
 import io.intino.goros.util.NodeHelper;
+import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.SetDefinition;
 import org.monet.space.applications.library.LibraryRequest;
 import org.monet.space.kernel.model.Node;
@@ -27,11 +28,13 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
     private final GorosBox box;
     private final UISession session;
     private final Node set;
+    private final NodeViewProperty view;
 
-    public CollectionMapDatasource(GorosBox box, UISession session, Node set) {
+    public CollectionMapDatasource(GorosBox box, UISession session, Node set, String view) {
         this.box = box;
         this.session = session;
         this.set = set;
+        this.view = set.getDefinition().getNodeView(view);
     }
 
     @Override
@@ -62,6 +65,7 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         NodeDataRequest request = request(set);
         request.setCondition(condition);
         request.setGroupsBy(NodeHelper.groupsByOf(filters));
+        request.setCodeView(view.getCode());
         return request;
     }
 

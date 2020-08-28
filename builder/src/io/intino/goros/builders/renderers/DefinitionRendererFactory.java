@@ -14,6 +14,7 @@ public class DefinitionRendererFactory {
 
 	static {
 		renderers.put(DefinitionType.activity, (dictionary, modernization, definition) -> new ActivityRenderer(dictionary, modernization, (ActivityDefinition)definition));
+		renderers.put(DefinitionType.service, (dictionary, modernization, definition) -> new ServiceRenderer(dictionary, modernization, (ServiceDefinition)definition));
 		renderers.put(DefinitionType.form, (dictionary, modernization, definition) -> new FormRenderer(dictionary, modernization, (FormDefinition)definition));
 		renderers.put(DefinitionType.container, (dictionary, modernization, definition) -> new ContainerRenderer(dictionary, modernization, (ContainerDefinition) definition));
 		renderers.put(DefinitionType.collection, (dictionary, modernization, definition) -> new CollectionRenderer(dictionary, modernization, (CollectionDefinition) definition));

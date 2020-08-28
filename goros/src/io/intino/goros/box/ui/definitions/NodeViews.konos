@@ -10,20 +10,20 @@ Template nodeLinksInTemplate as Relative(height=100%)
 		noItemsMessage = "No hay elementos que lo relacionen"
 		Mold
 			Heading linksInTableLabelHeading > Text(value="Título")
-			Item(height=50px,width=16%) linksInTableLabelItem > Link(title="Cargando...") label as Action Addressable(addressableResource=empty)
+			Item(height=50px,width=40%) linksInTableLabelItem > Link(title="Cargando...") label as Action Addressable(addressableResource=empty)
 		Mold
 			Heading linksInTableDescriptionHeading > Text(value="Descripción")
-			Item(height=50px,width=16%) linksInTableDescriptionItem > Text description
+			Item(height=50px,width=60%) linksInTableDescriptionItem > Text description
 
 Template nodeLinksOutTemplate as Relative(height=100%)
 	Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, format=bordered) linksOutTable
 		noItemsMessage = "No hay elementos con los que se relacione"
 		Mold
 			Heading linksOutTableLabelHeading > Text(value="Título")
-			Item(height=50px,width=16%) linksOutTableLabelItem > Link(title="Loading...") label as Action Addressable(addressableResource=empty)
+			Item(height=50px,width=40%) linksOutTableLabelItem > Link(title="Loading...") label as Action Addressable(addressableResource=empty)
 		Mold
 			Heading linksOutTableDescriptionHeading > Text(value="Descripción")
-			Item(height=50px,width=16%) linksOutTableDescriptionItem > Text description
+			Item(height=50px,width=60%) linksOutTableDescriptionItem > Text description
 
 Template nodeRevisionsTemplate as Relative(height=100%)
 	Table(itemClass="org.monet.space.kernel.model.Revision", scrollingMark=false, format=bordered) nodeRevisionsTable as Selectable(multiple=false)

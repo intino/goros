@@ -5,10 +5,11 @@ import io.intino.goros.builders.monet.Dictionary;
 import io.intino.goros.builders.renderers.templates.java.FormTemplate;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
+import org.monet.bpi.java.ActivityImpl;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty.ShowProperty;
-import org.monet.metamodel.internal.Ref;
+import org.monet.metamodel.internal.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,13 +40,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 
 	@Override
 	protected FrameBuilder viewFrame(NodeViewProperty viewProperty) {
-		FrameBuilder result = baseFrame().add("nodeview");
-		NodeDefinition definition = definition();
-		result.add(typeOf(viewProperty));
-		result.add("definition", nameOf(definition));
-		result.add("label", labelOf(viewProperty));
-		result.add("name", nameOf(viewProperty));
-		result.add("code", viewProperty.getCode());
+		FrameBuilder result = baseViewFrame(viewProperty);
 		addShow((FormViewProperty) viewProperty, result);
 		addDisplayProvider((FormViewProperty) viewProperty, result);
 		return result;
@@ -139,9 +134,10 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		result.add(typeOf(showProperty));
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));
-		if (showProperty.getRecentTask() != null) {
-			if (showProperty.getRecentTask().getTask().size() <= 0) return;
-			addRecentTaskShow(viewProperty, showProperty, result);
+		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
+		else if (showProperty.getLayout() != null) {
+			builder.add("updateFields", baseFrame().add("updateFields"));
+			addLayoutShow(viewProperty, showProperty, result);
 		}
 		else if (showProperty.getField().size() > 0) {
 			builder.add("updateFields", baseFrame().add("updateFields"));
@@ -161,22 +157,107 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	}
 
 	private boolean isDisplayProvider(FormViewProperty viewProperty) {
-		ShowProperty showProperty = ((FormViewProperty)viewProperty).getShow();
+		ShowProperty showProperty = viewProperty.getShow();
 		if (showProperty.getField().size() <= 0) return false;
 		return showProperty.getField().stream().anyMatch(ref -> fieldProperty(ref).isComposite() || fieldProperty(ref).isNode());
 	}
 
 	private void addRecentTaskShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
 		ArrayList<Ref> taskList = showProperty.getRecentTask().getTask();
-		if (taskList.size() <= 0) return;
-		TaskDefinition definition = dictionary.getTaskDefinition(taskList.get(0).getValue());
-		builder.add("taskName", nameOf(definition));
-		builder.add("taskCode", definition.getCode());
+		List<TaskDefinition> definitionList = taskList.size() <= 0 ? findTaskDefinitionsWith(definition()) : taskList.stream().map(ref -> dictionary.getTaskDefinition(ref.getValue())).collect(Collectors.toList());
+		definitionList.forEach(d -> addRecentTaskType(d, builder));
 	}
 
 	private void addFieldShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
 		ArrayList<Ref> fieldList = showProperty.getField();
 		fieldList.forEach(ref -> addField(fieldProperty(ref), null, builder));
+	}
+
+	private void addLayoutShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
+		LayoutDefinition definition = this.dictionary.getLayoutDefinition(showProperty.getLayout());
+		String width = definition.getWidth();
+		String height = definition.getHeight();
+		if (width == null && height == null) builder.add("relativeFacet", sizeFacetFrame("relative", "90", null));
+		else if (isUnitRelative(width) || isUnitRelative(height)) builder.add("relativeFacet", relativeFacetFrame(definition));
+		else builder.add("absoluteFacet", absoluteFacetFrame(definition));
+		builder.add("width", definition.getWidth() != null ? definition.getWidth() : "100%");
+		rowsOf(definition.getElements()).forEach(row -> addLayoutRow(row, null, builder));
+	}
+
+	private List<List<LayoutElementDefinition>> rowsOf(List<LayoutElementDefinition> elements) {
+		List<List<LayoutElementDefinition>> result = new ArrayList<>();
+		int index = -1;
+		for (LayoutElementDefinition element : elements) {
+			if (element.isBreak() || index == -1) index++;
+			if (result.size() <= index) result.add(new ArrayList<>());
+			if (element.isBreak()) continue;
+			result.get(index).add(element);
+		}
+		return result;
+	}
+
+	private void addLayoutRow(List<LayoutElementDefinition> row, CompositeFieldProperty composite, FrameBuilder builder) {
+		FrameBuilder result = baseFrame().add("layoutRow");
+		row.forEach(e -> addLayoutElement(e, composite, result));
+		builder.add("row", result);
+	}
+
+	private void addLayoutElement(LayoutElementDefinition element, CompositeFieldProperty composite, FrameBuilder builder) {
+		FrameBuilder result = baseFrame().add("layoutElement");
+		result.add(typeOf(element));
+		addLayoutSizeToElement(element, result);
+		if (element.isSection()) {
+			LayoutElementSectionDefinition section = (LayoutElementSectionDefinition) element;
+			result.add("label", section.getLabel());
+			rowsOf(section.getElements()).forEach(r -> addLayoutRow(r, composite, result));
+		}
+		else if (element.isBox()) {
+			LayoutElementBoxDefinition box = (LayoutElementBoxDefinition) element;
+			result.add("field", renderer(definition().getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition())));
+		}
+		builder.add("element", result);
+	}
+
+	private void addLayoutSizeToElement(LayoutElementDefinition element, FrameBuilder builder) {
+		float width = element.getWidth();
+		float height = element.getHeight();
+		if (width == 0 && height == 0) return;
+		boolean relative = isUnitRelative(element.getHeightUnit()) || isUnitRelative(element.getWidthUnit());
+		FrameBuilder result = sizeFacetFrame(relative ? "relative" : "absolute", toString(element.getWidth()), toString(element.getHeight()));
+		builder.add(relative ? "relativeFacet" : "absoluteFacet", result);
+	}
+
+	private boolean isUnitRelative(String unit) {
+		return unit != null && (unit.isEmpty() || unit.contains("%"));
+	}
+
+	private String toString(float value) {
+		return value != 0 ? String.valueOf(value) : null;
+	}
+
+	private String typeOf(LayoutElementDefinition element) {
+		if (element.isSection()) return "section";
+		if (element.isSpace()) return "space";
+		return "box";
+	}
+
+	private FrameBuilder absoluteFacetFrame(LayoutDefinition definition) {
+		return sizeFacetFrame("absolute", definition.getWidth(), definition.getHeight());
+	}
+
+	private FrameBuilder relativeFacetFrame(LayoutDefinition definition) {
+		return sizeFacetFrame("relative", definition.getWidth(), definition.getHeight());
+	}
+
+	private FrameBuilder sizeFacetFrame(String type, String width, String height) {
+		FrameBuilder result = baseFrame().add(type + "Facet");
+		if (width != null) result.add("width", clean(width));
+		if (height != null) result.add("height", clean(height));
+		return result;
+	}
+
+	private String clean(String size) {
+		return size.replace("px", "").replace("%", "");
 	}
 
 	private void addField(FieldProperty fieldProperty, CompositeFieldProperty composite, FrameBuilder builder) {

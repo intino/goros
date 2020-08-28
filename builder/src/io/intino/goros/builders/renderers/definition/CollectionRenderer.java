@@ -28,11 +28,19 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 		FrameBuilder result = new FrameBuilder("addList");
 		Collection<Ref> addList = definition().getAdd().getNode().stream().collect(Collectors.toMap(Ref::getValue, a -> a, (a1, a2) -> a1)).values();
 		if (addList.size() > 0) result.add("defaultAdd", addFrame(dictionary.getNodeDefinition(addList.iterator().next().getValue())));
+		result.add("addVisibility", addVisibilityFrame(addList.size() == 1));
+		result.add("addSplitVisibility", addVisibilityFrame(addList.size() > 1));
 		addList.forEach(ref -> {
 			addRefAdd(ref, result);
 			addRefAdd(ref, builder);
 		});
 		builder.add("addList", result);
+	}
+
+	private FrameBuilder addVisibilityFrame(boolean visible) {
+		FrameBuilder result = baseFrame().add("addVisibility");
+		if (visible) result.add("visible");
+		return result;
 	}
 
 	private void addRefAdd(Ref ref, FrameBuilder builder) {

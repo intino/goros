@@ -3,12 +3,14 @@ def type(nodedefinition & embedded)
 
     import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Revision;
     import io.intino.goros.util.DisplayHelper;
 
     import java.util.List;
 
     public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
         private Node node;
+        private Revision revision;
         private boolean readonly = false;
         [$toolbar+editableDeclaration]
 
@@ -18,6 +20,11 @@ def type(nodedefinition & embedded)
 
         public $name+firstUpperCase~EmbeddedTemplate node(Node node) {
             this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate revision(org.monet.space.kernel.model.Revision revision) {
+            this.revision = revision;
             return this;
         }
 
@@ -48,15 +55,23 @@ def type(nodedefinition & embedded)
         @Override
         public void refresh() {
             super.refresh();
+            if (revision != null) DisplayHelper.selectNotSystemView(viewSelector, node);
             refreshToolbar();
+            refreshViewsVisibility();
             refreshView();
         }
 
         private void refreshToolbar() {
+            restore.readonly(readonly);
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.visible(!node.getDefinition().isReadonly());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
+        }
+
+        private void refreshViewsVisibility() {
+            String selectedView = selectedView();
+            [$view+refreshVisibilityCall...[$NL]]
         }
 
         private void refreshView() {
@@ -64,6 +79,9 @@ def type(nodedefinition & embedded)
         }
 
         private void initToolbar() {
+            toolbar.visible(revision == null);
+            revisionToolbar.visible(revision != null);
+            restore.onExecute(e -> restore());
             edit.onExecute(e -> toggleEdition());
             [$toolbar+editableInitCall]
         }
@@ -74,81 +92,25 @@ def type(nodedefinition & embedded)
 
         [$view+refreshMethod...[$NL]]
 
+        private Node locateNode() {
+            Node node = this.node;
+            if (node == null) return null;
+            if (revision != null) node = io.intino.goros.util.LayerHelper.nodeLayer().loadNodeRevision(this.node.getId(), revision.getId());
+            return node;
+        }
+
         private void toggleEdition() {
             readonly(!readonly);
             [$toolbar+editableCall]
             refresh();
         }
 
-        [$toolbar+editableMethods]
-    }
-end
-
-def type(nodedefinition & revision)
-    package $package.$module+lowerCase.box.ui.displays.templates;
-
-    import io.intino.goros.util.DisplayHelper;
-    import io.intino.goros.util.LayerHelper;
-
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
-    import org.monet.space.kernel.model.Node;
-    import org.monet.space.kernel.model.Revision;
-
-    import static io.intino.goros.util.DictionaryHelper.view;
-
-    public class $name+firstUpperCase~RevisionTemplate extends Abstract$name+firstUpperCase~RevisionTemplate<$module+firstUpperCase~Box> {
-        private Node node;
-        private Revision revision;
-        private boolean readonly = true;
-
-        public $name+firstUpperCase~RevisionTemplate($module+firstUpperCase~Box box) {
-            super(box);
-        }
-
-        public $name+firstUpperCase~RevisionTemplate node(Node node) {
-            this.node = node;
-            return this;
-        }
-
-        public $name+firstUpperCase~RevisionTemplate revision(org.monet.space.kernel.model.Revision revision) {
-            this.revision = revision;
-            return this;
-        }
-
-        public $name+firstUpperCase~RevisionTemplate readonly(boolean readonly) {
-            this.readonly = readonly;
-            return this;
-        }
-
-        @Override
-        public void init() {
-            super.init();
-            restore.onExecute(e -> restore());
-            initViews();
-        }
-
-        @Override
-        public void refresh() {
-            super.refresh();
-            restore.readonly(readonly);
-            DisplayHelper.selectNotSystemView(viewSelector, node);
-            refreshView();
-        }
-
-        private void initViews() {
-            [$view+initCall...[$NL]]
-        }
-
-        private void refreshView() {
-            [$view+refreshCall...[$NL]]
-        }
-
-        [$view+revisionRefreshMethod...[$NL]]
-
         private void restore() {
-            LayerHelper.nodeLayer().restoreNode(revision);
+            io.intino.goros.util.LayerHelper.nodeLayer().restoreNode(revision);
             notifier.redirect(session().browser().requestUrl());
         }
+
+        [$toolbar+editableMethods]
     }
 end
 
@@ -319,6 +281,10 @@ end
 def type(toolbar) trigger(navigableMethods)
 end
 
+def type(operation & download) trigger(editableInitCall)
+    $name+lowerCase.onExecute(e -> io.intino.goros.util.NodeHelper.downloadOperation($name+lowerCase, node, "$name"));
+end
+
 def type(operation) trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.util.NodeHelper.executeOperation($name+lowerCase, node, "$name", translate("Operation executed")));
 end
@@ -340,19 +306,15 @@ def type(nodeview) trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
 end
 
-def type(nodeview & visibleWhenEmbedded) trigger(revisionRefreshMethod)
+def type(nodeview & visibleWhenEmbedded) trigger(refreshVisibilityCall)
 end
 
-def type(nodeview) trigger(revisionRefreshMethod)
-    private void refresh$name+firstUpperCase~View() {
-        if (node == null) return;
-        Node revisionNode = io.intino.goros.util.LayerHelper.nodeLayer().loadNodeRevision(node.getId(), revision.getId());
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(revisionNode);
-        [$contain+revision]
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
-    }
+def type(nodeview & notVisibleOnRevision) trigger(refreshVisibilityCall)
+    $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase") && revision == null);
+end
+
+def type(nodeview) trigger(refreshVisibilityCall)
+    $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase"));
 end
 
 def type(nodeview & visibleWhenEmbedded) trigger(refreshMethod)
@@ -360,21 +322,27 @@ end
 
 def type(nodeview) trigger(refreshMethod)
     private void refresh$name+firstUpperCase~View() {
+        Node node = locateNode();
         if (node == null) return;
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
-        [$contain]
+        [$contain+declaration]
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
+
+    [$contain]
 end
 
-def type(contain) trigger(revision)
-    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(io.intino.goros.util.LayerHelper.nodeLayer().loadNodeRevision(io.intino.goros.util.NodeHelper.getContainerContain(revisionNode, "$contain"), revision.getId()));
+def type(contain) trigger(declaration)
+    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain($name+firstLowerCase~ViewContain(node));
 end
 
 def type(contain)
-    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(io.intino.goros.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.util.NodeHelper.getContainerContain(node,"$contain")));
+    private Node $name+firstLowerCase~ViewContain(Node node) {
+        if (this.revision != null) return io.intino.goros.util.LayerHelper.nodeLayer().loadNodeRevision(io.intino.goros.util.NodeHelper.getContainerContain(node, "$contain"), revision.getId());
+        return io.intino.goros.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.util.NodeHelper.getContainerContain(node,"$contain"));
+    }
 end
 
 def type(nodeView)
@@ -404,6 +372,10 @@ def type(nodeView)
             this.node = node;
             $updateFields+call
             return this;
+        }
+
+        public String view() {
+            return this.view;
         }
 
         public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate view(String view) {

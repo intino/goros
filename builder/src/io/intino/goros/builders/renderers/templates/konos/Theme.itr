@@ -66,6 +66,7 @@ def type(theme)
     Format("minWidth:'48px'") minDrawerButtonSize
     Format("overflow:'auto'") autoOverflow
     Format("background:'white',padding:'10px'") dialog
+    Format("whiteSpace:'nowrap'") noSpaceWrap
 
     // OTHER
     Format("background:'white',padding:'10px 15px',borderRadius:'10px'") catalogIndexReferenceStyle

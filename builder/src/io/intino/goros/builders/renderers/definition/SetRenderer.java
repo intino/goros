@@ -29,7 +29,6 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		writeJava(builder);
 		writeKonos(builder);
 		writeViewsTemplate();
-		writeToolbarTemplate();
 		writeFiltersTemplates();
 	}
 
@@ -95,10 +94,16 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		if (show.getPicture() != null) return 165;
 		int size = 100;
-		size += show.getLineBelow().size() > 0 ? 20 : 0;
-		size += show.getHighlight().size() > 0 ? 20 : 0;
-		size += show.getFooter().size() > 0 ? 20 : 0;
+		size += show.getLine().size() > 0 ? (15*countLines(show.getLine().size())) : 0;
+		size += show.getLineBelow().size() > 0 ? (15*countLines(show.getLineBelow().size())) : 0;
+		size += show.getHighlight().size() > 0 ? (15*countLines(show.getHighlight().size())) : 0;
+		size += show.getFooter().size() > 0 ? (15*countLines(show.getFooter().size())) : 0;
 		return size;
+	}
+
+	protected int countLines(int size) {
+		if (size <= 6) return 1;
+		return Math.round(size/6);
 	}
 
 	@Override
@@ -211,6 +216,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	private FrameBuilder dimensionFrame(AttributeProperty attributeProperty) {
 		FrameBuilder result = baseFrame().add("dimension");
 		result.add("name", attributeProperty.getName());
+		result.add("code", attributeProperty.getCode());
 		result.add("label", attributeProperty.getLabel());
 		result.add("type", RendererHelper.dimensionTypeOf(attributeProperty));
 		return result;
@@ -263,13 +269,6 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		else if (show.getSharedPrototypes() != null) return "Assignment";
 		else if (show.getReport() != null) return "Assessment";
 		return null;
-	}
-
-	private void writeToolbarTemplate() {
-		resetAddedDisplays();
-		FrameBuilder builder = buildFrame().add("toolbar");
-		File file = new File(javaPackage() + nameOf(definition()) + "ToolbarTemplate.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
 	}
 
 	private void writeFiltersTemplates() {

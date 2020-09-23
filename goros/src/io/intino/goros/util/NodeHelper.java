@@ -7,7 +7,11 @@ import io.intino.alexandria.ui.displays.components.Actionable;
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.model.datasource.filters.RangeFilter;
-import io.intino.goros.box.I18n;
+import io.intino.alexandria.ui.services.push.UISession;
+import io.intino.alexandria.ui.spark.UIFile;
+import io.intino.goros.box.GorosBox;
+import io.intino.goros.box.ui.datasources.model.Column;
+import io.intino.goros.printers.SetPrinter;
 import org.monet.bpi.FieldDate;
 import org.monet.bpi.FieldFile;
 import org.monet.bpi.FieldLink;
@@ -20,13 +24,15 @@ import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.agents.AgentNotifier;
+import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
-import org.monet.space.kernel.components.ComponentPersistence;
-import org.monet.space.kernel.library.LibraryEncoding;
 import org.monet.space.kernel.model.*;
 import org.monet.space.kernel.model.Dictionary;
 import io.intino.goros.box.ui.datasources.FieldSelectDatasource;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -51,9 +57,51 @@ public class NodeHelper {
         return nameOf(node.getDefinition());
     }
 
+	public static InputStream download(GorosBox box, Node node, NodeDataRequest request, String format, List<String> columns, String language) {
+        return new SetPrinter(box, node, request, format, columns).print(language);
+    }
+
+	public static List<Column> downloadColumns(Node node, String view) {
+        if (!node.isSet()) return Collections.emptyList();
+        SetDefinition.SetViewProperty setViewProperty = (SetDefinition.SetViewProperty) node.getDefinition().getNodeView(view);
+        if (setViewProperty.getShow().getIndex() == null) return emptyList();
+
+        IndexDefinition indexDefinition = Dictionary.getInstance().getIndexDefinition(((SetDefinition) node.getDefinition()).getIndex().getValue());
+        SetDefinitionBase.SetViewPropertyBase.ShowProperty showDefinition = setViewProperty.getShow();
+        String nameReferenceView = showDefinition.getIndex().getWithView().getValue();
+        IndexDefinitionBase.IndexViewProperty referenceViewDefinition = indexDefinition.getView(nameReferenceView);
+
+        return indexDefinition.getAttributes(referenceViewDefinition).stream().map(NodeHelper::columnOf).collect(toList());
+    }
+
+    private static Column columnOf(AttributeProperty attributeProperty) {
+        return new Column().code(attributeProperty.getCode()).label((String)attributeProperty.getLabel()).isDate(attributeProperty.getType() == AttributeProperty.TypeEnumeration.DATE);
+    }
+
     public static String internalValueOf(Instant instant) {
         if (instant == null) return null;
         return InternalFormat.format(java.util.Date.from(instant));
+    }
+
+    public static UIFile downloadOperation(Actionable actionable, Node node, String operation) {
+        actionable.readonly(true);
+        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
+        event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
+        AgentNotifier.getInstance().notify(event);
+        File fileForUser = AgentUserClient.getInstance().getFileForUser(Thread.currentThread().getId());
+        actionable.readonly(false);
+        return new UIFile() {
+            @Override
+            public String label() {
+                return fileForUser.getFilename();
+            }
+
+            @Override
+            public InputStream content() {
+                return fileForUser.getContentAsStream();
+            }
+        };
     }
 
     public static void executeOperation(Actionable actionable, Node node, String operation, String successMessage) {
@@ -141,8 +189,9 @@ public class NodeHelper {
         return NodeHelper.valueOf(node, nodeDefinition.getCode());
     }
 
-    public static String valueOf(Reference reference, String attribute) {
-        return reference.getAttribute(attribute).getValueAsString();
+    public static String valueOf(Reference reference, String attributeKey) {
+        ReferenceAttribute<?> attribute = reference.getAttribute(attributeKey);
+        return attribute != null ? attribute.getValueAsString() : null;
     }
 
     public static Instant instantOf(Node node, String attribute) {
@@ -365,11 +414,13 @@ public class NodeHelper {
     }
 
     public static List<DataRequest.GroupBy> groupsByOf(List<Filter> filters) {
+        if (filters == null) return emptyList();
         return filters.stream().map(NodeHelper::groupByOf).flatMap(Collection::stream).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     private static List<DataRequest.GroupBy> groupByOf(Filter filter) {
-        if (filter instanceof GroupFilter) return singletonList(groupByOf(filter.grouping(), ((GroupFilter) filter).groups()));
+        if (filter == null) return emptyList();
+        else if (filter instanceof GroupFilter) return singletonList(groupByOf(filter.grouping(), ((GroupFilter) filter).groups()));
         else if (filter instanceof RangeFilter) {
             return Arrays.asList(groupByOf(filter.grouping(), ((RangeFilter) filter).from(), DataRequest.GroupBy.Operator.Gt),
                     groupByOf(filter.grouping(), ((RangeFilter) filter).to(), DataRequest.GroupBy.Operator.Lt));

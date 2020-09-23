@@ -2,11 +2,12 @@ dsl Legio
 
 Artifact(groupId = "io.intino", version = "1.0.0-SNAPSHOT") goros-elements
 	WebImports
-		WebArtifact("io.intino.alexandria", "ui-framework-elements", "4.3.23") alexandria-ui-elements
+		WebArtifact("io.intino.alexandria", "ui-framework-elements", "4.4.3") alexandria-ui-elements
 
-	Distribution("intino-maven")
-		Release("https://artifactory.intino.io/artifactory/release-libraries")
-		Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
+	Distribution
+		Artifactory("intino-maven")
+			Release("https://artifactory.intino.io/artifactory/release-libraries")
+			Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
 
 Repository("monentia-maven")
 	Release("https://artifactory.monentia.es/artifactory/libs-release-local")

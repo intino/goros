@@ -158,93 +158,6 @@ def type(dimension) trigger(clearCall)
     $name+firstLowerCase.clearSelection();
 end
 
-def type(setdefinition & toolbar)
-    package $package.$module+lowerCase.box.ui.displays.templates;
-
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
-    import io.intino.alexandria.ui.displays.components.Collection;
-    import io.intino.alexandria.ui.displays.components.collection.Selectable;
-    import io.intino.alexandria.ui.displays.events.ActionListener;
-    import io.intino.alexandria.ui.displays.events.Event;
-    import org.monet.space.kernel.model.Node;
-    import io.intino.goros.util.LayerHelper;
-
-    import java.util.function.Consumer;
-
-    public class $name+firstUpperCase~ToolbarTemplate extends Abstract$name+firstUpperCase~ToolbarTemplate<$module+firstUpperCase~Box> {
-        private Node node;
-        private boolean readonly = false;
-        private java.util.function.Consumer<Node> addListener;
-        private java.util.function.Consumer<Boolean> toggleEditionListener;
-        private ActionListener removeSelectionListener;
-
-        public $name+firstUpperCase~ToolbarTemplate($module+firstUpperCase~Box box) {
-            super(box);
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate node(Node node) {
-            this.node = node;
-            return this;
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate readonly(boolean readonly) {
-            this.readonly = readonly;
-            return this;
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate onAdd(java.util.function.Consumer<Node> listener) {
-            this.addListener = listener;
-            return this;
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate onToggleEdition(java.util.function.Consumer<Boolean> listener) {
-            this.toggleEditionListener = listener;
-            return this;
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate onRemoveSelection(ActionListener listener) {
-            this.removeSelectionListener = listener;
-            return this;
-        }
-
-        public $name+firstUpperCase~ToolbarTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            this.toolbar.bindTo((Selectable)collection);
-            return this;
-        }
-
-        @Override
-        public void init() {
-            super.init();
-            [$addList+execute]
-            edit.onExecute(e -> toggleEdition());
-            removeSelection.onExecute(e -> removeSelectionListener.accept(new Event(this)));
-        }
-
-        @Override
-        public void refresh() {
-            super.refresh();
-            edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!node.getDefinition().isReadonly());
-            removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
-            [$addList+refresh]
-        }
-
-        private void addNode(String option) {
-            Node result = null;
-            [$add+toolbarTemplate...[$NL]]
-            if (result == null) return;
-            addListener.accept(result);
-        }
-
-        private void toggleEdition() {
-            readonly(!readonly);
-            toggleEditionListener.accept(!readonly);
-            refresh();
-        }
-
-    }
-end
-
 def type(addList) trigger(execute)
     add.onExecute(e -> addNode($defaultAdd+option));
     addSplit.onExecute(e -> addNode(e.option()));
@@ -294,10 +207,14 @@ def type(setdefinition)
         private boolean readonly = true;
         private boolean nodeAdded = false;
         private List<Node> selection = Collections.emptyList();
+        [$toolbar+editableDeclaration]
 
         public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
             super(box);
         }
+
+        [$toolbar+editableEvents]
+        [$toolbar+navigableMethods]
 
         public void open(String id) {}
 
@@ -307,31 +224,32 @@ def type(setdefinition)
             [$desktop]
             [$parent]
             node = io.intino.goros.util.NodeHelper.singleton("$code");
-            initToolbars();
+            initToolbar();
             initViews();
         }
 
-        private void initToolbars() {
+        private void initToolbar() {
+            [$toolbar+editableInitCall]
+            edit.onExecute(e -> toggleEdition());
             filters.onToggle(e -> toggleFiltersViewVisibility(e.state()));
-            toolbar.onAdd(node -> { nodeAdded = true; refresh(); select(node); });
-            toolbar.onToggleEdition(this::toggleEdition);
-            toolbar.onRemoveSelection(this::removeSelection);
         }
 
         @Override
         public void refresh() {
             super.refresh();
-            refreshToolbars();
+            refreshToolbar();
             refreshView();
             refreshFilters();
+            viewSelector.visible(viewSelector.options().size() > 1);
             if (viewSelector.selection().size() <= 0) DisplayHelper.selectDefaultView(viewSelector, node);
+            DownloadDialog.onOpen(e -> refreshDownloadDialog());
         }
 
         private void initViews() {
             [$view+initCall...[$NL]]
             filtersView.onInit(e -> initFilters());
             filtersView.onShow(e -> showFilters());
-            [$add+initCall...[$NL]]
+            [$toolbar+initViews]
         }
 
         private void updateSelection(SelectionEvent selectionEvent) {
@@ -354,10 +272,11 @@ def type(setdefinition)
             filtersBlock.refresh();
         }
 
-        private void refreshToolbars() {
-            toolbar.node(node);
-            toolbar.readonly(readonly);
-            toolbar.refresh();
+        private void refreshToolbar() {
+            [$toolbar+editableRefreshCall]
+            [$toolbar+navigableRefreshCall]
+            edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.visible(!node.getDefinition().isReadonly());
         }
 
         private void refreshCount(RefreshCountEvent event) {
@@ -369,10 +288,22 @@ def type(setdefinition)
             [$view+refreshCall...[$NL]]
         }
 
-        private void toggleEdition(boolean value) {
-            readonly = !value;
+        private void refreshDownloadDialog() {
+            DownloadDialog.dialog.onTerminate(e -> DownloadDialog.close());
+            DownloadDialog.dialog.node(node);
+            DownloadDialog.dialog.view(selectedViewCode());
+            DownloadDialog.dialog.condition(java.util.Objects.requireNonNull(currentCollection()).condition());
+            DownloadDialog.dialog.filters(java.util.Objects.requireNonNull(currentCollection()).filters());
+            DownloadDialog.dialog.columns(NodeHelper.downloadColumns(node, selectedViewCode()));
+            DownloadDialog.dialog.refresh();
+        }
+
+        private void toggleEdition() {
+            readonly = !readonly;
             if (!readonly) hideChildViews();
+            [$toolbar+editableCall]
             [$view+readonlyCall...[$NL]]
+            refreshToolbar();
         }
 
         private void removeSelection(Event event) {
@@ -388,12 +319,7 @@ def type(setdefinition)
         }
 
         private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            [$add+bindCall...[$NL]]
-        }
-
-        private void bindToolbarsTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            toolbar.bindTo(collection);
-            search.bindTo(collection);
+            [$toolbar+bindCall]
         }
 
         private Collection currentCollection() {
@@ -421,6 +347,11 @@ def type(setdefinition)
 
         private void select(Node node) {
             [$view+selectNodeCall...[$NL]]
+        }
+
+        private String selectedViewCode() {
+            [$view+selectViewCodeCall...[$NL]]
+            return null;
         }
 
         private void open(SelectionEvent event) {
@@ -452,18 +383,20 @@ def type(setdefinition)
 
         private BlockConditional selectedNodeView() {
             if (selectedChild == null) return null;
-            [$add+equals...[$NL]]
+            [$toolbar+equals...[$NL]]
             return null;
         }
 
         private void hideChildViews() {
-            [$add+hideCall...[$NL]]
+            [$toolbar+hideCall...[$NL]]
         }
 
         private Node reloadSelected() {
             if (selectedChild == null) return null;
             return io.intino.goros.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId());
         }
+
+        [$toolbar+editableMethods]
 
     }
 end
@@ -484,7 +417,7 @@ def type(collectionview) trigger(initCall)
     });
     $name+firstLowerCase~View.onShow(e -> {
         bindCurrentViewTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
-        bindToolbarsTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
+        bindToolbars($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
@@ -589,6 +522,19 @@ def type(collectionview) trigger(selectNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
 end
 
+def type(collectionview & ownedprototypes) trigger(selectViewCodeCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(selectViewCodeCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(selectViewCodeCall)
+end
+
+def type(collectionview) trigger(selectViewCodeCall)
+    if ($name+firstLowerCase~View.isVisible()) return $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view();
+end
+
 def type(collectionview & ownedprototypes) trigger(readonlyCall)
 end
 
@@ -641,4 +587,90 @@ end
 
 def type(add) trigger(hideCall)
     $name+firstLowerCase~View.hide();
+end
+
+def type(toolbar & singleton) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
+    removeSelection.onExecute(this::removeSelection);
+    [$addList+execute]
+end
+
+def type(toolbar & singleton) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
+    removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
+    [$addList+refresh]
+end
+
+def type(toolbar & singleton) trigger(editableEvents)
+    public $definition+firstUpperCase~Template onFinishEdition(java.util.function.Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar) trigger(editableEvents)
+    public $definition+firstUpperCase~Template onRemove(java.util.function.Consumer<Node> listener) {
+        this.removeListener = listener;
+        return this;
+    }
+
+    public $definition+firstUpperCase~Template onFinishEdition(java.util.function.Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar & singleton) trigger(editableMethods)
+    private void addNode(String option) {
+        Node result = null;
+        [$add+toolbarTemplate...[$NL]]
+        if (result == null) return;
+        nodeAdded = true;
+        refresh();
+        select(node);
+    }
+    private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
+        toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
+        search.bindTo(collection);
+    }
+end
+
+def type(toolbar) trigger(editableMethods)
+    private void addNode(String option) {
+        Node result = null;
+        [$add+toolbarTemplate...[$NL]]
+        if (result == null) return;
+        nodeAdded = true;
+        refresh();
+        select(node);
+    }
+    private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
+        toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
+        search.bindTo(collection);
+    }
+    private void removeNode() {
+        String message = io.intino.goros.util.NodeHelper.canRemove(node);
+        if (message != null) {
+            notifyUser(message, io.intino.alexandria.ui.displays.UserMessage.Type.Error);
+            return;
+        }
+        io.intino.goros.util.LayerHelper.nodeLayer().deleteNode(node);
+        if (removeListener != null) removeListener.accept(node);
+    }
+end
+
+def type(toolbar) trigger(initViews)
+    [$add+initCall...[$NL]]
+end
+
+def type(toolbar) trigger(bindCall)
+    [$add+bindCall...[$NL]]
+end
+
+def type(toolbar) trigger(equals)
+    [$add+equals...[$NL]]
+end
+
+def type(toolbar) trigger(hideCall)
+    [$add+hideCall...[$NL]]
 end

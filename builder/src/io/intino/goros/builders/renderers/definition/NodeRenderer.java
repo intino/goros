@@ -10,6 +10,7 @@ import org.monet.metamodel.internal.Ref;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static io.intino.goros.builders.util.StringUtil.firstUpperCase;
@@ -28,7 +29,6 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	public void write() {
 		super.write();
 		writeEmbeddedTemplate();
-		writeRevisionTemplate();
 		writeViewsTemplate();
 	}
 
@@ -46,6 +46,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		result.add("name", nameOf(viewProperty));
 		result.add("label", labelOf(viewProperty));
 		if (viewProperty.isVisibleWhenEmbedded()) result.add("visibleWhenEmbedded");
+		if (!isVisibleOnRevision(viewProperty)) result.add("notVisibleOnRevision");
 		return result;
 	}
 
@@ -75,13 +76,6 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		writeFrame(file, javaTemplate().render(builder.toFrame()));
 	}
 
-	protected void writeRevisionTemplate() {
-		resetAddedDisplays();
-		FrameBuilder builder = buildFrame(true);
-		File file = new File(javaPackage() + nameOf(definition()) + "RevisionTemplate.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
-	}
-
 	protected void writeViewsTemplate() {
 		definition().getViewDefinitionList().stream().filter(this::hasTemplate).forEach(this::writeViewTemplate);
 	}
@@ -98,6 +92,10 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	}
 
 	private void addToolbar(FrameBuilder builder) {
+		builder.add("toolbar", toolbarFrame());
+	}
+
+	protected FrameBuilder toolbarFrame() {
 		FrameBuilder result = baseFrame().add("toolbar");
 		result.add("definition", nameOf(definition()));
 		if (definition().isSingleton()) result.add("singleton");
@@ -105,7 +103,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (collectable) result.add("collectable");
 		addOperations(definition(), result);
 		addResourceType(definition(), result);
-		builder.add("toolbar", result);
+		return result;
 	}
 
 	protected void addOperations(D definition, FrameBuilder result) {
@@ -114,16 +112,24 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 
 	protected void addOperation(NodeDefinitionBase.OperationProperty operation, FrameBuilder builder) {
 		FrameBuilder result = new FrameBuilder("operation");
+		if (isDownloadOperation(operation)) result.add("download");
 		result.add("name", operation.getName());
 		result.add("label", operation.getLabel());
 		if (operation.getConfirmation() != null) result.add("confirmText", operation.getConfirmation().getDescription());
 		builder.add("operation", result);
 	}
 
+	protected boolean isDownloadOperation(NodeDefinitionBase.OperationProperty operation) {
+		String name = operation.getName().toLowerCase();
+		String label = ((String) operation.getLabel()).toLowerCase();
+		return name.contains("descargar") || name.contains("download") ||
+				label.contains("descargar") || label.contains("download");
+	}
+
 	private NodeDefinition findParentDefinition() {
 		return dictionary.getCollectionDefinitionList().stream().filter(c -> {
 			ArrayList<Ref> refList = c.getAdd().getNode();
-			return refList.stream().anyMatch(ref -> dictionary.getNodeDefinition(ref.getValue()).getCode().equals(definition().getCode()));
+			return refList.stream().map(ref -> dictionary.getAllImplementersOfNodeDefinition(ref.getValue())).flatMap(Collection::stream).anyMatch(def -> def.getCode().equals(definition().getCode()));
 		}).findFirst().orElse(null);
 	}
 

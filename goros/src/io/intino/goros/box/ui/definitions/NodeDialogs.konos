@@ -1,0 +1,27 @@
+dsl Konos
+
+use Theme
+
+Template(layout=Flexible) NodeDownloadDialog as Relative(height=100%)
+	Block(layout=Flexible, format=autoOverflow) as Relative(height=100%, offsetHeight=50px)
+		Block(format=airBottom)
+			Text(value="Indique el formato de descarga", format=airBottom)
+			Selector format as ComboBox(placeholder="Seleccione un formato")
+				Text(value="Formato de documento portátil (pdf)") pdf as Option
+				Text(value="Valores separados por coma (csv)") csv as Option
+				Text(value="Documento de Excel (xls)") xls as Option
+		Block(format=airBottom doubleAirTop) columnsBlock
+			Text(value="Indique las columnas de la cabecera del documento", format=airBottom)
+			TemplateStamp(template=NodeDownloadDialogOption) options as Multiple
+	Divider
+	Block(layout=Horizontal EndJustified)
+		Button(title="Cancelar", size=Small, format=airRight) downloadCancel as Action
+		Button(title="Aceptar", size=Small) downloadAccept as Download
+
+Template(layout=Horizontal, format=airBottom) NodeDownloadDialogOption
+	Block as Relative(width=25%) > Text name
+	Block(layout=Flexible) > Selector options as ComboBox(placeholder="Seleccione una columna")
+
+
+
+

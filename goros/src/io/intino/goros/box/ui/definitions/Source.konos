@@ -32,8 +32,8 @@ Template(layout=Vertical, format=rightBordered sourceLevelWidth) sourceLevelTemp
 				Block(layout=Horizontal, format=termReferenceStyle)
 					Block(layout=Vertical Flexible)
 						Block(layout=Horizontal Center)
+							Text(format=body2 legendPillStyle middleAirRight) type as Highlighted(textColor="white", backgroundColor="transparent")
 							Text(format=middleAirRight, cropWithEllipsis=20Chars) label
-							Text(format=body2 legendPillStyle) type as Highlighted(textColor="white", backgroundColor="transparent")
 						Text(format=body2 grey, cropWithEllipsis=26Chars) code
 						Number(format=body2) tagsCount as Labeled("Tags count")
 					Block

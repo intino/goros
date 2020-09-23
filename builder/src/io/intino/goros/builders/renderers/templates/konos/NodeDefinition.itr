@@ -4,6 +4,7 @@ def type(nodedefinition)
     [$view+use...[$NL]]
     use UI
     use Theme
+    [$toolbar+import]
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=bordered spaced) header
@@ -16,28 +17,20 @@ def type(nodedefinition)
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
-        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
+        Block(layout=Horizontal, format=bottomBordered middleBottomSpaced leftSpaced middleTopSpaced) toolbar
             Block(layout=Horizontal Flexible)
                 $toolbar+editable
             Block(layout=Horizontal EndJustified)
                 $toolbar+navigable
+        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced) revisionToolbar
+            Block(layout=Horizontal Flexible, visible=false)
+                Button(title="Restaurar", size=Small, highlight=Outline) restore as Action Affirmed("¿Está seguro que quiere restaurar esta revisión?")
 
         Selector viewSelector as Tabs
             [$view+declaration...[$NL]]
 
         Block(layout=Vertical Flexible)
             [$view+page...[$NL]]
-
-    Template(layout=Vertical Flexible) $name+firstUpperCase~RevisionTemplate as Relative(height=100%)
-        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
-            Block(layout=Horizontal Flexible)
-                Button(title="Restaurar", size=Small, highlight=Outline) restore as Action Affirmed("¿Está seguro que quiere restaurar esta revisión?")
-
-        Selector viewSelector as Tabs
-            [$view+revisionDeclaration...[$NL]]
-
-        Block(layout=Vertical Flexible)
-            [$view+revisionPage...[$NL]]
 
     [$view...[$NL]]
     [$compositeView...[$NL]]
@@ -53,13 +46,19 @@ def type(parent)
     Text(value="/", format=h4 middleAirRight)
 end
 
+def type(toolbar) trigger(import)
+    $addList+import
+end
+
 def type(toolbar & singleton) trigger(editable)
     [$operation...[$NL]]
+    [$addList+option]
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
 end
 
 def type(toolbar) trigger(editable)
     [$operation...[$NL]]
+    [$addList+option]
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
 end
@@ -73,8 +72,15 @@ end
 def type(toolbar) trigger(navigable)
 end
 
+def type(addList)
+end
+
+def type(operation & download)
+    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Download[ Affirmed("$confirmText")]
+end
+
 def type(operation)
-    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Action[ as Affirmed("$confirmText")]
+    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Action[ Affirmed("$confirmText")]
 end
 
 def type(nodeview & linksin) trigger(revisionDeclaration)
@@ -251,7 +257,7 @@ def type(show & revisions)
 
 	Block(format=smallAirLeft middleSpaced bordered, visible=false) revisionPage as Animated Relative(width=55%)
 		Transition(direction=Left)
-		TemplateStamp(template=$definition+firstUpperCase~RevisionTemplate) currentRevisionStamp
+		TemplateStamp(template=$definition+firstUpperCase~EmbeddedTemplate) currentRevisionStamp
 end
 
 def type(show) trigger(use)

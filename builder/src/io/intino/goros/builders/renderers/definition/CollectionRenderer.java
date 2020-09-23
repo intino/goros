@@ -18,8 +18,8 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 	}
 
 	@Override
-	protected FrameBuilder buildFrame() {
-		FrameBuilder result = super.buildFrame();
+	protected FrameBuilder toolbarFrame() {
+		FrameBuilder result = super.toolbarFrame();
 		addRefAddList(result);
 		return result;
 	}
@@ -44,8 +44,8 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 	}
 
 	private void addRefAdd(Ref ref, FrameBuilder builder) {
-		NodeDefinition nodeDefinition = dictionary.getNodeDefinition(ref.getValue());
-		builder.add("add", addFrame(nodeDefinition));
+		ArrayList<NodeDefinition> nodeDefinitionList = dictionary.getAllImplementersOfNodeDefinition(ref.getValue());
+		nodeDefinitionList.forEach(def -> builder.add("add", addFrame(def)));
 	}
 
 	private FrameBuilder addFrame(NodeDefinition nodeDefinition) {

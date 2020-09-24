@@ -2,36 +2,38 @@ package io.intino.goros.util;
 
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
+import io.intino.alexandria.ui.Soul;
+import io.intino.alexandria.ui.displays.DisplayRouteDispatcher;
+import io.intino.alexandria.ui.displays.RouteDispatcher;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.alexandria.ui.displays.components.Actionable;
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.model.datasource.filters.RangeFilter;
+import io.intino.alexandria.ui.services.push.UIClient;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.alexandria.ui.spark.UIFile;
 import io.intino.goros.box.GorosBox;
+import io.intino.goros.box.ui.datasources.FieldSelectDatasource;
 import io.intino.goros.box.ui.datasources.model.Column;
 import io.intino.goros.printers.SetPrinter;
 import org.monet.bpi.FieldDate;
 import org.monet.bpi.FieldFile;
 import org.monet.bpi.FieldLink;
 import org.monet.bpi.FieldPicture;
-import org.monet.bpi.types.*;
 import org.monet.bpi.types.Date;
 import org.monet.bpi.types.Number;
 import org.monet.bpi.types.Term;
+import org.monet.bpi.types.*;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
-import org.monet.space.kernel.model.*;
 import org.monet.space.kernel.model.Dictionary;
-import io.intino.goros.box.ui.datasources.FieldSelectDatasource;
+import org.monet.space.kernel.model.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,7 +56,7 @@ public class NodeHelper {
     }
 
     public static String nameOf(Node node) {
-        return nameOf(node.getDefinition());
+        return PathHelper.nameOf(node.getDefinition());
     }
 
 	public static InputStream download(GorosBox box, Node node, NodeDataRequest request, String format, List<String> columns, String language) {
@@ -104,14 +106,38 @@ public class NodeHelper {
         };
     }
 
-    public static void executeOperation(Actionable actionable, Node node, String operation, String successMessage) {
+    public static void executeOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
         actionable.readonly(true);
         Node current = LayerHelper.nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
         event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
         AgentNotifier.getInstance().notify(event);
         actionable.readonly(false);
-        actionable.notifyUser(successMessage, UserMessage.Type.Info);
+        ClientOperation clientOperation = AgentUserClient.getInstance().getOperationForUser(Thread.currentThread().getId());
+        String message = AgentUserClient.getInstance().getMessageForUser(Thread.currentThread().getId());
+
+        if (clientOperation != null) {
+            dispatchOperation(dispatcher, session, clientOperation);
+            if (message != null) actionable.notifyUser(successMessage, UserMessage.Type.Info);
+        }
+        else {
+            if (message != null) actionable.notifyUser(message, UserMessage.Type.Error);
+        }
+    }
+
+    private static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
+        String name = operation.getName().toLowerCase();
+        String id = operation.getData().get("Id").toString();
+        Soul soul = session.client().soul();
+
+        if (name.equals("shownode") || name.equalsIgnoreCase("shownodeview")) {
+            Node node = LayerHelper.nodeLayer().loadNode(id);
+            dispatcher.dispatch(soul, PathHelper.pathOf(node));
+        }
+        else if (name.equals("showtask")) {
+            Task task = LayerHelper.taskLayer().loadTask(operation.getData().get("Id").toString());
+            dispatcher.dispatch(soul, PathHelper.pathOf(task));
+        }
     }
 
     public static Task recentTask(Node node, String view) {
@@ -486,21 +512,6 @@ public class NodeHelper {
             }
         }
         return taskTypes;
-    }
-
-    private static String nameOf(Definition definition) {
-        String prefix = prefixOf(definition, Dictionary.getInstance().basePackage());
-        String name = definition.getName();
-        name = name.contains(".") ? name.substring(name.lastIndexOf(".")+1) : name;
-        return prefix + name;
-    }
-
-    private static String prefixOf(Definition definition, String basePackage) {
-        String prefix = definition.getName();
-        if (!prefix.contains(".")) return "";
-        prefix = prefix.substring(0, prefix.lastIndexOf("."));
-        prefix = prefix.replace(basePackage + ".", "").replace(basePackage, "").replace(".", "-");
-        return StringHelper.snakeCaseToCamelCase(/*shortName(*/prefix/*)*/);
     }
 
 }

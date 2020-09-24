@@ -4,10 +4,7 @@ import io.intino.goros.builders.Modernization;
 import io.intino.goros.builders.monet.Dictionary;
 import io.intino.goros.builders.renderers.templates.konos.UITemplate;
 import io.intino.itrules.FrameBuilder;
-import org.monet.metamodel.Definition;
-import org.monet.metamodel.DesktopDefinition;
-import org.monet.metamodel.NodeDefinition;
-import org.monet.metamodel.SourceDefinition;
+import org.monet.metamodel.*;
 
 import java.io.File;
 import java.util.List;
@@ -48,6 +45,7 @@ public class UIRenderer extends Renderer {
 		if (definition instanceof SourceDefinition) result.add("source");
 		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isSingleton()) result.add("singleton");
 		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isComponent()) result.add("component");
+		if (definition instanceof ProcessDefinition) result.add("process");
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
 		result.add("label", definition.getLabel());

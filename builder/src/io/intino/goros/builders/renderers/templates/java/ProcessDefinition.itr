@@ -96,7 +96,7 @@ def type(process & embedded)
         }
 
         private void refreshToolbar() {
-            open.address(path -> path.replace(":task", task.getId()).replace(":inbox", inboxPath()));
+            open.address(path -> path.replace(":name", io.intino.goros.util.TaskHelper.nameOf(task)).replace(":task", task.getId()).replace(":inbox", inboxPath()));
             toolbar.task(task);
             toolbar.readonly(readonly);
             toolbar.refresh();

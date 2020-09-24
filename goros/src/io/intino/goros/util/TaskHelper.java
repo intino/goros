@@ -8,6 +8,10 @@ public class TaskHelper {
         return !task.isExpired() && !task.isAborted() && !task.isFinished();
     }
 
+    public static String nameOf(Task task) {
+        return PathHelper.nameOf(task.getDefinition());
+    }
+
     public static String state(Task task) {
         if (task.isNew()) return "New";
         if (task.isPending()) return "Pending";

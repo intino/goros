@@ -57,6 +57,7 @@ public class DisplayHelper {
 			return;
 		}
 		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
+		if (name == null || name.isEmpty()) return;
 		selector.select(StringHelper.validName(name));
 	}
 
@@ -69,6 +70,7 @@ public class DisplayHelper {
 			return;
 		}
 		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
+		if (name == null || name.isEmpty()) return;
 		selector.select(StringHelper.validName(name));
 	}
 
@@ -76,6 +78,7 @@ public class DisplayHelper {
 		NodeViewProperty defaultView = defaultView(node);
 		if (defaultView == null) return;
 		String name = defaultView.getName() != null && !defaultView.getName().isEmpty() ? defaultView.getName() : Language.getInstance().getModelResource(defaultView.getLabel());
+		if (name == null || name.isEmpty()) return;
 		selector.select(StringHelper.validName(name));
 	}
 

@@ -286,7 +286,7 @@ def type(operation & download) trigger(editableInitCall)
 end
 
 def type(operation) trigger(editableInitCall)
-    $name+lowerCase.onExecute(e -> io.intino.goros.util.NodeHelper.executeOperation($name+lowerCase, node, "$name", translate("Operation executed")));
+    $name+lowerCase.onExecute(e -> io.intino.goros.util.NodeHelper.executeOperation(box().routeManager().routeDispatcher(), session(), $name+lowerCase, node, "$name", translate("Operation executed")));
 end
 
 def type(operation) trigger(editableRefreshCall)

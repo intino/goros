@@ -562,8 +562,8 @@ def type(collectionview) trigger(collection)
 end
 
 def type(add) trigger(initCall)
-    $name+firstLowerCase~View.onInit(e -> bindCurrentViewTo(currentCollection()));
     $name+firstLowerCase~View.onShow(e -> {
+        bindCurrentViewTo(currentCollection());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.node(reloadSelected());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.readonly(!nodeAdded && readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onRemove(e1 -> {

@@ -94,16 +94,16 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		if (show.getPicture() != null) return 165;
 		int size = 100;
-		size += show.getLine().size() > 0 ? (15*countLines(show.getLine().size())) : 0;
-		size += show.getLineBelow().size() > 0 ? (15*countLines(show.getLineBelow().size())) : 0;
-		size += show.getHighlight().size() > 0 ? (15*countLines(show.getHighlight().size())) : 0;
-		size += show.getFooter().size() > 0 ? (15*countLines(show.getFooter().size())) : 0;
+		size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
+		size += show.getLineBelow().size() > 0 ? (17*countLines(show.getLineBelow().size())) : 0;
+		size += show.getHighlight().size() > 0 ? (17*countLines(show.getHighlight().size())) : 0;
+		size += show.getFooter().size() > 0 ? (17*countLines(show.getFooter().size())) : 0;
 		return size;
 	}
 
 	protected int countLines(int size) {
-		if (size <= 6) return 1;
-		return Math.round(size/6);
+		if (size <= 4) return 1;
+		return Math.round(size/4);
 	}
 
 	@Override

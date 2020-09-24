@@ -381,8 +381,8 @@ def type(tasks)
 end
 
 def type(process) trigger(init)
-    $name+firstLowerCase~View.onInit(e -> bindCurrentViewTo(currentCollection()));
     $name+firstLowerCase~View.onShow(e -> {
+        bindCurrentViewTo(currentCollection());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.task(reloadSelected());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.inbox(inbox);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.readonly(readonly);

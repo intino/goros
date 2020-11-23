@@ -1,0 +1,91 @@
+dsl Konos
+
+Service docservice as REST(host = "", port = "{port}")
+	title = "Docservice API"
+	basePath = ""
+
+	Resource("/document/") document
+		Get(description = "Document operation")
+			Parameter(in=query) action as Text
+			Parameter(in=query) templateCode as Text
+			Parameter(in=form) templateData as File
+			Parameter(in=query) mimeType as Text
+			Parameter(in=query) signFields as Text
+			Parameter(in=query) signsPosition as Text
+			Parameter(in=query) signsCount as Text
+			Parameter(in=query) signsCountPattern as Text
+			Parameter(in=query) documentCode as Text
+			Parameter(in=form) documentData as File
+			Parameter(in=query) contentType as Text
+			Parameter(in=query) width as Text
+			Parameter(in=query) height as Text
+			Parameter(in=query) asynchronous as Text
+			Parameter(in=query) nodeCode as Text
+			Parameter(in=query) copiedDocumentCode as Text
+			Parameter(in=query) generatePreview as Text
+			Parameter(in=query) sourceDocumentId as Text
+			Parameter(in=query) destinationDocumentId as Text
+			Parameter(in=query) documentXmlData as Text
+			Parameter(in=query) documentId as Text
+			Parameter(in=query) certificate as Text
+			Parameter(in=query) signReason as Text
+			Parameter(in=query) signLocation as Text
+			Parameter(in=query) signContact as Text
+			Parameter(in=query) signField as Text
+			Parameter(in=query) signId as Text
+			Parameter(in=query) signature as Text
+			Response as File
+			Exception(BadRequest)
+		Post(description = "Document operation")
+			Parameter(in=query) action as Text
+			Parameter(in=query) templateCode as Text
+			Parameter(in=form) templateData as File
+			Parameter(in=query) mimeType as Text
+			Parameter(in=query) signFields as Text
+			Parameter(in=query) signsPosition as Text
+			Parameter(in=query) signsCount as Text
+			Parameter(in=query) signsCountPattern as Text
+			Parameter(in=query) documentCode as Text
+			Parameter(in=form) documentData as File
+			Parameter(in=query) contentType as Text
+			Parameter(in=query) width as Text
+			Parameter(in=query) height as Text
+			Parameter(in=query) asynchronous as Text
+			Parameter(in=query) nodeCode as Text
+			Parameter(in=query) copiedDocumentCode as Text
+			Parameter(in=query) generatePreview as Text
+			Parameter(in=query) sourceDocumentId as Text
+			Parameter(in=query) destinationDocumentId as Text
+			Parameter(in=query) documentXmlData as Text
+			Parameter(in=query) documentId as Text
+			Parameter(in=query) certificate as Text
+			Parameter(in=query) signReason as Text
+			Parameter(in=query) signLocation as Text
+			Parameter(in=query) signContact as Text
+			Parameter(in=query) signField as Text
+			Parameter(in=query) signId as Text
+			Parameter(in=query) signature as Text
+			Response as File
+			Exception(BadRequest)
+
+	Resource("/preview/") previewDocument
+		Get(description = "Previews document")
+			Parameter(in=query) id as Text
+			Parameter(in=query) page as Text
+			Parameter(in=query) thumb as Text
+			Response as File
+		Post(description = "Previews document")
+			Parameter(in=query) id as Text
+			Parameter(in=query) page as Text
+			Parameter(in=query) thumb as Text
+			Response as File
+
+	Resource("/download/") downloadDocument
+		Get(description = "Download document")
+			Parameter(in=query) id as Text
+			Parameter(in=query) thumb as Text
+			Response as File
+		Post(description = "Download document")
+			Parameter(in=query) id as Text
+			Parameter(in=query) thumb as Text
+			Response as File

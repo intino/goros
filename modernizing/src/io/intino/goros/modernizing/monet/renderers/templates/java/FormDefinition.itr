@@ -1,0 +1,533 @@
+def type(show & fields) trigger(declaration)
+    [$field+declaration...[$NL]]
+end
+
+def type(show & layout) trigger(declaration)
+    [$row+declaration...[$NL]]
+end
+
+def type(layoutRow) trigger(declaration)
+    [$element+declaration...[$NL]]
+end
+
+def type(layoutElement) trigger(declaration)
+    [$field+declaration]
+end
+
+def type(show & layout)
+    @Override
+    public void init() {
+        super.init();
+        [$row+init...[$NL]]
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        [$row+refresh...[$NL]]
+    }
+
+    private void save(java.util.function.Consumer<Boolean> consumer) {
+        consumer.accept(true);
+        io.intino.goros.unit.util.LayerHelper.nodeLayer().saveNode(node);
+        updateFields();
+    }
+
+    private void updateFields() {
+        FormDatasource datasource = new FormDatasource(box().unit(), session(), node);
+        [$row+update...[$NL]]
+    }
+end
+
+def type(layoutRow) trigger(init)
+    [$element+init...[$NL]]
+end
+
+def type(layoutRow) trigger(refresh)
+    [$element+refresh...[$NL]]
+end
+
+def type(layoutRow) trigger(update)
+    [$element+update...[$NL]]
+end
+
+def type(layoutElement) trigger(init)
+    $field+init
+end
+
+def type(layoutElement) trigger(refresh)
+    $field+refresh
+end
+
+def type(layoutElement) trigger(update)
+    $field+update
+end
+
+def type(show & fields)
+    @Override
+    public void init() {
+        super.init();
+        [$field+init...[$NL]]
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        [$field+refresh...[$NL]]
+    }
+
+    private void save(java.util.function.Consumer<Boolean> consumer) {
+        consumer.accept(true);
+        io.intino.goros.unit.util.LayerHelper.nodeLayer().saveNode(node);
+        updateFields();
+    }
+
+    private void updateFields() {
+        FormDatasource datasource = new FormDatasource(box().unit(), session(), node);
+        [$field+update...[$NL]]
+    }
+end
+
+def type(displayProvider)
+    @Override
+    public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
+        [$display...[$NL]]
+        return null;
+    }
+end
+
+def type(field & select & multiple) trigger(declaration)
+    private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
+    private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
+end
+
+def type(field & multiple) trigger(declaration)
+    private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
+end
+
+def type(field & select) trigger(declaration)
+    private Field$type+firstUpperCase $name+firstLowerCase~Field;
+    private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
+end
+
+def type(field) trigger(declaration)
+    private Field$type+firstUpperCase $name+firstLowerCase~Field;
+end
+
+def type(field & select) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+    $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource(box().unit(), session(), node, $name+firstLowerCase~Field);
+end
+
+def type(field & link) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+end
+
+def type(field) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+end
+
+def type(field & text & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(e.item())));
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & text & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & text) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(e.value())));
+end
+
+def type(field & text) trigger(refresh)
+    $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & number & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(new org.monet.bpi.types.Number((Double) e.item()))));
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & number & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().mapToDouble(n -> n != null ? n.doubleValue() : 0).boxed().collect(java.util.stream.Collectors.toList()));
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & number) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(new org.monet.bpi.types.Number((Double) e.value()))));
+end
+
+def type(field & number) trigger(refresh)
+    $name+firstLowerCase~.value($name+firstLowerCase~Field.get() != null ? $name+firstLowerCase~Field.get().doubleValue() : null);
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & boolean) trigger(init)
+    $name+firstLowerCase~.onToggle(e -> save(b -> $name+firstLowerCase~Field.set(e.state() == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On)));
+end
+
+def type(field & boolean) trigger(refresh)
+    $name+firstLowerCase~.state($name+firstLowerCase~Field.get() ? io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On : io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & date & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.dateOf(e.item()))));
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & date & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? f.getValue().toInstant() : null).collect(java.util.stream.Collectors.toList()));
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & date) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.dateOf(e.value()))));
+end
+
+def type(field & date) trigger(refresh)
+    $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.instantOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & memo & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(e.item())));
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & memo & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & memo) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(e.value())));
+end
+
+def type(field & memo) trigger(refresh)
+    $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & serial) trigger(init)
+end
+
+def type(field & serial) trigger(refresh)
+    $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
+    $name+firstLowerCase~.readonly(true);
+end
+
+def type(field & file & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.fileOf(e.item())));
+        ((io.intino.alexandria.ui.displays.components.FileEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+    });
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & file & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & file) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.fileOf(e.value())));
+        $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
+    });
+end
+
+def type(field & file) trigger(refresh)
+    $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & picture & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.item())));
+        ((io.intino.alexandria.ui.displays.components.ImageEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
+    });
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & picture & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
+    $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & picture) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.value())));
+        $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
+    });
+end
+
+def type(field & picture) trigger(refresh)
+    $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & check) trigger(init)
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.checkListOf($name+firstLowerCase~Field.get(), e.selection()))));
+end
+
+def type(field & check) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & link & multiple) trigger(init)
+    $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
+    $name+firstLowerCase~.onSelect(e -> save(b -> {
+        $name+firstLowerCase~Field.removeAll();
+        $name+firstLowerCase~Field.addNewAll(io.intino.goros.unit.util.NodeHelper.linksOf(e.selection()));
+    }));
+end
+
+def type(field & link & multiple) trigger(refresh)
+    $name+firstLowerCase.selection(io.intino.goros.unit.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
+    $name+firstLowerCase.readonly(readonly);
+end
+
+def type(field & link) trigger(init)
+    $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
+    $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.linkOf(e.selection()))));
+end
+
+def type(field & link) trigger(refresh)
+    if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & select & multiple) trigger(init)
+    $name+firstLowerCase~.onSelect(e -> save(b -> {
+        $name+firstLowerCase~Field.removeAll();
+        $name+firstLowerCase~Field.addNewAll(io.intino.goros.unit.util.NodeHelper.termsOf($name+firstLowerCase~Source, e.selection()));
+    }));
+end
+
+def type(field & select & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & select & inline) trigger(init)
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
+end
+
+def type(field & select & inline) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & select) trigger(init)
+    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
+end
+
+def type(field & select) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & composite & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> {});
+        (($definition+firstUpperCase$name+firstUpperCase~Template)e.component()).node(node).field($name+firstLowerCase~Field.getAsField(e.index())).refresh();
+    });
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & composite & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~Field.getAllFields().forEach(field -> {
+        $definition+firstUpperCase$name+firstUpperCase~Template display = $name+firstLowerCase~.add().node(node).field(field).readonly(this.readonly);
+        display.refresh();
+    });
+    $name+firstLowerCase~.onAdd(e -> save(b -> {
+        FieldComposite fieldComposite = $name+firstLowerCase~Field.addNew();
+        $definition+firstUpperCase$name+firstUpperCase~Template display = e.component();
+        display.node(node);
+        display.field(fieldComposite);
+        display.readonly(readonly);
+        display.refresh();
+    }));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & composite) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> {}));
+end
+
+def type(field & composite) trigger(refresh)
+    $name+firstLowerCase~.node(node);
+    $name+firstLowerCase~.field($name+firstLowerCase~Field);
+    $name+firstLowerCase~.readonly(readonly);
+    $name+firstLowerCase~.refresh();
+end
+
+def type(field & node & multiple) trigger(init)
+    $name+firstLowerCase~.onChange(e -> {
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(((FieldNode)e.item()).get()));
+        ((io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate)e.component()).node(node).field($name+firstLowerCase~Field.getAsField(e.index())).refresh();
+    });
+    $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
+end
+
+def type(field & node & multiple) trigger(refresh)
+    $name+firstLowerCase~.clear();
+    $name+firstLowerCase~.onAdd(null);
+    $name+firstLowerCase~Field.getAllFields().forEach(field -> {
+        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = $name+firstLowerCase~.add().node(node).field(field).readonly(this.readonly).displayProvider(this);
+        display.refresh();
+    });
+    $name+firstLowerCase~.onAdd(e -> save(b -> {
+        FieldNode fieldNode = $name+firstLowerCase~Field.addNew();
+        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = e.component();
+        display.node(node);
+        display.field(fieldNode);
+        display.displayProvider(this);
+        display.readonly(readonly);
+        display.refresh();
+    }));
+    $name+firstLowerCase~.readonly(readonly);
+end
+
+def type(field & node) trigger(init)
+    $name+firstLowerCase~.onChange(e -> save(b -> {}));
+end
+
+def type(field & node) trigger(refresh)
+    $name+firstLowerCase~.node(node);
+    $name+firstLowerCase~.field($name+firstLowerCase~Field);
+    $name+firstLowerCase~.readonly(readonly);
+    $name+firstLowerCase~.displayProvider(this);
+    $name+firstLowerCase~.refresh();
+end
+
+def type(compositeView)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.events.ChangeEvent;
+    import io.intino.alexandria.ui.displays.events.ChangeListener;
+    import org.monet.bpi.*;
+    import io.intino.goros.unit.box.ui.datasources.FieldCompositeDatasource;
+    import org.monet.space.kernel.model.Node;
+
+    import java.util.function.Consumer;
+
+    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$module+firstUpperCase~Box>[ implements $implements] {
+        private Node node;
+        private FieldComposite field;
+        private boolean readonly;
+        private ChangeListener changeListener;
+        [$field+declaration...[$NL]]
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template readonly(boolean readonly) {
+            this.readonly = readonly;
+            [$editable+readonly]
+            return this;
+        }
+
+        [$editable]
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template field(FieldComposite field) {
+            this.field = field;
+            updateFields();
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template onChange(ChangeListener listener) {
+            this.changeListener = listener;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            [$field+init...[$NL]]
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            [$field+refresh...[$NL]]
+        }
+
+        private void save(java.util.function.Consumer<Boolean> consumer) {
+            consumer.accept(true);
+            changeListener.accept(new ChangeEvent(this, field));
+            updateFields();
+        }
+
+        private void updateFields() {
+            FieldCompositeDatasource datasource = new FieldCompositeDatasource(box().unit(), session(), field);
+            [$field+update...[$NL]]
+        }
+    }
+end
+
+def type(display)
+    if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
+        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
+        result.node(node);
+        result.readonly(false);
+        return result;
+    }
+end
+
+def type(editable) trigger(readonly)
+    if (field != null) refresh();
+end
+
+def type(editable)
+    @Override
+    public boolean readonly() {
+        return readonly;
+    }
+
+    @Override
+    public void reload() {
+        refresh();
+    }
+end

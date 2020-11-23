@@ -1,0 +1,509 @@
+def type(nodedefinition & embedded)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Revision;
+    import io.intino.goros.unit.util.DisplayHelper;
+
+    import java.util.List;
+
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private Revision revision;
+        private boolean readonly = false;
+        [$toolbar+editableDeclaration]
+
+        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate revision(org.monet.space.kernel.model.Revision revision) {
+            this.revision = revision;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        [$toolbar+editableEvents]
+        [$toolbar+navigableMethods]
+
+        public String selectedView() {
+            List<String> selection = viewSelector.selection();
+            return selection.size() > 0 ? selection.get(0) : null;
+        }
+
+        public void selectDefaultView() {
+            io.intino.goros.unit.util.DisplayHelper.selectDefaultView(viewSelector, node);
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            initToolbar();
+            initViews();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (revision != null) io.intino.goros.unit.util.DisplayHelper.selectNotSystemView(viewSelector, node);
+            refreshToolbar();
+            refreshViewsVisibility();
+            refreshView();
+        }
+
+        private void refreshToolbar() {
+            restore.readonly(readonly);
+            edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.visible(!node.getDefinition().isReadonly());
+            [$toolbar+editableRefreshCall]
+            [$toolbar+navigableRefreshCall]
+        }
+
+        private void refreshViewsVisibility() {
+            String selectedView = selectedView();
+            [$view+refreshVisibilityCall...[$NL]]
+        }
+
+        private void refreshView() {
+            [$view+refreshCall...[$NL]]
+        }
+
+        private void initToolbar() {
+            toolbar.visible(revision == null);
+            revisionToolbar.visible(revision != null);
+            restore.onExecute(e -> restore());
+            edit.onExecute(e -> toggleEdition());
+            [$toolbar+editableInitCall]
+        }
+
+        private void initViews() {
+            [$view+initCall...[$NL]]
+        }
+
+        [$view+refreshMethod...[$NL]]
+
+        private Node locateNode() {
+            Node node = this.node;
+            if (node == null) return null;
+            if (revision != null) node = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNodeRevision(this.node.getId(), revision.getId());
+            return node;
+        }
+
+        private void toggleEdition() {
+            readonly(!readonly);
+            [$toolbar+editableCall]
+            refresh();
+        }
+
+        private void restore() {
+            io.intino.goros.unit.util.LayerHelper.nodeLayer().restoreNode(revision);
+            notifier.redirect(session().browser().requestUrl());
+        }
+
+        [$toolbar+editableMethods]
+    }
+end
+
+def type(nodedefinition & singleton)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = true;
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            [$desktop]
+            [$parent]
+            node = io.intino.goros.unit.util.NodeHelper.singleton("$code");
+            content.node(node);
+            content.readonly(readonly);
+            content.refresh();
+            [$toolbar+removeListener]
+            if (content.selectedView() == null) content.selectDefaultView();
+        }
+
+    }
+end
+
+def type(nodedefinition)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.components.ComponentPersistence;
+    import org.monet.space.kernel.model.Node;
+
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+        private Node node;
+
+        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public void open(String id) {
+            node(ComponentPersistence.getInstance().getNodeLayer().loadNode(id));
+            refresh();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (node == null) return;
+            [$parent+refresh]
+            refreshHeader(node);
+            refreshContent(node);
+        }
+
+        private void refreshHeader(Node node) {
+            label.value(node.getLabel());
+        }
+
+        private void refreshContent(Node node) {
+            content.node(node);
+            content.refresh();
+            if (content.selectedView() == null) content.selectDefaultView();
+        }
+    }
+end
+
+def type(toolbar & singleton) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
+end
+
+def type(toolbar & singleton) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
+end
+
+def type(toolbar & singleton) trigger(editableEvents)
+    public $definition+firstUpperCase~EmbeddedTemplate onFinishEdition(java.util.function.Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar & singleton) trigger(editableMethods)
+end
+
+def type(toolbar & singleton) trigger(removeListener)
+end
+
+def type(toolbar & singleton) trigger(editableDeclaration)
+    private java.util.function.Consumer<Node> finishEditionListener;
+end
+
+def type(toolbar) trigger(editableDeclaration)
+    private java.util.function.Consumer<Node> finishEditionListener;
+    private java.util.function.Consumer<Node> removeListener;
+end
+
+def type(toolbar) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
+    remove.onExecute(e -> removeNode());
+end
+
+def type(toolbar) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
+    remove.visible(!readonly && !node.isSingleton() && !node.getDefinition().isReadonly());
+end
+
+def type(toolbar) trigger(editableCall)
+    if (readonly && finishEditionListener != null) finishEditionListener.accept(node);
+end
+
+def type(toolbar) trigger(removeListener)
+    content.onRemove(e -> PathHelper.dispatch(box().routeManager(), soul(), node.getMainNode()));
+end
+
+def type(toolbar) trigger(editableEvents)
+    public $definition+firstUpperCase~EmbeddedTemplate onRemove(java.util.function.Consumer<Node> listener) {
+        this.removeListener = listener;
+        return this;
+    }
+
+    public $definition+firstUpperCase~EmbeddedTemplate onFinishEdition(java.util.function.Consumer<Node> listener) {
+        this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar) trigger(editableMethods)
+    private void removeNode() {
+        String message = io.intino.goros.unit.util.NodeHelper.canRemove(node);
+        if (message != null) {
+            notifyUser(message, io.intino.alexandria.ui.displays.UserMessage.Type.Error);
+            return;
+        }
+        io.intino.goros.unit.util.LayerHelper.nodeLayer().deleteNode(node);
+        if (removeListener != null) removeListener.accept(node);
+    }
+end
+
+def type(toolbar & collectable) trigger(navigableRefreshCall)
+    open.address(path -> path.replace(":name", "$definition").replace(":id", node.getId()));
+end
+
+def type(toolbar) trigger(navigableRefreshCall)
+end
+
+def type(toolbar & collectable) trigger(navigableMethods)
+    public void bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
+        previous.bindTo(collection);
+        previous.visible(collection != null);
+        next.bindTo(collection);
+        next.visible(collection != null);
+        open.visible(collection != null);
+    }
+end
+
+def type(toolbar) trigger(navigableMethods)
+end
+
+def type(operation & download) trigger(editableInitCall)
+    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.downloadOperation($name+lowerCase, node, "$name"));
+end
+
+def type(operation) trigger(editableInitCall)
+    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(box().routeManager().routeDispatcher(), session(), $name+lowerCase, node, "$name", translate("Operation executed")));
+end
+
+def type(operation) trigger(editableRefreshCall)
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(initCall)
+end
+
+def type(nodeview) trigger(initCall)
+    $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(refreshCall)
+end
+
+def type(nodeview) trigger(refreshCall)
+    if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(refreshVisibilityCall)
+end
+
+def type(nodeview & notVisibleOnRevision) trigger(refreshVisibilityCall)
+    $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase") && revision == null);
+end
+
+def type(nodeview) trigger(refreshVisibilityCall)
+    $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase"));
+end
+
+def type(nodeview & visibleWhenEmbedded) trigger(refreshMethod)
+end
+
+def type(nodeview) trigger(refreshMethod)
+    private void refresh$name+firstUpperCase~View() {
+        Node node = locateNode();
+        if (node == null) return;
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        [$contain+declaration]
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+
+    [$contain]
+end
+
+def type(contain) trigger(declaration)
+    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain($name+firstLowerCase~ViewContain(node));
+end
+
+def type(contain)
+    private Node $name+firstLowerCase~ViewContain(Node node) {
+        if (this.revision != null) return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNodeRevision(io.intino.goros.unit.util.NodeHelper.getContainerContain(node, "$contain"), revision.getId());
+        return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.unit.util.NodeHelper.getContainerContain(node,"$contain"));
+    }
+end
+
+def type(nodeView)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import org.monet.bpi.*;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.unit.box.ui.datasources.FormDatasource;
+
+    import java.util.function.Consumer;
+
+    import static java.util.stream.Collectors.toList;
+
+    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box>[ implements $implements] {
+        private Node node;
+        private String view;
+        private boolean readonly = false;
+        $show+declaration
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate node(Node node) {
+            this.node = node;
+            $updateFields+call
+            return this;
+        }
+
+        public String view() {
+            return this.view;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate view(String view) {
+            this.view = view;
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        $show
+        [$displayProvider]
+    }
+end
+
+def type(updateFields) trigger(call)
+    updateFields();
+end
+
+def type(show & recenttask) trigger(declaration)
+    private org.monet.space.kernel.model.Task<?> task;
+end
+
+def type(show & recenttask)
+    @Override
+    public void init() {
+        super.init();
+        initToolbar();
+        initViews();
+    }
+
+	private void initToolbar() {
+		toolbar.onUpdate(task -> refresh());
+		toolbar.onChange(e -> refresh());
+		toolbar.onAbort(e -> refresh());
+	}
+
+	private void initViews() {
+	    [$tasktype+initCall...[$NL]]
+	}
+
+	@Override
+	public void refresh() {
+		super.refresh();
+		task = io.intino.goros.unit.util.NodeHelper.recentTask(node, view);
+		noTaskMessage.visible(task == null);
+		viewsBlock.visible(task != null);
+		refreshToolbar();
+		showView();
+	}
+
+	private void refreshToolbar() {
+		boolean visible = task != null;
+		toolbarBlock.visible(visible);
+		if (!visible) return;
+		toolbar.task(task);
+		toolbar.readonly(readonly);
+		toolbar.refresh();
+	}
+
+	private void showView() {
+	    hideViews();
+	    if (task == null) return;
+	    String code = task.getCode();
+	    [$tasktype+showCall...[$NL]]
+	}
+
+	private void hideViews() {
+        [$tasktype+hideCall...[$NL]]
+	}
+
+    [$tasktype+refreshMethod...[$NL]]
+end
+
+def type(tasktype) trigger(initCall)
+    $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View(task));
+end
+
+def type(tasktype) trigger(showCall)
+    if (code.equals("$code")) $name+firstLowerCase~View.show();
+end
+
+def type(tasktype) trigger(hideCall)
+    $name+firstLowerCase~View.hide();
+end
+
+def type(tasktype) trigger(refreshMethod)
+	private void refresh$name+firstUpperCase~View(org.monet.space.kernel.model.Task<?> task) {
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+	}
+end
+
+def type(show & revisions) trigger(declaration)
+end
+
+def type(show & revisions)
+	@Override
+	public void refresh() {
+		super.refresh();
+		revisionsStamp.node(node);
+		revisionsStamp.readonly(readonly);
+		revisionsStamp.onSelect(this::openRevision);
+		revisionsStamp.refresh();
+	}
+
+	private void openRevision(org.monet.space.kernel.model.Revision revision) {
+		selectRevisionPage.visible(false);
+		revisionPage.visible(true);
+		currentRevisionStamp.node(node);
+		currentRevisionStamp.revision(revision);
+		currentRevisionStamp.readonly(readonly);
+		currentRevisionStamp.refresh();
+	}
+end
+
+def type(desktop)
+    desktopLink.address(path -> path.replace(":name", "$name+lowerCase"));
+end
+
+def type(parent) trigger(refresh)
+    parentLink.address(path -> path.replace(":name", io.intino.goros.unit.util.NodeHelper.nameOf(node.getParent())));
+    parentLink.title(node.getParent() != null ? node.getParent().getLabel() : "Inicio");
+end
+
+def type(parent)
+    parentLink.address(path -> path.replace(":name", "$name+lowerCase"));
+end

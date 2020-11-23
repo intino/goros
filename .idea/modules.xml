@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/builder/builder.iml" filepath="$PROJECT_DIR$/builder/builder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/goros/goros.iml" filepath="$PROJECT_DIR$/goros/goros.iml" />
-      <module fileurl="file://$PROJECT_DIR$/goros-elements/goros-elements.iml" filepath="$PROJECT_DIR$/goros-elements/goros-elements.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shifter/shifter.iml" filepath="$PROJECT_DIR$/shifter/shifter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/tests.iml" filepath="$PROJECT_DIR$/tests/tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/m1/m1.iml" filepath="$PROJECT_DIR$/m1/m1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modernizing/modernization.modernizing.iml" filepath="$PROJECT_DIR$/modernizing/modernization.modernizing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shifter/modernization.shifter.iml" filepath="$PROJECT_DIR$/shifter/modernization.shifter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/documents/monet-apps.documents.iml" filepath="$PROJECT_DIR$/documents/monet-apps.documents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unit/monet-apps.unit.iml" filepath="$PROJECT_DIR$/unit/monet-apps.unit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" />
     </modules>
   </component>
 </project>

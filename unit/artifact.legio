@@ -1,0 +1,182 @@
+dsl Legio
+
+Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") unit as Platform
+	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
+	Box(language = "Konos", version = "8.8.30")
+	Code("io.intino.goros.unit")
+
+	Imports
+		Compile("org.siani.monet", "space", "1.1") > Exclude ("org.siani.monet","servlet-api")
+ 		Compile("io.intino.alexandria", "primitives", "1.0.4")
+ 		Compile("io.intino.alexandria", "ui-framework", "4.5.5")
+		Compile("io.intino.alexandria", "core-framework", "2.0.4")
+		Compile("io.intino.alexandria", "rest", "3.1.1")
+		Compile("org.apache.tomcat", "catalina", "6.0.43")
+		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
+		Compile("io.intino.itrules", "engine", "1.0.0")
+
+		Web("io.intino.goros", "unit-elements", "1.0.0-SNAPSHOT")
+
+		Test("junit", "junit", "4.13")
+
+	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.unit.box.Main")
+
+	Distribution
+		Artifactory("intino-maven")
+			Release("https://artifactory.intino.io/artifactory/release-libraries")
+			Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
+
+	Parameter("workspace")
+	Parameter("home")
+	Parameter("port")
+	Parameter("name")
+
+	// Certificate
+	Parameter("certificate-filename")
+	Parameter("certificate-password")
+
+	// Database
+	Parameter("jdbc-datasource")
+	Parameter("jdbc-type") // mysql | oracle
+	Parameter("jdbc-url")
+	Parameter("jdbc-user")
+	Parameter("jdbc-password")
+
+	// Directories & urls
+	Parameter("services-request-max-elapsed-time", "120000") // Milliseconds
+	Parameter("user-data-dir")
+	Parameter("component-documents-monet-url")
+	Parameter("component-datawarehouse-monet-url")
+	Parameter("services-base-url")
+	Parameter("store-directory")
+
+	// Constants
+	Parameter("application-definition-filename", "application.xml")
+	Parameter("component-definition-filename", "component.xml")
+	Parameter("translator-definition-filename", "translator.xml")
+	Parameter("business-model-definitions-dictionary-filename", "dictionary.xml")
+	Parameter("business-model-help-not-found-filename", "_not_found.html")
+	Parameter("business-model-datasource-filename", "datasource")
+	Parameter("business-model-node-exporter-main-filename", "main.xsl")
+	Parameter("business-model-node-importer-main-filename", "main.xsl")
+	Parameter("business-model-thesaurus-separator", "/")
+	Parameter("business-model-datasource-item-separator", ",")
+	Parameter("business-model-packages-path", "org.monet.businessmodel")
+	Parameter("simple-field-pattern", ".\\[(.*)\\]")
+	Parameter("multiple-field-pattern", ".\\[(.*)\\]\\[(.*)\\]")
+	Parameter("indicator-node-link", "&lt;indicator[^&gt;]*code=\"nodelink\"[^&gt;]*&gt;([^&lt;]*)&lt;/indicator&gt;")
+	Parameter("encript-parameters", "false")
+	Parameter("run-business-unit", "true")
+	Parameter("use-ssl", "false")
+	Parameter("default-application", "office")
+	Parameter("model-type", "OFFICE")
+
+	// Push tech
+  	Parameter("is-push-enabled", "true")
+
+	// Mobile push api
+	Parameter("mobile-fcm-settings-filename")
+	Parameter("mobile-fcm-project-id")
+	Parameter("mobile-google-api-key")
+
+	// Debug
+	Parameter("is-debug-mode", "false")
+	Parameter("database-query-execution-time-warning", "3000") // Milliseconds
+
+	// Worker thread period of execution
+	Parameter("workqueue-period", "1") // Milliseconds
+
+	// Datawarehouse
+	Parameter("datawarehouse-upgrade-launch-on-start", "true")
+	Parameter("datawarehouse-upgrade-hour", "4")
+	Parameter("datawarehouse-dir")
+
+	// Sources
+	Parameter("source-upgrade-launch-on-start", "false")
+	Parameter("source-upgrade-hour", "3")
+
+	// Mail
+	Parameter("mail-admin-host")
+	Parameter("mail-admin-from")
+	Parameter("mail-admin-to", "")
+	Parameter("mail-admin-username")
+	Parameter("mail-admin-password")
+	Parameter("mail-admin-port", "465")
+	Parameter("mail-admin-secure", "true")
+
+Repository("monentia-maven")
+	Release("https://artifactory.monentia.es/artifactory/releases")
+	Snapshot("https://artifactory.monentia.es/artifactory/snapshots")
+
+Repository(identifier = "intino-maven")
+	Release("https://artifactory.intino.io/artifactory/releases")
+	Snapshot("https://artifactory.intino.io/artifactory/snapshots")
+
+Repository(identifier = "siani-maven") siani
+	Release("https://artifactory.siani.es/artifactory/libs-release")
+	Snapshot("https://artifactory.siani.es/artifactory/libs-snapshot-local") snapshot
+
+Repository(identifier = "sonatype")
+	Release("https://oss.sonatype.org/content/repositories/releases/")
+
+Repository("bedatadriven") bedatadrivenPublic
+	Release("https://nexus.bedatadriven.com/content/groups/public/")
+
+RunConfiguration local
+	Argument("name", "unit")
+	Argument("workspace", "/Users/mcaballero/.monetintinodemo")
+	Argument("port", "9000")
+	Argument("certificate-filename", "businessunit-monet-intino-demo.p12")
+	Argument("certificate-password", "1234")
+	Argument("jdbc-datasource", "jdbc/UnitDatabaseSource")
+	Argument("jdbc-type", "mysql")
+	Argument("jdbc-url", "jdbc:mysql://localhost:3306/monet-intino-demo?autoReconnect=true&amp;useSSL=false")
+	Argument("jdbc-user", "root")
+	Argument("jdbc-password", "12345678")
+	Argument("user-data-dir", "/Users/mcaballero/.monetintinodemo")
+	Argument("component-documents-monet-url", "http://localhost:8081/docservice")
+	Argument("component-datawarehouse-monet-url", "http://localhost:8081/sumus")
+	Argument("services-base-url", "http://127.0.0.1:9000")
+	Argument("mobile-fcm-settings-filename", "/Users/mcaballero/.monetintinodemo/settings-fcm.json")
+	Argument("mobile-fcm-project-id", "externa-216812")
+	Argument("mobile-google-api-key", "AIzaSyBnOTkEjnMfiUyV9G9ml6o-0_xud5cg8f4")
+	Argument("mail-admin-host", "smtp.gmail.com")
+	Argument("mail-admin-host", "monet.org")
+	Argument("mail-admin-from", "noreply@monet.org")
+	Argument("mail-admin-to", "admin@monet.org")
+	Argument("mail-admin-username", "admin")
+	Argument("mail-admin-password", "")
+	Argument("store-directory", "/Users/mcaballero/.monetintinodemofederation/store")
+
+	// TODO OR QUITAR PORQUE TIENEN VALOR POR DEFECTO
+	Argument("mail-admin-port", "465")
+	Argument("mail-admin-secure", "true")
+	Argument("source-upgrade-launch-on-start", "false")
+	Argument("source-upgrade-hour", "3")
+	Argument("datawarehouse-upgrade-launch-on-start", "true")
+	Argument("datawarehouse-upgrade-hour", "4")
+	Argument("workqueue-period", "1") // Milliseconds
+	Argument("is-debug-mode", "false")
+	Argument("database-query-execution-time-warning", "3000") // Milliseconds
+  	Argument("is-push-enabled", "true")
+	Argument("services-request-max-elapsed-time", "120000") // Milliseconds
+	Argument("application-definition-filename", "application.xml")
+	Argument("component-definition-filename", "component.xml")
+	Argument("translator-definition-filename", "translator.xml")
+	Argument("business-model-definitions-dictionary-filename", "dictionary.xml")
+	Argument("business-model-help-not-found-filename", "_not_found.html")
+	Argument("business-model-datasource-filename", "datasource")
+	Argument("business-model-node-exporter-main-filename", "main.xsl")
+	Argument("business-model-node-importer-main-filename", "main.xsl")
+	Argument("business-model-thesaurus-separator", "/")
+	Argument("business-model-datasource-item-separator", ",")
+	Argument("business-model-packages-path", "org.monet.businessmodel")
+	Argument("simple-field-pattern", ".\\[(.*)\\]")
+	Argument("multiple-field-pattern", ".\\[(.*)\\]\\[(.*)\\]")
+	Argument("indicator-node-link", "&lt;indicator[^&gt;]*code=\"nodelink\"[^&gt;]*&gt;([^&lt;]*)&lt;/indicator&gt;")
+	Argument("encript-parameters", "false")
+	Argument("run-business-unit", "true")
+	Argument("use-ssl", "false")
+	Argument("default-application", "office")
+	Argument("model-type", "OFFICE")
+	Argument("datawarehouse-dir", "")

@@ -1,0 +1,88 @@
+def type(documentdefinition & embedded)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import org.monet.space.kernel.model.Node;
+    import io.intino.goros.unit.util.DisplayHelper;
+
+    import java.util.List;
+
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+        private Node node;
+        private boolean readonly = false;
+        [$toolbar+editableDeclaration]
+
+        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        [$toolbar+editableEvents]
+        [$toolbar+navigableMethods]
+
+        public String selectedView() {
+            return null;
+        }
+
+        public void selectDefaultView() {
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            initToolbar();
+            initViews();
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            refreshToolbar();
+            refreshView();
+        }
+
+        private void refreshToolbar() {
+            edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.visible(!node.getDefinition().isReadonly());
+            [$toolbar+editableRefreshCall]
+            [$toolbar+navigableRefreshCall]
+        }
+
+        private void refreshView() {
+            refreshPreviewView();
+        }
+
+        private void initToolbar() {
+            edit.onExecute(e -> toggleEdition());
+            [$toolbar+editableInitCall]
+        }
+
+        private void initViews() {
+            refreshPreviewView();
+        }
+
+        private void refreshPreviewView() {
+            if (node == null) return;
+            previewView.previewStamp.node(node);
+            previewView.previewStamp.readonly(readonly);
+            previewView.previewStamp.refresh();
+        }
+
+        private void toggleEdition() {
+            readonly(!readonly);
+            [$toolbar+editableCall]
+            refresh();
+        }
+
+        [$toolbar+editableMethods]
+    }
+end

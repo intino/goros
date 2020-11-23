@@ -1,0 +1,49 @@
+def type(artifact)
+    dsl Legio
+
+    Artifact(groupId = "$package", version = "1.0.0") model as Product
+        Model(language = "Unit", version = "1.0.0-SNAPSHOT", sdk = "4.1.2")
+        Box(language = "Konos", version = "8.8.21")
+
+        Imports
+            Compile("io.intino.alexandria", "ui-framework", "4.3.21")
+            Compile("io.intino.alexandria", "core-framework", "2.0.4")
+
+            Web("$package", "model-elements", "1.0.0")
+
+            Test(groupId = "junit", artifactId = "junit", version = "LATEST")
+
+        Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable(mainClass=" $package.$module+lowerCase.box.Main")
+
+        Parameter("home")
+        Parameter("port")
+
+    Repository(identifier = "intino-maven")
+        Release(url = "https://artifactory.intino.io/artifactory/releases")
+        Snapshot(url = "https://artifactory.intino.io/artifactory/snapshots")
+
+    RunConfiguration local
+        Argument("workspace", "./temp")
+        Argument("port", "9000")
+        Argument("certificate-filename", "businessunit-monet.p12")
+        Argument("certificate-password", "1234")
+        Argument("jdbc-datasource", "jdbc/MonetDatabaseSource")
+        Argument("jdbc-type", "mysql")
+        Argument("jdbc-url", "jdbc:mysql://localhost:3306/monet?autoReconnect=true&amp;useSSL=false")
+        Argument("jdbc-user", "root")
+        Argument("jdbc-password", "")
+        Argument("user-data-dir", "./temp/monet")
+        Argument("component-documents-monet-url", "http://localhost:8080/docservice")
+        Argument("component-datawarehouse-monet-url", "http://localhost:8081/sumus")
+        Argument("services-base-url", "http://127.0.0.1:9000")
+        Argument("mobile-fcm-settings-filename", "./temp/monet/settings-fcm.json")
+        Argument("mobile-fcm-project-id", "")
+        Argument("mobile-google-api-key", "")
+        Argument("mail-admin-host", "smtp.gmail.com")
+        Argument("mail-admin-host", "monet.org")
+        Argument("mail-admin-from", "noreply@monet.org")
+        Argument("mail-admin-to", "admin@monet.org")
+        Argument("mail-admin-username", "admin")
+        Argument("mail-admin-password", "")
+        Argument("store-directory", "./temp/monetfederation/store")
+end

@@ -1,0 +1,100 @@
+dsl Legio
+
+Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as Platform
+	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
+	Box(language = "Konos", version = "8.8.30")
+	Code("io.intino.goros.documents")
+
+	Imports
+		Compile("org.siani.monet", "docservice", "1.1") > Exclude ("org.siani.monet","servlet-api")
+ 		Compile("io.intino.alexandria", "primitives", "1.0.4")
+		Compile("io.intino.alexandria", "core-framework", "2.0.4")
+		Compile("io.intino.alexandria", "rest", "3.1.1")
+		Compile("org.apache.tomcat", "catalina", "6.0.43")
+		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
+		Compile("io.intino.itrules", "engine", "1.0.0")
+
+		Test("junit", "junit", "4.13")
+
+	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.documents.box.Main")
+
+	Distribution
+		Artifactory("intino-maven")
+			Release("https://artifactory.intino.io/artifactory/release-libraries")
+			Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
+
+	Parameter("workspace")
+	Parameter("home")
+	Parameter("port")
+	Parameter("name")
+
+	// Database
+	Parameter("jdbc-datasource")
+	Parameter("jdbc-type") // mysql | oracle
+	Parameter("jdbc-url")
+	Parameter("jdbc-user")
+	Parameter("jdbc-password")
+
+	// Directories & urls
+	Parameter("true-type-fonts-path", "C:/Windows/Fonts")
+	Parameter("temp-path", "C:/Windows/Temp")
+	Parameter("document-disks") // separated by comma
+
+	// Workqueue
+	Parameter("workqueue-thread-pool-size", "1")
+	Parameter("workqueue-collect-work-period", "5")
+
+	// Document Previews Cleaner
+	Parameter("document-previews-cache-size-in-days", "5")
+
+	// Pdf Converter Configuration
+	Parameter("generate-pdf-a", "false")
+	Parameter("pdf-licence-path")
+	Parameter("pdf-converter-class", "")
+
+	// Model producer
+	Parameter("model-producer-class", "org.monet.docservice.docprocessor.templates.impl.ImplicitModelProducer")
+
+	// Signs Configuration
+	Parameter("sign-height", "100")
+	Parameter("sign-offset-x", "50")
+	Parameter("sign-offset-y", "650")
+	Parameter("sign-offset-y-for-bottom", "")
+	Parameter("sign-count", "3")
+
+Repository("monentia-maven")
+	Release("https://artifactory.monentia.es/artifactory/releases")
+	Snapshot("https://artifactory.monentia.es/artifactory/snapshots")
+
+Repository("intino-maven")
+	Release("https://artifactory.intino.io/artifactory/releases")
+
+Repository("siani-maven") siani
+	Release("https://artifactory.siani.es/artifactory/libs-release")
+	Snapshot("https://artifactory.siani.es/artifactory/libs-snapshot-local") snapshot
+
+RunConfiguration local
+	Argument("name", "documents")
+	Argument("workspace", "/Users/mcaballero/.monetintinodemo")
+	Argument("home", "/Users/mcaballero/.monetintinodemo")
+	Argument("port", "9001")
+	Argument("jdbc-datasource", "jdbc/DocumentsDatabaseSource")
+	Argument("jdbc-type", "mysql")
+	Argument("jdbc-url", "jdbc:mysql://localhost:3306/monet-intino-demo?autoReconnect=true&amp;useSSL=false")
+	Argument("jdbc-user", "root")
+	Argument("jdbc-password", "12345678")
+	Argument("true-type-fonts-path", "")
+	Argument("temp-path", "./temp")
+	Argument("document-disks", "/Users/mcaballero/.monet-3.2/documents")
+	Argument("workqueue-thread-pool-size", "1")
+	Argument("workqueue-collect-work-period", "5")
+	Argument("document-previews-cache-size-in-days", "120")
+	Argument("generate-pdf-a", "false")
+	Argument("pdf-licence-path", "")
+	Argument("model-producer-class", "org.monet.docservice.docprocessor.templates.impl.ImplicitModelProducer")
+	Argument("sign-height", "100")
+	Argument("sign-offset-x", "50")
+	Argument("sign-offset-y", "650")
+	Argument("pdf-converter-class", "")
+	Argument("sign-offset-y-for-bottom", "")
+	Argument("sign-count", "3")

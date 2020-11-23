@@ -9,6 +9,15 @@ import java.util.Map;
 public class GorosUnit {
 
 	public static void open(Map<String, String> parameters) {
+		install(parameters);
+		openUnit(parameters);
+	}
+
+	private static void install(Map<String, String> parameters) {
+		// TODO RL
+	}
+
+	private static void openUnit(Map<String, String> parameters) {
 		DatabaseConfiguration databaseConfiguration = DatabaseConfiguration.fromMap(parameters);
 		ConfigurationMap configuration = ConfigurationMap.fromMap(parameters);
 		Kernel.getInstance().run(configuration, databaseConfiguration);

@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/documents/monet-apps.documents.iml" filepath="$PROJECT_DIR$/documents/monet-apps.documents.iml" />
       <module fileurl="file://$PROJECT_DIR$/unit/monet-apps.unit.iml" filepath="$PROJECT_DIR$/unit/monet-apps.unit.iml" />
       <module fileurl="file://$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unit-elements/unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/unit-elements.iml" />
     </modules>
   </component>
 </project>

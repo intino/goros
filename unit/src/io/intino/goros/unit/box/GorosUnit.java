@@ -4,6 +4,9 @@ import org.monet.space.kernel.Kernel;
 import org.monet.space.kernel.configuration.ConfigurationMap;
 import org.monet.space.kernel.configuration.DatabaseConfiguration;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 public class GorosUnit {
@@ -15,6 +18,15 @@ public class GorosUnit {
 
 	private static void install(Map<String, String> parameters) {
 		// TODO RL
+		System.out.println("test");
+
+
+		InputStream in = GorosUnit.class.getResourceAsStream("/kernel/database/mysql.sql");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+
+
+
 	}
 
 	private static void openUnit(Map<String, String> parameters) {

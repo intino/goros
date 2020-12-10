@@ -6,3 +6,14 @@ platform/user_data/space.xml
 platform-ui/gen/
 platform-ui/node_modules
 platform/user_data/datawarehouse/
+.DS_Store
+.intino
+unit/package.json
+unit/pom.xml
+unit/gen/
+unit/node_modules/
+unit-elements/gen/
+.idea/workspace.xml
+.idea/uiDesigner.xml
+.idea/codeStyles
+.idea/libraries/

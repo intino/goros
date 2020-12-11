@@ -13,6 +13,8 @@ unit/pom.xml
 unit/gen/
 unit/node_modules/
 unit-elements/gen/
+unit-elements/node_modules
+unit-elements/pom.xml
 .idea/workspace.xml
 .idea/uiDesigner.xml
 .idea/codeStyles

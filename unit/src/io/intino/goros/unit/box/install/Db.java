@@ -4,11 +4,9 @@ package io.intino.goros.unit.box.install;
 import io.intino.alexandria.logger.Logger;
 import oracle.jdbc.pool.OracleDataSource;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,7 +73,7 @@ public class Db {
     }
   }
 
-  public void executeScript(String fileName) throws SQLException, IOException {
+  public void executeScript(Reader reader) throws SQLException, IOException {
     if (dbType.equals("oracle")) {
       OracleDataSource ods = new OracleDataSource();
       ods.setUser(user);
@@ -85,14 +83,25 @@ public class Db {
 
       try {
         ScriptRunner scriptRunner = new ScriptRunner(connection, true, false);
-
-        Reader reader = new FileReader(fileName);
         scriptRunner.runScript(reader);
       } finally {
         connection.close();
       }
     } else {
       if (dbType.equals("mysql")) {
+        File tempFile = File.createTempFile("script", ".sql");
+        String fileName = tempFile.getAbsolutePath();
+        tempFile.deleteOnExit();
+
+        int intValueOfChar;
+        StringBuilder buffer = new StringBuilder();
+        while ((intValueOfChar = reader.read()) != -1) {
+          buffer.append((char) intValueOfChar);
+        }
+        Writer targetFileWriter = new FileWriter(tempFile);
+        targetFileWriter.write(buffer.toString());
+        targetFileWriter.close();
+
         String command = "";
         String passwordText = "";
         if (!password.equals(""))
@@ -100,7 +109,7 @@ public class Db {
 
         Logger.info("Deploy mysql file: " + fileName);
 
-        command = "mysql --default-character-set=utf8 --host=" + host + " --port=" + port + " --database=" + dbname + " --user=" + user + passwordText + " < " + fileName + " 2>&1";
+        command = "mysql --default-character-set=utf8 --host=" + host + " --port=" + port + " --database=" + dbname + " --user=" + user + passwordText + " < " + fileName + "";
         Logger.info(command);
 
         Shell shell = new Shell();
@@ -110,6 +119,67 @@ public class Db {
       }
     }
   }
+
+  public String executeSentence(String sentence) throws SQLException, IOException {
+    String result = "";
+    if (dbType.equals("oracle")) {
+      OracleDataSource ods = new OracleDataSource();
+      ods.setUser(user);
+      ods.setPassword(password);
+      ods.setURL(url);
+      Connection connection = ods.getConnection();
+      sentence = sentence.replaceAll("`", "").replaceAll("\"", "'");
+
+      ResultSet rs = null;
+      try {
+        rs = connection.createStatement().executeQuery(sentence);
+
+        String sentence_op = sentence.split(" ")[0];
+        if ((!sentence_op.equals("INSERT")) && (!sentence_op.equals("DELETE"))) {
+          try {
+            rs.next();
+            Object value = rs.getObject(1);
+            result = value.toString();
+          } catch (Exception e) {
+            Logger.warn("SQL: " + sentence + ". SQLException: " + e.getMessage());
+          }
+        }
+      } finally {
+        if (rs != null)
+          rs.close();
+        connection.close();
+      }
+    } else {
+      if (dbType.equals("mysql")) {
+        String command = "";
+        String passwordText = "";
+        if (!password.equals(""))
+          passwordText = " --password=\"" + password + "\" ";
+
+        if (SystemOS.isMacOS()) {
+          sentence = "\"" + sentence + "\"";
+        } else {
+          sentence = "'" + sentence + "'";
+        }
+
+        if (SystemOS.isWindows()) {
+          sentence = sentence.replace("\"", "&quot;");
+          sentence = sentence.replace("'", "\"");
+          sentence = sentence.replace("&quot;", "'");
+        }
+
+        command = "mysql --default-character-set=utf8 --silent --host=" + host + " --port=" + port + " --database=" + dbname + " --user=" + user + passwordText + " --execute=" + sentence;
+
+        Shell shell = new Shell();
+        result = shell.executeCommandWithResponse(command, new File(getPath()));
+
+      }
+    }
+    return result.replaceAll("\n", "");
+  }
+
+  public String getDbname() { return getDbNameFromUrl(url); }
+  public String getDbType() { return getDbTypeFromUrl(url); }
 
   private String getDbTypeFromUrl(String url) {
     return url.toLowerCase().split(":")[1];
@@ -127,5 +197,14 @@ public class Db {
     }
 
     return dbName;
+  }
+  private String getPath() {
+    String path = "";
+    try {
+      path = new java.io.File(".").getCanonicalPath();
+    } catch (Exception exception) {
+      Logger.error("Unable to read current path.");
+    }
+    return path;
   }
 }

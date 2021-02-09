@@ -13,6 +13,8 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as P
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("io.intino.itrules", "engine", "1.0.0")
+		Compile("io.intino.goros", "shared", "1.0.0-SNAPSHOT")
+
 
 		Test("junit", "junit", "4.13")
 

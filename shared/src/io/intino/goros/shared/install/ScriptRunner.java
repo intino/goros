@@ -18,14 +18,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.intino.goros.unit.box.install;
+package io.intino.goros.shared.install;
+
+import io.intino.alexandria.logger.Logger;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.sql.*;
-
-import org.apache.log4j.Logger;
 
 /**
  * Tool to run database scripts
@@ -41,7 +41,6 @@ public class ScriptRunner {
 
 	// private PrintWriter logWriter = new PrintWriter(System.out);
 	// private PrintWriter errorLogWriter = new PrintWriter(System.err);
-	private Logger logger;
 
 	private String delimiter = DEFAULT_DELIMITER;
 	private boolean fullLineDelimiter = false;
@@ -50,7 +49,6 @@ public class ScriptRunner {
 	 * Default constructor
 	 */
 	public ScriptRunner(Connection connection, boolean autoCommit, boolean stopOnError) {
-		logger = Logger.getLogger(this.getClass());
 		this.connection = connection;
 		this.autoCommit = autoCommit;
 		this.stopOnError = stopOnError;
@@ -248,7 +246,7 @@ public class ScriptRunner {
 		/*
 		 * if (logWriter != null) { System.out.print(o); }
 		 */
-		logger.debug(o);
+		Logger.debug(o.toString());
 	}
 
 	private void println(Object o) {
@@ -262,7 +260,7 @@ public class ScriptRunner {
 		/*
 		 * if (errorLogWriter != null) { errorLogWriter.println(o); }
 		 */
-		logger.error(o);
+		Logger.error(o.toString());
 	}
 
 	private void flush() {

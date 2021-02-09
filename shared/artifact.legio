@@ -1,0 +1,29 @@
+dsl Legio
+
+Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") shared
+	Code("io.intino.goros.shared")
+
+	Imports
+		Compile("commons-io", "commons-io", "1.4")
+		Compile("io.intino.alexandria", "logger", "2.1.0")
+		Compile("com.oracle.database.jdbc", "ojdbc8", "19.8.0.0")
+		Compile("mysql", "mysql-connector-java", "5.1.35")
+
+	Package(mode = ModulesAndLibrariesLinkedByManifest)
+
+	Distribution
+		Artifactory("intino-maven")
+			Release("https://artifactory.intino.io/artifactory/release-libraries")
+			Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
+
+Repository("monentia-maven")
+	Release("https://artifactory.monentia.es/artifactory/releases")
+	Snapshot("https://artifactory.monentia.es/artifactory/snapshots")
+
+Repository(identifier = "intino-maven")
+	Release("https://artifactory.intino.io/artifactory/releases")
+	Snapshot("https://artifactory.intino.io/artifactory/snapshots")
+
+Repository(identifier = "siani-maven") siani
+	Release("https://artifactory.siani.es/artifactory/libs-release")
+	Snapshot("https://artifactory.siani.es/artifactory/libs-snapshot-local") snapshot

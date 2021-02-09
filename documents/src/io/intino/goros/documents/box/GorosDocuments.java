@@ -9,10 +9,20 @@ import java.util.Map;
 public class GorosDocuments {
 
 	public static void open(Map<String, String> parameters) {
+		install(parameters);
+		openDocuments(parameters);
+	}
+
+	private static void install(Map<String, String> parameters) {
+
+	}
+
+	private static void openDocuments(Map<String, String> parameters) {
 		InjectorFactory.register(new DocServiceModule(parameters));
 		Application application = InjectorFactory.get().getInstance(Application.class);
 		application.setName(parameters.get("name"));
 		application.run();
 	}
+
 
 }

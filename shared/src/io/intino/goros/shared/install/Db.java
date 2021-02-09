@@ -1,4 +1,4 @@
-package io.intino.goros.unit.box.install;
+package io.intino.goros.shared.install;
 
 
 import io.intino.alexandria.logger.Logger;

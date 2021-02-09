@@ -1,18 +1,16 @@
-package io.intino.goros.unit.box.install;
+package io.intino.goros.shared.install;
+
+import io.intino.alexandria.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.log4j.Logger;
-
 public class Shell {
-	private Logger logger;
 	private String info;
 	private String response;
 	
 	public Shell() {
-		logger = Logger.getLogger(this.getClass());
 		info = "";
 	}
 
@@ -32,15 +30,15 @@ public class Shell {
 		else
   		commands = new String[] { "sh", "-c", command };
 
-		logger.debug("Execute command: " + command);
+		Logger.debug("Execute command: " + command);
 		try {
 			process = Runtime.getRuntime().exec(commands, null, path);
 			process.waitFor();
       out = process.getInputStream();
 		} catch (IOException e) {
-			logger.error("Process error: " + e.getMessage());
+			Logger.error("Process error: " + e.getMessage());
 		} catch (InterruptedException e) {
-			logger.error("Process error: " + e.getMessage());
+			Logger.error("Process error: " + e.getMessage());
 		}
 
 		StringUtils stringUtils = new StringUtils();
@@ -49,10 +47,10 @@ public class Shell {
 
 		if (process.exitValue() > minimalExitValue) {
 			info = "Failed to execute: " + command + ", Details: " + info + "\nError:\n" + stringUtils.getResponse( process.getErrorStream());
-			logger.error(info);
+			Logger.error(info);
 			return process.exitValue();
 		} else {
-			logger.debug(info);
+			Logger.debug(info);
 		}
 
 		return process.exitValue();
@@ -77,7 +75,7 @@ public class Shell {
 		else
   		commands = new String[] { "sh", "-c", command };
 
-		logger.info("Execute command: " + command);
+		Logger.info("Execute command: " + command);
 		try {
 			Runtime.getRuntime().exec(commands, null, path);
 		} catch (IOException e) {

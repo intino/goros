@@ -38,6 +38,13 @@ public class Install {
     federationCAFileKey = parameters.get("MONET_CERTIFICATE_CA_KEY_FILENAME");
   }
 
+  public void initWorkspace() {
+    File f = new File(workspace);
+    if(! f.exists()) {
+      f.mkdirs();
+    }
+  }
+
   public void processDB() {
     if (!installedDb()) {
       Logger.info("Install database...");
@@ -113,7 +120,7 @@ public class Install {
 
   private boolean installedDb() {
     try {
-      String count = db.executeSentence("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + db.getDbname() + "'");
+      String count = db.executeSentence("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + db.getDbname() + "' and table_name = 'ts\\$info'");
       return (Integer.parseInt(count) > 0);
     } catch (SQLException throwables) {
       throwables.printStackTrace();

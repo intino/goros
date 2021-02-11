@@ -15,7 +15,6 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as P
 		Compile("io.intino.itrules", "engine", "1.0.0")
 		Compile("io.intino.goros", "shared", "1.0.0-SNAPSHOT")
 
-
 		Test("junit", "junit", "4.13")
 
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.documents.box.Main")
@@ -38,8 +37,8 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as P
 	Parameter("jdbc-password")
 
 	// Directories & urls
-	Parameter("true-type-fonts-path", "C:/Windows/Fonts")
-	Parameter("temp-path", "C:/Windows/Temp")
+	Parameter("true-type-fonts-path", "/Users/rlopez/.monetintinodemo/docservice")
+	Parameter("temp-path", "/tmp")
 	Parameter("document-disks") // separated by comma
 
 	// Workqueue
@@ -75,19 +74,19 @@ Repository("siani-maven") siani
 	Release("https://artifactory.siani.es/artifactory/libs-release")
 	Snapshot("https://artifactory.siani.es/artifactory/libs-snapshot-local") snapshot
 
-RunConfiguration local
+RunConfiguration local-mysql
 	Argument("name", "documents")
-	Argument("workspace", "/Users/mcaballero/.monetintinodemo")
-	Argument("home", "/Users/mcaballero/.monetintinodemo")
+	Argument("workspace", "/Users/rlopez/.monetintinodemo/docservice")
+	Argument("home", "/Users/rlopez/.monetintinodemo/docservice")
 	Argument("port", "9001")
 	Argument("jdbc-datasource", "jdbc/DocumentsDatabaseSource")
 	Argument("jdbc-type", "mysql")
 	Argument("jdbc-url", "jdbc:mysql://localhost:3306/monet-intino-demo?autoReconnect=true&amp;useSSL=false")
-	Argument("jdbc-user", "root")
+	Argument("jdbc-user", "intino")
 	Argument("jdbc-password", "12345678")
 	Argument("true-type-fonts-path", "")
 	Argument("temp-path", "./temp")
-	Argument("document-disks", "/Users/mcaballero/.monet-3.2/documents")
+	Argument("document-disks", "/Users/rlopez/.monetintinodemo/docservice/documents")
 	Argument("workqueue-thread-pool-size", "1")
 	Argument("workqueue-collect-work-period", "5")
 	Argument("document-previews-cache-size-in-days", "120")

@@ -1,5 +1,6 @@
 package io.intino.goros.documents.box;
 
+import io.intino.goros.documents.box.install.Install;
 import io.intino.goros.documents.box.modules.DocServiceModule;
 import org.monet.docservice.Application;
 import org.monet.docservice.guice.InjectorFactory;
@@ -14,7 +15,10 @@ public class GorosDocuments {
 	}
 
 	private static void install(Map<String, String> parameters) {
-
+		Install install = new Install(parameters);
+		install.initWorkspace();
+		install.processDB();
+		install.processFonts();
 	}
 
 	private static void openDocuments(Map<String, String> parameters) {
@@ -23,6 +27,4 @@ public class GorosDocuments {
 		application.setName(parameters.get("name"));
 		application.run();
 	}
-
-
 }

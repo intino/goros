@@ -16,6 +16,7 @@ public class GorosUnit {
 
 	private static void install(Map<String, String> parameters) {
 		Install install = new Install(parameters);
+		install.initWorkspace();
 		install.processDB();
 		install.processLogs();
 		install.processCertificates();

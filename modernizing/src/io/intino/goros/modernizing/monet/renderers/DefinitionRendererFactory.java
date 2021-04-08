@@ -3,7 +3,6 @@ package io.intino.goros.modernizing.monet.renderers;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.definition.*;
-import io.intino.goros.modernizing.renderers.definition.*;
 import org.monet.metamodel.*;
 import org.monet.space.kernel.model.DefinitionType;
 

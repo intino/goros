@@ -1,19 +1,17 @@
 package io.intino.goros.modernizing;
 
-import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.MonetModernizer;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        args = Arrays.asList("./temp/modernization.goros").toArray(new String[0]);
+//        args = Arrays.asList("./temp/modernization.goros").toArray(new String[0]);
         if (args.length <= 0) {
             System.out.println("Path to modernization file not defined");
             return;

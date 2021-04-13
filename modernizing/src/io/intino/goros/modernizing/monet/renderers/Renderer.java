@@ -96,6 +96,11 @@ public abstract class Renderer {
 		return RendererHelper.typeOf(showProperty);
 	}
 
+	protected String clean(Object label) {
+		if (label == null) return null;
+		return ((String)label).replace("\n", "");
+	}
+
 	private boolean containsDefinition(Definition definition, DesktopDefinitionBase.ViewProperty viewProperty) {
 		DesktopDefinitionBase.ViewProperty.ShowProperty show = viewProperty.getShow();
 		return show.getLink().stream().anyMatch(l -> dictionary.getDefinition(l.getValue()).getCode().equals(definition.getCode()));

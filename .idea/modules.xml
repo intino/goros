@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/m1/m1.iml" filepath="$PROJECT_DIR$/m1/m1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/modernizing/modernization.modernizing.iml" filepath="$PROJECT_DIR$/modernizing/modernization.modernizing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shifter/modernization.shifter.iml" filepath="$PROJECT_DIR$/shifter/modernization.shifter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/documents/monet-apps.documents.iml" filepath="$PROJECT_DIR$/documents/monet-apps.documents.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unit/monet-apps.unit.iml" filepath="$PROJECT_DIR$/unit/monet-apps.unit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/monet-apps.unit-elements.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unit-elements/unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/unit-elements.iml" />
+      <module fileurl="file://$PROJECT_DIR$/documents/documents.iml" filepath="$PROJECT_DIR$/documents/documents.iml" group="monet-apps"/>
+      <module fileurl="file://$PROJECT_DIR$/shifter/shifter.iml" filepath="$PROJECT_DIR$/shifter/shifter.iml" group="modernization"/>
+      <module fileurl="file://$PROJECT_DIR$/modernizing/modernizing.iml" filepath="$PROJECT_DIR$/modernizing/modernizing.iml" group="modernization"/>
+      <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/unit/unit.iml" filepath="$PROJECT_DIR$/unit/unit.iml" group="monet-apps" />
+      <module fileurl="file://$PROJECT_DIR$/unit-elements/unit-elements.iml" filepath="$PROJECT_DIR$/unit-elements/unit-elements.iml" group="monet-apps" />
     </modules>
   </component>
 </project>

@@ -12,4 +12,8 @@ public class RouteDispatcher extends AbstractRouteDispatcher {
 	public void dispatchRoles(Soul soul) {
 		soul.display(GorosAppTemplate.class).openRoles();
 	}
+
+	@Override
+	public void dispatchInstall(Soul soul) {
+	}
 }

@@ -1,5 +1,6 @@
 package io.intino.goros.modernizing.monet;
 
+import io.intino.alexandria.logger.Logger;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.renderers.*;
 import io.intino.goros.modernizing.monet.util.ZipUtil;
@@ -28,13 +29,19 @@ public class MonetModernizer {
     }
 
     private void createProjectSkeleton() {
+        Logger.info("Creating project skeleton");
         File projectDir = modernization.projectDirectory();
-        if (projectDir.exists()) return;
+        if (projectDir.exists()) {
+            Logger.info("Project skeleton already created");
+            return;
+        }
         projectDir.mkdirs();
         ZipUtil.decompress(MonetModernizer.class.getResourceAsStream("/skeleton.zip"), projectDir.getAbsolutePath());
+        Logger.info("Project skeleton created");
     }
 
     private void compileDefinitions() {
+        Logger.info("Compiling definitions");
         new ArtifactRenderer(dictionary, modernization).write();
         new MainRenderer(dictionary, modernization).write();
         new BoxRenderer(dictionary, modernization).write();
@@ -43,6 +50,7 @@ public class MonetModernizer {
         new TranslationsRenderer(dictionary, modernization).write();
         new TasksRenderer(dictionary, modernization).write();
         definitions().filter(d -> !(d instanceof SourceDefinition)).forEach(this::compileDefinition);
+        Logger.info("Definitions compiled");
     }
 
     private void compileDefinition(Definition definition) {
@@ -51,9 +59,11 @@ public class MonetModernizer {
     }
 
     private void loadDictionary() {
+        Logger.info("Loading dictionary from " + modernization.businessModel().getAbsolutePath());
         dictionary = new Dictionary();
         org.monet.metamodel.Dictionary.injectCurrentInstance(dictionary);
         dictionary.initialize(modernization.businessModel().getAbsolutePath());
+        Logger.info("Dictionary loaded. Definitions count: " + dictionary.getAllDefinitions().size());
     }
 
     private Stream<Definition> definitions() {

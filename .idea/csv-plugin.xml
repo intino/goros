@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CsvFileAttributes">
+    <option name="attributeMap">
+      <map>
+        <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/java/FormDefinition.itr">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/java/UI.itr">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/konos/FormDefinition.itr">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/konos/NodeDefinition.itr">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/modernizing/src/org/monet/space/kernel/bpi/java/locator/PackageReader.java">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

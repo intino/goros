@@ -51,7 +51,7 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 		FrameBuilder result = baseFrame().add("add");
 		result.add("name", nameOf(nodeDefinition));
 		result.add("code", nodeDefinition.getCode());
-		result.add("label", nodeDefinition.getLabel());
+		result.add("label", clean(nodeDefinition.getLabel()));
 		return result;
 	}
 

@@ -5,8 +5,21 @@ use Theme
 Service UnitElements as UI(port = "{port}", title = "", favicon = "")
 	Resource(path = "/goros-home") home as Page(gorosAppTemplate) Main Confidential
 	Resource(path = "/roles") roles as Page(gorosAppTemplate) Confidential
+	Resource(path = "/install") install as Page(gorosInstallTemplate) Confidential
 
 Template gorosAppTemplate
+
+Template(layout=Vertical) gorosInstallTemplate as Relative(height=100%)
+	Block(layout=Vertical CenterJustified, format=blackBackground) as Relative(height=25%)
+		Text(value="Goros installer", format=h3 white doubleAirLeft)
+		Text(value="Create database", format=h1 white doubleAirLeft)
+	Block(layout=Vertical CenterCenter) as Relative(height=75%)
+		Block
+			Block(format=doubleAirBottom)
+				Text(value="Database root configuration", format=h3)
+				Text(value="Fill root credentials to create database in your server", format=grey)
+			Block(format=doubleAirBottom) > Text(value="username"); Text username as Editable("Fill username")
+			Block > Text(value="password"); Text password as Editable("Fill password") Password
 
 Template businessUnitsTemplate
 	Text(value="Business units", translate=true)

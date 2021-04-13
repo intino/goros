@@ -92,6 +92,10 @@ def type(ui & app)
         @Override
         public void init() {
             super.init();
+            if (!box().unit().isInstalled()) {
+                notifier.redirect(session().browser().baseUrl() + "/install");
+                return;
+            }
             taskTrayLink.address(path -> path.replace(":view", "activas"));
             taskBoardLink.address(path -> path.replace(":view", "activas"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
@@ -268,7 +272,7 @@ def type(ui & header)
             BusinessUnit businessUnit = BusinessUnit.getInstance();
             Distribution distribution = businessUnit.getDistribution();
             Project project = businessUnit.getBusinessModel().getProject();
-            title.value(BusinessUnit.getTitle(distribution, project));
+            title.value(distribution != null ? BusinessUnit.getTitle(distribution, project) : "");
             subtitle.value(businessUnit.getLabel());
             businessUnitsBlock.onOpen(e -> businessUnitsStamp.refresh());
         }

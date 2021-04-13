@@ -67,7 +67,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 		result.add("view", nameOf(viewProperty));
 		result.add("name", normalize(attributeProperty.getName()));
 		result.add("code", attributeProperty.getCode());
-		result.add("label", attributeProperty.getLabel());
+		result.add("label", clean(attributeProperty.getLabel()));
 		result.add("type", RendererHelper.attributeTypeOf(attributeProperty));
 		result.add("width", countAttributes > 0 ? Math.round(100.0/countAttributes) : 0);
 		return result;
@@ -99,7 +99,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 		result.add("definition", RendererHelper.nameOf(definition(), dictionary.basePackage()));
 		result.add("name", RendererHelper.nameOf(viewProperty));
 		result.add("code", viewProperty.getCode());
-		result.add("label", viewProperty.getName());
+		result.add("label", clean(viewProperty.getName()));
 		addAttributes(viewProperty, result);
 		return result;
 	}

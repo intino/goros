@@ -215,6 +215,8 @@ def type(nodeview & notes)
 end
 
 def type(nodeview & location)
+    Template(layout=Vertical CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        $show
 end
 
 def type(nodeview & locations)

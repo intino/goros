@@ -42,7 +42,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		result.add("definition", nameOf(definition));
 		result.add("code", viewProperty.getCode());
 		result.add("name", nameOf(viewProperty));
-		result.add("label", labelOf(viewProperty));
+		result.add("label", clean(labelOf(viewProperty)));
 		if (viewProperty.isVisibleWhenEmbedded()) result.add("visibleWhenEmbedded");
 		if (!isVisibleOnRevision(viewProperty)) result.add("notVisibleOnRevision");
 		return result;
@@ -53,7 +53,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (parent == null) return;
 		FrameBuilder result = baseFrame().add("parent");
 		result.add("name", nameOf(parent));
-		result.add("label", parent.getLabel());
+		result.add("label", clean(parent.getLabel()));
 		if (parent.isSingleton()) result.add("singleton");
 		addResourceType(parent, result);
 		builder.add("parent", result);
@@ -112,7 +112,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		FrameBuilder result = new FrameBuilder("operation");
 		if (isDownloadOperation(operation)) result.add("download");
 		result.add("name", operation.getName());
-		result.add("label", operation.getLabel());
+		result.add("label", clean(operation.getLabel()));
 		if (operation.getConfirmation() != null) result.add("confirmText", operation.getConfirmation().getDescription());
 		builder.add("operation", result);
 	}

@@ -7,6 +7,10 @@ def type(show & fields)
         [$field...[$NL]]
 end
 
+def type(show & location)
+    Text(value="TODO")
+end
+
 def type(show & layout) trigger(use)
     [$row+use...[$NL]]
 end

@@ -16,7 +16,7 @@
     "multipart/form-data"
   ],
   "paths": {
-    "/source/:source-name/": {
+    "/source/{source-name}/": {
       "post": {
         "description": "Executes an action and returns the result",
         "operationId": "FrontService_10_2_01351881949",
@@ -109,7 +109,7 @@
         }
       }
     },
-    "/mailbox/:address/": {
+    "/mailbox/{address}/": {
       "post": {
         "description": "Sends a message",
         "operationId": "FrontService_24_2_1181270786",
@@ -174,7 +174,7 @@
         }
       }
     },
-    "/business/:service-name/": {
+    "/business/{service-name}/": {
       "post": {
         "description": "Receives tasks from another business unit",
         "operationId": "FrontService_34_2_02053737959",

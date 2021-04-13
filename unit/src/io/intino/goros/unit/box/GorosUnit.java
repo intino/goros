@@ -1,6 +1,6 @@
 package io.intino.goros.unit.box;
 
-import io.intino.goros.unit.box.install.Install;
+import io.intino.goros.unit.box.install.Installer;
 import org.monet.space.kernel.Kernel;
 import org.monet.space.kernel.configuration.ConfigurationMap;
 import org.monet.space.kernel.configuration.DatabaseConfiguration;
@@ -9,17 +9,23 @@ import java.util.Map;
 
 public class GorosUnit {
 
+	public static boolean isInstalled(Map<String, String> parameters) {
+		Installer installer = new Installer(parameters);
+		installer.initWorkspace();
+		return installer.isInstalled();
+	}
+
 	public static void open(Map<String, String> parameters) {
 		install(parameters);
 		openUnit(parameters);
 	}
 
 	private static void install(Map<String, String> parameters) {
-		Install install = new Install(parameters);
-		install.initWorkspace();
-		install.processDB();
-		install.processLogs();
-		install.processCertificates();
+		Installer installer = new Installer(parameters);
+		installer.initWorkspace();
+		installer.processDB();
+		installer.processLogs();
+		installer.processCertificates();
 	}
 
 	private static void openUnit(Map<String, String> parameters) {

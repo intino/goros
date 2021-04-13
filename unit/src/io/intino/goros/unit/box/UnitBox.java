@@ -61,6 +61,10 @@ public class UnitBox extends AbstractBox {
 		return token -> false;
 	}
 
+	public boolean isInstalled() {
+		return GorosUnit.isInstalled(normalize(configuration.args()));
+	}
+
 	private void listenMonet() {
 		AgentNotifier.getInstance().register("Goros", ListenerGoros.class);
 		ListenerGoros listener = (ListenerGoros) AgentNotifier.getInstance().get("Goros");

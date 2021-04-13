@@ -48,7 +48,7 @@ public class UIRenderer extends Renderer {
 		if (definition instanceof ProcessDefinition) result.add("process");
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
-		result.add("label", definition.getLabel());
+		result.add("label", clean(definition.getLabel()));
 		addResourceType(definition, result);
 		addSourceDesktop(definition, result);
 		return result;

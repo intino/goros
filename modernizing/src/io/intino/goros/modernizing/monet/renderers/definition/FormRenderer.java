@@ -52,6 +52,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		else if (showProperty.getRecentTask() != null) return true;
 		else if (showProperty.getLayout() != null) return true;
 		else if (showProperty.getRevisions() != null) return true;
+		else if (showProperty.getLocation() != null) return true;
 		else return showProperty.getLayoutExtended() != null;
 	}
 
@@ -105,8 +106,9 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		FrameBuilder result = baseFrame().add("compositeview");
 		FormDefinition definition = definition();
 		result.add("definition", nameOf(definition));
-		result.add("label", fieldProperty.getLabel());
+		result.add("label", clean(fieldProperty.getLabel()));
 		result.add("name", fieldProperty.getName());
+		addDisplayProvider(fieldProperty, result);
 		if (fieldProperty.isMultiple()) {
 			result.add("implements", "io.intino.alexandria.ui.displays.components.editable.Editable");
 			result.add("editable", new FrameBuilder("editable"));
@@ -144,6 +146,16 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		builder.add("show", result);
 	}
 
+	private void addDisplayProvider(CompositeFieldProperty fieldProperty, FrameBuilder builder) {
+		resetAddedDisplays();
+		if (!isDisplayProvider(fieldProperty)) return;
+		FrameBuilder result = new FrameBuilder("displayProvider");
+		List<FieldProperty> fieldList = fieldProperty.getAllFieldPropertyList().stream().filter(field -> field.isComposite() || field.isNode()).collect(Collectors.toList());
+		fieldList.forEach(f -> addDisplayFor(f, result));
+		builder.add("implements", "io.intino.goros.unit.box.ui.DisplayProvider");
+		builder.add("displayProvider", result);
+	}
+
 	private void addDisplayProvider(FormViewProperty viewProperty, FrameBuilder builder) {
 		resetAddedDisplays();
 		if (!isDisplayProvider(viewProperty)) return;
@@ -158,6 +170,10 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		ShowProperty showProperty = viewProperty.getShow();
 		if (showProperty.getField().size() <= 0) return false;
 		return showProperty.getField().stream().anyMatch(ref -> fieldProperty(ref).isComposite() || fieldProperty(ref).isNode());
+	}
+
+	private boolean isDisplayProvider(CompositeFieldProperty fieldProperty) {
+		return fieldProperty.getAllFieldPropertyList().stream().anyMatch(field -> field.isComposite() || field.isNode());
 	}
 
 	private void addRecentTaskShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
@@ -206,7 +222,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		addLayoutSizeToElement(element, result);
 		if (element.isSection()) {
 			LayoutElementSectionDefinition section = (LayoutElementSectionDefinition) element;
-			result.add("label", section.getLabel());
+			result.add("label", clean(section.getLabel()));
 			rowsOf(section.getElements()).forEach(r -> addLayoutRow(r, composite, result));
 		}
 		else if (element.isBox()) {

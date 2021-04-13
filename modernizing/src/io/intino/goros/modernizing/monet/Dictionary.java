@@ -40,6 +40,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -780,8 +781,8 @@ public class Dictionary extends org.monet.metamodel.Dictionary {
 	}
 
 	public void initialize(String businessModelDir) {
-		String classesDir = businessModelDir + "/classes";
-		String librariesDir = businessModelDir + "/classes_libraries";
+		String classesDir = businessModelDir + File.separator + "classes";
+		String librariesDir = businessModelDir + File.separator + "classes_libraries";
 		PackageReader reader = new PackageReader(classesDir);
 		ClassLoader classLoader = new BusinessModelClassLoader(classesDir, librariesDir);
 
@@ -795,7 +796,7 @@ public class Dictionary extends org.monet.metamodel.Dictionary {
 				    Class.forName(classname, true, classLoader);
 				}
 				catch (Exception e) {
-					System.out.println(String.format("Could not register definition class in dictionary: %s", classname));
+					Logger.error(String.format("Could not register definition class in dictionary: %s", classname));
 					throw new RuntimeException(String.format("Could not register definition class in dictionary: %s", classname));
 				}
 

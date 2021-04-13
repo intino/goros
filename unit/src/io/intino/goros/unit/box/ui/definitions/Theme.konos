@@ -1,8 +1,8 @@
 dsl Konos
 
 // FONTS
-Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'25pt'") h1
-Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'20pt'") h2
+Format("color:'#05673c',fontSize:'25pt'") h1
+Format("color:'#05673c',fontSize:'20pt'") h2
 Format("fontSize:'15pt'") h3
 Format("fontSize:'14pt',fontWeight:'400'") h4
 Format("fontSize:'13pt'") h5
@@ -14,8 +14,10 @@ Format("") subtitle2
 Format("fontWeight:'bold'") bold
 Format("") secondary
 Format("color:'#000'") black
+Format("backgroundColor:'#272C34'") blackBackground
 Format("color:'#777'") grey
 Format("color:'#F44335'") red
+Format("color:'white'") white
 Format("color:'#777'") description
 
 // SPACED, AIR

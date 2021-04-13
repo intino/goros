@@ -44,7 +44,7 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		FrameBuilder result = super.baseFrame();
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
-		result.add("label", definition().getLabel());
+		result.add("label", clean(definition().getLabel()));
 		if (definition.getType() != null) {
 			result.add(definition.getType().name());
 			if (definition instanceof ProcessDefinition) result.add("process");
@@ -80,7 +80,7 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 		FrameBuilder result = baseFrame().add("desktop");
 		if (desktopDefinition.isSingleton()) result.add("singleton");
 		result.add("name", nameOf(desktopDefinition));
-		result.add("label", desktopDefinition.getLabel());
+		result.add("label", clean(desktopDefinition.getLabel()));
 		addResourceType(desktopDefinition, result);
 		return result;
 	}

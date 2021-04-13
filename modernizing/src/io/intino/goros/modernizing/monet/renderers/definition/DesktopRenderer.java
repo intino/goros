@@ -52,7 +52,7 @@ public class DesktopRenderer extends NodeRenderer<DesktopDefinition> {
 		result.add(definition.getType().name().toLowerCase());
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
-		result.add("label", definition.getLabel());
+		result.add("label", clean(definition.getLabel()));
 		result.add("description", definition.getDescription());
 		addResourceType(definition, result);
 		builder.add("item", result);

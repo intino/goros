@@ -1,5 +1,7 @@
 package org.monet.space.kernel.bpi.java.locator;
 
+import io.intino.alexandria.logger.Logger;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -15,44 +17,44 @@ public class PackageReader {
 		this.packagePath = classpathRoot;
 	}
 
-	public Set<String> read() throws IOException {
+	public Set<String> read() {
+		Logger.info("Reading classes in businessmodel");
 		this.loadClassNames(packagePath);
+		Logger.info("Number of classes found: " + classnames.size());
 		return classnames;
 	}
 
-	private void loadClassNames(String packagePath) throws IOException {
-		this.classnames = new HashSet<String>();
-
+	private void loadClassNames(String packagePath) {
+		this.classnames = new HashSet<>();
 		File directory = new File(packagePath);
 		readDirectory(directory);
 	}
 
-	private String toPackageName(String absolutePath) {
-		String fileSeparator = System.getProperty("file.separator");
-		String fileSeparatorEscaped = (fileSeparator.contains("\\")) ? "\\\\" + fileSeparator : fileSeparator;
+	private void readDirectory(File dir) {
+		File[] filenames = dir.listFiles(file -> (file.isDirectory() && !file.getName().startsWith(".")) || file.getName().endsWith(".class"));
 
-		String relativePath = absolutePath.replace(new File(this.packagePath).getAbsolutePath(), "");
-		relativePath = relativePath.startsWith(fileSeparator) ? relativePath.substring(1, relativePath.length()) : relativePath;
+		if (filenames == null) {
+			Logger.error("Could not read directory " + dir.getAbsolutePath());
+			return;
+		}
 
-		String packageName = relativePath.replaceAll(fileSeparatorEscaped, ".");
-		return packageName.replace(".class", "");
-	}
-
-	private void readDirectory(File file) {
-		File[] filenames = file.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				return (file.isDirectory() && !file.getName().startsWith(".")) || file.getName().endsWith(".class");
-			}
-		});
-
-		if (filenames != null) {
-			for (File filename : filenames) {
-				if (filename.isFile())
-					this.classnames.add(toPackageName(filename.getAbsolutePath()));
-				else
-					readDirectory(filename);
-			}
+		for (File filename : filenames) {
+			if (filename.isFile())
+				this.classnames.add(toPackageName(filename.getAbsolutePath(), this.packagePath));
+			else
+				readDirectory(filename);
 		}
 	}
+
+	private static String toPackageName(String absolutePath, String packagePath) {
+		String result = absolutePath.replace(packagePath, "");
+		result = result.replace("\\", "##").replace("/", "##").replace(".class", "").replace("##", ".");
+		return result.startsWith(".") ? result.substring(1) : result;
+	}
+
+//	public static void main(String[] args) {
+//		String packagePath = "C:\\Users\\sfalcon\\projects\\modelos\\ViasyObras\\Coordinacion\\bin\\classes";
+//		String className = "C:\\Users\\sfalcon\\projects\\modelos\\ViasyObras\\Coordinacion\\bin\\classes\\coordinacion\\analytics\\dashboardincidencias\\$Definition$.class";
+//		System.out.println(toPackageName(className, packagePath));
+//	}
 }

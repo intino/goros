@@ -29,7 +29,7 @@ public class FieldRenderer extends Renderer {
 		FrameBuilder result = baseFrame().add("field");
 		result.add("code", fieldProperty.getCode());
 		result.add("name", fieldProperty.getName());
-		result.add("label", fieldProperty.getLabel());
+		result.add("label", clean(fieldProperty.getLabel()));
 		result.add("type", type());
 		addTypes(result);
 		addMultipleProperties(result);

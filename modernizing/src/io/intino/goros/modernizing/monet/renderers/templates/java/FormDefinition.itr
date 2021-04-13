@@ -447,7 +447,7 @@ def type(compositeView)
 
     import java.util.function.Consumer;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$module+firstUpperCase~Box>[ implements $implements] {
+    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$module+firstUpperCase~Box>[ implements $implements...[,]] {
         private Node node;
         private FieldComposite field;
         private boolean readonly;
@@ -504,6 +504,16 @@ def type(compositeView)
             FieldCompositeDatasource datasource = new FieldCompositeDatasource(box().unit(), session(), field);
             [$field+update...[$NL]]
         }
+
+        [$displayProvider]
+    }
+end
+
+def type(compositeDisplayProvider)
+    @Override
+    public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
+        [$display...[$NL]]
+        return null;
     }
 end
 

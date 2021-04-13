@@ -28,10 +28,11 @@ module.exports = {
     },
     entry : {
         'home' : './gen/apps/Home.js',
-        'roles' : './gen/apps/Roles.js'
+        'roles' : './gen/apps/Roles.js',
+        'install' : './gen/apps/Install.js'
     },
     output: {
-        path: "/Users/rlopez/proyectos/trabajo/intino/goros/out/production/unit-elements/www/unit-elements",
+        path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
         publicPath: '$basePath/unit-elements/',
         filename: "[name].js"
     },
@@ -64,6 +65,13 @@ module.exports = {
             chunks: ['roles'],
             template: "./src/roles.html",
             filename: "./roles.html"
+        }),
+        new HtmlWebPackPlugin({
+            hash: true,
+            title: "Test UI",
+            chunks: ['install'],
+            template: "./src/install.html",
+            filename: "./install.html"
         })
     ]
 };

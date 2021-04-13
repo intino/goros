@@ -9,6 +9,7 @@ public class FormDefinitionTemplate extends Template {
 		return new RuleSet().add(
 			rule().condition((allTypes("show","fields")), (trigger("use"))).output(expression().output(mark("field", "use").multiple("\n"))),
 			rule().condition((allTypes("show","fields"))).output(literal("Block content as Relative(width=90%)\n    ")).output(expression().output(mark("field").multiple("\n"))),
+			rule().condition((allTypes("show","location"))).output(literal("Text(value=\"TODO\")")),
 			rule().condition((allTypes("show","layout")), (trigger("use"))).output(expression().output(mark("row", "use").multiple("\n"))),
 			rule().condition((allTypes("show","layout"))).output(literal("Block")).output(expression().output(literal(" ")).output(mark("absoluteFacet"))).output(expression().output(literal(" ")).output(mark("relativeFacet"))).output(literal("\n    ")).output(expression().output(mark("row").multiple("\n"))),
 			rule().condition((type("layoutRow")), (trigger("use"))).output(expression().output(mark("element", "use").multiple("\n"))),

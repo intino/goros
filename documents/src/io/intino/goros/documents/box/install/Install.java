@@ -84,7 +84,7 @@ public class Install {
   private boolean installedDb() {
     try {
       String count = db.executeSentence("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + db.getDbname() + "' and table_name = 'ds\\$documents'");
-      return (Integer.parseInt(count) > 0);
+      return (!count.isEmpty() && Integer.parseInt(count) > 0);
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     } catch (IOException e) {

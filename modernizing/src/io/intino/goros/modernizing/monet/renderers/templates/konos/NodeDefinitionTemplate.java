@@ -58,7 +58,7 @@ public class NodeDefinitionTemplate extends Template {
 			rule().condition((allTypes("nodeview","linksout"))),
 			rule().condition((allTypes("nodeview","tasks"))),
 			rule().condition((allTypes("nodeview","notes"))),
-			rule().condition((allTypes("nodeview","location"))),
+			rule().condition((allTypes("nodeview","location"))).output(literal("Template(layout=Vertical CenterJustified) ")).output(mark("definition", "firstUpperCase")).output(mark("name", "firstUpperCase")).output(literal("ViewTemplate as Relative(height=100%)\n    ")).output(mark("show")),
 			rule().condition((allTypes("nodeview","locations"))),
 			rule().condition((allTypes("nodeview","recenttask"))).output(literal("Template(layout=Vertical CenterJustified) ")).output(mark("definition", "firstUpperCase")).output(mark("name", "firstUpperCase")).output(literal("ViewTemplate as Relative(height=100%)\n    ")).output(mark("show")),
 			rule().condition((type("nodeview"))).output(literal("Template(layout=Horizontal CenterJustified) ")).output(mark("definition", "firstUpperCase")).output(mark("name", "firstUpperCase")).output(literal("ViewTemplate as Relative(height=100%)\n    ")).output(mark("show")),

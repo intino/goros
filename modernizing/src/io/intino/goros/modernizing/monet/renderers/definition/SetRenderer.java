@@ -216,7 +216,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		FrameBuilder result = baseFrame().add("dimension");
 		result.add("name", attributeProperty.getName());
 		result.add("code", attributeProperty.getCode());
-		result.add("label", attributeProperty.getLabel());
+		result.add("label", clean(attributeProperty.getLabel()));
 		result.add("type", RendererHelper.dimensionTypeOf(attributeProperty));
 		return result;
 	}
@@ -230,7 +230,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("name", normalize(attributeProperty.getName()));
 		result.add("shortName", shortName(viewProperty, attributeProperty));
 		result.add("code", attributeProperty.getCode());
-		result.add("label", attributeProperty.getLabel());
+		result.add("label", clean(attributeProperty.getLabel()));
 		result.add("type", RendererHelper.attributeTypeOf(attributeProperty));
 		result.add("width", countAttributes > 0 ? Math.round(100.0/countAttributes) : 0);
 		return result;
@@ -254,7 +254,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("name", normalize(key));
 		result.add("shortName", shortName(viewProperty, normalize(key)));
 		result.add("code", key);
-		result.add("label", label);
+		result.add("label", clean(label));
 		result.add("width", width);
 		return result;
 	}

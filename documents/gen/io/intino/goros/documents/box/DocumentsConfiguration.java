@@ -100,4 +100,8 @@ public class DocumentsConfiguration extends io.intino.alexandria.core.BoxConfigu
 	public String signCount() {
 		return get("sign-count");
 	}
+
+	public java.io.File home() {
+		return new java.io.File(args.getOrDefault("home", System.getProperty("user.home")));
+	}
 }

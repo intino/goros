@@ -31,11 +31,9 @@
     <orderEntry type="library" name="Intino: stax:stax:1.2.0" level="project" />
     <orderEntry type="library" name="Intino: xpp3:xpp3:1.1.3.3" level="project" />
     <orderEntry type="library" name="Intino: commons-fileupload:commons-fileupload:1.2.2" level="project" />
-    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.47" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tika:tika-core:0.4" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:tomcat-shared:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:core-shared:1.0" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:docservice:1.1" level="project" />
     <orderEntry type="library" name="Intino: net.sf.json-lib:json-lib:2.2" level="project" />
     <orderEntry type="library" name="Intino: net.sf.ezmorph:ezmorph:1.0.4" level="project" />
     <orderEntry type="library" name="Intino: com.aspose.words:aspose-words:1.0" level="project" />
@@ -43,8 +41,6 @@
     <orderEntry type="library" name="Intino: org.jpedal:jpedal_lgpl:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:monet-library-http:0.3" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:primitives:1.0.4" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:core-framework:2.0.4" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:2.0.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:logger:2.1.0" level="project" />
     <orderEntry type="library" name="Intino: com.sparkjava:spark-core:2.7.2" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty:jetty-server:9.4.8.v20171121" level="project" />
@@ -64,7 +60,6 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-api:9.4.8.v20171121" level="project" />
     <orderEntry type="library" name="Intino: eu.medsea.mimeutil:mime-util:2.1.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.0.2" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.1.1" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
@@ -88,7 +83,6 @@
     <orderEntry type="library" name="Intino: com.itextpdf:itextpdf:5.0.2" level="project" />
     <orderEntry type="library" name="Intino: org.slf4j:slf4j-api:1.7.13" level="project" />
     <orderEntry type="library" name="Intino: com.google.code.gson:gson:2.8.6" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.1.1" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.6.0.0" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ucp:19.6.0.0" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.security:oraclepki:19.6.0.0" level="project" />
@@ -97,5 +91,13 @@
     <orderEntry type="library" name="Intino: com.oracle.database.ha:simplefan:19.6.0.0" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.ha:ons:19.6.0.0" level="project" />
     <orderEntry type="module" module-name="shared" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:core-framework:2.1.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.1.9" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.1.9" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:2.0.1" level="project" />
+    <orderEntry type="library" name="Intino: com.google.protobuf:protobuf-java:3.11.4" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:docservice:1.1.1" level="project" />
+    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:8.0.23" level="project" />
+    <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
   </component>
 </module>

@@ -1,6 +1,6 @@
 package io.intino.goros.documents.box.configuration;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import io.intino.alexandria.logger.Logger;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 
@@ -41,7 +41,6 @@ public class DatabaseLoader {
 
     private static ConnectionPoolDataSource mysqlDataSource(DatabaseConfiguration database) {
         MysqlConnectionPoolDataSource dataSource = new MysqlConnectionPoolDataSource();
-        dataSource.setRetainStatementAfterResultSetClose(true);
         dataSource.setURL(database.url());
         dataSource.setUser(database.user());
         dataSource.setPassword(database.password());

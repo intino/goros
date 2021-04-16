@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.Soul;
 import io.intino.goros.unit.box.ui.displays.templates.GorosAppTemplate;
 
 public class RouteDispatcher extends AbstractRouteDispatcher {
+
 	@Override
 	public void dispatchHome(Soul soul) {
 	}
@@ -16,4 +17,5 @@ public class RouteDispatcher extends AbstractRouteDispatcher {
 	@Override
 	public void dispatchInstall(Soul soul) {
 	}
+
 }

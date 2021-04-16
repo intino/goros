@@ -1,10 +1,14 @@
 package io.intino.goros.unit.box;
 
 import io.intino.alexandria.ui.services.AuthService;
+import io.intino.alexandria.ui.services.auth.Space;
 import io.intino.goros.unit.box.listeners.GorosUnitNotifier;
 import io.intino.goros.unit.box.listeners.ListenerGoros;
 import org.monet.space.kernel.agents.AgentNotifier;
+import org.monet.space.kernel.configuration.Configuration;
+import org.monet.space.kernel.model.BusinessUnit;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
@@ -54,7 +58,7 @@ public class UnitBox extends AbstractBox {
 
 	@Override
 	protected AuthService authService(URL authServiceUrl) {
-		return null;
+		return new GorosOAuthAccessor();
 	}
 
 	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {

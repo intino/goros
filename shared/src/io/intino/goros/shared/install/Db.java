@@ -31,7 +31,7 @@ public class Db {
 
     if (dbType.equals("mysql")) {
       try {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }
@@ -156,18 +156,7 @@ public class Db {
         if (!password.equals(""))
           passwordText = " --password=\"" + password + "\" ";
 
-        if (SystemOS.isMacOS()) {
-          sentence = "\"" + sentence + "\"";
-        } else {
-          sentence = "'" + sentence + "'";
-        }
-
-        if (SystemOS.isWindows()) {
-          sentence = sentence.replace("\"", "&quot;");
-          sentence = sentence.replace("'", "\"");
-          sentence = sentence.replace("&quot;", "'");
-        }
-
+        sentence = "\"" + sentence + "\"";
         command = "mysql --default-character-set=utf8 --silent --host=" + host + " --port=" + port + " --database=" + dbname + " --user=" + user + passwordText + " --execute=" + sentence;
 
         Shell shell = new Shell();
@@ -207,4 +196,5 @@ public class Db {
     }
     return path;
   }
+
 }

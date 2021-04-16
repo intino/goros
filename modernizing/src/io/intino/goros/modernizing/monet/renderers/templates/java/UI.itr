@@ -92,7 +92,7 @@ def type(ui & app)
         @Override
         public void init() {
             super.init();
-            if (!box().unit().isInstalled()) {
+            if (!org.monet.space.kernel.model.BusinessUnit.getInstance().isInstalled()) {
                 notifier.redirect(session().browser().baseUrl() + "/install");
                 return;
             }

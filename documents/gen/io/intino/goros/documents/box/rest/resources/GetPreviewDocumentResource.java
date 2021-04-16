@@ -41,6 +41,7 @@ public class GetPreviewDocumentResource implements Resource {
 	private io.intino.alexandria.http.spark.SparkContext context() {
 		io.intino.alexandria.http.spark.SparkContext context = new io.intino.alexandria.http.spark.SparkContext(manager);
 
+		context.put("ip", manager.ip());
 		return context;
 	}
 }

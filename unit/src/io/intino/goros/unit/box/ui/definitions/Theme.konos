@@ -19,6 +19,7 @@ Format("color:'#777'") grey
 Format("color:'#F44335'") red
 Format("color:'white'") white
 Format("color:'#777'") description
+Format("position:'absolute',bottom:'0',marginBottom:'-48px',marginLeft:'43px'") installerImageStyle
 
 // SPACED, AIR
 Format("margin:'3px'") smallAir

@@ -34,18 +34,8 @@ public abstract class AbstractBox extends io.intino.alexandria.core.Box {
 	public io.intino.alexandria.core.Box start() {
 		if (owner != null) owner.beforeStart();
 		beforeStart();
-		if (owner != null) owner.start();
-		initUI();
-		initConnector();
-		initRestServices();
-		initSoapServices();
-		initJmxServices();
-		initDatalake();
-		initTerminal();
-		initMessagingServices();
-		initSentinels();
-		initSlackBots();
-		initWorkflow();
+		if (owner != null) owner.startServices();
+		startServices();
 		if (owner != null) owner.afterStart();
 		afterStart();
 		return this;
@@ -58,13 +48,33 @@ public abstract class AbstractBox extends io.intino.alexandria.core.Box {
 	public void stop() {
 		if (owner != null) owner.beforeStop();
 		beforeStop();
-		if (owner != null) owner.stop();
-		io.intino.alexandria.http.AlexandriaSparkBuilder.instance().stop();
+		if (owner != null) owner.stopServices();
+		stopServices();
 		if (owner != null) owner.afterStop();
 		afterStop();
 	}
 
+    @Override
+	public void stopServices() {
+		io.intino.alexandria.http.AlexandriaSparkBuilder.instance().stop();
+	}
+
 	public abstract void afterStop();
+
+    @Override
+	public void startServices() {
+		initUI();
+		initConnector();
+		initRestServices();
+		initSoapServices();
+		initJmxServices();
+		initDatalake();
+		initTerminal();
+		initMessagingServices();
+		initSentinels();
+		initSlackBots();
+		initWorkflow();
+	}
 
 
 

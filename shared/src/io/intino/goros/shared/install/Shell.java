@@ -34,7 +34,7 @@ public class Shell {
 		try {
 			process = Runtime.getRuntime().exec(commands, null, path);
 			process.waitFor();
-      out = process.getInputStream();
+      		out = process.getInputStream();
 		} catch (IOException e) {
 			Logger.error("Process error: " + e.getMessage());
 		} catch (InterruptedException e) {
@@ -42,7 +42,7 @@ public class Shell {
 		}
 
 		StringUtils stringUtils = new StringUtils();
-		response = stringUtils.getResponse(out); 
+		response = clean(stringUtils.getResponse(out));
 		info = "Exit value: " + process.exitValue() + ". \nOut:\n" + stringUtils.getResponse(process.getInputStream());
 
 		if (process.exitValue() > minimalExitValue) {
@@ -66,7 +66,7 @@ public class Shell {
 		  return response;
 		else return "";
 	}
-	
+
 	public Integer executeDaemon(String command, File path) {
 		String[] commands = null;
 
@@ -86,5 +86,9 @@ public class Shell {
 	public String lastInfo() {
 		return info;
 	}
-	
+
+	private String clean(String response) {
+		return response != null ? response.replace("\r", "").replace("\n", "") : response;
+	}
+
 }

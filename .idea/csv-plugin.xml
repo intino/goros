@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/documents/src/io/intino/goros/documents/box/services/Response.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/java/FormDefinition.itr">
           <value>
             <Attribute>
@@ -31,7 +38,28 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/modernizing/src/io/intino/goros/modernizing/monet/renderers/templates/konos/UI.itr">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/modernizing/src/org/monet/space/kernel/bpi/java/locator/PackageReader.java">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/unit/src/io/intino/goros/unit/box/UI.konos">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/unit/src/io/intino/goros/unit/box/install/Installer.java">
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />

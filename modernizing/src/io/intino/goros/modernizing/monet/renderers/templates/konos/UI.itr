@@ -8,6 +8,7 @@ def type(ui)
     Service $module+firstUpperCase~Elements as UI(port="{port}", title="", favicon = "")
         googleApiKey = "{mobile-google-api-key}"
 
+    	Authentication(by = "")
         Use(package = "io.intino.goros.unit", name = "Unit", service = "UnitElements") goros
 
         Resource(path = "/") home as Page(AppTemplate) Main Confidential

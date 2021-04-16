@@ -4,15 +4,16 @@ import io.intino.alexandria.Context;
 import io.intino.alexandria.logger.Logger;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Response implements org.monet.http.Response {
     private Context context;
-    private FileOutputStream stream;
     private File tempFile;
     private String contentType;
     private String filename = "out.zip";
     private int status;
     private String encoding;
+    private PrintWriter writer;
 
     public Response(Context context) {
         this.context = context;
@@ -42,7 +43,12 @@ public class Response implements org.monet.http.Response {
 
     @Override
     public PrintWriter getWriter() {
-        return new PrintWriter(outputStream());
+        if (writer == null) {
+            OutputStream outputStream = outputStream();
+            if (outputStream == null) return null;
+            writer = new PrintWriter(outputStream);
+        }
+        return writer;
     }
 
     @Override
@@ -52,10 +58,11 @@ public class Response implements org.monet.http.Response {
 
     public InputStream stream() {
         try {
-            if (stream == null) return null;
-            stream.close();
+            if (writer == null) return null;
+            writer.flush();
+            writer.close();
             return new FileInputStream(tempFile);
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             Logger.error(e);
             return null;
         }
@@ -66,16 +73,14 @@ public class Response implements org.monet.http.Response {
         tempFile.delete();
     }
 
-    private FileOutputStream outputStream() {
-        if (stream == null) {
-            try {
-                tempFile = File.createTempFile("goros-response", null);
-                stream = new FileOutputStream(tempFile);
-            } catch (IOException e) {
-                Logger.error(e);
-            }
+    private OutputStream outputStream() {
+        try {
+            tempFile = File.createTempFile("goros-response", null);
+            return new FileOutputStream(tempFile);
+        } catch (IOException e) {
+            Logger.error(e);
+            return null;
         }
-        return stream;
     }
 
     public String getContentType() {
@@ -93,4 +98,5 @@ public class Response implements org.monet.http.Response {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }

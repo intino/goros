@@ -3,6 +3,8 @@ dsl Konos
 use Theme
 
 Service UnitElements as UI(port = "{port}", title = "", favicon = "")
+	Authentication(by = "")
+
 	Resource(path = "/goros-home") home as Page(gorosAppTemplate) Main Confidential
 	Resource(path = "/roles") roles as Page(gorosAppTemplate) Confidential
 	Resource(path = "/install") install as Page(gorosInstallTemplate) Confidential
@@ -10,16 +12,26 @@ Service UnitElements as UI(port = "{port}", title = "", favicon = "")
 Template gorosAppTemplate
 
 Template(layout=Vertical) gorosInstallTemplate as Relative(height=100%)
-	Block(layout=Vertical CenterJustified, format=blackBackground) as Relative(height=25%)
-		Text(value="Goros installer", format=h3 white doubleAirLeft)
-		Text(value="Create database", format=h1 white doubleAirLeft)
-	Block(layout=Vertical CenterCenter) as Relative(height=75%)
-		Block
+	Block(layout=Horizontal End, format=blackBackground relative) as Absolute(height=150px)
+		Block as Absolute(width=165px)
+			Image(value="/images/installer.png", format=installerImageStyle) as Absolute(width=128px,height=128px)
+		Block(format=airBottom)
+			Text(value="Goros Installer", format=white doubleAirLeft, mode=Uppercase)
+			Text(value="Upload Business Model", format=h1 white doubleAirLeft)
+	Block(layout=Vertical Flexible CenterCenter) as Relative(height=75%)
+		Block(format=doubleAirTop)
 			Block(format=doubleAirBottom)
-				Text(value="Database root configuration", format=h3)
-				Text(value="Fill root credentials to create database in your server", format=grey)
-			Block(format=doubleAirBottom) > Text(value="username"); Text username as Editable("Fill username")
-			Block > Text(value="password"); Text password as Editable("Fill password") Password
+				Text(value="Unit model not defined", format=h3) title
+				Text(value="Upload Unit model by using eclipse IDE or drag and drop here", format=grey) description
+			Block(format=doubleAirBottom)
+				Text(value="Business unit model zip file")
+				File modelFile as Editable(showDropZone=true)
+				Block(layout=Vertical CenterCenter, format=doubleAirTop, visible=false) uploading > Spinner(mode=Bar)
+			Divider(format=airBottom)
+			Block(layout=Vertical End) > Button(title="Upload", highlight=Outline) upload as Action Readonly
+		Block(layout=Vertical Flexible, visible=false, format=bordered doubleAirTop dialog autoOverflow) loggingBlock as Relative(height=50%, width=100%) Animated
+			Text(value="Console", format=h3 airBottom, translate=true)
+			Text logEntries as Multiple(noItemsMessage="No logging info available")
 
 Template businessUnitsTemplate
 	Text(value="Business units", translate=true)

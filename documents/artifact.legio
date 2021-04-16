@@ -2,14 +2,14 @@ dsl Legio
 
 Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
-	Box(language = "Konos", version = "8.8.30")
+	Box(language = "Konos", version = "8.11.0")
 	Code("io.intino.goros.documents")
 
 	Imports
-		Compile("org.siani.monet", "docservice", "1.1") > Exclude ("org.siani.monet","servlet-api")
+		Compile("org.siani.monet", "docservice", "1.1.1") > Exclude ("org.siani.monet","servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
-		Compile("io.intino.alexandria", "core-framework", "2.0.4")
-		Compile("io.intino.alexandria", "rest", "3.1.1")
+		Compile("io.intino.alexandria", "core-framework", "2.1.0")
+		Compile("io.intino.alexandria", "rest", "3.1.9")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("io.intino.itrules", "engine", "1.0.0")
@@ -76,17 +76,17 @@ Repository("siani-maven") siani
 
 RunConfiguration local-mysql
 	Argument("name", "documents")
-	Argument("workspace", "/Users/rlopez/.monetintinodemo/docservice")
-	Argument("home", "/Users/rlopez/.monetintinodemo/docservice")
+	Argument("workspace", "./temp/docservice")
+	Argument("home", "./temp/docservice")
 	Argument("port", "9001")
 	Argument("jdbc-datasource", "jdbc/DocumentsDatabaseSource")
 	Argument("jdbc-type", "mysql")
-	Argument("jdbc-url", "jdbc:mysql://localhost:3306/monet-intino-demo?autoReconnect=true&amp;useSSL=false")
-	Argument("jdbc-user", "intino")
-	Argument("jdbc-password", "12345678")
+	Argument("jdbc-url", "jdbc:mysql://localhost:3306/viasyobras-docservice?autoReconnect=true&useSSL=false")
+	Argument("jdbc-user", "root")
+	Argument("jdbc-password", "")
 	Argument("true-type-fonts-path", "")
 	Argument("temp-path", "./temp")
-	Argument("document-disks", "/Users/rlopez/.monetintinodemo/docservice/documents")
+	Argument("document-disks", "./temp/docservice/documents")
 	Argument("workqueue-thread-pool-size", "1")
 	Argument("workqueue-collect-work-period", "5")
 	Argument("document-previews-cache-size-in-days", "120")

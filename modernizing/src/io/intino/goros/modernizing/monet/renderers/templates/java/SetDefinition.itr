@@ -194,11 +194,13 @@ def type(setdefinition)
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
     import io.intino.alexandria.ui.displays.events.collection.RefreshCountEvent;
+    import io.intino.alexandria.ui.displays.UserMessage;
     import org.monet.space.kernel.components.layers.NodeLayer;
     import org.monet.space.kernel.model.Node;
     import io.intino.goros.unit.util.*;
 
     import java.util.Collections;
+    import java.util.stream.Collectors;
     import java.util.List;
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
@@ -309,6 +311,12 @@ def type(setdefinition)
         private void removeSelection(Event event) {
             if (selection == null) return;
             NodeLayer nodeLayer = io.intino.goros.unit.util.LayerHelper.nodeLayer();
+            String linkedNodes = selection.stream().filter(Node::isLinked).map(Node::getLabel).collect(Collectors.joining(", "));
+            if (linkedNodes.length() > 0) {
+                notifyUser("Los siguientes elementos no se han borrado por estar en uso: " + linkedNodes, UserMessage.Type.Warning);
+                return;
+            }
+            selection.stream().filter(n -> !n.isLinked()).forEach(nodeLayer::deleteNode);
             selection.forEach(nodeLayer::deleteNode);
             refresh();
         }
@@ -627,7 +635,8 @@ def type(toolbar & singleton) trigger(editableMethods)
         if (result == null) return;
         nodeAdded = true;
         refresh();
-        select(node);
+        //select(result);
+        open(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
@@ -642,7 +651,8 @@ def type(toolbar) trigger(editableMethods)
         if (result == null) return;
         nodeAdded = true;
         refresh();
-        select(node);
+        //select(result);
+        open(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);

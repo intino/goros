@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-//        args = Arrays.asList("./temp/modernization.goros").toArray(new String[0]);
         Logger.info("Starting modernization with args " + String.join(",", args));
         if (args.length <= 0) {
             System.out.println("Path to modernization file not defined");

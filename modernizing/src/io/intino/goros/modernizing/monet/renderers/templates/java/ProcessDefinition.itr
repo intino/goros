@@ -96,10 +96,15 @@ def type(process & embedded)
         }
 
         private void refreshToolbar() {
-            open.address(path -> path.replace(":name", io.intino.goros.unit.util.TaskHelper.nameOf(task)).replace(":task", task.getId()).replace(":inbox", inboxPath()));
+            open.address(this::preparePath);
             toolbar.task(task);
             toolbar.readonly(readonly);
             toolbar.refresh();
+        }
+
+        private String preparePath(String path) {
+            if (task == null) return path;
+            return path.replace(":name", io.intino.goros.unit.util.TaskHelper.nameOf(task)).replace(":task", task.getId()).replace(":inbox", inboxPath());
         }
 
         private String inboxPath() {

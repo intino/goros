@@ -16,6 +16,7 @@ Format("") secondary
 Format("color:'#000'") black
 Format("backgroundColor:'#272C34'") blackBackground
 Format("color:'#777'") grey
+Format("backgroundColor:'#fafafa'") greyBackground
 Format("color:'#F44335'") red
 Format("color:'white'") white
 Format("color:'#777'") description

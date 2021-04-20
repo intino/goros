@@ -20,6 +20,7 @@ def type(ui)
         Resource(path = "/tarea/:name/:inbox/:task") task as Page(AppTemplate) Confidential
         Resource(path = "/permisos") roles as Page(AppTemplate) Confidential
         Resource(path = "/papelera") trash as Page(AppTemplate) Confidential
+        Resource(path = "/noticias") news as Page(AppTemplate) Confidential
 
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
@@ -29,7 +30,7 @@ def type(ui)
             Block(layout=Horizontal Center) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Text(value="Permisos")
             Block(layout=Horizontal Center) taskTray > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Text(value="Mis tareas")
             Block(layout=Horizontal Center) taskBoard > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardLink as Action Addressable($module+firstUpperCase~Elements.taskBoard); Text(value="Tareas")
-            Block(layout=Horizontal Center, visible=false) news > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Text(value="Noticias")
+            Block(layout=Horizontal Center) news > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.news); Text(value="Noticias")
             Block(layout=Horizontal Center) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Text(value="Papelera")
 
         Block(layout=Vertical Flexible)

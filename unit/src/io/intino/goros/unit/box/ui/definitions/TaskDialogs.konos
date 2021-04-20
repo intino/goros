@@ -10,6 +10,7 @@ Template(layout=Horizontal) taskToolbarTemplate
 
 	Dialog(title="Asignar...") assignTaskOwnerDialogBox as Relative(height=80%, width=80%)
 		Block(layout=Vertical Flexible) content as Relative(height=100%, offsetHeight=50px)
+			SearchBox(collections=assignTaskDialogTable)
 			Table(itemClass="org.monet.space.kernel.model.User", scrollingMark=false, format=bordered) assignTaskDialogTable as Selectable(multiple=false)
 				noItemsMessage = "No hay usuarios"
 				Mold
@@ -18,7 +19,7 @@ Template(layout=Horizontal) taskToolbarTemplate
 				Mold
 					Heading assignTaskDialogTableEmailHeading > Text(value="Email", translate=true)
 					Item(height=30px,width=16%) assignTaskDialogTableEmailItem > Text(value="Loading...") email
-			Text(format=doubleAirTop doubleAirBottom) reason as Memo Editable Labeled("Reason")
+			Text(format=doubleAirTop doubleAirBottom greyBackground) reason as Memo Editable Labeled("Reason")
 		Divider
 		Block(layout=Horizontal EndJustified)
 			Button(title="Cancel", format=airRight) cancel as CloseDialog(dialog=assignTaskOwnerDialogBox)

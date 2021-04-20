@@ -60,6 +60,7 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
     @Override
     public void refresh() {
         super.refresh();
+        if (task == null) return;
         assign.visible(!readonly && TaskHelper.isAlive(task) && task.getOwner() == null);
         unAssign.visible(!readonly && TaskHelper.isAlive(task) && task.getOwner() != null);
         abort.visible(!readonly && TaskHelper.isAlive(task));

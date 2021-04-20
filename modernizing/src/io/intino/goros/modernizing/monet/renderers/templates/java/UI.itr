@@ -53,6 +53,10 @@ def type(ui & routedispatcher)
             soul.display(AppTemplate.class).openTrash();
         }
 
+        @Override
+        public void dispatchNews(Soul soul) {
+            soul.display(AppTemplate.class).openNews();
+        }
     }
 end
 
@@ -97,8 +101,8 @@ def type(ui & app)
                 return;
             }
             box().unit().initSession(session());
-            taskTrayLink.address(path -> path.replace(":view", "activas"));
-            taskBoardLink.address(path -> path.replace(":view", "activas"));
+            taskTrayLink.address(path -> path.replace(":folder", "activas"));
+            taskBoardLink.address(path -> path.replace(":folder", "activas"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
             io.intino.goros.unit.util.DisplayHelper.initAgentSession(session());
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());

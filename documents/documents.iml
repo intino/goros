@@ -99,5 +99,6 @@
     <orderEntry type="library" name="Intino: org.siani.monet:docservice:1.1.1" level="project" />
     <orderEntry type="library" name="Intino: mysql:mysql-connector-java:8.0.23" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
+    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
   </component>
 </module>

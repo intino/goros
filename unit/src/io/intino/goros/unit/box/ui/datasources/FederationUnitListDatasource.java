@@ -33,7 +33,7 @@ public class FederationUnitListDatasource extends PageDatasource<FederationUnit>
 
     @Override
     public List<FederationUnit> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<FederationUnit> result = new ArrayList<>(federationUnits(session, roleDefinition, type));
+        List<FederationUnit> result = new ArrayList<>(federationUnits(box, session, roleDefinition, type));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -41,7 +41,7 @@ public class FederationUnitListDatasource extends PageDatasource<FederationUnit>
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return federationUnits(session, roleDefinition, type).size();
+        return federationUnits(box, session, roleDefinition, type).size();
     }
 
     @Override
@@ -49,7 +49,8 @@ public class FederationUnitListDatasource extends PageDatasource<FederationUnit>
         return emptyList();
     }
 
-    private static List<FederationUnit> federationUnits(UISession session, RoleDefinition definition, RoleTypeGrouping type) {
+    private static List<FederationUnit> federationUnits(UnitBox box, UISession session, RoleDefinition definition, RoleTypeGrouping type) {
+        box.linkSession(session);
         ArrayList<FederationUnit> federationUnitList = new ArrayList<>(LayerHelper.federationLayer(session).loadPartners().get().values());
         return federationUnitList.stream().filter(fu -> conforms(fu, definition, type)).collect(Collectors.toList());
     }

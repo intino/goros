@@ -41,12 +41,12 @@ public class RoleListDatasource extends PageDatasource<Role> {
         DataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
-        return new ArrayList<>(roles(request, session));
+        return new ArrayList<>(roles(request, box, session));
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return roles(request(condition, filters), session).size();
+        return roles(request(condition, filters), box, session).size();
     }
 
     @Override
@@ -58,11 +58,12 @@ public class RoleListDatasource extends PageDatasource<Role> {
         return emptyList();
     }
 
-    public static long itemCount(UISession session) {
-        return roles(request(), session).size();
+    public static long itemCount(UnitBox box, UISession session) {
+        return roles(request(), box, session).size();
     }
 
-    private static List<Role> roles(DataRequest request, UISession session) {
+    private static List<Role> roles(DataRequest request, UnitBox box, UISession session) {
+        box.linkSession(session);
         return LayerHelper.roleLayer().loadRoleList(request).get().values().stream().filter(u -> !u.getId().equals("system")).collect(toList());
     }
 

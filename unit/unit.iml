@@ -85,11 +85,9 @@
     <orderEntry type="library" name="Intino: io.intino.itrules:engine:1.0.0" level="project" />
     <orderEntry type="module" module-name="shared" />
     <orderEntry type="module" module-name="unit-elements" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.1.9" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:2.0.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest-accessor:2.2.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:zip:1.0.4" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.9.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:core-framework:2.1.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.1.9" level="project" />
     <orderEntry type="library" name="Intino: commons-io:commons-io:1.4" level="project" />
@@ -261,6 +259,9 @@
     <orderEntry type="library" name="Intino: org.siani.monet:space:1.2.2" level="project" />
     <orderEntry type="library" name="Intino: mysql:mysql-connector-java:8.0.23" level="project" />
     <orderEntry type="library" name="Intino: com.google.protobuf:protobuf-java:3.11.4" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:servlet-api:1.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.1.10" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.9.3" level="project" />
+    <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
+    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
   </component>
 </module>

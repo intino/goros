@@ -30,7 +30,7 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
 
     @Override
     public List<FederationUnitFeeder> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<FederationUnitFeeder> result = new ArrayList<>(federationUnitsFeeders(session, roleDefinition));
+        List<FederationUnitFeeder> result = new ArrayList<>(federationUnitsFeeders(box, session, roleDefinition));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -38,7 +38,7 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return federationUnitsFeeders(session, roleDefinition).size();
+        return federationUnitsFeeders(box, session, roleDefinition).size();
     }
 
     @Override
@@ -46,8 +46,9 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
         return emptyList();
     }
 
-    private static List<FederationUnitFeeder> federationUnitsFeeders(UISession session, RoleDefinition definition) {
+    private static List<FederationUnitFeeder> federationUnitsFeeders(UnitBox box, UISession session, RoleDefinition definition) {
         if (definition == null) return emptyList();
+        box.linkSession(session);
         ArrayList<FederationUnit> federationUnitList = new ArrayList<>(LayerHelper.federationLayer(session).loadPartners().get().values());
         return federationUnitList.stream().map(fu -> fu.getFeederList().get().values()).flatMap(Collection::stream).filter(feeder -> conforms(feeder, definition)).collect(Collectors.toList());
     }

@@ -2,9 +2,8 @@ package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
 import io.intino.goros.unit.box.UnitBox;
-import io.intino.goros.unit.util.AccountHelper;
-import io.intino.goros.unit.util.DisplayHelper;
-import io.intino.goros.unit.util.LayerHelper;
+import io.intino.goros.unit.util.*;
+import org.monet.metamodel.Distribution;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.RoleDefinition;
 import org.monet.metamodel.SendJobActionProperty;
@@ -80,7 +79,9 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
 
         RoleList roleList = roles();
         pendingView.openRoles.visible(roleList.getTotalCount() <= 0);
+        pendingView.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
         pendingView.unAssignedRole.affirmed(translate(DisplayHelper.requireConfirmationMessage(property)));
+        pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
 
         if (roleList.getTotalCount() <= 0) {
             String label = Language.getInstance().getModelResource(roleDefinition().getLabel());

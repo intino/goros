@@ -42,12 +42,12 @@ def type(ui)
                 Text(value="Hay una actualización pendiente. No se puede acceder en estos momentos. Inténtelo más tarde.", format=h4)
                 Link(title="Intentar de nuevo", format=airTop) reloadPage as Action
 
-            Block(layout=Vertical Flexible) dashboardPage as Conditional > TemplateStamp(template=DashboardTemplate) dashboardStamp
-            Block(layout=Vertical Flexible) rolesPage as Conditional > OwnerTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
-            Block(layout=Vertical Flexible) taskTrayPage as Conditional > TemplateStamp(template=TaskTrayTemplate) taskTrayStamp
-            Block(layout=Vertical Flexible) taskBoardPage as Conditional > TemplateStamp(template=TaskBoardTemplate) taskBoardStamp
-            Block(layout=Vertical Flexible) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
-            Block(layout=Vertical Flexible) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
+            Block(layout=Vertical Flexible, visible=false) dashboardPage as Conditional > TemplateStamp(template=DashboardTemplate) dashboardStamp
+            Block(layout=Vertical Flexible, visible=false) rolesPage as Conditional > OwnerTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
+            Block(layout=Vertical Flexible, visible=false) taskTrayPage as Conditional > TemplateStamp(template=TaskTrayTemplate) taskTrayStamp
+            Block(layout=Vertical Flexible, visible=false) taskBoardPage as Conditional > TemplateStamp(template=TaskBoardTemplate) taskBoardStamp
+            Block(layout=Vertical Flexible, visible=false) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
+            Block(layout=Vertical Flexible, visible=false) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
             [$definition+page...[$NL]]
 
     Template(layout=Horizontal Flexible) HeaderTemplate
@@ -89,7 +89,7 @@ def type(definition) trigger(use)
 end
 
 def type(definition & desktop) trigger(declaration)
-    Block(layout=Horizontal Center) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType); Text(value="$label")
+    Block(layout=Horizontal Center, visible=false) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType); Text(value="$label")
 end
 
 def type(definition) trigger(declaration)
@@ -99,9 +99,9 @@ def type(definition & index) trigger(page)
 end
 
 def type(definition & source) trigger(page)
-    Block(layout=Vertical Flexible) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=CoordinacionElements.goros) $name+firstLowerCase~Stamp
+    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=CoordinacionElements.goros) $name+firstLowerCase~Stamp
 end
 
 def type(definition) trigger(page)
-    Block(layout=Vertical Flexible) $name+firstLowerCase~Page as Conditional > TemplateStamp(template=$name+firstUpperCase~Template) $name+firstLowerCase~Stamp
+    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > TemplateStamp(template=$name+firstUpperCase~Template) $name+firstLowerCase~Stamp
 end

@@ -34,12 +34,12 @@ public class SourceDatasource extends PageDatasource<Term> {
         DataRequest request = request(condition, filters, from);
         request.setStartPos(start);
         request.setLimit(count);
-        return new ArrayList<>(terms(source, request));
+        return new ArrayList<>(terms(source, request, box, session));
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return terms(source, request(condition, filters, from)).size();
+        return terms(source, request(condition, filters, from), box, session).size();
     }
 
     @Override
@@ -47,13 +47,14 @@ public class SourceDatasource extends PageDatasource<Term> {
         return emptyList();
     }
 
-    public static long itemCount(Source<SourceDefinition> source, DataRequest request) {
-        return terms(source, request).size();
+    public static long itemCount(Source<SourceDefinition> source, DataRequest request, UnitBox box, UISession session) {
+        return terms(source, request, box, session).size();
     }
 
-    private static List<Term> terms(Source<SourceDefinition> source, DataRequest request) {
+    private static List<Term> terms(Source<SourceDefinition> source, DataRequest request, UnitBox box, UISession session) {
         boolean onlyEnabled = onlyEnabled(request);
         String condition = request.getCondition();
+        box.linkSession(session);
         TermList terms = condition == null || condition.isEmpty() ? source.loadTerms(request, onlyEnabled) : source.searchTerms(request);
         return new ArrayList<>(terms.get().values());
     }

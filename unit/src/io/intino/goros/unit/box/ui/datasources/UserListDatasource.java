@@ -29,12 +29,12 @@ public class UserListDatasource extends PageDatasource<User> {
         DataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
-        return new ArrayList<>(users(request, session));
+        return new ArrayList<>(users(request, box, session));
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return users(request(condition, filters), session).size();
+        return users(request(condition, filters), box, session).size();
     }
 
     @Override
@@ -42,11 +42,12 @@ public class UserListDatasource extends PageDatasource<User> {
         return emptyList();
     }
 
-    public static long itemCount(UISession session) {
-        return users(request(), session).size();
+    public static long itemCount(UnitBox box, UISession session) {
+        return users(request(), box, session).size();
     }
 
-    private static List<User> users(DataRequest request, UISession session) {
+    private static List<User> users(DataRequest request, UnitBox box, UISession session) {
+        box.linkSession(session);
         return LayerHelper.federationLayer(session).searchUsers(request).get().values().stream().filter(u -> !u.getId().equals("system")).collect(toList());
     }
 

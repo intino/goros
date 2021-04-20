@@ -37,6 +37,7 @@ public class GorosInstallTemplate extends AbstractGorosInstallTemplate<UnitBox> 
             notifier.redirect(session().browser().baseUrl());
             return;
         }
+        box().initSession(session());
         title.value(Formatters.firstUpperCase(box().configuration().name()) + " " + translate("model not defined"));
         description.value(translate("Upload") + " " + Formatters.firstUpperCase(box().configuration().name()) + " " + translate("model by using eclipse IDE or drag and drop here"));
         upload.onExecute(e -> updateModel());

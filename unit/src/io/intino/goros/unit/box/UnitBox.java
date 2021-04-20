@@ -1,12 +1,14 @@
 package io.intino.goros.unit.box;
 
 import io.intino.alexandria.ui.services.AuthService;
-import io.intino.alexandria.ui.services.auth.Space;
+import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.listeners.GorosUnitNotifier;
 import io.intino.goros.unit.box.listeners.ListenerGoros;
+import io.intino.goros.unit.util.LayerHelper;
 import org.monet.space.kernel.agents.AgentNotifier;
-import org.monet.space.kernel.configuration.Configuration;
+import org.monet.space.kernel.agents.AgentSession;
 import org.monet.space.kernel.model.BusinessUnit;
+import org.monet.space.kernel.model.Context;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,22 +45,39 @@ public class UnitBox extends AbstractBox {
 
 	@Override
 	public void afterStart() {
+		pushService().onLinkToThread((client, session) -> linkSession(session));
 		GorosUnit.open(normalize(configuration.args()));
 	}
 
 	@Override
 	public void beforeStop() {
-
 	}
 
 	@Override
 	public void afterStop() {
+	}
 
+	public void initSession(UISession session) {
+		Context.getInstance().setApplication(Thread.currentThread().getId(), hostOf(session.browser().homeUrl()), configuration.name(), "UI");
+		Context.getInstance().setUserServerConfig(Thread.currentThread().getId(), hostOf(session.browser().baseUrl()), session.browser().basePath(), Integer.parseInt(configuration.port()));
+		AgentSession.getInstance().add(session.id());
+		linkSession(session);
+		if (session.token() == null) return;
+		org.scribe.model.Token token = new org.scribe.model.Token(session.token().id(), session.token().secret());
+		LayerHelper.federationLayer(session).injectAccessToken(token);
+	}
+
+	public void linkSession(UISession session) {
+		Context.getInstance().setSessionId(Thread.currentThread().getId(), session.id());
+	}
+
+	public BusinessUnit businessUnit() {
+		return BusinessUnit.getInstance();
 	}
 
 	@Override
 	protected AuthService authService(URL authServiceUrl) {
-		return new GorosOAuthAccessor();
+		return new GorosOAuthAccessor(this);
 	}
 
 	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {
@@ -86,6 +105,14 @@ public class UnitBox extends AbstractBox {
 		if (key.equals("jdbc-user")) return "Jdbc.User";
 		if (key.equals("jdbc-password")) return "Jdbc.Password";
 		return "MONET_" + key.toUpperCase().replace("-", "_");
+	}
+
+	private String hostOf(String url) {
+		try {
+			return new URL(url).getHost();
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 }

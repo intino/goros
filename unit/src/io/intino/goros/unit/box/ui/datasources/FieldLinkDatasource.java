@@ -7,6 +7,7 @@ import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.LayerHelper;
 import org.monet.metamodel.IndexDefinition;
+import org.monet.space.kernel.model.Context;
 import org.monet.space.kernel.model.NodeDataRequest;
 import org.monet.space.kernel.model.NodeItem;
 
@@ -31,11 +32,13 @@ public class FieldLinkDatasource extends PageDatasource<NodeItem> {
         NodeDataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.nodeLayer().searchLinkNodeItems(request).get().values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().searchLinkNodeItems(request(condition, filters)).getTotalCount();
     }
 

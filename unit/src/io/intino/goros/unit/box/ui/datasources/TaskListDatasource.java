@@ -54,11 +54,13 @@ public class TaskListDatasource extends PageDatasource<Task> {
         TaskSearchRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.taskLayer().searchTasks(account, request).get().values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.taskLayer().searchTasksCount(account, request(condition, filters));
     }
 

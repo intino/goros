@@ -1,45 +1,63 @@
 package io.intino.goros.unit.box;
 
+import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.restaccessor.Response;
 import io.intino.alexandria.restaccessor.RestAccessor;
 import io.intino.alexandria.restaccessor.exceptions.RestfulFailure;
 import io.intino.alexandria.ui.services.AuthService;
 import io.intino.alexandria.ui.services.auth.*;
 import io.intino.alexandria.ui.services.auth.exceptions.*;
-import org.monet.space.kernel.configuration.Configuration;
-import org.monet.space.kernel.model.BusinessUnit;
+import io.intino.goros.unit.util.LayerHelper;
+import org.monet.federation.accountservice.accountactions.impl.messagemodel.FederationAccount;
+import org.monet.http.Request;
+import org.monet.metamodel.Distribution;
+import org.monet.space.kernel.components.ComponentFederation;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.oauth.OAuthService;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class GorosOAuthAccessor implements AuthService {
-    private RestAccessor api;
+    private final UnitBox box;
+    private final RestAccessor api;
+    private Space space;
 
-    public GorosOAuthAccessor() {
+    public GorosOAuthAccessor(UnitBox box) {
+        this.box = box;
         this.api = new io.intino.alexandria.restaccessor.core.RestAccessor();
     }
 
     @Override
     public URL url() {
-        return urlOf(BusinessUnit.getInstance().getFederation().getUri());
+        return urlOf(box.businessUnit().getFederation().getUri());
     }
 
     @Override
     public Space space() {
-        Space space = new Space(urlOf(BusinessUnit.getInstance().getDistribution().getSpace().getDeployUri()));
-        space.setBaseUrl(url().toString());
+        if (space != null) return space;
+        Distribution distribution = this.box.businessUnit().getDistribution();
+        if (distribution == null || distribution.getSpace() == null) return space;
+        URL baseUrl = urlOf(distribution.getSpace().getDeployUri());
+        space = new Space(url());
+        space.name(box.configuration().name());
+        space.secret(box.configuration().certificatePassword());
+        space.setBaseUrl(baseUrl != null ? baseUrl.toString() : box.configuration().servicesBaseUrl());
         return space;
     }
 
     @Override
     public Authentication authenticate() throws SpaceAuthCallbackUrlIsNull {
         return new Authentication() {
-            private OAuthService authService = serviceOf(url(), space());
+            private OAuthService authService;
             private Token requestToken;
             private Token accessToken;
 
@@ -47,9 +65,12 @@ public class GorosOAuthAccessor implements AuthService {
             public Token requestToken() throws CouldNotObtainRequestToken {
 
                 try {
-                    this.requestToken = tokenFrom(Optional.of(authService.getRequestToken()));
+                    this.requestToken = tokenFrom(Optional.of(authService().getRequestToken()));
                 } catch (Exception exception) {
                     throw new CouldNotObtainRequestToken(exception);
+                } catch (SpaceAuthCallbackUrlIsNull e) {
+                    Logger.error(e);
+                    throw new RuntimeException(e);
                 }
 
                 this.accessToken = null;
@@ -62,9 +83,12 @@ public class GorosOAuthAccessor implements AuthService {
                     return null;
 
                 try {
-                    return new URL(authService.getAuthorizationUrl(token(Optional.of(requestToken))));
+                    return new URL(authService().getAuthorizationUrl(token(Optional.of(requestToken))));
                 } catch (Exception exception) {
                     throw new CouldNotObtainAuthorizationUrl(exception);
+                } catch (SpaceAuthCallbackUrlIsNull e) {
+                    Logger.error(e);
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -79,10 +103,13 @@ public class GorosOAuthAccessor implements AuthService {
                     return null;
 
                 try {
-                    org.scribe.model.Token accessToken = authService.getAccessToken(token(Optional.of(requestToken)), verifier(verifier));
+                    org.scribe.model.Token accessToken = authService().getAccessToken(token(Optional.of(requestToken)), verifier(verifier));
                     this.accessToken = tokenFrom(Optional.of(accessToken));
-                } catch (Exception exception) {
-                    throw new CouldNotObtainAccessToken(exception);
+                } catch (Exception e) {
+                    throw new CouldNotObtainAccessToken(e);
+                } catch (SpaceAuthCallbackUrlIsNull e) {
+                    Logger.error(e);
+                    throw new RuntimeException(e);
                 }
 
                 return this.accessToken;
@@ -91,15 +118,20 @@ public class GorosOAuthAccessor implements AuthService {
             @Override
             public void invalidate() throws CouldNotInvalidateAccessToken {
                 try {
-                    api.post(url(), String.format("/api/invalidate/%s", accessToken.id()));
-                } catch (Exception exception) {
-                    throw new CouldNotInvalidateAccessToken(exception);
+                    ComponentFederation.getInstance().getFederationService().logout(accessToken.id(), LayerHelper.defaultRequest());
+                } catch (Exception e) {
+                    throw new CouldNotInvalidateAccessToken(e);
                 }
             }
 
             @Override
             public Version version() {
-                return Version.OAuth1;
+                return Version.OAuth2;
+            }
+
+            private OAuthService authService() throws SpaceAuthCallbackUrlIsNull {
+                if (authService == null) authService = serviceOf(url(), space());
+                return authService;
             }
         };
     }
@@ -107,8 +139,10 @@ public class GorosOAuthAccessor implements AuthService {
     @Override
     public boolean valid(Token accessToken) {
         try {
-            return getAndCheck(url(), String.format("/api/valid/%s", accessToken.id()));
+            if (accessToken == null) return false;
+            return ComponentFederation.getInstance().getFederationService().isLogged(accessToken.id(), LayerHelper.defaultRequest());
         } catch (Exception e) {
+            Logger.error(e);
             return false;
         }
     }
@@ -116,9 +150,37 @@ public class GorosOAuthAccessor implements AuthService {
     @Override
     public FederationInfo info(Token accessToken) throws CouldNotObtainInfo {
         try {
-            Response response = api.get(url(), String.format("/api/info/%s", accessToken.id()));
-            // FIXME return new FederationInfoResponseAdapter().adapt(response.content());
-            return null;
+            org.monet.federation.accountservice.accountactions.impl.messagemodel.FederationInfo info = ComponentFederation.getInstance().getFederationService().getInfo();
+            return new FederationInfo() {
+                @Override
+                public String name() {
+                    return info.getName();
+                }
+
+                @Override
+                public String title() {
+                    return info.getLabel();
+                }
+
+                @Override
+                public String subtitle() {
+                    return null;
+                }
+
+                @Override
+                public URL logo() {
+                    try {
+                        return new URL(info.getLogoPath());
+                    } catch (MalformedURLException ignored) {
+                        return null;
+                    }
+                }
+
+                @Override
+                public URI pushServerUri() {
+                    return null;
+                }
+            };
         }
         catch (Exception exception) {
             throw new CouldNotObtainInfo(exception);
@@ -128,10 +190,39 @@ public class GorosOAuthAccessor implements AuthService {
     @Override
     public UserInfo me(Token accessToken) throws CouldNotObtainInfo {
         try {
-            Response response = api.get(url(), String.format("/api/me/%s", accessToken.id()));
-            // FIXME return new UserInfoResponseAdapter().adapt(response.content());
-            return null;
-        } catch (RestfulFailure exception) {
+            FederationAccount account = ComponentFederation.getInstance().getFederationService().getAccount(accessToken.id(), LayerHelper.defaultRequest());
+            return new UserInfo() {
+                @Override
+                public String username() {
+                    return account.getUsername();
+                }
+
+                @Override
+                public String fullName() {
+                    return account.getFullname();
+                }
+
+                @Override
+                public URL photo() {
+                    return null;
+                }
+
+                @Override
+                public String email() {
+                    return account.getEmail();
+                }
+
+                @Override
+                public String language() {
+                    return account.getLang();
+                }
+
+                @Override
+                public List<String> roleList() {
+                    return Collections.emptyList();
+                }
+            };
+        } catch (Exception exception) {
             throw new CouldNotObtainInfo(exception);
         }
     }
@@ -153,14 +244,24 @@ public class GorosOAuthAccessor implements AuthService {
         if (!token.isPresent())
             return null;
 
-        return () -> token.get().getToken();
+        return new Token() {
+            @Override
+            public String id() {
+                return token.get().getToken();
+            }
+
+            @Override
+            public String secret() {
+                return token.get().getSecret();
+            }
+        };
     }
 
     private org.scribe.model.Token token(Optional<Token> token) {
         if (!token.isPresent())
             return null;
 
-        return new org.scribe.model.Token(token.get().id(), "");
+        return new org.scribe.model.Token(token.get().id(), token.get().secret());
     }
 
     private org.scribe.model.Verifier verifier(Verifier verifier) {
@@ -180,9 +281,9 @@ public class GorosOAuthAccessor implements AuthService {
     }
 
     private org.scribe.builder.api.Api apiOf(URL federation) {
-        final String AuthenticationPath = "/accounts/authorization?oauth_token=%s";
-        final String RequestTokenPath = "/accounts/tokens/request";
-        final String AccessTokenPath = "/accounts/tokens/access";
+        final String AuthenticationPath = "/accounts/authorization/?oauth_token=%s";
+        final String RequestTokenPath = "/accounts/tokens/request/";
+        final String AccessTokenPath = "/accounts/tokens/access/";
         final String url = federation.toString();
 
         return new DefaultApi10a() {

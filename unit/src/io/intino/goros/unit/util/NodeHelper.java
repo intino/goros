@@ -252,7 +252,9 @@ public class NodeHelper {
     }
 
     public static URL urlOf(Reference reference, String attribute, boolean preview) {
-        return urlOf((Picture) reference.getAttribute(attribute).getValue(), preview);
+        ReferenceAttribute<?> picture = reference.getAttribute(attribute);
+        if (picture == null) return null;
+        return urlOf((Picture) picture.getValue(), preview);
     }
 
     public static URL urlOf(FieldPicture field, boolean preview) {

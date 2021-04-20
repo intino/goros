@@ -33,12 +33,12 @@ public class TrashDatasource extends PageDatasource<Node> {
         DataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
-        return new ArrayList<>(load(request).get().values());
+        return new ArrayList<>(load(request, box, session).get().values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return load(request(condition, filters)).getTotalCount();
+        return load(request(condition, filters), box, session).getTotalCount();
     }
 
     @Override
@@ -47,7 +47,8 @@ public class TrashDatasource extends PageDatasource<Node> {
         return emptyList();
     }
 
-    private static NodeList load(DataRequest request) {
+    private static NodeList load(DataRequest request, UnitBox box, UISession session) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().loadNodesFromTrash(request);
     }
 

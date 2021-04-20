@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="$MAVEN_REPOSITORY$/io/intino/alexandria/ui-framework/4.9.2/ui-framework-4.9.2-sources.jar!/io/intino/alexandria/ui/spark/pages/Page.java">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/documents/src/io/intino/goros/documents/box/services/Response.java">
           <value>
             <Attribute>
@@ -49,6 +56,13 @@
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/unit/src/io/intino/goros/unit/box/GorosOAuthAccessor.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
             </Attribute>
           </value>
         </entry>

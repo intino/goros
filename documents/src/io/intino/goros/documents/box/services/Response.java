@@ -13,6 +13,7 @@ public class Response implements org.monet.http.Response {
     private String filename = "out.zip";
     private int status;
     private String encoding;
+    private FileOutputStream stream;
     private PrintWriter writer;
 
     public Response(Context context) {
@@ -58,9 +59,8 @@ public class Response implements org.monet.http.Response {
 
     public InputStream stream() {
         try {
-            if (writer == null) return null;
-            writer.flush();
-            writer.close();
+            if (writer != null) writer.close();
+            else if (stream == null) return null;
             return new FileInputStream(tempFile);
         } catch (FileNotFoundException e) {
             Logger.error(e);
@@ -74,13 +74,15 @@ public class Response implements org.monet.http.Response {
     }
 
     private OutputStream outputStream() {
-        try {
-            tempFile = File.createTempFile("goros-response", null);
-            return new FileOutputStream(tempFile);
-        } catch (IOException e) {
-            Logger.error(e);
-            return null;
+        if (stream == null) {
+            try {
+                tempFile = File.createTempFile("goros-response", null);
+                stream = new FileOutputStream(tempFile);
+            } catch (IOException e) {
+                Logger.error(e);
+            }
         }
+        return stream;
     }
 
     public String getContentType() {

@@ -30,7 +30,7 @@ public class FederationUnitServiceListDatasource extends PageDatasource<Federati
 
     @Override
     public List<FederationUnitService> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<FederationUnitService> result = new ArrayList<>(federationUnitsServices(session, roleDefinition));
+        List<FederationUnitService> result = new ArrayList<>(federationUnitsServices(box, session, roleDefinition));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -38,7 +38,7 @@ public class FederationUnitServiceListDatasource extends PageDatasource<Federati
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return federationUnitsServices(session, roleDefinition).size();
+        return federationUnitsServices(box, session, roleDefinition).size();
     }
 
     @Override
@@ -46,8 +46,9 @@ public class FederationUnitServiceListDatasource extends PageDatasource<Federati
         return emptyList();
     }
 
-    private static List<FederationUnitService> federationUnitsServices(UISession session, RoleDefinition definition) {
+    private static List<FederationUnitService> federationUnitsServices(UnitBox box, UISession session, RoleDefinition definition) {
         if (definition == null) return emptyList();
+        box.linkSession(session);
         ArrayList<FederationUnit> federationUnitList = new ArrayList<>(LayerHelper.federationLayer(session).loadPartners().get().values());
         return federationUnitList.stream().map(fu -> fu.getServiceList().get().values()).flatMap(Collection::stream).filter(service -> conforms(service, definition)).collect(Collectors.toList());
     }

@@ -30,7 +30,7 @@ public class NodeTasksDatasource extends PageDatasource<Task> {
 
     @Override
     public List<Task> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<Task> result = toList(LayerHelper.taskLayer().loadTasks(node, Strings.ALL, Strings.ALL));
+        List<Task> result = toList(load(node));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -38,7 +38,12 @@ public class NodeTasksDatasource extends PageDatasource<Task> {
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return LayerHelper.taskLayer().loadTasks(node, Strings.ALL, Strings.ALL).getTotalCount();
+        return load(node).getTotalCount();
+    }
+
+    private TaskList load(Node node) {
+        box.linkSession(session);
+        return LayerHelper.taskLayer().loadTasks(node, Strings.ALL, Strings.ALL);
     }
 
     @Override

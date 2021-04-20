@@ -34,11 +34,13 @@ public abstract class NodeDatasource extends PageDatasource<Node> {
         NodeDataRequest request = request(condition, filters, view);
         request.setStartPos(start);
         request.setLimit(count);
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.nodeLayer().requestNodeSetItems(node.getId(), type, request).values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().requestNodeSetItemsCount(node.getId(), type, request(condition, filters, view));
     }
 

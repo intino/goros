@@ -37,11 +37,13 @@ public class CollectionDatasource extends PageDatasource<Node> {
         NodeDataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.nodeLayer().requestNodeListItems(set.getId(), request).values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().requestNodeListItemsCount(set.getId(), request(condition, filters));
     }
 

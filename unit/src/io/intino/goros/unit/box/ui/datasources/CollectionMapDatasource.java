@@ -42,11 +42,13 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         request.setStartPos(0);
         request.setLimit(1000000);
         request.setBoundingBox(boundingBoxOf(boundingBox));
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.nodeLayer().requestNodeListItems(set.getId(), request).values().stream().map(node -> placeMarkOf(node)).collect(toList()));
     }
 
     @Override
     public long placeMarkCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().requestNodeListItemsCount(set.getId(), request(condition, filters));
     }
 

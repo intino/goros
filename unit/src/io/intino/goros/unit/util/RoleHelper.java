@@ -1,14 +1,12 @@
 package io.intino.goros.unit.util;
 
+import io.intino.alexandria.ui.services.push.UISession;
 import org.monet.metamodel.ContainerDefinition;
 import org.monet.metamodel.DesktopDefinition;
 import org.monet.metamodel.Distribution;
 import org.monet.metamodel.NodeDefinition;
 import org.monet.metamodel.internal.Ref;
-import org.monet.space.kernel.model.FeederRole;
-import org.monet.space.kernel.model.Role;
-import org.monet.space.kernel.model.ServiceRole;
-import org.monet.space.kernel.model.UserRole;
+import org.monet.space.kernel.model.*;
 import io.intino.goros.unit.box.ui.datasources.model.role.RoleExpiredGrouping;
 import io.intino.goros.unit.box.ui.datasources.model.role.RoleNatureGrouping;
 
@@ -17,6 +15,12 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 public class RoleHelper {
+
+	public static boolean canAccessRoles(UISession session) {
+		Distribution distribution = BusinessUnit.getInstance().getDistribution();
+		Distribution.ShowProperty showProperty = distribution.getShow();
+		return showProperty.getTabRoles() != null && AccountHelper.hasRoles(showProperty.getTabRoles().getFor(), session);
+	}
 
 	public static List<Ref> nodeDefinitionRoles(Distribution.ShowProperty showProperty, String code) {
 		NodeDefinition definition = showProperty.getTabEnvironment().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getNodeDefinition(te.getValue())).filter(d -> d.getCode().equals(code)).findFirst().orElse(null);

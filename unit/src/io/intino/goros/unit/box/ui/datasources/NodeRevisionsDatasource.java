@@ -30,11 +30,13 @@ public class NodeRevisionsDatasource extends PageDatasource<Revision> {
         DataRequest request = request(condition, filters);
         request.setStartPos(start);
         request.setLimit(count);
+        box.linkSession(session);
         return new ArrayList<>(LayerHelper.nodeLayer().requestRevisionListItems(node.getId(), request).values());
     }
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        box.linkSession(session);
         return LayerHelper.nodeLayer().requestRevisionListItemsCount(node.getId(), request(condition, filters));
     }
 

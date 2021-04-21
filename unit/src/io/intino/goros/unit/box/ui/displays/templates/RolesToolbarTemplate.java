@@ -65,7 +65,7 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
             });
         });
         userRoleBlock.onShow(e -> {
-            userRoleBlock.addRoleUserTable.source(new UserListDatasource(box(), session()));
+            userRoleBlock.addRoleUserTable.source(new UserListDatasource(box(), session(), true));
             userRoleBlock.addRoleUserTable.reload();
         });
     }

@@ -123,7 +123,7 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
     }
 
     private void refreshUsersTable() {
-        assignTaskDialogTable.source(new UserListDatasource(box(), session()));
+        assignTaskDialogTable.source(new UserListDatasource(box(), session(), false));
         assignTaskDialogTable.reload();
     }
 

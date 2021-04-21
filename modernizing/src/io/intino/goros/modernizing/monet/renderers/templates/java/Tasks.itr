@@ -200,7 +200,7 @@ def type(tasks & embedded)
                 tableView.hide();
                 listView.show();
             }
-            selectedTask = null;
+            //selectedTask = null;
         }
 
         private void refresh(Task task) {
@@ -338,7 +338,7 @@ def type(tasks)
             super.refresh();
             label.value(translate(inbox == io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox.TaskBoard ? "Tasks" : "My tasks"));
             refreshContent();
-            viewSelector.select(view);
+            if (viewSelector.selection().size() <= 0) viewSelector.select(view);
         }
 
         private void initToolbar() {

@@ -42,7 +42,6 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
             row.tasksTableLabelItem.label.value(task.getLabel());
             row.tasksTableLabelItem.state.value(translate(TaskHelper.state(task)));
             row.tasksTableLabelItem.state.backgroundColor(TaskHelper.stateColor(task));
-            row.tasksTableDescriptionItem.description.value(task.getDescription());
             row.tasksTableOwnerItem.owner.value(task.getOwner() != null ? task.getOwner().getInfo().getFullname() : null);
             row.tasksTableCountMessagesItem.countMessages.value(task.getNewMessagesCount());
             row.tasksTableCreateDateItem.createDate.value(task.getInternalCreateDate().toInstant());

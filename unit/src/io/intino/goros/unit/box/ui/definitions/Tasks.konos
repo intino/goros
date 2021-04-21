@@ -11,27 +11,24 @@ Template(layout=Vertical Flexible) tasksTableCatalog as Relative(height=100%)
 		noItemsMessage = "No hay tareas"
 		Mold
 			Heading tasksTableLabelHeading > Text(value="Título")
-			Item(height=55px,width=20%) tasksTableLabelItem
-				Text(value="Loading...") label
+			Item(height=80px,width=50%) tasksTableLabelItem
+				Text(value="Loading...", cropWithEllipsis=120Chars) label
 				Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="#33942F")
 		Mold
-			Heading tasksTableDescriptionHeading > Text(value="Descripción")
-			Item(height=55px,width=30%) tasksTableDescriptionItem > Text description
-		Mold
 			Heading tasksTableOwnerHeading > Block(layout=Horizontal CenterJustified) > Text(value="Responsable")
-			Item(height=55px,width=10%) tasksTableOwnerItem > Block(layout=Horizontal CenterJustified) > Text owner
+			Item(height=80px,width=10%) tasksTableOwnerItem > Block(layout=Horizontal CenterJustified) > Text owner
 		Mold
 			Heading tasksTableCreateDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Creada")
-			Item(height=55px,width=10%) tasksTableCreateDateItem > Block(layout=Horizontal CenterJustified) > Date createDate
+			Item(height=80px,width=10%) tasksTableCreateDateItem > Block(layout=Horizontal CenterJustified) > Date createDate
 		Mold
 			Heading tasksTableUpdateDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Actualizada")
-			Item(height=55px,width=10%) tasksTableUpdateDateItem > Block(layout=Horizontal CenterJustified) > Date updateDate
+			Item(height=80px,width=10%) tasksTableUpdateDateItem > Block(layout=Horizontal CenterJustified) > Date updateDate
 		Mold
 			Heading tasksTableCountMessagesHeading > Block(layout=Horizontal CenterJustified) > Text(value="Mensajes")
-			Item(height=55px,width=10%) tasksTableCountMessagesItem > Block(layout=Horizontal CenterJustified) > Number countMessages
+			Item(height=80px,width=10%) tasksTableCountMessagesItem > Block(layout=Horizontal CenterJustified) > Number countMessages
 		Mold
 			Heading tasksTableOperationsHeading
-			Item(height=55px,width=10%) tasksTableOperationsItem
+			Item(height=80px,width=10%) tasksTableOperationsItem
 				MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
 
 Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)

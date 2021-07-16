@@ -3,6 +3,7 @@ def type(process)
 
     use UI
     use Theme
+    [$display+use...[$NL]]
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=bordered spaced) header
@@ -30,5 +31,15 @@ def type(process)
             Block(layout=Vertical Flexible) stateView as Conditional(viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) stateViewStamp
 
     Template(format=spaced) $name+firstUpperCase~StateViewTemplate as Relative(height=100%)
+        Block as Conditional
+            [$display...[$NL]]
         OwnerTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
+end
+
+def type(display) trigger(use)
+    use $name+firstUpperCase
+end
+
+def type(display)
+    TemplateStamp(template=$name+firstUpperCase~$viewName~ViewTemplate)
 end

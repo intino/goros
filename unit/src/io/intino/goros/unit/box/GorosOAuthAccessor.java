@@ -45,8 +45,7 @@ public class GorosOAuthAccessor implements AuthService {
     public Space space() {
         if (space != null) return space;
         Distribution distribution = this.box.businessUnit().getDistribution();
-        if (distribution == null || distribution.getSpace() == null) return space;
-        URL baseUrl = urlOf(distribution.getSpace().getDeployUri());
+        URL baseUrl = distribution != null && distribution.getSpace() != null ? urlOf(distribution.getSpace().getDeployUri()) : urlOf(box.configuration.servicesBaseUrl());
         space = new Space(url());
         space.name(box.configuration().name());
         space.secret(box.configuration().certificatePassword());

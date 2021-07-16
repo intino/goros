@@ -1,6 +1,7 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
+import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.*;
 import org.monet.metamodel.Distribution;
@@ -139,7 +140,9 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
     }
 
     private void setup() {
+        notifyUser("Setting up job...", UserMessage.Type.Loading);
         task.getProcess().setupSendJobAction();
+        notifyUser("Job setup", UserMessage.Type.Success);
     }
 
     private TaskOrder order() {

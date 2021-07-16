@@ -7,7 +7,7 @@ public class TranslationsTemplate extends Template {
 
 	public RuleSet ruleSet() {
 		return new RuleSet().add(
-			rule().condition((type("translations"))).output(literal("dsl Konos\n\nTranslator(language = Spanish)"))
+			rule().condition((type("translations"))).output(literal("dsl Konos\n\nTranslator(language = Spanish)\n\tTranslation(\"Operation executed\", \"Operación ejecutada correctamente\")\n    Translation(\"Operation canceled\", \"Operación cancelada\")"))
 		);
 	}
 }

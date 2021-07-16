@@ -25,7 +25,7 @@ def type(setdefinition)
             Block(layout=Horizontal EndJustified)
                 $toolbar+navigable
 
-        Selector viewSelector as Tabs
+        Selector viewSelector as Tabs(scrollButtons=Auto)
             [$view+selector...[$NL]]
 
         Block(layout=Horizontal Flexible, format=smallAirTop)
@@ -40,7 +40,7 @@ def type(setdefinition)
             [$toolbar+block]
 
         Dialog(title="Descargar...") DownloadDialog as Relative(height=90%, width=60%)
-            OwnerTemplateStamp(template="NodeDownloadDialog", owner=CoordinacionElements.goros) dialog
+            OwnerTemplateStamp(template="NodeDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
 
     [$view+template...[$NL]]
     [$view+filterTemplate...[$NL]]

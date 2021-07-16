@@ -2,6 +2,7 @@ package io.intino.goros.modernizing.monet.renderers;
 
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
+import io.intino.goros.modernizing.monet.renderers.definition.FieldRenderer;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
@@ -99,6 +100,12 @@ public abstract class Renderer {
 	protected String clean(Object label) {
 		if (label == null) return null;
 		return ((String)label).replace("\n", "");
+	}
+
+	protected FieldRenderer renderer(FieldProperty fieldProperty, CompositeFieldProperty composite) {
+		FieldRenderer renderer = new FieldRenderer(dictionary, modernization, fieldProperty);
+		renderer.parent(composite);
+		return renderer;
 	}
 
 	private boolean containsDefinition(Definition definition, DesktopDefinitionBase.ViewProperty viewProperty) {

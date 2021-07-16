@@ -1,6 +1,7 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
+import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.DisplayHelper;
 import io.intino.goros.unit.util.LayerHelper;
@@ -84,9 +85,11 @@ public class TaskPlaceEditionTemplate extends AbstractTaskPlaceEditionTemplate<U
     }
 
     private void solve() {
+        notifyUser("Resolving task...", UserMessage.Type.Loading);
         ValidationResult validation = task.getProcess().solveEditionAction();
         solveErrorMessageBlock.visible(!validation.isValid());
         if (!validation.isValid()) solveErrorMessage.value(solveErrorMessage(validation));
+        notifyUser("Task resolved", UserMessage.Type.Success);
     }
 
     private String solveErrorMessage(ValidationResult validation) {

@@ -100,7 +100,7 @@ def type(definition & index) trigger(page)
 end
 
 def type(definition & source) trigger(page)
-    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=CoordinacionElements.goros) $name+firstLowerCase~Stamp
+    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~Stamp
 end
 
 def type(definition) trigger(page)

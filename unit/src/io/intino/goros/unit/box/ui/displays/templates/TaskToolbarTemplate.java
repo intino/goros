@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
+import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.UserListDatasource;
 import io.intino.goros.unit.box.ui.displays.rows.AssignTaskDialogTableRow;
@@ -81,17 +82,25 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
     }
 
     private void abort() {
+        unAssign.readonly(true);
+        notifyUser("Unassigning task...", UserMessage.Type.Loading);
         TaskLayer taskLayer = LayerHelper.taskLayer();
         taskLayer.abortTask(task.getId());
         task(taskLayer.loadTask(this.task.getId()));
         abortListener.accept(task);
+        notifyUser("Task unassigned", UserMessage.Type.Success);
+        unAssign.readonly(false);
     }
 
     private void assign(User user, String reason) {
+        assign.readonly(true);
         assignTaskOwnerDialogBox.close();
+        notifyUser("Assigning task...", UserMessage.Type.Loading);
         saveTaskOwner(user, reason);
         refresh();
         changeListener.accept(task);
+        notifyUser("Task assigned", UserMessage.Type.Success);
+        assign.readonly(false);
     }
 
     private void unAssign() {

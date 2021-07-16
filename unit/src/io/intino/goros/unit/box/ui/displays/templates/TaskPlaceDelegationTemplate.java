@@ -1,6 +1,7 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.Display;
+import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.*;
 import org.monet.metamodel.*;
@@ -142,7 +143,9 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     }
 
     private void setup() {
+        notifyUser("Setting up delegation...", UserMessage.Type.Loading);
         task.getProcess().setupDelegationAction();
+        notifyUser("Delegation setup", UserMessage.Type.Success);
     }
 
     private TaskOrder order() {

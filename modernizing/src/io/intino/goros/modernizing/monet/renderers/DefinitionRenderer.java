@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public abstract class DefinitionRenderer<D extends Definition> extends Renderer {
 	private final D definition;
-	private Set<String> addedDisplays = new HashSet<>();
+	private final Set<String> addedDisplays = new HashSet<>();
 
 	public DefinitionRenderer(Dictionary dictionary, Modernization modernization, D definition) {
 		super(dictionary, modernization);

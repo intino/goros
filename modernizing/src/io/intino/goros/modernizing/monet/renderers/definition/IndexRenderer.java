@@ -7,6 +7,7 @@ import io.intino.goros.modernizing.monet.renderers.RendererHelper;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.IndexTemplate;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
+import io.intino.itrules.formatters.StringFormatters;
 import org.monet.metamodel.AttributeProperty;
 import org.monet.metamodel.IndexDefinition;
 import org.monet.metamodel.IndexDefinitionBase;
@@ -22,6 +23,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 
 	@Override
 	public void write() {
+		if (definition().getViewList().size() <= 0) return;
 		FrameBuilder builder = buildFrame();
 		writeKonos(builder);
 		writeViewsTemplate();
@@ -39,6 +41,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	}
 
 	private void addView(IndexDefinitionBase.IndexViewProperty viewProperty, FrameBuilder builder) {
+		if (RendererHelper.countAttributes(viewProperty) == 0) return;
 		builder.add("view", viewFrame(viewProperty));
 	}
 
@@ -90,7 +93,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	private void writeViewTemplate(IndexDefinitionBase.IndexViewProperty view) {
 		resetAddedDisplays();
 		FrameBuilder viewFrame = viewFrame(view);
-		File file = new File(javaPackage() + nameOf(definition()) + nameOf(view) + "Table.java");
+		File file = new File(javaPackage() + nameOf(definition()) + StringFormatters.firstUpperCase().format(nameOf(view)) + "Table.java");
 		writeFrame(file, javaTemplate().render(viewFrame.toFrame()));
 	}
 

@@ -111,6 +111,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	protected void addOperation(NodeDefinitionBase.OperationProperty operation, FrameBuilder builder) {
 		FrameBuilder result = new FrameBuilder("operation");
 		if (isDownloadOperation(operation)) result.add("download");
+		if (operation.getConfirmation() != null) result.add("confirmation");
 		result.add("name", operation.getName());
 		result.add("label", clean(operation.getLabel()));
 		if (operation.getConfirmation() != null) result.add("confirmText", operation.getConfirmation().getDescription());

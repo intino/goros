@@ -15,7 +15,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FormRenderer extends NodeRenderer<FormDefinition> {
 
@@ -32,7 +31,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	@Override
 	protected FrameBuilder buildFrame() {
 		FrameBuilder result = super.buildFrame().add("formdefinition");
-		addCompositeViews(result);
+		addCompositeFieldsTemplates(result);
 		return result;
 	}
 
@@ -74,13 +73,14 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	}
 
 	private void writeCompositeFieldsTemplate() {
-		definition().getViewList().stream().filter(view -> {
-			ArrayList<Ref> field = view.getShow().getField();
-			return field != null && field.stream().anyMatch(ref -> fieldProperty(ref) instanceof CompositeFieldProperty);
-		}).forEach(view -> {
-			Stream<FieldProperty> compositeStream = view.getShow().getField().stream().map(this::fieldProperty).filter(f -> f instanceof CompositeFieldProperty);
-			compositeStream.forEach(composite -> writeCompositeFieldTemplate((CompositeFieldProperty) composite));
-		});
+//		definition().getViewList().stream().filter(view -> {
+//			ArrayList<Ref> field = view.getShow().getField();
+//			return field != null && field.stream().anyMatch(ref -> fieldProperty(ref) instanceof CompositeFieldProperty);
+//		}).forEach(view -> {
+//			Stream<FieldProperty> compositeStream = view.getShow().getField().stream().map(this::fieldProperty).filter(f -> f instanceof CompositeFieldProperty);
+//			compositeStream.forEach(composite -> writeCompositeFieldTemplate((CompositeFieldProperty) composite));
+//		});
+		definition().getCompositeFieldPropertyList().forEach(this::writeCompositeFieldTemplate);
 	}
 
 	private void writeCompositeFieldTemplate(CompositeFieldProperty field) {
@@ -88,14 +88,11 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		FrameBuilder viewFrame = compositeViewFrame(field, new FrameBuilder());
 		File file = new File(javaPackage() + nameOf(definition()) + StringUtil.firstUpperCase(field.getName()) + "Template.java");
 		writeFrame(file, new io.intino.goros.modernizing.monet.renderers.templates.java.FormTemplate().render(viewFrame.toFrame()));
-		field.getAllFieldPropertyList().stream().filter(FieldProperty::isComposite).forEach(f -> writeCompositeFieldTemplate((CompositeFieldProperty) f));
+		field.getCompositeFieldPropertyList().forEach(this::writeCompositeFieldTemplate);
 	}
 
-	private void addCompositeViews(FrameBuilder builder) {
-		definition().getViewList().stream().filter(v -> v.getShow().getField().size() > 0).forEach(v -> {
-			ArrayList<Ref> fieldList = v.getShow().getField();
-			fieldList.stream().filter(r -> fieldProperty(r) instanceof CompositeFieldProperty).map(this::fieldProperty).forEach(f -> addCompositeView((CompositeFieldProperty) f, builder));
-		});
+	private void addCompositeFieldsTemplates(FrameBuilder builder) {
+		definition().getCompositeFieldPropertyList().forEach(f -> addCompositeView(f, builder));
 	}
 
 	private void addCompositeView(CompositeFieldProperty fieldProperty, FrameBuilder builder) {
@@ -227,7 +224,8 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		}
 		else if (element.isBox()) {
 			LayoutElementBoxDefinition box = (LayoutElementBoxDefinition) element;
-			result.add("field", renderer(definition().getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition())));
+			FieldProperty field = definition().getField(box.getLink());
+			if (field != null) result.add("field", renderer(definition().getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition())));
 		}
 		builder.add("element", result);
 	}
@@ -276,12 +274,6 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 
 	private void addField(FieldProperty fieldProperty, CompositeFieldProperty composite, FrameBuilder builder) {
 		builder.add("field", renderer(fieldProperty, composite).buildFrame().add("definition", nameOf(definition())));
-	}
-
-	private FieldRenderer renderer(FieldProperty fieldProperty, CompositeFieldProperty composite) {
-		FieldRenderer renderer = new FieldRenderer(dictionary, modernization, fieldProperty);
-		renderer.parent(composite);
-		return renderer;
 	}
 
 }

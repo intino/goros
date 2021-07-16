@@ -104,6 +104,16 @@ public class NodeHelper {
         };
     }
 
+    public static boolean isOperationConfirmationRequired(Node node, String operation) {
+        OperationConfirmation confirmation = new OperationConfirmation();
+        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_WHEN, null, current);
+        event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
+        event.addParameter(MonetEvent.PARAMETER_COMMAND_CONFIRMATION_REQUIRED, confirmation);
+        AgentNotifier.getInstance().notify(event);
+        return confirmation.isRequired();
+    }
+
     public static void executeOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
         actionable.readonly(true);
         Node current = LayerHelper.nodeLayer().loadNode(node.getId());
@@ -112,7 +122,7 @@ public class NodeHelper {
         AgentNotifier.getInstance().notify(event);
         actionable.readonly(false);
         ClientOperation clientOperation = AgentUserClient.getInstance().getOperationForUser(Thread.currentThread().getId());
-        String message = AgentUserClient.getInstance().getMessageForUser(Thread.currentThread().getId());
+        String message = agentUserClientMessage();
 
         if (clientOperation != null) {
             dispatchOperation(dispatcher, session, clientOperation);
@@ -121,6 +131,24 @@ public class NodeHelper {
         else {
             if (message != null) actionable.notifyUser(message, UserMessage.Type.Error);
         }
+    }
+
+    public static void cancelOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
+        actionable.readonly(true);
+        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_ON_CANCEL, null, current);
+        event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
+        AgentNotifier.getInstance().notify(event);
+        actionable.readonly(false);
+        String message = agentUserClientMessage();
+        if (message == null) return;
+        actionable.notifyUser(successMessage, UserMessage.Type.Info);
+    }
+
+    private static String agentUserClientMessage() {
+        String message = AgentUserClient.getInstance().getMessageForUser(Thread.currentThread().getId());
+        AgentUserClient.getInstance().clear(Thread.currentThread().getId());
+        return message;
     }
 
     private static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {

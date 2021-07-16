@@ -29,12 +29,16 @@ def type(layoutRow)
         [$element...[$NL]]
 end
 
+def type(layoutElement & section) trigger(use)
+    [$row+use...[$NL]]
+end
+
 def type(layoutElement) trigger(use)
     [$field+use]
 end
 
 def type(layoutElement & section)
-    Block(layout=Horizontal Flexible)
+    Block(layout=Vertical Flexible)
         [Text(value="$label")]
         [$row...[$NL]]
 end
@@ -61,6 +65,10 @@ end
 
 def type(field & link) trigger(use)
     use $index+firstUpperCase
+end
+
+def type(field & composite) trigger(use)
+    [$field+use...[$NL]]
 end
 
 def type(field) trigger(use)

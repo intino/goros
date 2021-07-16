@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        args = Arrays.asList("/Users/mcaballero/Proyectos/goros-tests/limpiezaplayas/coordinacion/modernization.goros").toArray(new String[0]);
+        args = Arrays.asList("/Users/mcaballero/Proyectos/externa/cruz-roja/Modernizado/ejecucion/modernization.goros").toArray(new String[0]);
         Logger.info("Starting modernization with args " + String.join(",", args));
         if (args.length <= 0) {
             System.out.println("Path to modernization file not defined");

@@ -26,7 +26,7 @@ def type(nodedefinition)
             Block(layout=Horizontal Flexible, visible=false)
                 Button(title="Restaurar", size=Small, highlight=Outline) restore as Action Affirmed("¿Está seguro que quiere restaurar esta revisión?")
 
-        Selector viewSelector as Tabs
+        Selector viewSelector as Tabs(scrollButtons=Auto)
             [$view+declaration...[$NL]]
 
         Block(layout=Vertical Flexible)

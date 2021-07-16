@@ -112,6 +112,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		if (showProperty.getIndex() != null) return true;
 		if (showProperty.getLocations() != null) return true;
 		if (showProperty.getSharedPrototypes() != null) return true;
+		if (showProperty.getOwnedPrototypes() != null) return true;
 		return false;
 	}
 

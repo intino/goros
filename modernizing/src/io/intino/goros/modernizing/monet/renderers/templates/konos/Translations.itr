@@ -2,4 +2,6 @@ def type(translations)
     dsl Konos
 
     Translator(language = Spanish)
+    	Translation("Operation executed", "Operación ejecutada correctamente")
+	    Translation("Operation canceled", "Operación cancelada")
 end

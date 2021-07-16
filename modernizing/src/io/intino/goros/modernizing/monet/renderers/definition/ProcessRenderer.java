@@ -41,11 +41,19 @@ public abstract class ProcessRenderer<D extends ProcessDefinition> extends Defin
 	}
 
 	protected void addDisplayList(FrameBuilder builder) {
+		resetAddedDisplays();
 		definition().getViewList().stream().filter(v -> v.getShow() != null && v.getShow().getTarget() != null).forEach(v -> {
 			Ref target = v.getShow().getTarget();
 			NodeDefinition definition = dictionary.getNodeDefinition(target.getDefinition());
 			addDisplayFor(definition, target.getValue(), builder);
 		});
+	}
+
+	@Override
+	protected void writeKonos(FrameBuilder builder) {
+		File file = new File(konosPackage() + nameOf(definition()) + ".konos");
+		addDisplayList(builder);
+		writeFrame(file, konosTemplate().render(builder.toFrame()));
 	}
 
 	private void writeEmbeddedTemplate() {

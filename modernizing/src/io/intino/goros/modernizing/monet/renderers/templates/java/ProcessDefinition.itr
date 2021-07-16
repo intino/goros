@@ -248,7 +248,7 @@ end
 
 def type(display)
     if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
-        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
+        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate(box());
         result.node(node);
         result.readonly(false);
         return result;

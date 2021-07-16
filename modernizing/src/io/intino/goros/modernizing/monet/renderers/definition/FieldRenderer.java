@@ -34,6 +34,7 @@ public class FieldRenderer extends Renderer {
 		addTypes(result);
 		addMultipleProperties(result);
 		addLinkProperties(result);
+		addCompositeProperties(result);
 		return result;
 	}
 
@@ -75,6 +76,15 @@ public class FieldRenderer extends Renderer {
 		builder.add("indexView", viewProperty != null ? nameOf(viewProperty) : (definition.getDefaultView() != null ? nameOf(definition.getDefaultView()) : ""));
 	}
 
+	private void addCompositeProperties(FrameBuilder builder) {
+		if (!fieldProperty.isComposite()) return;
+		CompositeFieldProperty compositeField = (CompositeFieldProperty) fieldProperty;
+		compositeField.getAllFieldPropertyList().forEach(f -> {
+			FieldRenderer renderer = renderer(f, compositeField);
+			builder.add("field", renderer.buildFrame());
+		});
+	}
+
 	private String type() {
 		if (fieldProperty instanceof TextFieldProperty) return "text";
 		if (fieldProperty instanceof NumberFieldProperty) return "number";
@@ -92,4 +102,5 @@ public class FieldRenderer extends Renderer {
 		if (fieldProperty instanceof SummationFieldProperty) return "summation";
 		return "";
 	}
+
 }

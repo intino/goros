@@ -10,6 +10,10 @@ def type(layoutRow) trigger(declaration)
     [$element+declaration...[$NL]]
 end
 
+def type(layoutElement & section) trigger(declaration)
+    [$row+declaration...[$NL]]
+end
+
 def type(layoutElement) trigger(declaration)
     [$field+declaration]
 end
@@ -51,12 +55,24 @@ def type(layoutRow) trigger(update)
     [$element+update...[$NL]]
 end
 
+def type(layoutElement & section) trigger(init)
+    [$row+init...[$NL]]
+end
+
 def type(layoutElement) trigger(init)
     $field+init
 end
 
+def type(layoutElement & section) trigger(refresh)
+    [$row+refresh...[$NL]]
+end
+
 def type(layoutElement) trigger(refresh)
     $field+refresh
+end
+
+def type(layoutElement & section) trigger(update)
+    [$row+update...[$NL]]
 end
 
 def type(layoutElement) trigger(update)
@@ -519,7 +535,7 @@ end
 
 def type(display)
     if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
-        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName~ViewTemplate(box());
+        $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate(box());
         result.node(node);
         result.readonly(false);
         return result;

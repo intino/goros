@@ -36,7 +36,7 @@ public class RendererHelper {
 	public static String nameOf(ViewProperty viewProperty, String label) {
 		String name = viewProperty.getName();
 		if (name != null && !name.isEmpty()) return name;
-		return label != null ? normalize(label) : viewProperty.getCode();
+		return normalize(label != null ? label : viewProperty.getCode());
 	}
 
 	public static String shortName(String snakeName) {
@@ -51,11 +51,12 @@ public class RendererHelper {
 
 	public static String labelOf(NodeViewProperty viewProperty) {
 		String label = (String) viewProperty.getLabel();
-		return label != null && !label.isEmpty() ? label : viewProperty.getName();
+		return label != null && !label.isEmpty() ? normalize(label) : normalize(viewProperty.getName());
 	}
 
 	public static String normalize(String name) {
-		name = name.replace(" ", "-").replace("_", "-");
+		if (name == null) return null;
+		name = name.replace("/", "-").replace(" ", "-").replace("_", "-");
 		return stripAccents(firstUpperCase(StringUtil.snakeCaseToCamelCase(name)));
 	}
 

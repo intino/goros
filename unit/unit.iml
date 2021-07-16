@@ -261,5 +261,7 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty:jetty-client:9.4.31.v20200723" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-servlet:9.4.31.v20200723" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-api:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
+    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
   </component>
 </module>

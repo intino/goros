@@ -156,13 +156,21 @@ public class NodeHelper {
         String id = operation.getData().get("Id").toString();
         Soul soul = session.client().soul();
 
-        if (name.equals("shownode") || name.equalsIgnoreCase("shownodeview")) {
-            Node node = LayerHelper.nodeLayer().loadNode(id);
-            dispatcher.dispatch(soul, PathHelper.pathOf(node));
-        }
-        else if (name.equals("showtask")) {
-            Task task = LayerHelper.taskLayer().loadTask(operation.getData().get("Id").toString());
-            dispatcher.dispatch(soul, PathHelper.pathOf(task));
+        switch (name) {
+            case "shownode": {
+                Node node = LayerHelper.nodeLayer().loadNode(id);
+                dispatcher.dispatch(soul, PathHelper.pathOf(node));
+                break;
+            }
+            case "shownodeview": {
+                Node node = LayerHelper.nodeLayer().loadNode(id);
+                dispatcher.dispatch(soul, PathHelper.pathOf(node, operation.getData().get("IdView").toString()));
+                break;
+            }
+            case "showtask":
+                Task task = LayerHelper.taskLayer().loadTask(operation.getData().get("Id").toString());
+                dispatcher.dispatch(soul, PathHelper.pathOf(task));
+                break;
         }
     }
 

@@ -30,6 +30,10 @@ public class PathHelper {
 		return "/" + subPathOf(node);
 	}
 
+	public static String pathOf(Node node, String view) {
+		return pathOf(node) + "/" + view;
+	}
+
 	public static String pathOf(Task task) {
 		return "/" + subPathOf(task);
 	}

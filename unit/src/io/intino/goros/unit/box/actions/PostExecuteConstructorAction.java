@@ -6,7 +6,6 @@ import java.util.*;
 
 
 public class PostExecuteConstructorAction extends SetupServiceAction {
-	public io.intino.alexandria.core.Box box;
 
 	public java.lang.String execute() {
 		return executeServiceAction(new ActionExecuteConstructor());

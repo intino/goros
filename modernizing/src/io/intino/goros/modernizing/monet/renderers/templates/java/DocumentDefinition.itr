@@ -29,6 +29,9 @@ def type(documentdefinition & embedded)
         [$toolbar+editableEvents]
         [$toolbar+navigableMethods]
 
+        public void openView(String view) {
+        }
+
         public String selectedView() {
             return null;
         }

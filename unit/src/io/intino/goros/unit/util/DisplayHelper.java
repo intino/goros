@@ -118,4 +118,9 @@ public class DisplayHelper {
 	public static SelectorCollectionBox.ValueProvider linkValueProvider() {
 		return nodeItem -> ((NodeItem)nodeItem).getAttribute("value");
 	}
+
+	public static String translation(Object label) {
+		return Language.getInstance().getModelResource(label);
+	}
+
 }

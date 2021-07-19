@@ -8,7 +8,6 @@ import java.util.Map;
 
 
 public class PostPutLabelAction extends SetupServiceAction {
-	public io.intino.alexandria.core.Box box;
 	public String label;
 
     public java.lang.String execute() {

@@ -47,6 +47,9 @@ def type(process & embedded)
             return this;
         }
 
+        public void openView(String view) {
+        }
+
         public String selectedView() {
             List<String> selection = viewSelector.selection();
             return selection.size() > 0 ? selection.get(0) : null;

@@ -8,7 +8,6 @@ import java.util.Map;
 
 
 public class PostPutLogoAction extends SetupServiceAction {
-	public io.intino.alexandria.core.Box box;
 	public io.intino.alexandria.Resource logo;
 
 	public java.lang.String execute() {

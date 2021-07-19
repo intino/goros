@@ -3,11 +3,14 @@ package io.intino.goros.modernizing.monet;
 import io.intino.alexandria.logger.Logger;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.renderers.*;
+import io.intino.goros.modernizing.monet.util.FileUtil;
 import io.intino.goros.modernizing.monet.util.ZipUtil;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.TaskOrderDefinition;
 
+import javax.security.auth.login.Configuration;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -60,10 +63,36 @@ public class MonetModernizer {
 
     private void loadDictionary() {
         Logger.info("Loading dictionary from " + modernization.businessModel().getAbsolutePath());
+        loadDictionaryLibraries();
+        loadDictionaryDefinitions();
+        Logger.info("Dictionary loaded. Definitions count: " + dictionary.getAllDefinitions().size());
+    }
+
+    private void loadDictionaryLibraries() {
+        String businessModelDir = modernization.businessModel().getAbsolutePath();
+        String librariesDir = businessModelDir + File.separator + "libs";
+        String[] libraries = FileUtil.listDir(librariesDir);
+        String librariesClassesDir = businessModelDir + File.separator + "classes_libraries";
+
+        if (libraries == null || new File(librariesClassesDir).exists())
+            return;
+
+        Arrays.stream(libraries).forEach(library -> {
+            String libraryPath = librariesDir + "/" + library;
+
+            File libraryFile = new File(libraryPath);
+            try {
+                ZipUtil.decompress(libraryFile, librariesClassesDir);
+            } catch (Exception exception) {
+                Logger.error("Can't add model library error.");
+            }
+        });
+    }
+
+    private void loadDictionaryDefinitions() {
         dictionary = new Dictionary();
         org.monet.metamodel.Dictionary.injectCurrentInstance(dictionary);
         dictionary.initialize(modernization.businessModel().getAbsolutePath());
-        Logger.info("Dictionary loaded. Definitions count: " + dictionary.getAllDefinitions().size());
     }
 
     private Stream<Definition> definitions() {

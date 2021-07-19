@@ -22,7 +22,7 @@ def type(ui & routedispatcher)
         }
 
         @Override
-        public void dispatchInstance(Soul soul, String name, String id) {
+        public void dispatchInstance(Soul soul, String name, String id, String view) {
             AppTemplate display = soul.display(AppTemplate.class);
             [$definition+dispatchInstance...[$NL]]
         }
@@ -371,11 +371,11 @@ def type(definition & singleton) trigger(method)
 end
 
 def type(definition) trigger(method)
-    public void open$name+firstUpperCase(String id) {
+    public void open$name+firstUpperCase(String id, String view) {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
         if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) {
-            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(id);
+            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(id, view);
         }
     }
 end
@@ -411,7 +411,7 @@ def type(definition & index) trigger(dispatchInstance)
 end
 
 def type(definition) trigger(dispatchInstance)
-    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id);
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id, view);
 end
 
 def type(definition & index) trigger(block)

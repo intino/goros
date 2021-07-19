@@ -10,7 +10,6 @@ import java.util.Map;
 
 
 public class PostUpdateModelAction extends SetupServiceAction {
-	public io.intino.alexandria.core.Box box;
 	public io.intino.alexandria.Resource model;
 
     public java.lang.String execute() {

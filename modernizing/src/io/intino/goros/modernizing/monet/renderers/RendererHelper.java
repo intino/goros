@@ -30,7 +30,7 @@ public class RendererHelper {
 	}
 
 	public static String nameOf(NodeViewProperty viewProperty) {
-		return nameOf(viewProperty, labelOf(viewProperty));
+		return nameOf(viewProperty, normalize(labelOf(viewProperty)));
 	}
 
 	public static String nameOf(ViewProperty viewProperty, String label) {
@@ -51,7 +51,7 @@ public class RendererHelper {
 
 	public static String labelOf(NodeViewProperty viewProperty) {
 		String label = (String) viewProperty.getLabel();
-		return label != null && !label.isEmpty() ? normalize(label) : normalize(viewProperty.getName());
+		return label != null && !label.isEmpty() ? label : viewProperty.getName();
 	}
 
 	public static String normalize(String name) {

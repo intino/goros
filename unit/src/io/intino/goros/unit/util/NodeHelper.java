@@ -490,6 +490,30 @@ public class NodeHelper {
         return emptyList();
     }
 
+    public static List<DataRequest.SortBy> sortsByOf(List<String> sortings) {
+        if (sortings == null) return emptyList();
+        return sortings.stream().map(NodeHelper::sortByOf).collect(Collectors.toList());
+    }
+
+    public static String sortingOf(String attribute, String mode) {
+        return attribute + "#" + (mode.toLowerCase().startsWith("asc") ? "ASC" : "DESC");
+    }
+
+    private static DataRequest.SortBy sortByOf(String sorting) {
+        String[] split = sorting.split("#");
+        return new DataRequest.SortBy() {
+            @Override
+            public String attribute() {
+                return split[0];
+            }
+
+            @Override
+            public String mode() {
+                return split.length > 1 ? split[1] : "ASC";
+            }
+        };
+    }
+
     private static DataRequest.GroupBy groupByOf(String grouping, Set<String> groups) {
         return new DataRequest.GroupBy() {
             @Override

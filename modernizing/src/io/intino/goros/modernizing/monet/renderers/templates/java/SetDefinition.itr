@@ -18,6 +18,10 @@ def type(show)
         io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
     }
 
+    public void selectSorting(String sorting, String mode) {
+        $definition+firstLowerCase~$view+firstUpperCase.sortings(sorting != null ? java.util.Collections.singletonList(io.intino.goros.unit.util.NodeHelper.sortingOf(sorting, mode)) : java.util.Collections.emptyList());
+    }
+
     public void refresh(Node node) {
         $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId())), node);
     }
@@ -158,6 +162,14 @@ def type(dimension) trigger(clearCall)
     $name+firstLowerCase.clearSelection();
 end
 
+def type(sorting) trigger(codeRegistration)
+    put("$view+firstLowerCase~_$label", "$code");
+end
+
+def type(sorting)
+    "$label"
+end
+
 def type(addList) trigger(execute)
     add.onExecute(e -> addNode($defaultAdd+option));
     addSplit.onExecute(e -> addNode(e.option()));
@@ -209,6 +221,7 @@ def type(setdefinition)
         private boolean readonly = true;
         private boolean nodeAdded = false;
         private List<Node> selection = Collections.emptyList();
+        private String sorting;
         [$toolbar+editableDeclaration]
 
         public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
@@ -227,6 +240,7 @@ def type(setdefinition)
             [$parent]
             node = io.intino.goros.unit.util.NodeHelper.singleton("$code");
             initToolbar();
+            initSortings();
             initViews();
         }
 
@@ -236,10 +250,19 @@ def type(setdefinition)
             filters.onToggle(e -> toggleFiltersViewVisibility(e.state()));
         }
 
+        private void initSortings() {
+            sortings.onSelect(this::selectSortingMode);
+            sortingsMode.add("Ascendente");
+            sortingsMode.add("Descendente");
+            sortingsMode.onSelect(this::selectSorting);
+            removeSorting.onExecute(this::removeSorting);
+        }
+
         @Override
         public void refresh() {
             super.refresh();
             refreshToolbar();
+            refreshCollapse();
             refreshView();
             refreshFilters();
             viewSelector.visible(viewSelector.options().size() > 1);
@@ -248,6 +271,7 @@ def type(setdefinition)
         }
 
         private void initViews() {
+            hideViews.onExecute(e -> hideViews());
             [$view+initCall...[$NL]]
             filtersView.onInit(e -> initFilters());
             filtersView.onShow(e -> showFilters());
@@ -268,6 +292,7 @@ def type(setdefinition)
         }
 
         private void showFilters(BlockConditional filtersBlock) {
+            refreshSortings();
             if (!filtersView.isVisible()) return;
             [$view+hideFilterCall...[$NL]]
             filtersBlock.show();
@@ -336,6 +361,7 @@ def type(setdefinition)
         }
 
         private void toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            showViews();
             hideChildViews();
             if (state == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On) filtersView.show();
             else filtersView.hide();
@@ -377,6 +403,7 @@ def type(setdefinition)
 
         private $name+firstUpperCase~Template close() {
             selectedChild = null;
+            enableCollapse(false);
             updateSelectedNodeViewVisibility(false);
             return this;
         }
@@ -387,6 +414,7 @@ def type(setdefinition)
             if (selectedView == null) return;
             if (!selectedView.isVisible()) hideChildViews();
             selectedView.show();
+            enableCollapse(true);
         }
 
         private BlockConditional selectedNodeView() {
@@ -397,11 +425,77 @@ def type(setdefinition)
 
         private void hideChildViews() {
             [$toolbar+hideCall...[$NL]]
+            enableCollapse(false);
+        }
+
+        private void refreshCollapse() {
+            viewsToolbar.visible(selectedChild != null);
+            views.visible(true);
+            [$toolbar+hideCollectionCall]
+        }
+
+        private void enableCollapse(boolean value) {
+            boolean visible = value && views.isVisible();
+            viewsToolbar.visible(visible);
+            [$toolbar+enableCollapseCall]
+        }
+
+        private void showViews() {
+            views.visible(true);
+            enableCollapse(selectedChild != null);
+            [$toolbar+hideCollectionCall]
+        }
+
+        private void hideViews() {
+            views.visible(false);
+            enableCollapse(selectedChild != null);
+            [$toolbar+showCollectionCall]
+        }
+
+        private void resetView() {
+            [$toolbar+hideCall...[$NL]]
+            refreshCollapse();
         }
 
         private Node reloadSelected() {
             if (selectedChild == null) return null;
             return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId());
+        }
+
+        private static final java.util.Map<String, List<String>> sortingsMap = new java.util.HashMap<>() {{
+            [$view+registerSorting...[$NL]]
+        }};
+        private static final java.util.Map<String, String> sortingsCodesMap = new java.util.HashMap<>() {{
+            [$view+registerSortingCode...[$NL]]
+        }};
+        private void refreshSortings() {
+            [$view+refreshSortingCall...[$NL]]
+        }
+
+        private void refreshSortings(List<String> sortingList) {
+            sortingsBlock.visible(sortingList.size() > 0);
+            sortings.clear();
+            sortingList.forEach(s -> sortings.add(s));
+        }
+
+        private void selectSortingMode(SelectionEvent e) {
+            this.sorting = e.selection().size() > 0 ? (String) e.selection().get(0) : null;
+            this.sortingsMode.visible(sorting != null);
+            if (sortingsMode.selection().size() <= 0) sortingsMode.select("Ascendente");
+            else selectSorting(sorting, sorting != null ? sortingsMode.selection().get(0) : null);
+        }
+
+        private void selectSorting(SelectionEvent e) {
+            selectSorting(sorting, (String) e.selection().get(0));
+        }
+
+        private void selectSorting(String sorting, String mode) {
+            removeSorting.visible(sorting != null);
+            [$view+selectSortingCall...[$NL]]
+        }
+
+        private void removeSorting(Event event) {
+            sortings.select();
         }
 
         [$toolbar+editableMethods]
@@ -431,6 +525,7 @@ def type(collectionview) trigger(initCall)
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
         showFilters(filtersView.$name+firstLowerCase~Filters);
+        resetView();
     });
 end
 
@@ -569,6 +664,60 @@ def type(collectionview) trigger(collection)
     if ($name+firstLowerCase~View.isVisible()) return $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase;
 end
 
+def type(collectionview & ownedprototypes) trigger(registerSorting)
+end
+
+def type(collectionview & sharedprototypes) trigger(registerSorting)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(registerSorting)
+end
+
+def type(collectionview) trigger(registerSorting)
+    put("$name+firstLowerCase", List.of("Título","Fecha de creación"[,$sorting...[,]]));
+end
+
+def type(collectionview & ownedprototypes) trigger(registerSortingCode)
+end
+
+def type(collectionview & sharedprototypes) trigger(registerSortingCode)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(registerSortingCode)
+end
+
+def type(collectionview) trigger(registerSortingCode)
+    put("$name+firstLowerCase~_Título", "label");
+    put("$name+firstLowerCase~_Fecha de creación", "create_date");
+    [$sorting+codeRegistration...[$NL]]
+end
+
+def type(collectionview & ownedprototypes) trigger(refreshSortingCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(refreshSortingCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(refreshSortingCall)
+end
+
+def type(collectionview) trigger(refreshSortingCall)
+    if ($name+firstLowerCase~View.isVisible()) refreshSortings(sortingsMap.get("$name+firstLowerCase"));
+end
+
+def type(collectionview & ownedprototypes) trigger(selectSortingCall)
+end
+
+def type(collectionview & sharedprototypes) trigger(selectSortingCall)
+end
+
+def type(collectionview & visibleWhenEmbedded) trigger(selectSortingCall)
+end
+
+def type(collectionview) trigger(selectSortingCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.selectSorting(sortingsCodesMap.get("$name+firstLowerCase~_"+sorting), mode);
+end
+
 def type(add) trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> {
         bindCurrentViewTo(currentCollection());
@@ -579,6 +728,8 @@ def type(add) trigger(initCall)
             close();
         });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onFinishEdition(this::refresh);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> showViews());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
         nodeAdded = false;
@@ -587,6 +738,18 @@ end
 
 def type(add) trigger(bindCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
+end
+
+def type(add) trigger(showCollectionCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(true);
+end
+
+def type(add) trigger(enableCollapseCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible);
+end
+
+def type(add) trigger(hideCollectionCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(false);
 end
 
 def type(add) trigger(equals)
@@ -675,6 +838,18 @@ end
 
 def type(toolbar) trigger(bindCall)
     [$add+bindCall...[$NL]]
+end
+
+def type(toolbar) trigger(enableCollapseCall)
+    [$add+enableCollapseCall...[$NL]]
+end
+
+def type(toolbar) trigger(showCollectionCall)
+    [$add+showCollectionCall...[$NL]]
+end
+
+def type(toolbar) trigger(hideCollectionCall)
+    [$add+hideCollectionCall...[$NL]]
 end
 
 def type(toolbar) trigger(equals)

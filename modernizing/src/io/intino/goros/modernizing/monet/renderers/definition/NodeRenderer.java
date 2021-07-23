@@ -82,6 +82,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		FrameBuilder result = baseDefinitionFrame().add("nodedefinition");
 		if (revision) result.add("revision");
 		if (definition().isSingleton()) result.add("singleton");
+		result.add("readonly", definition().isReadonly() ? "true" : "readonly");
 		addDesktop(result);
 		addParent(result);
 		addToolbar(result);

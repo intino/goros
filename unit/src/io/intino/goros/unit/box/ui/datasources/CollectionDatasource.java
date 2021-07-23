@@ -34,7 +34,7 @@ public class CollectionDatasource extends PageDatasource<Node> {
 
     @Override
     public List<Node> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        NodeDataRequest request = request(condition, filters);
+        NodeDataRequest request = request(condition, filters, sortings);
         request.setStartPos(start);
         request.setLimit(count);
         box.linkSession(session);
@@ -58,9 +58,14 @@ public class CollectionDatasource extends PageDatasource<Node> {
     }
 
     private NodeDataRequest request(String condition, List<Filter> filters) {
+        return request(condition, filters, emptyList());
+    }
+
+    private NodeDataRequest request(String condition, List<Filter> filters, List<String> sortings) {
         NodeDataRequest request = request(set);
         request.setCondition(condition);
         request.setGroupsBy(NodeHelper.groupsByOf(filters));
+        request.setSortsBy(NodeHelper.sortsByOf(sortings));
         request.setCodeView(view.getCode());
         return request;
     }

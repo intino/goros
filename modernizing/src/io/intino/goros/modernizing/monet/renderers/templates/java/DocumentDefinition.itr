@@ -76,7 +76,7 @@ def type(documentdefinition & embedded)
         private void refreshPreviewView() {
             if (node == null) return;
             previewView.previewStamp.node(node);
-            previewView.previewStamp.readonly(readonly);
+            previewView.previewStamp.readonly($readonly);
             previewView.previewStamp.refresh();
         }
 

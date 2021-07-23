@@ -31,6 +31,7 @@ public class FieldRenderer extends Renderer {
 		result.add("name", fieldProperty.getName());
 		result.add("label", clean(fieldProperty.getLabel()));
 		result.add("type", type());
+		result.add("readonly", fieldProperty.isReadonly() ? "true" : "readonly");
 		addTypes(result);
 		addMultipleProperties(result);
 		addLinkProperties(result);

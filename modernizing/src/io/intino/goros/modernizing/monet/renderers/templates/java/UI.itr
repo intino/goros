@@ -24,12 +24,14 @@ def type(ui & routedispatcher)
         @Override
         public void dispatchInstance(Soul soul, String name, String id, String view) {
             AppTemplate display = soul.display(AppTemplate.class);
+            if (view != null && view.equals("undefined")) view = null;
             [$definition+dispatchInstance...[$NL]]
         }
 
         @Override
         public void dispatchTask(Soul soul, String name, String inbox, String task) {
             AppTemplate display = soul.display(AppTemplate.class);
+            if (task != null && task.equals("undefined")) task = null;
             [$definition+dispatchTask...[$NL]]
         }
 

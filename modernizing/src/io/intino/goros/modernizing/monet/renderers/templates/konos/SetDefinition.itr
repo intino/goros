@@ -13,6 +13,11 @@ def type(setdefinition)
                     [$parent]
                     Text(value="$label", format=h4 bold) label
                 Text(format=body2) count
+                Block(layout=Horizontal, visible=false) sortingsBlock as Relative(width=50%)
+                    Text(value="Ordenar por:", format=body2 noSpaceWrap middleAirRight);
+                    Selector(format=body2 bold) sortings as ComboBox(placeholder="Seleccione una ordenación", view=TextView)
+                    Selector(format=body2 bold airRight, visible=false) sortingsMode as ComboBox(placeholder="Tipo", view=TextView)
+                    Link(format=body2, title="quitar", visible=false) removeSorting
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search
                 MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
@@ -29,7 +34,9 @@ def type(setdefinition)
             [$view+selector...[$NL]]
 
         Block(layout=Horizontal Flexible, format=smallAirTop)
-            Block(layout=Vertical Flexible)
+            Block(layout=Vertical Flexible) views
+                Block(layout=Horizontal EndJustified, format=bottomBordered viewsToolbarStyle, visible=false) viewsToolbar
+                    MaterialIconButton(icon="ChevronLeft", title="Ocultar listado", size=Small) hideViews
                 Block(layout=Vertical Flexible) as Relative(height=100%)
                     [$view+page...[$NL]]
 

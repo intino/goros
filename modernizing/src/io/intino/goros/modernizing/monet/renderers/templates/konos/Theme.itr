@@ -1,6 +1,16 @@
 def type(theme)
     dsl Konos
 
+    Theme
+        type = Normal
+
+        Typography
+            fontSize = 11px
+
+        Primary("#005b9f")
+        Secondary("#ff9100")
+        Error("#f44336")
+
     // FONTS
     Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'25pt'") h1
     Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'20pt'") h2
@@ -82,4 +92,6 @@ def type(theme)
     Format("height:'20px'") pillStyle
     Format("minWidth:'320px'") sourceLevelWidth
     Format("borderRadius:'10px',padding:'0 4px',fontSize:'8pt'") legendPillStyle
+    Format("paddingBottom:'8px',paddingTop:'8px',paddingLeft:'10px',marginRight:'10px'") viewsToolbarStyle
+    Format("marginRight:'18px',marginTop:'20px'") badgeBlock
 end

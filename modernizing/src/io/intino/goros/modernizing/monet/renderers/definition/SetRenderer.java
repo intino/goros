@@ -201,6 +201,11 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	private void addAnalyze(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		if (viewProperty.getAnalyze() == null) return;
+		addDimensions(viewProperty, builder);
+		addSortings(viewProperty, builder);
+	}
+
+	protected void addDimensions(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		SetDefinitionBase.SetViewPropertyBase.AnalyzePropertyBase.DimensionProperty dimension = viewProperty.getAnalyze().getDimension();
 		if (dimension == null) return;
 		Collection<Ref> dimensionList = dimension.getAttribute().stream().collect(Collectors.toMap(Ref::getValue, a -> a, (a1, a2) -> a1)).values();
@@ -210,11 +215,24 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	private void addDimension(Ref dimension, FrameBuilder builder) {
 		IndexDefinition definition = dictionary.getIndexDefinition(dimension.getDefinition());
 		AttributeProperty attributeProperty = definition.getAttribute(dimension.getValue());
-		builder.add("dimension", dimensionFrame(attributeProperty));
+		builder.add("dimension", attributeFrame(attributeProperty, "dimension"));
 	}
 
-	private FrameBuilder dimensionFrame(AttributeProperty attributeProperty) {
-		FrameBuilder result = baseFrame().add("dimension");
+	protected void addSortings(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
+		SetDefinitionBase.SetViewPropertyBase.AnalyzePropertyBase.SortingProperty sorting = viewProperty.getAnalyze().getSorting();
+		if (sorting == null) return;
+		Collection<Ref> sortingList = sorting.getAttribute().stream().collect(Collectors.toMap(Ref::getValue, a -> a, (a1, a2) -> a1)).values();
+		sortingList.forEach(d -> addSorting(viewProperty, d, builder));
+	}
+
+	private void addSorting(SetDefinition.SetViewProperty viewProperty, Ref sorting, FrameBuilder builder) {
+		IndexDefinition definition = dictionary.getIndexDefinition(sorting.getDefinition());
+		AttributeProperty attributeProperty = definition.getAttribute(sorting.getValue());
+		builder.add("sorting", attributeFrame(attributeProperty, "sorting").add("view", nameOf(viewProperty)));
+	}
+
+	private FrameBuilder attributeFrame(AttributeProperty attributeProperty, String type) {
+		FrameBuilder result = baseFrame().add(type);
 		result.add("name", attributeProperty.getName());
 		result.add("code", attributeProperty.getCode());
 		result.add("label", clean(attributeProperty.getLabel()));

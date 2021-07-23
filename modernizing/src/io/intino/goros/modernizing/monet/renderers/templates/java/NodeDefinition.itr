@@ -13,6 +13,7 @@ def type(nodedefinition & embedded)
         private Revision revision;
         private boolean readonly = false;
         [$toolbar+editableDeclaration]
+        [$toolbar+navigableDeclaration]
 
         public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
             super(box);
@@ -34,9 +35,11 @@ def type(nodedefinition & embedded)
         }
 
         [$toolbar+editableEvents]
+        [$toolbar+navigableEvents]
         [$toolbar+navigableMethods]
 
         public void openView(String view) {
+            if (view == null) return;
             viewSelector.select(io.intino.goros.unit.util.DisplayHelper.translation(node.getDefinition().getNodeView(view).getLabel()));
         }
 
@@ -88,6 +91,7 @@ def type(nodedefinition & embedded)
             restore.onExecute(e -> restore());
             edit.onExecute(e -> toggleEdition());
             [$toolbar+editableInitCall]
+            [$toolbar+navigableInitCall]
         }
 
         private void initViews() {
@@ -200,6 +204,10 @@ def type(toolbar & singleton) trigger(editableInitCall)
     [$operation+editableInitCall...[$NL]]
 end
 
+def type(toolbar & collectable) trigger(navigableInitCall)
+    showCollection.onExecute(e -> notifyShowCollection());
+end
+
 def type(toolbar & singleton) trigger(editableRefreshCall)
     [$operation+editableRefreshCall...[$NL]]
 end
@@ -207,6 +215,13 @@ end
 def type(toolbar & singleton) trigger(editableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onFinishEdition(java.util.function.Consumer<Node> listener) {
         this.finishEditionListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar & collectable) trigger(navigableEvents)
+    public $definition+firstUpperCase~EmbeddedTemplate onShowCollection(java.util.function.Consumer<Node> listener) {
+        this.showCollectionListener = listener;
         return this;
     }
 end
@@ -219,6 +234,10 @@ end
 
 def type(toolbar & singleton) trigger(editableDeclaration)
     private java.util.function.Consumer<Node> finishEditionListener;
+end
+
+def type(toolbar & collectable) trigger(navigableDeclaration)
+    private java.util.function.Consumer<Node> showCollectionListener;
 end
 
 def type(toolbar) trigger(editableDeclaration)
@@ -269,6 +288,7 @@ def type(toolbar) trigger(editableMethods)
 end
 
 def type(toolbar & collectable) trigger(navigableRefreshCall)
+    label.value(node.getLabel());
     open.address(path -> path.replace(":name", "$definition").replace(":id", node.getId()));
 end
 
@@ -282,6 +302,16 @@ def type(toolbar & collectable) trigger(navigableMethods)
         next.bindTo(collection);
         next.visible(collection != null);
         open.visible(collection != null);
+    }
+    public void showLabel(boolean value) {
+        label.visible(value);
+    }
+    public void showCollectionVisibility(boolean value) {
+        showCollection.visible(value);
+    }
+    private void notifyShowCollection() {
+        if (showCollectionListener == null) return;
+        showCollectionListener.accept(node);
     }
 end
 

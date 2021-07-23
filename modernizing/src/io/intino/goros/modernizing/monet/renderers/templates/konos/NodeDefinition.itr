@@ -17,6 +17,7 @@ def type(nodedefinition)
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
+        $toolbar+navigableExpanded
         Block(layout=Horizontal, format=bottomBordered middleBottomSpaced leftSpaced middleTopSpaced) toolbar
             Block(layout=Horizontal Flexible)
                 $toolbar+editable
@@ -61,6 +62,15 @@ def type(toolbar) trigger(editable)
     [$addList+option]
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
+end
+
+def type(toolbar & collectable) trigger(navigableExpanded)
+	Block(layout=Horizontal StartJustified, format=middleAirLeft)
+		MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollection
+		Text(format=bold middleAirLeft, visible=false) label
+end
+
+def type(toolbar) trigger(navigableExpanded)
 end
 
 def type(toolbar & collectable) trigger(navigable)

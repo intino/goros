@@ -160,10 +160,12 @@ def type(tasks & embedded)
         @Override
         public void refresh() {
             super.refresh();
+            refreshCollapse();
             refreshView();
         }
 
         private void initViews() {
+            hideViews.onExecute(e -> hideViews());
             tableView.onInit(e -> {
                 tableView.tableViewStamp.tasksTable.onRefreshItemCount(this::refreshCount);
                 tableView.tableViewStamp.tasksTable.onSelect(this::open);
@@ -213,6 +215,7 @@ def type(tasks & embedded)
         }
 
         private void toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            showViews();
             hideChildViews();
             if (state == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On) filtersView.show();
             else filtersView.hide();
@@ -257,6 +260,7 @@ def type(tasks & embedded)
 
         private void close() {
             selectedTask = null;
+            enableCollapse(false);
             updateSelectedTaskViewVisibility(false);
         }
 
@@ -283,10 +287,36 @@ def type(tasks & embedded)
             if (selectedView == null) return;
             if (!selectedView.isVisible()) hideChildViews();
             selectedView.show();
+            enableCollapse(true);
         }
 
         private void hideChildViews() {
             [$process+hide...[$NL]]
+            enableCollapse(false);
+        }
+
+        private void refreshCollapse() {
+            viewsToolbar.visible(selectedTask != null);
+            views.visible(true);
+            [$process+hideCollectionCall...[$NL]]
+        }
+
+        private void enableCollapse(boolean value) {
+            boolean visible = value && views.isVisible();
+            viewsToolbar.visible(visible);
+            [$process+enableCollapseCall...[$NL]]
+        }
+
+        private void showViews() {
+            views.visible(true);
+            enableCollapse(selectedTask != null);
+            [$process+hideCollectionCall...[$NL]]
+        }
+
+        private void hideViews() {
+            views.visible(false);
+            enableCollapse(selectedTask != null);
+            [$toolbar+showCollectionCall...[$NL]]
         }
 
     }
@@ -391,6 +421,8 @@ def type(process) trigger(init)
             close();
             refresh();
         });
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> showViews());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
     });
@@ -402,6 +434,18 @@ end
 
 def type(process) trigger(bind)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
+end
+
+def type(process) trigger(enableCollapseCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible);
+end
+
+def type(process) trigger(showCollectionCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(true);
+end
+
+def type(process) trigger(hideCollectionCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(false);
 end
 
 def type(process) trigger(selectedView)

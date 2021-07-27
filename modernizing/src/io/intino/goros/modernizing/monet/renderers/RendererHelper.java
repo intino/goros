@@ -33,6 +33,10 @@ public class RendererHelper {
 		return nameOf(viewProperty, normalize(labelOf(viewProperty)));
 	}
 
+	public static String nameOf(ProcessDefinitionBase.ViewProperty viewProperty) {
+		return nameOf(viewProperty, normalize(labelOf(viewProperty)));
+	}
+
 	public static String nameOf(ViewProperty viewProperty, String label) {
 		String name = viewProperty.getName();
 		if (name != null && !name.isEmpty()) return name;
@@ -50,6 +54,11 @@ public class RendererHelper {
 	}
 
 	public static String labelOf(NodeViewProperty viewProperty) {
+		String label = (String) viewProperty.getLabel();
+		return label != null && !label.isEmpty() ? label : viewProperty.getName();
+	}
+
+	public static String labelOf(ProcessDefinitionBase.ViewProperty viewProperty) {
 		String label = (String) viewProperty.getLabel();
 		return label != null && !label.isEmpty() ? label : viewProperty.getName();
 	}

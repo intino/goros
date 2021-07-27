@@ -3,10 +3,12 @@ dsl Konos
 use Theme
 
 Template(layout=Horizontal) taskToolbarTemplate
-	Button(title="Actualizar", size=Small, highlight=Outline, format=airRight) update as Action
-	Button(title="Asignar...", size=Small, highlight=Outline, format=airRight, visible=false) assign as OpenDialog(dialog=assignTaskOwnerDialogBox)
-	Button(title="Desasignar", size=Small, highlight=Outline, format=airRight, visible=false) unAssign as Action Affirmed("Are you sure to unassign task?")
-	Button(title="Abortar", size=Small, highlight=Outline, visible=false) abort as Action Affirmed("Are you sure to abort task?")
+	Block(layout=Vertical CenterJustified Flexible)
+		Block(layout=Horizontal)
+			Button(title="Actualizar", size=Small, highlight=Outline, format=airRight) update as Action
+			Button(title="Asignar...", size=Small, highlight=Outline, format=airRight, visible=false) assign as OpenDialog(dialog=assignTaskOwnerDialogBox)
+			Button(title="Desasignar", size=Small, highlight=Outline, format=airRight, visible=false) unAssign as Action Affirmed("Are you sure to unassign task?")
+			Button(title="Abortar", size=Small, highlight=Outline, visible=false) abort as Action Affirmed("Are you sure to abort task?")
 
 	Dialog(title="Asignar...") assignTaskOwnerDialogBox as Relative(height=80%, width=80%)
 		Block(layout=Vertical Flexible) content as Relative(height=100%, offsetHeight=50px)

@@ -3,6 +3,7 @@ def type(process)
 
     use UI
     use Theme
+    [$view+use...[$NL]]
     [$display+use...[$NL]]
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
@@ -29,14 +30,18 @@ def type(process)
 
         Selector viewSelector as Tabs
             Text(value="Estado") state as Option
+            [$view+declaration...[$NL]]
 
         Block(layout=Vertical Flexible)
             Block(layout=Vertical Flexible) stateView as Conditional(viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) stateViewStamp
+            [$view+page...[$NL]]
 
     Template(format=spaced) $name+firstUpperCase~StateViewTemplate as Relative(height=100%)
         Block as Conditional
             [$display...[$NL]]
         OwnerTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
+
+    [$view...[$NL]]
 end
 
 def type(display) trigger(use)
@@ -46,3 +51,29 @@ end
 def type(display)
     TemplateStamp(template=$name+firstUpperCase~$viewName~ViewTemplate)
 end
+
+def type(shortcutview) trigger(use)
+   [$show+use...[$NL]]
+end
+
+def type(shortcutview) trigger(declaration)
+    Text(value="$label") $name+firstLowerCase as Option
+end
+
+def type(shortcutview) trigger(page)
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
+end
+
+def type(shortcutview)
+    Template(format=spaced) $definition+firstUpperCase$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        [$show...[$NL]]
+end
+
+def type(show) trigger(use)
+    use $definitionName+firstUpperCase
+end
+
+def type(show)
+    Block(layout=Vertical Flexible) $definitionName+firstLowerCase$viewName+firstUpperCase~Block as Conditional Relative(height=100%) > TemplateStamp(template=$definitionName+firstUpperCase$viewName+firstUpperCase) $definitionName+firstLowerCase$viewName+firstUpperCase~Stamp
+end
+

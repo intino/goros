@@ -140,9 +140,9 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
     }
 
     private void setup() {
-        notifyUser("Setting up job...", UserMessage.Type.Loading);
+        notifyUser(translate("Setting up job..."), UserMessage.Type.Loading);
         task.getProcess().setupSendJobAction();
-        notifyUser("Job setup", UserMessage.Type.Success);
+        notifyUser(translate("Job setup"), UserMessage.Type.Success);
     }
 
     private TaskOrder order() {

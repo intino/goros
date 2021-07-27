@@ -83,23 +83,23 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
 
     private void abort() {
         unAssign.readonly(true);
-        notifyUser("Unassigning task...", UserMessage.Type.Loading);
+        notifyUser(translate("Unassigning task..."), UserMessage.Type.Loading);
         TaskLayer taskLayer = LayerHelper.taskLayer();
         taskLayer.abortTask(task.getId());
         task(taskLayer.loadTask(this.task.getId()));
         abortListener.accept(task);
-        notifyUser("Task unassigned", UserMessage.Type.Success);
+        notifyUser(translate("Task unassigned"), UserMessage.Type.Success);
         unAssign.readonly(false);
     }
 
     private void assign(User user, String reason) {
         assign.readonly(true);
         assignTaskOwnerDialogBox.close();
-        notifyUser("Assigning task...", UserMessage.Type.Loading);
+        notifyUser(translate("Assigning task..."), UserMessage.Type.Loading);
         saveTaskOwner(user, reason);
         refresh();
         changeListener.accept(task);
-        notifyUser("Task assigned", UserMessage.Type.Success);
+        notifyUser(translate("Task assigned"), UserMessage.Type.Success);
         assign.readonly(false);
     }
 

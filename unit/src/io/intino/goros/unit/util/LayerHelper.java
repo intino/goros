@@ -29,6 +29,10 @@ public class LayerHelper {
 		return ComponentFederation.getInstance().getRoleLayer();
 	}
 
+	public static NotificationLayer notificationLayer() {
+		return ComponentPersistence.getInstance().getNotificationLayer();
+	}
+
 	public static FederationLayer federationLayer(UISession session) {
 		return ComponentFederation.getInstance().getLayer(new FederationLayer.Configuration() {
 			@Override
@@ -140,4 +144,5 @@ public class LayerHelper {
 			}
 		};
 	}
+
 }

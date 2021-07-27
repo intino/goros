@@ -171,7 +171,9 @@ def type(ui & app)
             dashboard.visible(AccountHelper.hasRoles(dashboardRoles(showProperty), session()));
             roles.visible(showProperty.getTabRoles() != null && AccountHelper.hasRoles(showProperty.getTabRoles().getFor(), session()));
             taskTray.visible(showProperty.getTabTasktray() != null && AccountHelper.hasRoles(showProperty.getTabTasktray().getFor(), session()));
+            if (taskTray.isVisible()) taskTray.value(AccountHelper.aliveTaskTrayTasksCount(session()));
             taskBoard.visible(showProperty.getTabTaskboard() != null && AccountHelper.hasRoles(showProperty.getTabTaskboard().getFor(), session()));
+            if (taskBoard.isVisible()) taskBoard.value(AccountHelper.activeTaskBoardTasksCount(session()));
             news.visible(showProperty.getTabNews() != null && AccountHelper.hasRoles(showProperty.getTabNews().getFor(), session()));
             trash.visible(showProperty.getTabTrash() != null && AccountHelper.hasRoles(showProperty.getTabTrash().getFor(), session()));
         }

@@ -143,9 +143,9 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     }
 
     private void setup() {
-        notifyUser("Setting up delegation...", UserMessage.Type.Loading);
+        notifyUser(translate("Setting up delegation..."), UserMessage.Type.Loading);
         task.getProcess().setupDelegationAction();
-        notifyUser("Delegation setup", UserMessage.Type.Success);
+        notifyUser(translate("Delegation setup"), UserMessage.Type.Success);
     }
 
     private TaskOrder order() {

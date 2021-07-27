@@ -65,11 +65,19 @@ public abstract class Renderer {
 		return RendererHelper.nameOf(viewProperty);
 	}
 
+	protected String nameOf(ProcessDefinitionBase.ViewProperty viewProperty) {
+		return RendererHelper.nameOf(viewProperty);
+	}
+
 	protected String nameOf(NodeViewProperty viewProperty) {
 		return RendererHelper.nameOf(viewProperty);
 	}
 
 	protected String labelOf(NodeViewProperty viewProperty) {
+		return RendererHelper.labelOf(viewProperty);
+	}
+
+	protected String labelOf(ProcessDefinitionBase.ViewProperty viewProperty) {
 		return RendererHelper.labelOf(viewProperty);
 	}
 

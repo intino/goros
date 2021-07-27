@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.services.push.UISession;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.components.layers.RoleLayer;
+import org.monet.space.kernel.components.layers.TaskLayer;
 import org.monet.space.kernel.model.*;
 import org.monet.space.kernel.model.Dictionary;
 
@@ -40,6 +41,34 @@ public class AccountHelper {
 			String roleCode = dictionary.getDefinitionCode(role.getValue());
 			return roleLayer.existsNonExpiredUserRole(roleCode, account.getUser());
 		});
+	}
+
+
+	public static NotificationList notificationList(UISession session) {
+		return notificationList(session, 6);
+	}
+
+	public static NotificationList notificationList(UISession session, int limit) {
+		Account account = AccountHelper.account(session);
+		return LayerHelper.notificationLayer().loadNotificationList(account.getUser().getId(), 0, limit);
+	}
+
+	public static int activeTaskBoardTasksCount(UISession session) {
+		Account account = AccountHelper.account(session);
+		TaskLayer taskLayer = LayerHelper.taskLayer();
+		TaskSearchRequest request = new TaskSearchRequest();
+		request.addParameter(Task.Parameter.SITUATION, Task.Situation.ACTIVE);
+		request.addParameter(Task.Parameter.INBOX, Task.Inbox.TASKBOARD);
+		return taskLayer.searchTasksCount(account, request);
+	}
+
+	public static int aliveTaskTrayTasksCount(UISession session) {
+		Account account = AccountHelper.account(session);
+		TaskLayer taskLayer = LayerHelper.taskLayer();
+		TaskSearchRequest request = new TaskSearchRequest();
+		request.addParameter(Task.Parameter.SITUATION, Task.Situation.ALIVE);
+		request.addParameter(Task.Parameter.INBOX, Task.Inbox.TASKTRAY);
+		return taskLayer.searchTasksCount(account, request);
 	}
 
 	public static RoleList loadNonExpiredRoleList(String codeRole, Role.Nature nature) {

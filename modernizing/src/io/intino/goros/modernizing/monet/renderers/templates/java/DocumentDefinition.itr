@@ -11,6 +11,7 @@ def type(documentdefinition & embedded)
         private Node node;
         private boolean readonly = false;
         [$toolbar+editableDeclaration]
+        [$toolbar+navigableDeclaration]
 
         public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
             super(box);
@@ -27,6 +28,7 @@ def type(documentdefinition & embedded)
         }
 
         [$toolbar+editableEvents]
+        [$toolbar+navigableEvents]
         [$toolbar+navigableMethods]
 
         public void openView(String view) {

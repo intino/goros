@@ -65,9 +65,9 @@ Template(layout=Vertical Flexible, format=spaced) nodeLocationTemplate as Relati
 		Zoom(defaultZoom = 15, min = 1, max = 18)
 		Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
 
-Template(format=spaced relative) nodeDocumentTemplate as Relative(height=100%)
+Template(layout=Vertical Flexible, format=spaced relative) nodeDocumentTemplate as Relative(height=100%)
 	MaterialIconButton(title="Modify document", visible=false, icon="Edit", format=editDocumentButtonStyle) edit as OpenDialog(editDocumentDialog)
-	File preview
+	File(format=fullHeight) preview
 
 	Dialog(title="Modify document") editDocumentDialog as Relative(width=60%, height=60%)
 		Block as Relative(height=100%, offsetHeight=50px)

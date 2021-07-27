@@ -19,8 +19,9 @@ def type(nodedefinition)
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
         $toolbar+navigableExpanded
         Block(layout=Horizontal, format=bottomBordered middleBottomSpaced leftSpaced middleTopSpaced) toolbar
-            Block(layout=Horizontal Flexible)
-                $toolbar+editable
+            Block(layout=Vertical CenterJustified Flexible)
+                Block(layout=Horizontal)
+                    $toolbar+editable
             Block(layout=Horizontal EndJustified)
                 $toolbar+navigable
         Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced) revisionToolbar

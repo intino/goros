@@ -25,13 +25,13 @@ def type(ui)
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
             [$definition+declaration...[$NL]]
-            Block(layout=Horizontal Center) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Text(value="Cuadro de mando")
+            Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Text(value="Cuadro de mando")
             Divider
-            Block(layout=Horizontal Center) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Text(value="Permisos")
-            Block(layout=Horizontal Center) taskTray as Badge(max=10, value=0, format=badgeBlock) > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Text(value="Mis tareas")
-            Block(layout=Horizontal Center) taskBoard as Badge(max=10, value=0, format=badgeBlock) > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardLink as Action Addressable($module+firstUpperCase~Elements.taskBoard); Text(value="Tareas")
-            Block(layout=Horizontal Center) news as Badge(max=10, value=0, format=badgeBlock) > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.news); Text(value="Noticias")
-            Block(layout=Horizontal Center) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Text(value="Papelera")
+            Block(layout=Horizontal Center, visible=false) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Text(value="Permisos")
+            Block(layout=Horizontal Center, visible=false) taskTray as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Text(value="Mis tareas")
+            Block(layout=Horizontal Center, visible=false) taskBoard as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardLink as Action Addressable($module+firstUpperCase~Elements.taskBoard); Text(value="Tareas")
+            Block(layout=Horizontal Center, visible=false) news as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.news); Text(value="Noticias")
+            Block(layout=Horizontal Center, visible=false) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Text(value="Papelera")
 
         Block(layout=Vertical Flexible)
             Header(color="white", elevation=0, format=spaced bottomBordered) as Absolute(height=80px)
@@ -53,7 +53,9 @@ def type(ui)
 
     Template(layout=Horizontal Flexible) HeaderTemplate
         Block(layout=Horizontal Flexible Center)
-            Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=60px)
+            Block(format=relative)
+                Link(title="", format=homeLink) as Action Addressable($module+firstUpperCase~Elements.home)
+                Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=60px)
             Block
                 Text(format=h3 bold) title
                 Text(format=body2) subtitle

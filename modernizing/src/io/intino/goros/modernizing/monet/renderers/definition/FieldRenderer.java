@@ -5,6 +5,7 @@ import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.Renderer;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.*;
+import org.monet.metamodel.TextFieldProperty.EditionProperty.ModeEnumeration;
 import org.monet.metamodel.internal.Ref;
 
 public class FieldRenderer extends Renderer {
@@ -34,6 +35,7 @@ public class FieldRenderer extends Renderer {
 		result.add("readonly", fieldProperty.isReadonly() ? "true" : "readonly");
 		addTypes(result);
 		addMultipleProperties(result);
+		addTextProperties(result);
 		addLinkProperties(result);
 		addCompositeProperties(result);
 		return result;
@@ -63,6 +65,17 @@ public class FieldRenderer extends Renderer {
 		if (field instanceof SelectFieldProperty) return "org.monet.bpi.types.Term";
 		if (field instanceof NodeFieldProperty || field instanceof CompositeFieldProperty) return "java.util.List<org.monet.bpi.Field<?>>";
 		return null;
+	}
+
+	private void addTextProperties(FrameBuilder builder) {
+		if (!fieldProperty.isText()) return;
+		TextFieldProperty textField = (TextFieldProperty) fieldProperty;
+		TextFieldProperty.EditionProperty edition = textField.getEdition();
+		if (edition == null) return;
+		ModeEnumeration mode = edition.getMode();
+		if (mode == ModeEnumeration.UPPERCASE) builder.add("textMode", "Uppercase");
+		else if (mode == ModeEnumeration.LOWERCASE) builder.add("textMode", "Lowercase");
+		else if (mode == ModeEnumeration.TITLE) builder.add("textMode", "Capitalize");
 	}
 
 	private void addLinkProperties(FrameBuilder builder) {

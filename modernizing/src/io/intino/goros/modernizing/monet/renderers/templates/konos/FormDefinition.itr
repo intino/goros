@@ -79,7 +79,7 @@ def type(field & text & multiple)
 end
 
 def type(field & text)
-    Text(format=doubleAirBottom, mode=Lowercase) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
+    Text(format=doubleAirBottom[, mode=$textMode]) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
 end
 
 def type(field & number & multiple)

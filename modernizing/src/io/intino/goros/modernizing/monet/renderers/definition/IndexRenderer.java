@@ -8,9 +8,7 @@ import io.intino.goros.modernizing.monet.renderers.templates.konos.IndexTemplate
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import io.intino.itrules.formatters.StringFormatters;
-import org.monet.metamodel.AttributeProperty;
-import org.monet.metamodel.IndexDefinition;
-import org.monet.metamodel.IndexDefinitionBase;
+import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
 import java.io.File;
@@ -87,7 +85,12 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	}
 
 	private void writeViewsTemplate() {
-		definition().getViewList().forEach(this::writeViewTemplate);
+		definition().getViewList().stream().filter(this::hasTemplate).forEach(this::writeViewTemplate);
+	}
+
+	protected boolean hasTemplate(IndexDefinitionBase.IndexViewProperty viewProperty) {
+		IndexDefinitionBase.IndexViewProperty.ShowProperty showProperty = ((IndexDefinitionBase.IndexViewProperty)viewProperty).getShow();
+		return RendererHelper.countAttributes(viewProperty) > 0;
 	}
 
 	private void writeViewTemplate(IndexDefinitionBase.IndexViewProperty view) {

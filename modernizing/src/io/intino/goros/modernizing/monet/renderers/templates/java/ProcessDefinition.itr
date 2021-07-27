@@ -99,6 +99,7 @@ def type(process & embedded)
         public void refresh() {
             super.refresh();
             refreshToolbar();
+            refreshSelector();
             refreshView();
         }
 
@@ -111,6 +112,7 @@ def type(process & embedded)
 
         private void initViews() {
             stateView.onShow(e -> refreshStateView());
+            [$view+initCall...[$NL]]
         }
 
         private void refreshToolbar() {
@@ -132,6 +134,7 @@ def type(process & embedded)
 
         private void refreshView() {
             if (stateView.isVisible()) refreshStateView();
+            [$view+refreshCall...[$NL]]
         }
 
         private void refreshStateView() {
@@ -139,6 +142,12 @@ def type(process & embedded)
             stateView.stateViewStamp.task(task);
             stateView.stateViewStamp.readonly(readonly);
             stateView.stateViewStamp.refresh();
+        }
+
+        [$view+refreshViewMethod...[$NL]]
+
+        private void refreshSelector() {
+            [$view+refreshSelectorCall...[$NL]]
         }
 
         private void notifyResume(Task task) {
@@ -213,6 +222,60 @@ def type(process & stateview)
     }
 end
 
+def type(process & shortcutview)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.Display;
+    import org.monet.metamodel.internal.TaskOrderDefinition;
+    import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.unit.box.ui.DisplayProvider;
+    import io.intino.goros.unit.box.ui.displays.templates.TaskOrderTemplate;
+
+    public class $definition+firstUpperCase$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box> {
+        private Task task;
+        private boolean readonly = true;
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate($module+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate task(Task task) {
+            this.task = task;
+            return this;
+        }
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            [$show+initCall...[$NL]]
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (task == null) return;
+            refreshView();
+        }
+
+        private void refreshView() {
+            org.monet.space.kernel.model.Node node = task.getShortcutInstance("shInformeIncidencia");
+            [$show+hideCall...[$NL]]
+            if (node == null) return;
+            org.monet.metamodel.NodeDefinition definition = node.getDefinition();
+            [$show+showCall...[$NL]]
+        }
+
+        [$show...[$NL]]
+    }
+end
+
 def type(process)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
@@ -275,5 +338,61 @@ def type(display)
         result.node(node);
         result.readonly(false);
         return result;
+    }
+end
+
+def type(shortcutview) trigger(initCall)
+    $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
+end
+
+def type(shortcutview) trigger(refreshCall)
+    if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+end
+
+def type(shortcutview) trigger(refreshSelectorCall)
+    if (task.getShortcutInstance("$shortcut") != null) viewSelector.showOption("$name+firstLowerCase");
+    else viewSelector.hideOption("$name+firstLowerCase");
+end
+
+def type(shortcutview) trigger(refreshViewMethod)
+    private void refresh$name+firstUpperCase~View() {
+        if (task == null) return;
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+end
+
+def type(shortcutview) trigger(refreshView)
+    private void refresh$name+firstUpperCase~View() {
+        if (task == null) return;
+        org.monet.space.kernel.model.Node node = task.getShortcutInstance("$shortcut");
+        if (node == null) return;
+        org.monet.metamodel.NodeDefinition definition = node.getDefinition();
+        [$show...[$NL]]
+    }
+end
+
+def type(shortcutview)
+end
+
+def type(show) trigger(initCall)
+    $definitionName+firstLowerCase$viewName+firstUpperCase~Block.onShow(e -> refresh$definitionName+firstUpperCaseCase$viewName+firstUpperCase());
+end
+
+def type(show) trigger(hideCall)
+    $definitionName+firstLowerCase$viewName+firstUpperCase~Block.hide();
+end
+
+def type(show) trigger(showCall)
+    if (definition.getCode().equals("$definitionCode")) $definitionName+firstLowerCase$viewName+firstUpperCase~Block.show();
+end
+
+def type(show)
+    private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(task.getShortcutInstance("$shortcut"));
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.readonly(readonly);
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
     }
 end

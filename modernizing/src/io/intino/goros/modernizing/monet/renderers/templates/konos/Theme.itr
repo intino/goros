@@ -95,4 +95,5 @@ def type(theme)
     Format("paddingBottom:'8px',paddingTop:'8px',paddingLeft:'10px',marginRight:'10px'") viewsToolbarStyle
     Format("marginRight:'18px',marginTop:'20px'") badgeBlock
     Format("position:'absolute',top:'0',width:'100%',height:'100%'") homeLink
+    Format("marginRight:'4px'") airMenuRight
 end

@@ -24,6 +24,10 @@ def type(ui)
 
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
+            Block(layout=Horizontal EndJustified Center) as Absolute(height=74px)
+                MaterialIconButton(title="open menu", icon="ChevronRight", format=airMenuRight) as OpenDrawer(drawer=drawer)
+                MaterialIconButton(title="minimize", icon="ChevronLeft", format=airMenuRight) as CloseDrawer(drawer=drawer)
+            Divider
             [$definition+declaration...[$NL]]
             Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Text(value="Cuadro de mando")
             Divider

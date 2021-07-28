@@ -77,8 +77,9 @@ def type(process & embedded)
             label.visible(value);
         }
 
-        public void showCollectionVisibility(boolean value) {
-            showCollection.visible(value);
+        public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
+            showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
+            showCollectionMenu.visible(value == io.intino.goros.unit.box.ui.ViewMode.Compact);
         }
 
         @Override
@@ -107,7 +108,8 @@ def type(process & embedded)
             toolbar.onUpdate(task -> task(task).refresh());
             toolbar.onChange(this::notifyChange);
             toolbar.onAbort(this::notifyAbort);
-            showCollection.onExecute(e -> notifyShowCollection());
+            showCollectionBack.onExecute(e -> notifyShowCollection());
+            showCollectionMenu.onExecute(e -> notifyShowCollection());
         }
 
         private void initViews() {

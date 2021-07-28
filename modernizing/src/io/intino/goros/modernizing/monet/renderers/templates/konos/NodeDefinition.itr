@@ -67,7 +67,8 @@ end
 
 def type(toolbar & collectable) trigger(navigableExpanded)
 	Block(layout=Horizontal StartJustified, format=middleAirLeft)
-		MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollection
+	    MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
+		MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
 		Text(format=bold middleAirLeft, visible=false) label
 end
 

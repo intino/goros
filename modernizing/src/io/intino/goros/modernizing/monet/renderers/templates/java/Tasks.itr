@@ -103,7 +103,9 @@ def type(tasks & embedded)
         private boolean readonly = true;
         private java.util.function.Consumer<Long> itemsCountListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
+        private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleViewListener;
         private SearchBox searchBox;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Full;
 
         public TasksEmbeddedTemplate($module+firstUpperCase~Box box) {
             super(box);
@@ -136,6 +138,17 @@ def type(tasks & embedded)
 
         public TasksEmbeddedTemplate onToggleFilters(java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> listener) {
             this.toggleFiltersListener = listener;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate toggleView(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            this.viewMode = state == ToggleEvent.State.On ? io.intino.goros.unit.box.ui.ViewMode.Full : io.intino.goros.unit.box.ui.ViewMode.Compact;
+            refreshViewMode();
+            return this;
+        }
+
+        public TasksEmbeddedTemplate onToggleView(java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> listener) {
+            this.toggleViewListener = listener;
             return this;
         }
 
@@ -221,6 +234,17 @@ def type(tasks & embedded)
             else filtersView.hide();
         }
 
+        private void refreshViewMode() {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) {
+                if (selectedTask != null) hideViews();
+                else {
+                    showViews();
+                    close();
+                }
+            }
+            else showViews();
+        }
+
         private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             [$process+bind...[$NL]]
         }
@@ -282,6 +306,7 @@ def type(tasks & embedded)
         }
 
         private void showSelectedTaskView() {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) hideViews();
             if (selectedTask == null) return;
             BlockConditional selectedView = selectedTaskView();
             if (selectedView == null) return;
@@ -375,11 +400,14 @@ def type(tasks)
             if (view == null) view = "list";
             viewSelector.onSelect(this::selectView);
             filters.onToggle(e -> toggleFilters(e.state()));
+            toggleView.state(ToggleEvent.State.On);
+            toggleView.onToggle(e -> toggleView(e.state()));
         }
 
         private void initContent() {
             content.onItemsCountChange(this::refreshCount);
             content.onToggleFilters(this::refreshToggleFiltersButton);
+            content.onToggleView(this::refreshToggleViewButton);
             content.bindTo(search);
         }
 
@@ -403,8 +431,16 @@ def type(tasks)
             content.toggleFilters(state);
         }
 
+        private void toggleView(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            content.toggleView(state);
+        }
+
         private void refreshToggleFiltersButton(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
             filters.state(state);
+        }
+
+        private void refreshToggleViewButton(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            toggleView.state(state);
         }
 
     }
@@ -421,7 +457,10 @@ def type(process) trigger(init)
             close();
             refresh();
         });
-        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> showViews());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) close();
+            showViews();
+        });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
@@ -437,15 +476,15 @@ def type(process) trigger(bind)
 end
 
 def type(process) trigger(enableCollapseCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible ? viewMode : null);
 end
 
 def type(process) trigger(showCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(true);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(viewMode);
 end
 
 def type(process) trigger(hideCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(false);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(null);
 end
 
 def type(process) trigger(selectedView)

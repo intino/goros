@@ -205,7 +205,8 @@ def type(toolbar & singleton) trigger(editableInitCall)
 end
 
 def type(toolbar & collectable) trigger(navigableInitCall)
-    showCollection.onExecute(e -> notifyShowCollection());
+    showCollectionBack.onExecute(e -> notifyShowCollection());
+    showCollectionMenu.onExecute(e -> notifyShowCollection());
 end
 
 def type(toolbar & singleton) trigger(editableRefreshCall)
@@ -306,8 +307,9 @@ def type(toolbar & collectable) trigger(navigableMethods)
     public void showLabel(boolean value) {
         label.visible(value);
     }
-    public void showCollectionVisibility(boolean value) {
-        showCollection.visible(value);
+    public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
+        showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
+        showCollectionMenu.visible(value == io.intino.goros.unit.box.ui.ViewMode.Compact);
     }
     private void notifyShowCollection() {
         if (showCollectionListener == null) return;

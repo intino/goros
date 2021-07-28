@@ -6,7 +6,6 @@ import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.ConnectionPoolDataSource;
 import java.sql.SQLException;
 
@@ -23,7 +22,7 @@ public class DatabaseLoader {
             initialContext.createSubcontext("java:comp/env");
             initialContext.createSubcontext("java:comp/env/jdbc");
             initialContext.bind("java:comp/env/" + configuration.datasource(), dataSource(configuration));
-        } catch (NamingException | SQLException e) {
+        } catch (Throwable e) {
             Logger.error(e);
         }
     }

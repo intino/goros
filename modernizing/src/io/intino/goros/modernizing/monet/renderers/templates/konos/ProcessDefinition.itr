@@ -19,7 +19,8 @@ def type(process)
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
         Block(layout=Horizontal StartJustified, format=middleAirLeft)
-            MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollection
+            MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
+            MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
             Text(format=bold middleAirLeft, visible=false) label
         Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
             Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar

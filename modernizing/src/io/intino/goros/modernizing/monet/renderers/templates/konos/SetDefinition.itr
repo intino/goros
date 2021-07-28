@@ -21,6 +21,7 @@ def type(setdefinition)
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search
                 MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
+                MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=On) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
 
         Block(layout=Horizontal, format=bottomBordered middleBottomSpaced leftSpaced middleTopSpaced)

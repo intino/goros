@@ -222,6 +222,7 @@ def type(setdefinition)
         private boolean nodeAdded = false;
         private List<Node> selection = Collections.emptyList();
         private String sorting;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Full;
         [$toolbar+editableDeclaration]
 
         public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
@@ -248,6 +249,8 @@ def type(setdefinition)
             [$toolbar+editableInitCall]
             edit.onExecute(e -> toggleEdition());
             filters.onToggle(e -> toggleFiltersViewVisibility(e.state()));
+            toggleView.state(ToggleEvent.State.On);
+            toggleView.onToggle(e -> toggleView(e.state()));
         }
 
         private void initSortings() {
@@ -367,6 +370,22 @@ def type(setdefinition)
             else filtersView.hide();
         }
 
+        private void toggleView(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
+            this.viewMode = state == ToggleEvent.State.On ? io.intino.goros.unit.box.ui.ViewMode.Full : io.intino.goros.unit.box.ui.ViewMode.Compact;
+            refreshViewMode();
+        }
+
+        private void refreshViewMode() {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) {
+                if (selectedChild != null) hideViews();
+                else {
+                    showViews();
+                    close();
+                }
+            }
+            else showViews();
+        }
+
         private void updateSelectedNodeViewVisibility(boolean visible) {
             if (visible) {
                 if (filtersView.isVisible()) filters.toggle(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
@@ -409,6 +428,7 @@ def type(setdefinition)
         }
 
         private void showSelectedNodeView() {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) hideViews();
             if (selectedChild == null) return;
             BlockConditional selectedView = selectedNodeView();
             if (selectedView == null) return;
@@ -728,7 +748,10 @@ def type(add) trigger(initCall)
             close();
         });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onFinishEdition(this::refresh);
-        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> showViews());
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onShowCollection(node -> {
+            if (viewMode == io.intino.goros.unit.box.ui.ViewMode.Full) close();
+            showViews();
+        });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
@@ -741,15 +764,15 @@ def type(add) trigger(bindCall)
 end
 
 def type(add) trigger(showCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(true);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(viewMode);
 end
 
 def type(add) trigger(enableCollapseCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible ? viewMode : null);
 end
 
 def type(add) trigger(hideCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(false);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(null);
 end
 
 def type(add) trigger(equals)

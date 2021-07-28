@@ -23,6 +23,7 @@ def type(tasks)
                 Selector(selected="tableView", format=airRight) viewSelector as ToggleBox(size=Small)
                     MaterialIconButton(title="Tabla", icon="ViewHeadline", size=Small) table as Option
                     MaterialIconButton(title="Listado", icon="ViewList", size=Small) list as Option
+                MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=On) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=TasksEmbeddedTemplate) content

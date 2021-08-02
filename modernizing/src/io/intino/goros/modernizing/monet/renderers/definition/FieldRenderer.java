@@ -43,7 +43,29 @@ public class FieldRenderer extends Renderer {
 
 	private void addTypes(FrameBuilder builder) {
 		builder.add(type());
-		if (fieldProperty.isMultiple()) builder.add("multiple");
+		if (fieldProperty.isMultiple()) {
+			builder.add("multiple");
+			FrameBuilder addProperties = addPropertiesFrame(fieldProperty);
+			if (addProperties != null) builder.add("addProperties", addProperties);
+		}
+	}
+
+	private FrameBuilder addPropertiesFrame(FieldProperty fieldProperty) {
+		if (!(fieldProperty instanceof CompositeFieldProperty)) return null;
+		CompositeFieldProperty compositeField = (CompositeFieldProperty)fieldProperty;
+		CompositeFieldPropertyBase.ViewProperty view = compositeField.getView();
+		if (view == null || view.getMode() != CompositeFieldPropertyBase.ViewProperty.ModeEnumeration.COMPACT) return null;
+		FrameBuilder result = new FrameBuilder().add("addProperties");
+		view.getSummary().getField().forEach(f -> result.add("add", addPropertiesItemFrame(((CompositeFieldProperty) fieldProperty).getField(f.getValue()))));
+		return result;
+	}
+
+	private FrameBuilder addPropertiesItemFrame(FieldProperty fieldProperty) {
+		FrameBuilder result = new FrameBuilder("addPropertiesItem").add(type(fieldProperty));
+		result.add("label", fieldProperty.getLabel());
+		result.add("type", type(fieldProperty));
+		result.add("code", fieldProperty.getCode());
+		return result;
 	}
 
 	private void addMultipleProperties(FrameBuilder builder) {
@@ -53,6 +75,7 @@ public class FieldRenderer extends Renderer {
 		builder.add("min", boundary != null ? boundary.getMin() : -1L);
 		builder.add("max", boundary != null ? boundary.getMax() : -1L);
 		builder.add("valueType", valueType(multipleField));
+		builder.add("collapsed", collapsed(multipleField));
 	}
 
 	private String valueType(MultipleableFieldProperty field) {
@@ -65,6 +88,14 @@ public class FieldRenderer extends Renderer {
 		if (field instanceof SelectFieldProperty) return "org.monet.bpi.types.Term";
 		if (field instanceof NodeFieldProperty || field instanceof CompositeFieldProperty) return "java.util.List<org.monet.bpi.Field<?>>";
 		return null;
+	}
+
+	private boolean collapsed(MultipleableFieldProperty field) {
+		if (field instanceof CompositeFieldProperty) {
+			CompositeFieldPropertyBase.ViewProperty view = ((CompositeFieldProperty) field).getView();
+			return view != null && view.getMode() == CompositeFieldPropertyBase.ViewProperty.ModeEnumeration.COMPACT;
+		}
+		return false;
 	}
 
 	private void addTextProperties(FrameBuilder builder) {
@@ -100,6 +131,10 @@ public class FieldRenderer extends Renderer {
 	}
 
 	private String type() {
+		return type(fieldProperty);
+	}
+
+	private String type(FieldProperty fieldProperty) {
 		if (fieldProperty instanceof TextFieldProperty) return "text";
 		if (fieldProperty instanceof NumberFieldProperty) return "number";
 		if (fieldProperty instanceof BooleanFieldProperty) return "boolean";

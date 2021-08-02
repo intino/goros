@@ -54,13 +54,15 @@ public class RendererHelper {
 	}
 
 	public static String labelOf(NodeViewProperty viewProperty) {
-		String label = (String) viewProperty.getLabel();
-		return label != null && !label.isEmpty() ? label : viewProperty.getName();
+		return labelOf((String) viewProperty.getLabel(), viewProperty.getName());
 	}
 
 	public static String labelOf(ProcessDefinitionBase.ViewProperty viewProperty) {
-		String label = (String) viewProperty.getLabel();
-		return label != null && !label.isEmpty() ? label : viewProperty.getName();
+		return labelOf((String) viewProperty.getLabel(), viewProperty.getName());
+	}
+
+	public static String labelOf(String label, String name) {
+		return label != null && !label.isEmpty() ? label : name;
 	}
 
 	public static String normalize(String name) {
@@ -117,6 +119,12 @@ public class RendererHelper {
 		else if (showProperty.getLocation() != null) return "location";
 		else if (showProperty.getRevisions() != null) return "revisions";
 		else if (showProperty.getTasks() != null) return "tasks";
+		return null;
+	}
+
+	public static String typeOf(CompositeFieldProperty.ViewProperty.ShowProperty showProperty) {
+		if (showProperty == null || showProperty.getField().size() > 0) return "fields";
+		else if (showProperty.getLayout() != null) return "layout";
 		return null;
 	}
 

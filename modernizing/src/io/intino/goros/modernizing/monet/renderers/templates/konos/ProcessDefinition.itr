@@ -62,7 +62,7 @@ def type(shortcutview) trigger(declaration)
 end
 
 def type(shortcutview) trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
 end
 
 def type(shortcutview)

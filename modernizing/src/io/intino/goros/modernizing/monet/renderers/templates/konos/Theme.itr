@@ -86,7 +86,7 @@ def type(theme)
     Format("background:'white',padding:'2px 0 2px 5px',borderRadius:'10px'") termReferenceStyle
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") compositeFieldStyle
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
-    Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-5px',marginRight:'2px'") editDocumentButtonStyle
+    Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-9px',marginRight:'-26px'") editDocumentButtonStyle
     Format("background:'white',border:'1px solid #e4e4e4'") desktopBlockStyle
     Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
     Format("height:'20px'") pillStyle

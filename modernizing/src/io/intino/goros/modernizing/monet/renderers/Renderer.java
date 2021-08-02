@@ -105,6 +105,10 @@ public abstract class Renderer {
 		return RendererHelper.typeOf(showProperty);
 	}
 
+	protected String typeOf(CompositeFieldProperty.ViewProperty.ShowProperty showProperty) {
+		return RendererHelper.typeOf(showProperty);
+	}
+
 	protected String clean(Object label) {
 		if (label == null) return null;
 		return ((String)label).replace("\n", "");

@@ -18,6 +18,30 @@ def type(layoutElement) trigger(declaration)
     [$field+declaration]
 end
 
+def type(show & fields & composite) trigger(init)
+    [$field+init...[$NL]]
+end
+
+def type(show & fields & composite) trigger(refresh)
+    [$field+refresh...[$NL]]
+end
+
+def type(show & fields & composite) trigger(update)
+    [$field+update...[$NL]]
+end
+
+def type(show & layout & composite) trigger(init)
+    [$row+init...[$NL]]
+end
+
+def type(show & layout & composite) trigger(refresh)
+    [$row+refresh...[$NL]]
+end
+
+def type(show & layout & composite) trigger(update)
+    [$row+update...[$NL]]
+end
+
 def type(show & layout)
     @Override
     public void init() {
@@ -387,7 +411,7 @@ def type(field & composite & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~Field.getAllFields().forEach(field -> {
-        $definition+firstUpperCase$name+firstUpperCase~Template display = $name+firstLowerCase~.add().node(node).field(field).readonly(this.readonly);
+        $definition+firstUpperCase$name+firstUpperCase~Template display = $name+firstLowerCase~.add([$addProperties]).node(node).field(field).readonly(this.readonly);
         display.refresh();
     });
     $name+firstLowerCase~.onAdd(e -> save(b -> {
@@ -424,7 +448,7 @@ def type(field & node & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~Field.getAllFields().forEach(field -> {
-        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = $name+firstLowerCase~.add().node(node).field(field).readonly(this.readonly).displayProvider(this);
+        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = $name+firstLowerCase~.add([$addProperties]).node(node).field(field).readonly(this.readonly).displayProvider(this);
         display.refresh();
     });
     $name+firstLowerCase~.onAdd(e -> save(b -> {
@@ -437,6 +461,26 @@ def type(field & node & multiple) trigger(refresh)
         display.refresh();
     }));
     $name+firstLowerCase~.readonly($readonly);
+end
+
+def type(addProperties)
+    "[$add+label...[; ]]", [$add...[ + "; " + ]]
+end
+
+def type(addPropertiesItem) trigger(label)
+    $label
+end
+
+def type(addPropertiesItem & date)
+    ((Field~$type+firstUpperCase)field.getField("$code")).get().getFormattedValue()
+end
+
+def type(addPropertiesItem & link)
+    ((Field~$type+firstUpperCase)field.getField("$code")).get().getLabel()
+end
+
+def type(addPropertiesItem)
+    ((Field~$type+firstUpperCase)field.getField("$code")).get()
 end
 
 def type(field & node) trigger(init)
@@ -468,7 +512,7 @@ def type(compositeView)
         private FieldComposite field;
         private boolean readonly;
         private ChangeListener changeListener;
-        [$field+declaration...[$NL]]
+        [$show+declaration]
 
         public $definition+firstUpperCase~$name+firstUpperCase~Template($module+firstUpperCase~Box box) {
             super(box);
@@ -501,13 +545,13 @@ def type(compositeView)
         @Override
         public void init() {
             super.init();
-            [$field+init...[$NL]]
+            [$show+init]
         }
 
         @Override
         public void refresh() {
             super.refresh();
-            [$field+refresh...[$NL]]
+            [$show+refresh]
         }
 
         private void save(java.util.function.Consumer<Boolean> consumer) {
@@ -518,7 +562,7 @@ def type(compositeView)
 
         private void updateFields() {
             FieldCompositeDatasource datasource = new FieldCompositeDatasource(box().unit(), session(), field);
-            [$field+update...[$NL]]
+            [$show+update]
         }
 
         [$displayProvider]

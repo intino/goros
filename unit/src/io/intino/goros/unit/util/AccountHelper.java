@@ -39,6 +39,7 @@ public class AccountHelper {
 		if (roles.isEmpty()) return true;
 		return roles.stream().anyMatch(role -> {
 			String roleCode = dictionary.getDefinitionCode(role.getValue());
+			if (account == null) return false;
 			return roleLayer.existsNonExpiredUserRole(roleCode, account.getUser());
 		});
 	}

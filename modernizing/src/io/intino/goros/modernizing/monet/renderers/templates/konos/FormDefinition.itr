@@ -75,104 +75,103 @@ def type(field) trigger(use)
 end
 
 def type(field & text & multiple)
-    Text(format=doubleAirBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Readonly > Count(min=$min, max=$max)
+    Text(format=airBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Readonly > Count(min=$min, max=$max)
 end
 
 def type(field & text)
-    Text(format=doubleAirBottom[, mode=$textMode]) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
+    Text(format=airBottom[, mode=$textMode]) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
 end
 
 def type(field & number & multiple)
-    Number(format=doubleAirBottom, min=$min, max=$max) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay medidas") Labeled("$label") Readonly
+    Number(format=airBottom, min=$min, max=$max) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay medidas") Labeled("$label") Readonly
 end
 
 def type(field & number)
-    Number(format=doubleAirBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
+    Number(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
 end
 
 def type(field & boolean)
-    Switch(format=doubleAirBottom, title="$label") $name+firstLowerCase as Action Readonly
+    Switch(format=airBottom, title="$label") $name+firstLowerCase as Action Readonly
 end
 
 def type(field & date & multiple)
-    Date(format=doubleAirBottom) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
+    Date(format=airBottom) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
 end
 
 def type(field & date)
-    Date(format=doubleAirBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
+    Date(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
 end
 
 def type(field & memo & multiple)
-    Text(format=doubleAirBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Memo Readonly > Count(min=$min, max=$max)
+    Text(format=airBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Memo Readonly > Count(min=$min, max=$max)
 end
 
 def type(field & memo)
-    Text(format=doubleAirBottom) $name+firstLowerCase as Editable Labeled("$label") Memo Readonly
+    Text(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Memo Readonly
 end
 
 def type(field & serial)
-    Text(format=doubleAirBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
+    Text(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
 end
 
 def type(field & file & multiple)
-    File(format=doubleAirBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay documentos") Labeled("$label") Readonly Absolute(width=500px)
+    File(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay documentos") Labeled("$label") Readonly
 end
 
 def type(field & file)
-    File(format=doubleAirBottom) $name+firstLowerCase as Editable(showDropZone=true) Labeled("$label") Readonly Absolute(width=500px)
+    File(format=airBottom) $name+firstLowerCase as Editable(showDropZone=true) Labeled("$label") Readonly
 end
 
 def type(field & picture & multiple)
-    Image(format=doubleAirBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly Absolute(width=150px,height=150px)
+    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly Absolute(width=150px,height=150px)
 end
 
 def type(field & picture)
-    Image(format=doubleAirBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)
+    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)
 end
 
 def type(field & check)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as CheckBox(layout=Vertical) Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as CheckBox(layout=Vertical) Labeled("$label") Readonly
 end
 
 def type(field & link & multiple)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, multipleSelection=true, placeholder="Seleccione un valor") Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, multipleSelection=true, placeholder="Seleccione un valor") Labeled("$label") Readonly
 end
 
 def type(field & link)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, placeholder="Seleccione un valor") Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, placeholder="Seleccione un valor") Labeled("$label") Readonly
 end
 
 def type(field & select & multiple)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor", multipleSelection=true) Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor", multipleSelection=true) Labeled("$label") Readonly
 end
 
 def type(field & select & inline)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as ListBox Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as ListBox Labeled("$label") Readonly
 end
 
 def type(field & select)
-    Selector(format=doubleAirBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor") Labeled("$label") Readonly
+    Selector(format=airBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor") Labeled("$label") Readonly
 end
 
 def type(field & composite & multiple)
-    TemplateStamp(format=doubleAirBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
+    TemplateStamp(format=airBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos", collapsed=true) Editable Labeled("$label")
 end
 
 def type(field & composite)
-    TemplateStamp(format=doubleAirBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase
+    TemplateStamp(format=airBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase
 end
 
 def type(field & node & multiple)
-    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
+    OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
 end
 
 def type(field & node)
-    OwnerTemplateStamp(format=doubleAirBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
+    OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
 end
 
 def type(compositeView)
     Template(format=compositeFieldStyle) $definition+firstUpperCase~$name+firstUpperCase~Template
         Text(format=h5 airBottom, value="$label")
-        Block content as Relative(width=100%)
-            [$field...[$NL]]
+        $show
 end

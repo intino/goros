@@ -11,6 +11,7 @@ import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty.ShowProperty;
 import org.monet.metamodel.internal.*;
 
+import javax.swing.text.CompositeView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,11 +112,19 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 			result.add("editable", new FrameBuilder("editable"));
 		}
 		addDisplayFor(fieldProperty, builder);
+		addShow(fieldProperty, result);
 		fieldProperty.getAllFieldPropertyList().forEach(f -> {
 			if (f instanceof CompositeFieldProperty) addCompositeView((CompositeFieldProperty) f, builder);
 			addField(f, fieldProperty, result);
 		});
 		return result;
+	}
+
+	private FieldProperty fieldProperty(Ref ref, CompositeFieldProperty field) {
+		return field.getAllFieldPropertyList().stream().filter(fd -> {
+			String key = ref.getValue();
+			return fd.getCode().equals(key) || fd.getName().equals(key);
+		}).findFirst().orElse(null);
 	}
 
 	private FieldProperty fieldProperty(Ref ref) {
@@ -134,12 +143,26 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
 		else if (showProperty.getLayout() != null) {
 			builder.add("updateFields", baseFrame().add("updateFields"));
-			addLayoutShow(viewProperty, showProperty, result);
+			addLayoutShow(viewProperty, result);
 		}
 		else if (showProperty.getField().size() > 0) {
 			builder.add("updateFields", baseFrame().add("updateFields"));
-			addFieldShow(viewProperty, showProperty, result);
+			addFieldShow(viewProperty, result);
 		}
+		builder.add("show", result);
+	}
+
+	private void addShow(CompositeFieldProperty field, FrameBuilder builder) {
+		CompositeFieldPropertyBase.ViewProperty viewProperty = field.getView();
+		CompositeFieldPropertyBase.ViewProperty.ShowProperty showProperty = viewProperty != null ? viewProperty.getShow() : null;
+		FrameBuilder result = baseFrame().add("show").add("composite");
+		result.add(typeOf(showProperty));
+		result.add("view", nameOf(definition()));
+		result.add("definition", nameOf(definition()));
+		builder.add("updateFields", baseFrame().add("updateFields"));
+		if (showProperty == null) addFieldShow(field.getAllFieldPropertyList(), field, result);
+		else if (showProperty.getLayout() != null) addLayoutShow(viewProperty, result);
+		else if (showProperty.getField().size() > 0) addFieldShow(field, viewProperty, result);
 		builder.add("show", result);
 	}
 
@@ -179,13 +202,27 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		definitionList.forEach(d -> addRecentTaskType(d, builder));
 	}
 
-	private void addFieldShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
-		ArrayList<Ref> fieldList = showProperty.getField();
-		fieldList.forEach(ref -> addField(fieldProperty(ref), null, builder));
+	private void addFieldShow(FormViewProperty viewProperty, FrameBuilder builder) {
+		viewProperty.getShow().getField().forEach(ref -> addField(fieldProperty(ref), null, builder));
 	}
 
-	private void addLayoutShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
-		LayoutDefinition definition = this.dictionary.getLayoutDefinition(showProperty.getLayout());
+	private void addFieldShow(CompositeFieldProperty field, CompositeFieldPropertyBase.ViewProperty viewProperty, FrameBuilder builder) {
+		viewProperty.getShow().getField().forEach(ref -> addField(fieldProperty(ref, field), field, builder));
+	}
+
+	private void addFieldShow(List<FieldProperty> fieldList, CompositeFieldProperty compositeField, FrameBuilder builder) {
+		fieldList.forEach(field -> addField(field, compositeField, builder));
+	}
+
+	private void addLayoutShow(FormViewProperty viewProperty, FrameBuilder builder) {
+		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), builder);
+	}
+
+	private void addLayoutShow(CompositeFieldPropertyBase.ViewProperty viewProperty, FrameBuilder builder) {
+		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), builder);
+	}
+
+	private void addLayoutShow(LayoutDefinition definition, FrameBuilder builder) {
 		String width = definition.getWidth();
 		String height = definition.getHeight();
 		if (width == null && height == null) builder.add("relativeFacet", sizeFacetFrame("relative", "90", null));

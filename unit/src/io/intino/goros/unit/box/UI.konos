@@ -6,7 +6,6 @@ Service UnitElements as UI(port = "{port}", title = "", favicon = "")
 	Authentication(by = "")
 
 	Resource(path = "/goros-home") home as Page(gorosAppTemplate) Main Confidential
-	Resource(path = "/permisos") roles as Page(gorosAppTemplate) Confidential
 	Resource(path = "/install") install as Page(gorosInstallTemplate)
 
 Template gorosAppTemplate

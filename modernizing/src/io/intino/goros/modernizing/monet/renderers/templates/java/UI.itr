@@ -65,7 +65,7 @@ end
 def type(ui & app)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.BlockConditional;
     import org.monet.metamodel.*;
     import org.monet.metamodel.internal.Ref;
@@ -86,12 +86,12 @@ def type(ui & app)
 
     import static java.util.Collections.emptyList;
 
-    public class AppTemplate extends AbstractAppTemplate<$module+firstUpperCase~Box> {
+    public class AppTemplate extends AbstractAppTemplate<$boxName+firstUpperCase~Box> {
         private View current = null;
 
         public enum View { Dashboard, Roles, TaskTray, TaskBoard, News, Trash[, $definition+declaration...[, ]] }
 
-        public AppTemplate($module+firstUpperCase~Box box) {
+        public AppTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -109,6 +109,7 @@ def type(ui & app)
             io.intino.goros.unit.util.DisplayHelper.initAgentSession(session());
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());
             box().pushService().onLinkedToThread(session().client(), threadId -> io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), threadId));
+            box().notifier().onTaskCreated(this, this::refreshTasksCount);
             refresh();
         }
 
@@ -116,6 +117,12 @@ def type(ui & app)
         public void refresh() {
             super.refresh();
             refreshDrawer();
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            box().notifier().unTaskCreated(this);
         }
 
         public void openHome() {
@@ -258,13 +265,17 @@ def type(ui & app)
             return true;
         }
 
+        private void refreshTasksCount(Task task) {
+            if (taskTray.isVisible()) taskTray.value(AccountHelper.aliveTaskTrayTasksCount(session()));
+            if (taskBoard.isVisible()) taskBoard.value(AccountHelper.activeTaskBoardTasksCount(session()));
+        }
     }
 end
 
 def type(ui & header)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.metamodel.Distribution;
     import org.monet.metamodel.Project;
     import org.monet.space.kernel.Kernel;
@@ -275,9 +286,9 @@ def type(ui & header)
     import java.net.MalformedURLException;
     import java.net.URL;
 
-    public class HeaderTemplate extends AbstractHeaderTemplate<$module+firstUpperCase~Box> {
+    public class HeaderTemplate extends AbstractHeaderTemplate<$boxName+firstUpperCase~Box> {
 
-        public HeaderTemplate($module+firstUpperCase~Box box) {
+        public HeaderTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

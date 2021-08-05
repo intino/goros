@@ -208,6 +208,11 @@ public class NodeHelper {
         return Double.valueOf(value);
     }
 
+    public static Node nodeOf(MonetLink link) {
+        if (link == null) return null;
+        return LayerHelper.nodeLayer().loadNode(link.getId());
+    }
+
     public static Node nodeOf(Link link) {
         if (link == null) return null;
         return LayerHelper.nodeLayer().loadNode(link.getId());

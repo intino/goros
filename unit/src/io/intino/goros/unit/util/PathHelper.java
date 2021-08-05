@@ -4,15 +4,16 @@ import io.intino.alexandria.ui.Soul;
 import io.intino.alexandria.ui.displays.DisplayRouteManager;
 import org.monet.metamodel.Definition;
 import org.monet.space.kernel.model.Dictionary;
+import org.monet.space.kernel.model.MonetLink;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.Task;
 import io.intino.goros.unit.box.ui.displays.RouteDispatcher;
 
 public class PathHelper {
 
-	public static void dispatch(DisplayRouteManager manager, Soul soul, Node node) {
+	public static void dispatch(DisplayRouteManager manager, Soul soul, Task task) {
 		RouteDispatcher dispatcher = (RouteDispatcher) manager.routeDispatcher();
-		dispatcher.dispatch(soul, PathHelper.pathOf(node));
+		dispatcher.dispatch(soul, PathHelper.pathOf(task));
 	}
 
 	public static String fill(String path, Task task) {
@@ -26,16 +27,28 @@ public class PathHelper {
 		return prefix + name;
 	}
 
+	public static String pathOf(MonetLink link) {
+		MonetLink.Type type = link.getType();
+		if (type == MonetLink.Type.News) return PathHelper.pathOfNews();
+		else if (type == MonetLink.Type.Node) return PathHelper.pathOf(NodeHelper.nodeOf(link), link.getView());
+		else if (type == MonetLink.Type.Task) return PathHelper.pathOf(TaskHelper.taskOf(link));
+		return null;
+	}
+
 	public static String pathOf(Node node) {
 		return "/" + subPathOf(node);
 	}
 
 	public static String pathOf(Node node, String view) {
-		return pathOf(node) + "/" + view;
+		return pathOf(node) + "/" + (view != null ? view : "default");
 	}
 
 	public static String pathOf(Task task) {
 		return "/" + subPathOf(task);
+	}
+
+	public static String pathOfNews() {
+		return "/noticias";
 	}
 
 	private static String subPathOf(Node node) {

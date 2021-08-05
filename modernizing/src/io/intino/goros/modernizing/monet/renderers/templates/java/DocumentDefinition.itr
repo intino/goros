@@ -1,19 +1,19 @@
 def type(documentdefinition & embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
     import io.intino.goros.unit.util.DisplayHelper;
 
     import java.util.List;
 
-    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = false;
         [$toolbar+editableDeclaration]
         [$toolbar+navigableDeclaration]
 
-        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

@@ -1,21 +1,21 @@
 def type(nodedefinition & embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
     import org.monet.space.kernel.model.Revision;
     import io.intino.goros.unit.util.DisplayHelper;
 
     import java.util.List;
 
-    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private Node node;
         private Revision revision;
         private boolean readonly = false;
         [$toolbar+editableDeclaration]
         [$toolbar+navigableDeclaration]
 
-        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -125,14 +125,14 @@ end
 def type(nodedefinition & singleton)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
 
-    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = true;
 
-        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -155,15 +155,15 @@ end
 def type(nodedefinition)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.components.ComponentPersistence;
     import org.monet.space.kernel.model.Node;
 
-    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
         private String view;
 
-        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -393,7 +393,7 @@ end
 def type(nodeView)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
     import org.monet.bpi.*;
     import org.monet.space.kernel.model.Node;
@@ -403,13 +403,13 @@ def type(nodeView)
 
     import static java.util.stream.Collectors.toList;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box>[ implements $implements] {
+    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$boxName+firstUpperCase~Box>[ implements $implements] {
         private Node node;
         private String view;
         private boolean readonly = false;
         $show+declaration
 
-        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate($module+firstUpperCase~Box box) {
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

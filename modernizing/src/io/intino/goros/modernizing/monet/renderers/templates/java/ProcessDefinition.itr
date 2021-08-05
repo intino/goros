@@ -1,7 +1,7 @@
 def type(process & embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.Collection;
     import org.monet.space.kernel.model.Task;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
@@ -11,7 +11,7 @@ def type(process & embedded)
     import java.util.List;
     import java.util.function.Consumer;
 
-    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private Task task;
         private Inbox inbox;
         private boolean readonly = true;
@@ -19,7 +19,7 @@ def type(process & embedded)
         private java.util.function.Consumer<Task> abortListener;
         private java.util.function.Consumer<Task> showCollectionListener;
 
-        public $name+firstUpperCase~EmbeddedTemplate($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -176,7 +176,7 @@ end
 def type(process & stateview)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.Display;
     import org.monet.metamodel.internal.TaskOrderDefinition;
     import org.monet.space.kernel.model.Node;
@@ -184,11 +184,11 @@ def type(process & stateview)
     import io.intino.goros.unit.box.ui.DisplayProvider;
     import io.intino.goros.unit.box.ui.displays.templates.TaskOrderTemplate;
 
-    public class $name+firstUpperCase~StateViewTemplate extends Abstract$name+firstUpperCase~StateViewTemplate<$module+firstUpperCase~Box> implements DisplayProvider {
+    public class $name+firstUpperCase~StateViewTemplate extends Abstract$name+firstUpperCase~StateViewTemplate<$boxName+firstUpperCase~Box> implements DisplayProvider {
         private Task task;
         private boolean readonly = true;
 
-        public $name+firstUpperCase~StateViewTemplate($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~StateViewTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -227,7 +227,7 @@ end
 def type(process & shortcutview)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.Display;
     import org.monet.metamodel.internal.TaskOrderDefinition;
     import org.monet.space.kernel.model.Node;
@@ -235,11 +235,11 @@ def type(process & shortcutview)
     import io.intino.goros.unit.box.ui.DisplayProvider;
     import io.intino.goros.unit.box.ui.displays.templates.TaskOrderTemplate;
 
-    public class $definition+firstUpperCase$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase$name+firstUpperCase~ViewTemplate<$module+firstUpperCase~Box> {
+    public class $definition+firstUpperCase$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase$name+firstUpperCase~ViewTemplate<$boxName+firstUpperCase~Box> {
         private Task task;
         private boolean readonly = true;
 
-        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate($module+firstUpperCase~Box box) {
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -281,15 +281,15 @@ end
 def type(process)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Task;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
 
-    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$module+firstUpperCase~Box> {
+    public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Task task;
         private Inbox inbox;
 
-        public $name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+        public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

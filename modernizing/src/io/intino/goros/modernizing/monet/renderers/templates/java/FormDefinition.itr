@@ -498,7 +498,7 @@ end
 def type(compositeView)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.events.ChangeEvent;
     import io.intino.alexandria.ui.displays.events.ChangeListener;
     import org.monet.bpi.*;
@@ -507,14 +507,14 @@ def type(compositeView)
 
     import java.util.function.Consumer;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$module+firstUpperCase~Box>[ implements $implements...[,]] {
+    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$boxName+firstUpperCase~Box>[ implements $implements...[,]] {
         private Node node;
         private FieldComposite field;
         private boolean readonly;
         private ChangeListener changeListener;
         [$show+declaration]
 
-        public $definition+firstUpperCase~$name+firstUpperCase~Template($module+firstUpperCase~Box box) {
+        public $definition+firstUpperCase~$name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

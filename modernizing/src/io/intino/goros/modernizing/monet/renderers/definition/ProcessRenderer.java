@@ -98,6 +98,10 @@ public abstract class ProcessRenderer<D extends ProcessDefinition> extends Defin
 			NodeDefinition definition = dictionary.getNodeDefinition(target.getDefinition());
 			addDisplayFor(definition, target.getValue(), builder);
 		});
+		definition().getEditionActionList().forEach(a -> {
+			NodeDefinition definition = dictionary.getNodeDefinition(a.getUse().getForm().getValue());
+			addDisplayFor(definition, a.getUse().getWithView().getValue(), builder);
+		});
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 package io.intino.goros.unit.util;
 
-import io.intino.alexandria.ui.services.push.UISession;
-import org.monet.metamodel.Distribution;
-import org.monet.space.kernel.model.BusinessUnit;
+import org.monet.space.kernel.model.MonetLink;
 import org.monet.space.kernel.model.Task;
 
 public class TaskHelper {
-    
+
+    public static Task taskOf(MonetLink link) {
+        if (link == null) return null;
+        return LayerHelper.taskLayer().loadTask(link.getId());
+    }
+
     public static boolean isAlive(Task task) {
         return !task.isExpired() && !task.isAborted() && !task.isFinished();
     }

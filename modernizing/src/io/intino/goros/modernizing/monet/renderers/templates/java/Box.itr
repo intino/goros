@@ -7,13 +7,13 @@ def type(box)
 
     import java.net.URL;
 
-    public class $module+firstUpperCase~Box extends AbstractBox {
+    public class $boxName+firstUpperCase~Box extends AbstractBox {
 
-        public $module+firstUpperCase~Box(String$[$] args) {
+        public $boxName+firstUpperCase~Box(String$[$] args) {
             super(args);
         }
 
-        public $module+firstUpperCase~Box($module+firstUpperCase~Configuration configuration) {
+        public $boxName+firstUpperCase~Box($boxName+firstUpperCase~Configuration configuration) {
             super(configuration);
         }
 

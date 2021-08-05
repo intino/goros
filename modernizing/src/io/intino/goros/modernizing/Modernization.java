@@ -2,6 +2,8 @@ package io.intino.goros.modernizing;
 
 import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.xml.Xml;
+import io.intino.goros.modernizing.monet.util.StringUtil;
+import io.intino.itrules.formatters.StringFormatters;
 import org.w3c.dom.Node;
 
 import java.io.File;
@@ -61,6 +63,12 @@ public class Modernization {
 		return properties.getOrDefault("module.name", "");
 	}
 
+	public String boxName() {
+		String boxName = properties.getOrDefault("artifact.name", "");
+		if (boxName.isEmpty()) return moduleName();
+		return StringUtil.snakeCaseToCamelCase(boxName);
+	}
+
 	public File moduleDirectory() {
 		return new File(projectDirectory() + File.separator + moduleName());
 	}
@@ -82,12 +90,14 @@ public class Modernization {
 			io.intino.alexandria.xml.Node root = xml.document().getChildNodes().get(0);
 			Node projectNode = root.child("project").get();
 			Node moduleNode = root.child("module").get();
+			Node artifactNode = root.child("artifact") != null ? root.child("artifact").get() : null;
 			Node definitionsNode = root.child("definitions").get();
 			modernization.put("model", root.child("model").get().getTextContent());
 			modernization.put("project.name", projectNode.getAttributes().getNamedItem("name").getTextContent());
 			modernization.put("project.package", projectNode.getAttributes().getNamedItem("package").getTextContent());
 			modernization.put("project.directory", projectNode.getAttributes().getNamedItem("directory").getTextContent());
 			modernization.put("module.name", moduleNode.getAttributes().getNamedItem("name").getTextContent());
+			modernization.put("artifact.name", artifactNode != null ? artifactNode.getAttributes().getNamedItem("name").getTextContent() : "");
 			modernization.put("definitions.excluded", definitionsNode.getAttributes().getNamedItem("excluded").getTextContent());
 			return modernization;
 		} catch (IOException e) {

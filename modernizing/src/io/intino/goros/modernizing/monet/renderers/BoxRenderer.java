@@ -27,7 +27,7 @@ public class BoxRenderer extends Renderer {
 	}
 
 	private File file() {
-		return new File(modernization.sourceBoxDirectory() + File.separator + StringUtil.firstUpperCase(modernization.moduleName()) + "Box.java");
+		return new File(modernization.sourceBoxDirectory() + File.separator + StringUtil.firstUpperCase(modernization.boxName()) + "Box.java");
 	}
 
 }

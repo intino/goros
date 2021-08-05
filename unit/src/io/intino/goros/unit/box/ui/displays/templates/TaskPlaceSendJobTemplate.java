@@ -80,6 +80,7 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
 
         RoleList roleList = roles();
         pendingView.openRoles.visible(roleList.getTotalCount() <= 0);
+        pendingView.openRoles.address(path -> "/permisos");
         pendingView.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
         pendingView.unAssignedRole.affirmed(translate(DisplayHelper.requireConfirmationMessage(property)));
         pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
@@ -141,7 +142,9 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
 
     private void setup() {
         notifyUser(translate("Setting up job..."), UserMessage.Type.Loading);
+        solveSetup.readonly(true);
         task.getProcess().setupSendJobAction();
+        solveSetup.readonly(false);
         notifyUser(translate("Job setup"), UserMessage.Type.Success);
     }
 

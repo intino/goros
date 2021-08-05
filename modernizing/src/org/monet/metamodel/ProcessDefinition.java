@@ -3,7 +3,10 @@ package org.monet.metamodel;
 import org.monet.metamodel.interfaces.IsInitiable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * ProcessDefinition Una tarea es una trabajo colectivo o individual que se
@@ -61,5 +64,9 @@ public abstract class ProcessDefinition extends ProcessDefinitionBase implements
 
 	public PlaceProperty getPlace(String place) {
 		return this.placesMap.get(place);
+	}
+
+	public List<EditionActionProperty> getEditionActionList() {
+		return this.placesMap.values().stream().filter(p -> p.getPlaceActionProperty() instanceof EditionActionProperty).map(p -> ((EditionActionProperty)p.getPlaceActionProperty())).collect(toList());
 	}
 }

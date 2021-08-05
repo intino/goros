@@ -34,8 +34,8 @@ Template(layout=Vertical Flexible) rolesTableCatalog as Relative(height=100%)
 		noItemsMessage = "No roles"
 		Mold
 			Heading rolesTableUserHeading > Text(value="User", translate=true)
-			Item(height=50px,width=20%) rolesTableUserItem
-				Block(layout=Horizontal Center)
+			Item(height=50px,width=25%) rolesTableUserItem
+				Block(layout=Vertical)
 					Block(layout=Flexible) > Text(value="Loading...", translate=true, format=airRight) user
 					Block(layout=EndJustified) > Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="transparent")
 		Mold
@@ -55,7 +55,7 @@ Template(layout=Vertical Flexible) rolesTableCatalog as Relative(height=100%)
 			Item(height=50px,width=15%) rolesTableEndDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") endDate
 		Mold
 			Heading rolesTableOperationsHeading
-			Item(height=50px,width=10%) rolesTableOperationsItem
+			Item(height=50px,width=5%) rolesTableOperationsItem
 
 Template(layout=Horizontal, format=air) rolesToolbarTemplate
 	Button(title="Add role", size=Small, highlight=Outline) as OpenDialog(dialog=addRoleDialog)

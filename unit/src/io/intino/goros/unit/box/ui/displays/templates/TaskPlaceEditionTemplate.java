@@ -85,13 +85,15 @@ public class TaskPlaceEditionTemplate extends AbstractTaskPlaceEditionTemplate<U
     }
 
     private void solve() {
-        notifyUser(translate("Resolving task..."), UserMessage.Type.Loading);
+//        notifyUser(translate("Resolving task..."), UserMessage.Type.Loading);
         try {
+            solve.readonly(true);
             ValidationResult validation = task.getProcess().solveEditionAction();
             solveErrorMessageBlock.visible(!validation.isValid());
             if (!validation.isValid()) solveErrorMessage.value(solveErrorMessage(validation));
         }
         finally {
+            solve.readonly(false);
             notifyUser(translate("Task resolved"), UserMessage.Type.Success);
         }
     }

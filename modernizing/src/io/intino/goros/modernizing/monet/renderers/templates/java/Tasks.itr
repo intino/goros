@@ -1,16 +1,16 @@
 def type(tasks & nodetasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
 
-    public class NodeTasksTemplate extends AbstractNodeTasksTemplate<$module+firstUpperCase~Box> {
+    public class NodeTasksTemplate extends AbstractNodeTasksTemplate<$boxName+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = true;
         private String view;
 
-        public NodeTasksTemplate($module+firstUpperCase~Box box) {
+        public NodeTasksTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -47,13 +47,13 @@ end
 def type(tasks & inbox)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
 
-    public class $inboxType+firstUpperCase~Template extends Abstract$inboxType+firstUpperCase~Template<$module+firstUpperCase~Box> {
+    public class $inboxType+firstUpperCase~Template extends Abstract$inboxType+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private String folder;
 
-        public $inboxType+firstUpperCase~Template($module+firstUpperCase~Box box) {
+        public $inboxType+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -82,7 +82,7 @@ end
 def type(tasks & embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.BlockConditional;
     import io.intino.alexandria.ui.displays.components.Collection;
     import io.intino.alexandria.ui.displays.components.SearchBox;
@@ -96,7 +96,7 @@ def type(tasks & embedded)
     import java.util.List;
     import java.util.function.Consumer;
 
-    public class TasksEmbeddedTemplate extends AbstractTasksEmbeddedTemplate<$module+firstUpperCase~Box> {
+    public class TasksEmbeddedTemplate extends AbstractTasksEmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private String view;
         private TaskListDatasource.Inbox inbox;
         private Task selectedTask;
@@ -107,7 +107,7 @@ def type(tasks & embedded)
         private SearchBox searchBox;
         private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Full;
 
-        public TasksEmbeddedTemplate($module+firstUpperCase~Box box) {
+        public TasksEmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
@@ -350,19 +350,19 @@ end
 def type(tasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
     import io.intino.goros.unit.util.Formatters;
 
-    public class TasksTemplate extends AbstractTasksTemplate<$module+firstUpperCase~Box> {
+    public class TasksTemplate extends AbstractTasksTemplate<$boxName+firstUpperCase~Box> {
         private String view;
         private String folder;
         private TaskListDatasource.Inbox inbox;
         private boolean readonly = true;
 
-        public TasksTemplate($module+firstUpperCase~Box box) {
+        public TasksTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

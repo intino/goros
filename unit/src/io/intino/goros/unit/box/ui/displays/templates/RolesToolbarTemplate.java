@@ -139,14 +139,10 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
         Date beginValue = Date.from(beginDate.value() != null ? beginDate.value() : Instant.now());
         Date expireValue = endDate.value() != null ? Date.from(endDate.value()) : null;
 
-        RoleLayer roleLayer = LayerHelper.roleLayer();
-        if (roleLayer.existsNonExpiredUserRole(roleDefinition.getCode(), selectedUser.getId())) {
-            String message = translate("Role ::role:: is already active for ::user::").replace("::role::", definitionValue).replace("::user::", selectedUser.getInfo().getFullname());
-            notifyUser(message, UserMessage.Type.Error);
-            return;
-        }
-
+        if (existNonExpiredRole(definitionValue, roleDefinition)) return;
         addRoleDialog.close();
+
+        RoleLayer roleLayer = LayerHelper.roleLayer();
         Role role;
         if (typeValue == RoleTypeGrouping.User) role = roleLayer.addUserRole(roleDefinition.getCode(), selectedUser, beginValue, expireValue);
         else if (typeValue == RoleTypeGrouping.Service) role = roleLayer.addServiceRole(roleDefinition.getCode(), partner(selectedService), selectedService, beginValue, expireValue);
@@ -154,6 +150,30 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
 
         LayerHelper.federationLayer(session()).createOrUpdateAccount(AccountHelper.account(session()));
         addListener.accept(role);
+    }
+
+    private boolean existNonExpiredRole(String definitionValue, RoleDefinition roleDefinition) {
+        RoleLayer roleLayer = LayerHelper.roleLayer();
+
+        if (selectedUser != null && roleLayer.existsNonExpiredUserRole(roleDefinition.getCode(), selectedUser.getId())) {
+            String message = translate("Role ::role:: is already active for ::user::").replace("::role::", definitionValue).replace("::user::", selectedUser.getInfo().getFullname());
+            notifyUser(message, UserMessage.Type.Error);
+            return true;
+        }
+
+        if (selectedService != null && roleLayer.existsNonExpiredServiceRole(roleDefinition.getCode(), partner(selectedService), selectedService)) {
+            String message = translate("Role ::role:: is already active for ::service::").replace("::role::", definitionValue).replace("::service::", selectedService.getLabel());
+            notifyUser(message, UserMessage.Type.Error);
+            return true;
+        }
+
+        if (selectedFeeder != null && roleLayer.existsNonExpiredFeederRole(roleDefinition.getCode(), partner(selectedFeeder), selectedFeeder)) {
+            String message = translate("Role ::role:: is already active for ::feeder::").replace("::role::", definitionValue).replace("::feeder::", selectedFeeder.getLabel());
+            notifyUser(message, UserMessage.Type.Error);
+            return true;
+        }
+
+        return false;
     }
 
     private RoleDefinition findDefinitionCode(String label) {

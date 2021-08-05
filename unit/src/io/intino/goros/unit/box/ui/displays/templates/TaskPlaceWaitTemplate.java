@@ -67,19 +67,27 @@ public class TaskPlaceWaitTemplate extends AbstractTaskPlaceWaitTemplate<UnitBox
     }
 
     private void plusHour() {
+        plusHour.readonly(true);
         setup(plusMillis(TaskHelper.hoursToMillis(1)));
+        plusHour.readonly(false);
     }
 
     private void plusDay() {
+        plusDay.readonly(true);
         setup(plusMillis(TaskHelper.daysToMillis(1)));
+        plusDay.readonly(false);
     }
 
     private void plusMonth() {
+        plusMonth.readonly(true);
         setup(plusMillis(TaskHelper.monthsToMillis(1)));
+        plusMonth.readonly(false);
     }
 
     private void plusYear() {
+        plusYear.readonly(true);
         setup(plusMillis(TaskHelper.yearsToMillis(1)));
+        plusYear.readonly(false);
     }
 
     private long plusMillis(long millis) {
@@ -89,7 +97,9 @@ public class TaskPlaceWaitTemplate extends AbstractTaskPlaceWaitTemplate<UnitBox
     }
 
     private void freePlace() {
+        freePlace.readonly(true);
         setup(0);
+        freePlace.readonly(false);
     }
 
     private long dueDate() {

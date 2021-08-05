@@ -13,9 +13,10 @@ import org.monet.metamodel.internal.*;
 
 import javax.swing.text.CompositeView;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public class FormRenderer extends NodeRenderer<FormDefinition> {
 
@@ -162,8 +163,15 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		builder.add("updateFields", baseFrame().add("updateFields"));
 		if (showProperty == null) addFieldShow(field.getAllFieldPropertyList(), field, result);
 		else if (showProperty.getLayout() != null) addLayoutShow(viewProperty, result);
-		else if (showProperty.getField().size() > 0) addFieldShow(field, viewProperty, result);
+		else if (fields(showProperty).size() > 0) addFieldShow(field, viewProperty, result);
 		builder.add("show", result);
+	}
+
+	private List<Ref> fields(CompositeFieldPropertyBase.ViewProperty.ShowProperty showProperty) {
+		List<Ref> fieldList = showProperty.getField();
+		Map<String, Ref> result = new LinkedHashMap<>();
+		fieldList.forEach(f -> result.put(f.getValue(), f));
+		return new ArrayList<>(result.values());
 	}
 
 	private void addDisplayProvider(CompositeFieldProperty fieldProperty, FrameBuilder builder) {
@@ -207,7 +215,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	}
 
 	private void addFieldShow(CompositeFieldProperty field, CompositeFieldPropertyBase.ViewProperty viewProperty, FrameBuilder builder) {
-		viewProperty.getShow().getField().forEach(ref -> addField(fieldProperty(ref, field), field, builder));
+		fields(viewProperty.getShow()).forEach(ref -> addField(fieldProperty(ref, field), field, builder));
 	}
 
 	private void addFieldShow(List<FieldProperty> fieldList, CompositeFieldProperty compositeField, FrameBuilder builder) {

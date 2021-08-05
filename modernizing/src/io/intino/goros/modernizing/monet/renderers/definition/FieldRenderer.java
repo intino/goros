@@ -118,7 +118,14 @@ public class FieldRenderer extends Renderer {
 		IndexDefinitionBase.IndexViewProperty viewProperty = view != null ? definition.getView(view.getValue()) : definition.getDefaultView();
 		builder.add("index", nameOf(definition));
 		builder.add("indexCode", definition.getCode());
-		builder.add("indexView", viewProperty != null ? nameOf(viewProperty) : (definition.getDefaultView() != null ? nameOf(definition.getDefaultView()) : ""));
+		builder.add("indexView", indexView(definition, viewProperty));
+	}
+
+	private String indexView(IndexDefinition definition, IndexDefinitionBase.IndexViewProperty viewProperty) {
+		if (viewProperty != null) return nameOf(viewProperty);
+		IndexDefinitionBase.IndexViewProperty defaultView = definition.getDefaultView();
+		if (defaultView != null) return nameOf(defaultView);
+		return definition.getViewList().size() > 0 ? nameOf(definition.getViewList().iterator().next()) : "";
 	}
 
 	private void addCompositeProperties(FrameBuilder builder) {

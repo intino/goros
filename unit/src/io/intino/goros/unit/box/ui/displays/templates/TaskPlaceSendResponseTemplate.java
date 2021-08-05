@@ -54,7 +54,9 @@ public class TaskPlaceSendResponseTemplate extends AbstractTaskPlaceSendResponse
     }
 
     private void retry() {
+        retry.readonly(true);
         task.getProcess().resume();
+        retry.readonly(false);
     }
 
 }

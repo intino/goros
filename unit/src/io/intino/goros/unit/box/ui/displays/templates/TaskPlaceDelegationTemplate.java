@@ -86,6 +86,7 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
 
         RoleList roleList = roles(nature);
         pendingView.openRoles.visible(roleList.getTotalCount() <= 0);
+        pendingView.openRoles.address(path -> "/permisos");
         pendingView.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
         pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
 
@@ -104,7 +105,9 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private void refreshFailureView() {
         if (!task.isFailure()) return;
         Date date = this.task.getProcess().getCurrentProvider().getModel().getFailureDate();
-        failureDate.value(date.toInstant());
+        failureView.lastSendingView.visible(date != null);
+        failureView.tryingView.visible(date == null);
+        if (date != null) failureDate.value(date.toInstant());
     }
 
     private void refreshSetupStep(TaskOrder order) {
@@ -144,7 +147,9 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
 
     private void setup() {
         notifyUser(translate("Setting up delegation..."), UserMessage.Type.Loading);
+        solveSetup.readonly(true);
         task.getProcess().setupDelegationAction();
+        solveSetup.readonly(false);
         notifyUser(translate("Delegation setup"), UserMessage.Type.Success);
     }
 

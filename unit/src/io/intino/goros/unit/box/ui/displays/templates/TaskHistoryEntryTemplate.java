@@ -3,6 +3,7 @@ package io.intino.goros.unit.box.ui.displays.templates;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.LayerHelper;
+import io.intino.goros.unit.util.PathHelper;
 import org.monet.space.kernel.model.Fact;
 import org.monet.space.kernel.model.MonetLink;
 
@@ -26,16 +27,13 @@ public class TaskHistoryEntryTemplate extends AbstractTaskHistoryEntryTemplate<U
         title.value(entry.getTitle());
         subtitle.value(entry.getSubTitle());
         author.value(userId != null && !userId.isEmpty() ? translate("by") + " " + LayerHelper.federationLayer(session()).loadUserByUsername(entry.getUserId()).getInfo().getFullname() : null);
+        linksBlock.clear();
         entry.getLinks().forEach(link -> fill(link, linksBlock.add()));
     }
 
-    private void fill(MonetLink link, LinksBlock view) {
-        view.link.title(link.getLabel());
-        view.link.onExecute(e -> openLink(link));
-    }
-
-    private void openLink(MonetLink link) {
-        notifyUser("Pendiente abrir el link " + link.getId(), UserMessage.Type.Info);
+    private void fill(MonetLink link, TaskHistoryEntryLinkTemplate display) {
+        display.monetLink(link);
+        display.refresh();
     }
 
 }

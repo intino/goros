@@ -40,7 +40,7 @@ public class TaskPlaceLineStopTemplate extends AbstractTaskPlaceLineStopTemplate
     @Override
     public void init() {
         super.init();
-        label.onExecute(e -> selectListener.accept(property));
+        label.onExecute(e -> select());
     }
 
     @Override
@@ -48,6 +48,12 @@ public class TaskPlaceLineStopTemplate extends AbstractTaskPlaceLineStopTemplate
         super.refresh();
         label.affirmed(confirmText);
         label.title(Language.getInstance().getModelResource(property.getLabel()));
+    }
+
+    private void select() {
+        label.readonly(true);
+        selectListener.accept(property);
+        label.readonly(false);
     }
 
 }

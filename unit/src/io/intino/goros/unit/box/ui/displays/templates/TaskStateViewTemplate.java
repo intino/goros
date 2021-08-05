@@ -45,8 +45,7 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
         refreshAssignMessage();
         refreshState();
         refreshStateDueView();
-        refreshServiceView();
-        refreshActivityView();
+        refreshProcessView();
         refreshJobView();
         refreshHistoryView();
     }
@@ -67,13 +66,9 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
         stateDueView.onShow(e -> stateDueView.stateDueMessage.value(translate("Task is") + " " + translate(TaskHelper.state(task)).toLowerCase()));
     }
 
-    private void refreshServiceView() {
-        serviceView.visible(task.isService());
-    }
-
-    private void refreshActivityView() {
-        activityView.visible(task.isActivity());
-        if (!task.isActivity()) return;
+    private void refreshProcessView() {
+        processView.visible(isProcess());
+        if (!isProcess()) return;
         refreshPlaceView();
     }
 
@@ -187,6 +182,10 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
         else if (task.isAborted()) return translate("Job is aborted");
         else if (task.getOwner() != null) return translate("::owner:: is doing job").replace("::owner::", task.getOwner().getInfo().getFullname());
         else return translate("Job is pending to be assigned to user");
+    }
+
+    private boolean isProcess() {
+        return task.isService() || task.isActivity();
     }
 
 }

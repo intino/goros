@@ -8,7 +8,7 @@ Format("fontSize:'14pt',fontWeight:'400'") h4
 Format("fontSize:'13pt'") h5
 Format("lineHeight:'17pt',fontSize:'12pt'") h6
 Format("fontSize:'11pt !important'") body1
-Format("fontSize:'10pt'") body2
+Format("fontSize:'8pt'") body2
 Format("") subtitle1
 Format("") subtitle2
 Format("fontWeight:'bold'") bold
@@ -78,6 +78,6 @@ Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:
 Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
 Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-9px',marginRight:'-26px'") editDocumentButtonStyle
 Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
-Format("height:'20px'") pillStyle
+Format("height:'15px'") pillStyle
 Format("minWidth:'320px'") sourceLevelWidth
 Format("borderRadius:'10px',padding:'0 4px',fontSize:'8pt'") legendPillStyle

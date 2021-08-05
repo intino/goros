@@ -25,7 +25,7 @@ public abstract class Renderer {
 	public abstract void write();
 
 	protected FrameBuilder baseFrame() {
-		FrameBuilder result = new FrameBuilder().add("module", modernization.moduleName());
+		FrameBuilder result = new FrameBuilder().add("module", modernization.moduleName()).add("boxName", modernization.boxName());
 		String projectPackage = modernization.projectPackage();
 		if (projectPackage != null && !projectPackage.isEmpty()) result.add("package", projectPackage);
 		return result;

@@ -28,7 +28,6 @@ module.exports = {
     },
     entry : {
         'home' : './gen/apps/Home.js',
-        'roles' : './gen/apps/Roles.js',
         'install' : './gen/apps/Install.js'
     },
     output: {
@@ -58,13 +57,6 @@ module.exports = {
             chunks: ['home'],
             template: "./src/home.html",
             filename: "./home.html"
-        }),
-        new HtmlWebPackPlugin({
-            hash: true,
-            title: "Test UI",
-            chunks: ['roles'],
-            template: "./src/roles.html",
-            filename: "./roles.html"
         }),
         new HtmlWebPackPlugin({
             hash: true,

@@ -1,14 +1,14 @@
 def type(view)
     package $package.$module+lowerCase.box.ui.displays.tables;
 
-    import $package.$module+lowerCase.box.$module+firstUpperCase~Box;
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import $package.$module+lowerCase.box.ui.displays.rows.$definition+firstUpperCase$name+firstUpperCase~TableRow;
     import io.intino.alexandria.ui.displays.events.AddItemEvent;
     import org.monet.space.kernel.model.NodeItem;
 
-    public class $definition+firstUpperCase$name+firstUpperCase~Table extends Abstract$definition+firstUpperCase$name+firstUpperCase~Table<$module+firstUpperCase~Box> {
+    public class $definition+firstUpperCase$name+firstUpperCase~Table extends Abstract$definition+firstUpperCase$name+firstUpperCase~Table<$boxName+firstUpperCase~Box> {
 
-        public $definition+firstUpperCase$name+firstUpperCase~Table($module+firstUpperCase~Box box) {
+        public $definition+firstUpperCase$name+firstUpperCase~Table($boxName+firstUpperCase~Box box) {
             super(box);
         }
 

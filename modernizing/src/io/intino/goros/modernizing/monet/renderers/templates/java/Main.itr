@@ -4,7 +4,7 @@ def type(main)
     public class Main {
 
         public static void main(String$[$] args) {
-            $module+firstUpperCase~Box box = new $module+firstUpperCase~Box(args);
+            $boxName+firstUpperCase~Box box = new $boxName+firstUpperCase~Box(args);
             box.start();
             Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
         }

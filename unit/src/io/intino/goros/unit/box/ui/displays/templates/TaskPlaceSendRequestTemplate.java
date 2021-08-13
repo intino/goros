@@ -54,9 +54,9 @@ public class TaskPlaceSendRequestTemplate extends AbstractTaskPlaceSendRequestTe
     }
 
     private void retry() {
-        retry.readonly(true);
+        failureView.retry.readonly(true);
         task.getProcess().resume();
-        retry.readonly(false);
+        failureView.retry.readonly(false);
     }
 
 }

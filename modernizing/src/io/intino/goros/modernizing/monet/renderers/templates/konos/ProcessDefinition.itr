@@ -53,19 +53,19 @@ def type(display)
     TemplateStamp(template=$name+firstUpperCase~$viewName~ViewTemplate)
 end
 
-def type(shortcutview) trigger(use)
+def type(view) trigger(use)
    [$show+use...[$NL]]
 end
 
-def type(shortcutview) trigger(declaration)
+def type(view) trigger(declaration)
     Text(value="$label") $name+firstLowerCase as Option
 end
 
-def type(shortcutview) trigger(page)
+def type(view) trigger(page)
     Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
 end
 
-def type(shortcutview)
+def type(view)
     Template(format=spaced) $definition+firstUpperCase$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         [$show...[$NL]]
 end

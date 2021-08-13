@@ -224,7 +224,7 @@ def type(process & stateview)
     }
 end
 
-def type(process & shortcutview)
+def type(process & view & target)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -267,7 +267,61 @@ def type(process & shortcutview)
         }
 
         private void refreshView() {
-            org.monet.space.kernel.model.Node node = task.getShortcutInstance("shInformeIncidencia");
+            org.monet.space.kernel.model.Node node = task.getTarget();
+            [$show+hideCall...[$NL]]
+            if (node == null) return;
+            org.monet.metamodel.NodeDefinition definition = node.getDefinition();
+            [$show+showCall...[$NL]]
+        }
+
+        [$show...[$NL]]
+    }
+end
+
+def type(process & view & shortcut)
+    package $package.$module+lowerCase.box.ui.displays.templates;
+
+    import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.Display;
+    import org.monet.metamodel.internal.TaskOrderDefinition;
+    import org.monet.space.kernel.model.Node;
+    import org.monet.space.kernel.model.Task;
+    import io.intino.goros.unit.box.ui.DisplayProvider;
+    import io.intino.goros.unit.box.ui.displays.templates.TaskOrderTemplate;
+
+    public class $definition+firstUpperCase$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase$name+firstUpperCase~ViewTemplate<$boxName+firstUpperCase~Box> {
+        private Task task;
+        private boolean readonly = true;
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate($boxName+firstUpperCase~Box box) {
+            super(box);
+        }
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate task(Task task) {
+            this.task = task;
+            return this;
+        }
+
+        public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
+            this.readonly = readonly;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            [$show+initCall...[$NL]]
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            if (task == null) return;
+            refreshView();
+        }
+
+        private void refreshView() {
+            org.monet.space.kernel.model.Node node = task.getShortcutInstance("$shortcut");
             [$show+hideCall...[$NL]]
             if (node == null) return;
             org.monet.metamodel.NodeDefinition definition = node.getDefinition();
@@ -343,20 +397,20 @@ def type(display)
     }
 end
 
-def type(shortcutview) trigger(initCall)
+def type(view) trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
 end
 
-def type(shortcutview) trigger(refreshCall)
+def type(view) trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
 end
 
-def type(shortcutview) trigger(refreshSelectorCall)
+def type(view & shortcut) trigger(refreshSelectorCall)
     if (task.getShortcutInstance("$shortcut") != null) viewSelector.showOption("$name+firstLowerCase");
     else viewSelector.hideOption("$name+firstLowerCase");
 end
 
-def type(shortcutview) trigger(refreshViewMethod)
+def type(view) trigger(refreshViewMethod)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
@@ -365,7 +419,7 @@ def type(shortcutview) trigger(refreshViewMethod)
     }
 end
 
-def type(shortcutview) trigger(refreshView)
+def type(view & shortcut) trigger(refreshView)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         org.monet.space.kernel.model.Node node = task.getShortcutInstance("$shortcut");
@@ -375,7 +429,7 @@ def type(shortcutview) trigger(refreshView)
     }
 end
 
-def type(shortcutview)
+def type(view & shortcut)
 end
 
 def type(show) trigger(initCall)

@@ -26,6 +26,7 @@ public class GorosUnit {
 		installer.processDB();
 		installer.processLogs();
 		installer.processCertificates();
+		installer.processCache();
 	}
 
 	private static void openUnit(Map<String, String> parameters) {

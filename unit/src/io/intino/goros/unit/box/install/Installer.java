@@ -45,7 +45,7 @@ public class Installer {
 	}
 
 	public boolean isInstalled() {
-		return isDBInstalled() && isLogsInstalled() && isCertificatesInstalled();
+		return isDBInstalled() && isLogsInstalled() && isCertificatesInstalled() && isCacheInstalled();
 	}
 
 	public void processDB() {
@@ -69,8 +69,8 @@ public class Installer {
 		if (isLogsInstalled()) return;
 		Logger.info("Install log configuration...");
 
-		String sqlScript = "/WEB-INF/user_data/configuration/log4j.dist.config";
-		InputStream in = Installer.class.getResourceAsStream(sqlScript);
+		String log4jDist = "/WEB-INF/user_data/configuration/log4j.dist.config";
+		InputStream in = Installer.class.getResourceAsStream(log4jDist);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
 		File fileLog4j = new File(workspace + "/configuration/log4j.config");
@@ -118,6 +118,25 @@ public class Installer {
 		if (exitCode > 0) Logger.error("I can not generate certificates.");
 	}
 
+	public void processCache() {
+		if (isLogsInstalled()) return;
+		Logger.info("Install cache configuration...");
+
+		String cacheDist = "/WEB-INF/user_data/configuration/cache.dist.ccf";
+		InputStream in = Installer.class.getResourceAsStream(cacheDist);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+		File fileCache = new File(workspace + "/configuration/cache.ccf");
+		fileCache.getParentFile().mkdirs();
+
+		try {
+			Files.saveReaderFile(reader, fileCache);
+			Files.replaceTextInFile(fileCache, "#space_dir#", workspace);
+		} catch (IOException e) {
+			Logger.error(e);
+		}
+	}
+
 	private boolean isDBInstalled() {
 		try {
 			String count = db.executeSentence("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + db.getDbname() + "' and table_name = 'ts\\$info'");
@@ -145,4 +164,13 @@ public class Installer {
 		}
 		return false;
 	}
+
+	private boolean isCacheInstalled() {
+		File f = new File(workspace + "/configuration/cache.ccf");
+		if (f.exists() && !f.isDirectory()) {
+			return true;
+		}
+		return false;
+	}
+
 }

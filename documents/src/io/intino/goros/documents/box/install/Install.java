@@ -16,6 +16,7 @@ import java.util.Map;
 public class Install {
   private Db db;
   private String workspace;
+  private String documentDisks;
 
   public Install(Map<String, String> parameters) {
 
@@ -26,6 +27,7 @@ public class Install {
     db = new Db(DbUrl, DbUser, DbPassword);
 
     workspace = parameters.get("workspace");
+    documentDisks = parameters.get("document-disks");
   }
 
   public void initWorkspace() {
@@ -81,6 +83,13 @@ public class Install {
     }
   }
 
+  public void processDocumentDisks() {
+    if (! installedFonts()) {
+      File f = new File(documentDisks);
+      f.mkdirs();
+    }
+  }
+
   private boolean installedDb() {
     try {
       String count = db.executeSentence("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + db.getDbname() + "' and table_name = 'ds\\$documents'");
@@ -95,6 +104,14 @@ public class Install {
 
   private boolean installedFonts() {
     File f = new File(workspace + "/fonts");
+    if(f.exists() && f.isDirectory()) {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean installedDocumentDisks() {
+    File f = new File(documentDisks);
     if(f.exists() && f.isDirectory()) {
       return true;
     }

@@ -19,6 +19,7 @@ public class GorosDocuments {
 		install.initWorkspace();
 		install.processDB();
 		install.processFonts();
+		install.processDocumentDisks();
 	}
 
 	private static void openDocuments(Map<String, String> parameters) {

@@ -20,7 +20,9 @@ def type(desktopdefinition)
         }
 
         private void refreshLabels() {
+            labels.visible(false);
             [$view+refreshCall...[$NL]]
+            labels.visible(true);
         }
 
         [$view+refreshMethod...[$NL]]

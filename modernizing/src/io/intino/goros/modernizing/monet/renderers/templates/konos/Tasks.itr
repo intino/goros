@@ -19,10 +19,10 @@ def type(tasks)
                 Text(format=body2) count
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search
-                MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
                 Selector(selected="tableView", format=airRight) viewSelector as ToggleBox(size=Small)
                     MaterialIconButton(title="Tabla", icon="ViewHeadline", size=Small) table as Option
                     MaterialIconButton(title="Listado", icon="ViewList", size=Small) list as Option
+                MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
                 MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=On) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
 

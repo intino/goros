@@ -3,6 +3,7 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
+import io.intino.goros.modernizing.monet.renderers.templates.java.TasksTemplate;
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.*;
@@ -81,7 +82,10 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	private FrameBuilder buildFrame(boolean revision) {
 		FrameBuilder result = baseDefinitionFrame().add("nodedefinition");
 		if (revision) result.add("revision");
-		if (definition().isSingleton()) result.add("singleton");
+		if (definition().isSingleton()) {
+			result.add("singleton");
+			result.add("singleton", definition().getCode());
+		}
 		result.add("readonly", definition().isReadonly() ? "true" : "readonly");
 		addDesktop(result);
 		addParent(result);
@@ -100,6 +104,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (definition().isSingleton()) result.add("singleton");
 		boolean collectable = findParentDefinition() != null;
 		if (collectable) result.add("collectable");
+		if (definition().isSet()) result.add("collection");
 		addOperations(definition(), result);
 		addResourceType(definition(), result);
 		return result;

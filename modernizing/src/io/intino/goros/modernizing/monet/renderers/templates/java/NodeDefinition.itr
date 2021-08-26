@@ -87,7 +87,7 @@ def type(nodedefinition & embedded)
 
         private void initToolbar() {
             toolbar.visible(revision == null);
-            revisionToolbar.visible(revision != null);
+            restore.visible(revision != null);
             restore.onExecute(e -> restore());
             edit.onExecute(e -> toggleEdition());
             [$toolbar+editableInitCall]
@@ -335,6 +335,7 @@ def type(operation) trigger(editableInitCall)
 end
 
 def type(operation) trigger(editableRefreshCall)
+    $name+lowerCase.visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()));
 end
 
 def type(nodeview & visibleWhenEmbedded) trigger(initCall)
@@ -369,18 +370,29 @@ def type(nodeview) trigger(refreshMethod)
     private void refresh$name+firstUpperCase~View() {
         Node node = locateNode();
         if (node == null) return;
+        [$contain+declaration]
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
-        [$contain+declaration]
+        [$contain+call]
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+        [$contain+open]
     }
 
     [$contain]
 end
 
 def type(contain) trigger(declaration)
-    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain($name+firstLowerCase~ViewContain(node));
+    Node contain = $name+firstLowerCase~ViewContain(node);
+end
+
+def type(contain) trigger(call)
+    $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(contain);
+end
+
+def type(contain) trigger(open)
+    if (contain != null) openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()));
+    openContain.visible(contain != null && contain.isSet());
 end
 
 def type(contain)

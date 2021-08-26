@@ -27,6 +27,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		FrameBuilder builder = buildFrame();
 		writeJava(builder);
 		writeKonos(builder);
+		writeEmbeddedTemplate();
 		writeViewsTemplate();
 		writeFiltersTemplates();
 	}

@@ -55,6 +55,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 		FrameBuilder result = baseFrame().add("contain");
 		result.add("name", nameOf(viewProperty));
 		result.add("contain", containDefinition.getCode());
+		result.add("containName", nameOf(containDefinition));
 		builder.add("contain", result);
 	}
 
@@ -85,6 +86,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 
 	private void addComponent(NodeDefinition definition, NodeViewProperty viewProperty, FrameBuilder builder) {
 		FrameBuilder result = baseFrame().add("component");
+		if (definition.getType() != null) result.add(definition.getType().name());
 		result.add("name", nameOf(definition));
 		result.add("view", nameOf(viewProperty));
 		result.add("viewCode", viewProperty.getCode());

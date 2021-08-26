@@ -110,6 +110,7 @@ def type(ui & app)
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());
             box().pushService().onLinkedToThread(session().client(), threadId -> io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), threadId));
             box().notifier().onTaskCreated(this, this::refreshTasksCount);
+            box().notifier().onTaskStateChange(this, this::refreshTasksCount);
             refresh();
         }
 
@@ -123,6 +124,7 @@ def type(ui & app)
         public void remove() {
             super.remove();
             box().notifier().unTaskCreated(this);
+            box().notifier().unTaskStateChange(this);
         }
 
         public void openHome() {

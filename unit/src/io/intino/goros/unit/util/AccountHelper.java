@@ -28,6 +28,11 @@ public class AccountHelper {
 		return hasRoles(definition.getFor().getRole(), session);
 	}
 
+	public static boolean hasRoles(NodeDefinitionBase.OperationProperty operation, UISession session) {
+		if (operation == null || operation.getFor() == null) return true;
+		return hasRoles(operation.getFor().getRole(), session);
+	}
+
 	public static boolean hasRoles(List<Ref> roles, UISession session) {
 		return hasRoles(roles, account(session));
 	}

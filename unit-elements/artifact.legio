@@ -2,7 +2,7 @@ dsl Legio
 
 Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") unit-elements
 	WebImports
-		WebArtifact("io.intino.alexandria", "ui-framework-elements", "4.12.0") alexandria-ui-elements
+		WebArtifact("io.intino.alexandria", "ui-framework-elements", "4.12.3") alexandria-ui-elements
 
 	Distribution
 		Artifactory("intino-maven")

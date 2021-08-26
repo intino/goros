@@ -114,6 +114,10 @@ public class NodeHelper {
         return confirmation.isRequired();
     }
 
+    public static NodeDefinitionBase.OperationProperty operation(Node node, String name) {
+        return node.getDefinition().getOperationMap().getOrDefault(name, null);
+    }
+
     public static void executeOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
         actionable.readonly(true);
         Node current = LayerHelper.nodeLayer().loadNode(node.getId());

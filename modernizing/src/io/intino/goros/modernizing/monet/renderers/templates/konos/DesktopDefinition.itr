@@ -10,7 +10,7 @@ def type(desktopdefinition)
                 Block(layout=Horizontal)
                     Text(value="$label", format=h4 bold) label
 
-        Block(layout=Vertical Wrap)
+        Block(layout=Vertical Wrap) labels
             [$view...[$NL]]
 end
 

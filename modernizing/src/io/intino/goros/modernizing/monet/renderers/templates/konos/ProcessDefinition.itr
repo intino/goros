@@ -18,16 +18,17 @@ def type(process)
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
-        Block(layout=Horizontal StartJustified, format=middleAirLeft)
-            MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
-            MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
-            Text(format=bold middleAirLeft, visible=false) label
-        Block(layout=Horizontal, format=bottomBordered bottomSpaced leftSpaced middleTopSpaced)
-            Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
-            Block(layout=Horizontal EndJustified)
-                MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
-                MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-                MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.task)
+        Block(layout=Horizontal, format=bottomBordered)
+            Block(layout=Horizontal StartJustified, format=middleAirLeft)
+                MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
+                MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
+                Text(format=bold middleAirLeft, visible=false) label
+            Block(layout=Horizontal Flexible, format=airLeft bottomSpaced leftSpaced)
+                Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+                Block(layout=Horizontal EndJustified)
+                    MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
+                    MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
+                    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.task)
 
         Selector viewSelector as Tabs
             Text(value="Estado") state as Option

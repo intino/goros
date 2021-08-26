@@ -4,19 +4,24 @@ import java.text.Normalizer;
 
 public class StringHelper {
 
-	public static String validName(String text) {
-		StringBuilder sb = new StringBuilder();
-		if(!Character.isJavaIdentifierStart(text.charAt(0))) sb.append("_");
+	public static String validName(String name) {
+		if (name == null) return null;
+		name = name.replace("/", "-").replace(" ", "-").replace("_", "-");
+		return stripAccents(firstLowerCase(snakeCaseToCamelCase(name)));
+	}
 
-		for (char c : text.toCharArray()) {
-			if(!Character.isJavaIdentifierPart(c)) {
-				sb.append("_");
-			} else {
-				sb.append(c);
-			}
-		}
+	public static String stripAccents(String s) {
+		s = Normalizer.normalize(s, Normalizer.Form.NFD);
+		s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+		return s;
+	}
 
-		return clean(sb.toString()).toLowerCase();
+	public static String firstUpperCase(String value) {
+		return value.substring(0, 1).toUpperCase() + value.substring(1);
+	}
+
+	public static String firstLowerCase(String value) {
+		return value.substring(0, 1).toLowerCase() + value.substring(1);
 	}
 
 	public static String snakeCaseToCamelCase(String string) {

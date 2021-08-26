@@ -10,6 +10,14 @@ def type(component) trigger(use)
     use $name+firstUpperCase
 end
 
+def type(component & collection)
+    TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~$view+firstUpperCase~Stamp
+end
+
+def type(component & catalog)
+    TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~$view+firstUpperCase~Stamp
+end
+
 def type(component)
     TemplateStamp(template=$name+firstUpperCase~$view+firstUpperCase~ViewTemplate) $name+firstLowerCase~$view+firstUpperCase~Stamp
 end

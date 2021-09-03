@@ -38,6 +38,10 @@ def type(process & embedded)
             return this;
         }
 
+        public boolean editing() {
+            return !readonly;
+        }
+
         public $name+firstUpperCase~EmbeddedTemplate onChange(java.util.function.Consumer<Task> listener) {
             this.changeListener = listener;
             return this;
@@ -202,6 +206,10 @@ def type(process & stateview)
             return this;
         }
 
+        public boolean editing() {
+            return !readonly;
+        }
+
         @Override
         public void refresh() {
             super.refresh();
@@ -251,6 +259,10 @@ def type(process & view & target)
         public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         @Override
@@ -305,6 +317,10 @@ def type(process & view & shortcut)
         public $definition+firstUpperCase$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         @Override
@@ -407,6 +423,11 @@ end
 
 def type(view & shortcut) trigger(refreshSelectorCall)
     if (task.getShortcutInstance("$shortcut") != null) viewSelector.showOption("$name+firstLowerCase");
+    else viewSelector.hideOption("$name+firstLowerCase");
+end
+
+def type(view & target) trigger(refreshSelectorCall)
+    if (task.getTarget() != null) viewSelector.showOption("$name+firstLowerCase");
     else viewSelector.hideOption("$name+firstLowerCase");
 end
 

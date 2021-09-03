@@ -1,6 +1,9 @@
 package io.intino.goros.unit.util;
 
-import io.intino.alexandria.ui.displays.components.*;
+import io.intino.alexandria.ui.displays.components.SelectorCollectionBox;
+import io.intino.alexandria.ui.displays.components.SelectorComboBox;
+import io.intino.alexandria.ui.displays.components.SelectorTabs;
+import io.intino.alexandria.ui.displays.components.SelectorToggleBox;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
 import org.monet.metamodel.*;
@@ -10,9 +13,10 @@ import org.monet.space.kernel.constants.Database;
 import org.monet.space.kernel.model.*;
 import org.monet.space.office.ApplicationOffice;
 
-import java.util.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 
 public class DisplayHelper {
@@ -97,28 +101,14 @@ public class DisplayHelper {
 	}
 
 	public static ProcessDefinition.ViewProperty defaultView(Task task) {
-		if (task.getDefinition().isActivity()) return defaultView((ActivityDefinition) task.getDefinition());
-		else if (task.getDefinition().isService()) return defaultView((ServiceDefinition) task.getDefinition());
+		if (task.getDefinition().isActivity()) return ((ActivityDefinition) task.getDefinition()).getDefaultView();
+		else if (task.getDefinition().isService()) return ((ServiceDefinition) task.getDefinition()).getDefaultView();
 		return null;
-	}
-
-	public static ProcessDefinition.ViewProperty defaultView(ActivityDefinition definition) {
-		ProcessDefinition.ViewProperty defaultView = definition.getDefaultView();
-		List<ProcessDefinitionBase.ViewProperty> viewList = new ArrayList<>(definition.getViewList());
-		if (defaultView == null) defaultView = viewList.size() > 0 ? viewList.get(0) : null;
-		return defaultView;
-	}
-
-	public static ProcessDefinition.ViewProperty defaultView(ServiceDefinition definition) {
-		ProcessDefinition.ViewProperty defaultView = definition.getDefaultView();
-		List<ProcessDefinitionBase.ViewProperty> viewList = new ArrayList<>(definition.getViewList());
-		if (defaultView == null) defaultView = viewList.size() > 0 ? viewList.get(0) : null;
-		return defaultView;
 	}
 
 	public static String defaultViewName(Task task) {
 		ProcessDefinition.ViewProperty defaultView = defaultView(task);
-		if (defaultView == null) return null;
+		if (defaultView == null) return "state";
 		return viewNameOf(defaultView, defaultView.getLabel());
 	}
 
@@ -130,8 +120,9 @@ public class DisplayHelper {
 	public static NodeViewProperty defaultEmbeddedView(Node node) {
 		NodeDefinition definition = node.getDefinition();
 		NodeViewProperty defaultView = definition.getDefaultView();
+		if (defaultView == null) return null;
 		if (defaultView.isVisibleWhenEmbedded()) return defaultView;
-		return definition.getViewDefinitionList().stream().filter(NodeViewProperty::isVisibleWhenEmbedded).findFirst().orElse(definition.getDefaultView());
+		return definition.getViewDefinitionList().stream().filter(NodeViewProperty::isVisibleWhenEmbedded).findFirst().orElse(defaultView);
 	}
 
 	public static void selectNotSystemView(SelectorTabs selector, Node node) {

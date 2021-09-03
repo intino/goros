@@ -22,8 +22,8 @@ def type(process)
             Block(layout=Horizontal StartJustified, format=middleAirLeft)
                 MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
                 MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
-                Text(format=bold middleAirLeft, visible=false) label
-            Block(layout=Horizontal Flexible, format=airLeft bottomSpaced leftSpaced)
+                Text(format=bold middleAirLeft airRight, visible=false) label
+            Block(layout=Horizontal Flexible, format=middleAirBottom middleAirTop)
                 Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
                 Block(layout=Horizontal EndJustified)
                     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)

@@ -1,5 +1,6 @@
 package io.intino.goros.unit.util;
 
+import io.intino.alexandria.MimeTypes;
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.ui.Soul;
@@ -29,6 +30,7 @@ import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
+import org.monet.space.kernel.library.LibraryFile;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
 
@@ -435,7 +437,10 @@ public class NodeHelper {
     }
 
     public static io.intino.alexandria.ui.File alexandriaFileOf(File file) {
-        return file != null ? new io.intino.alexandria.ui.File().value(urlOf(file)).mimeType(contentTypeOf(file)) : null;
+        if (file == null) return null;
+        String filename = file.getFilename();
+        if (!filename.contains(".")) filename += "." + org.monet.space.kernel.utils.MimeTypes.getInstance().getExtension(contentTypeOf(file));
+        return new io.intino.alexandria.ui.File().value(urlOf(file)).mimeType(contentTypeOf(file)).filename(filename);
     }
 
     public static String linkIdOf(FieldLink field) {

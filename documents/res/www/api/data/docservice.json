@@ -19,7 +19,7 @@
     "/document/": {
       "get": {
         "description": "Document operation",
-        "operationId": "DocService_8_2_01881762039",
+        "operationId": "DocService_8_2_1761294603",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -222,6 +222,20 @@
           },
           {
             "name": "signature",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "space",
             "in": "query",
             "description": "",
             "required": false,
@@ -239,7 +253,7 @@
       },
       "post": {
         "description": "Document operation",
-        "operationId": "DocService_39_2_11280949683",
+        "operationId": "DocService_41_2_01279782731",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -442,6 +456,20 @@
           },
           {
             "name": "signature",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "space",
             "in": "query",
             "description": "",
             "required": false,
@@ -461,7 +489,7 @@
     "/preview/": {
       "get": {
         "description": "Previews document",
-        "operationId": "DocService_72_2_0417688088",
+        "operationId": "DocService_76_2_0538362498",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -473,6 +501,13 @@
           "multipart/form-data"
         ],
         "parameters": [
+          {
+            "name": "space",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "query",
@@ -503,7 +538,7 @@
       },
       "post": {
         "description": "Previews document",
-        "operationId": "DocService_77_2_1612852030",
+        "operationId": "DocService_82_2_11818610516",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -515,6 +550,13 @@
           "multipart/form-data"
         ],
         "parameters": [
+          {
+            "name": "space",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "query",
@@ -547,7 +589,7 @@
     "/download/": {
       "get": {
         "description": "Download document",
-        "operationId": "DocService_84_2_0252563876",
+        "operationId": "DocService_90_2_11043604678",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -559,6 +601,13 @@
           "multipart/form-data"
         ],
         "parameters": [
+          {
+            "name": "space",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "query",
@@ -582,7 +631,7 @@
       },
       "post": {
         "description": "Download document",
-        "operationId": "DocService_88_2_0756605522",
+        "operationId": "DocService_95_2_1604221208",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -594,6 +643,13 @@
           "multipart/form-data"
         ],
         "parameters": [
+          {
+            "name": "space",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "query",

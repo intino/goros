@@ -15,6 +15,14 @@ public class BusinessUnitsTemplate extends AbstractBusinessUnitsTemplate<UnitBox
     @Override
     public void refresh() {
         super.refresh();
+        loading.visible(true);
+        unitsBlock.visible(false);
+        refreshUnits();
+        loading.visible(false);
+        unitsBlock.visible(true);
+    }
+
+    private void refreshUnits() {
         FederationUnitList unitList = LayerHelper.federationLayer(session()).loadMembers(AccountHelper.account(session()));
         units.clear();
         unitList.forEach(f -> fill(f, units.add()));

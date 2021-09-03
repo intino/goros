@@ -28,7 +28,7 @@ def type(nodedefinition)
                     $toolbar+navigable
 
         Block(layout=Horizontal) header
-            Block(layout=Vertical Flexible) headerToolbar
+            Block(layout=Vertical) headerToolbar as Relative(width=100%)
                 Selector viewSelector as Tabs(scrollButtons=Auto)
                     [$view+declaration...[$NL]]
             Block(layout=Horizontal EndJustified)

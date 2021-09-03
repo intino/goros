@@ -36,11 +36,11 @@ public class PathHelper {
 	}
 
 	public static String pathOf(Node node) {
-		return "/" + subPathOf(node);
+		return pathOf(node, null);
 	}
 
 	public static String pathOf(Node node, String view) {
-		return pathOf(node) + "/" + (view != null ? view : "default");
+		return "/" + subPathOf(node) + "/" + (view != null ? view : "default");
 	}
 
 	public static String pathOf(Task task) {

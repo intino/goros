@@ -28,6 +28,7 @@ public class GetDownloadDocumentResource implements Resource {
 	private io.intino.goros.documents.box.actions.GetDownloadDocumentAction fill(io.intino.goros.documents.box.actions.GetDownloadDocumentAction action) {
 		action.box = this.box;
 		action.context = context();
+		action.space = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("space"), String.class);
 		action.id = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("id"), String.class);
 		action.thumb = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("thumb"), String.class);
 		return action;

@@ -95,8 +95,6 @@ Template(format=nodeFieldStyle) fieldNodeTemplate
 	Text(format=h5 airBottom) title
 	Block(layout=Horizontal CenterJustified) as Relative(height=100%)
 		Block as Relative(width=100%)
-			Block(visible=false) noTypesDefinedBlock
-				Text(value="Your model is wrong. Property 'add' or 'contain' not defined.", translate=true, format=red)
 			Block(visible=false) emptyBlock
 				Text(value="No element defined", translate=true)
 				Block(format=airTop) as Absolute(width=175px)

@@ -28,6 +28,7 @@ public class GetPreviewDocumentResource implements Resource {
 	private io.intino.goros.documents.box.actions.GetPreviewDocumentAction fill(io.intino.goros.documents.box.actions.GetPreviewDocumentAction action) {
 		action.box = this.box;
 		action.context = context();
+		action.space = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("space"), String.class);
 		action.id = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("id"), String.class);
 		action.page = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("page"), String.class);
 		action.thumb = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("thumb"), String.class);

@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import io.intino.goros.documents.box.services.Response;
 import net.sf.json.JSONSerializer;
+import org.monet.docservice.core.Key;
 import org.monet.docservice.core.exceptions.ApplicationException;
 import org.monet.docservice.core.log.Logger;
 import org.monet.docservice.core.util.Resources;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 
 public abstract class PreviewDocumentAction extends Action {
 	public String thumb;
+	public String space;
 	public String id;
 	public String page;
 	private Logger logger;
@@ -50,8 +52,9 @@ public abstract class PreviewDocumentAction extends Action {
 	public io.intino.alexandria.Resource execute() {
 		int pageNumber = -1;
 		boolean isThumb = false;
+		Key documentKey = new Key(space, id);
 
-		generateDocumentPreviewIfNotExists(id);
+		generateDocumentPreviewIfNotExists(documentKey);
 		response = new Response(context);
 
 		if (page != null) {
@@ -69,11 +72,11 @@ public abstract class PreviewDocumentAction extends Action {
 			}
 		}
 
-		if (id != null && id.length() != 0) {
+		if (documentKey.getId().length() != 0) {
 			if (pageNumber > 0) {
-				getPagePreviewData(response, id, pageNumber, isThumb);
+				getPagePreviewData(response, documentKey, pageNumber, isThumb);
 			} else {
-				getDocumentMetadata(response, id);
+				getDocumentMetadata(response, documentKey);
 			}
 		} else {
 			response.getWriter().println("Invalid query string");
@@ -83,25 +86,25 @@ public abstract class PreviewDocumentAction extends Action {
 		return resource();
 	}
 
-	private void generateDocumentPreviewIfNotExists(String documentId) {
+	private void generateDocumentPreviewIfNotExists(Key documentKey) {
 		Repository repository = repositoryProvider.get();
 
-		if (repository.existsDocumentPreview(documentId))
+		if (repository.existsDocumentPreview(documentKey))
 			return;
 
-		if (this.workQueue.documentHasPendingOperationsOfType(documentId, Operation.OPERATION_GENERATE_DOCUMENT_PREVIEW))
+		if (this.workQueue.documentHasPendingOperationsOfType(documentKey, Operation.OPERATION_GENERATE_DOCUMENT_PREVIEW))
 			return;
 
 		WorkQueueItem item = new WorkQueueItem(-1);
-		item.setDocumentId(documentId);
+		item.setDocumentKey(documentKey);
 		item.setOperation(Operation.OPERATION_GENERATE_DOCUMENT_PREVIEW);
 		this.workQueue.queueNewWorkItem(item);
 	}
 
-	private void getDocumentMetadata(Response resp, String sDocumentId) {
+	private void getDocumentMetadata(Response resp, Key documentKey) {
 		Repository repository = repositoryProvider.get();
 		try {
-			Document document = repository.getDocument(sDocumentId);
+			Document document = repository.getDocument(documentKey);
 			DocumentMetadata metadata = repository.getDocumentMetadata(document);
 
 			resp.setContentType(JSON_MIMETYPE);
@@ -112,22 +115,22 @@ public abstract class PreviewDocumentAction extends Action {
 		}
 	}
 
-	private void getPagePreviewData(Response resp, String sDocumentId, int iPage, boolean isThumb) {
+	private void getPagePreviewData(Response resp, Key documentKey, int iPage, boolean isThumb) {
 		Repository repository = repositoryProvider.get();
 		try {
 			int type = isThumb ? PreviewType.THUMBNAIL : PreviewType.PAGE;
 
-			String sContentType = repository.getDocumentPreviewDataContentType(sDocumentId, iPage, type);
+			String sContentType = repository.getDocumentPreviewDataContentType(documentKey, iPage, type);
 
 			resp.setContentType(sContentType);
 			resp.setHeader("Content-Disposition", String.format("attachment; filename=%s_%s.png",
-					sDocumentId,
+					documentKey.toString(),
 					iPage));
-			repository.readDocumentPreviewData(sDocumentId, iPage, resp.getOutputStream(), type);
+			repository.readDocumentPreviewData(documentKey, iPage, resp.getOutputStream(), type);
 		} catch (Exception e) {
 			resp.setContentType("image/png");
 			resp.setHeader("Content-Disposition", String.format("attachment; filename=%s_%s.png",
-					sDocumentId,
+					documentKey.toString(),
 					iPage));
 			InputStream img;
 			if (isThumb) img = Resources.getAsStream("/images/defaultThumb.png");

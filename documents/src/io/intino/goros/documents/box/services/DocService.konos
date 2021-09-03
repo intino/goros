@@ -34,6 +34,8 @@ Service docservice as REST(host = "", port = "{port}")
 			Parameter(in=query) signField as Text
 			Parameter(in=query) signId as Text
 			Parameter(in=query) signature as Text
+			Parameter(in=query) label as Text
+			Parameter(in=query) space as Text
 			Response as File
 			Exception(BadRequest)
 		Post(description = "Document operation")
@@ -65,16 +67,20 @@ Service docservice as REST(host = "", port = "{port}")
 			Parameter(in=query) signField as Text
 			Parameter(in=query) signId as Text
 			Parameter(in=query) signature as Text
+			Parameter(in=query) label as Text
+			Parameter(in=query) space as Text
 			Response as File
 			Exception(BadRequest)
 
 	Resource("/preview/") previewDocument
 		Get(description = "Previews document")
+			Parameter(in=query) space as Text
 			Parameter(in=query) id as Text
 			Parameter(in=query) page as Text
 			Parameter(in=query) thumb as Text
 			Response as File
 		Post(description = "Previews document")
+			Parameter(in=query) space as Text
 			Parameter(in=query) id as Text
 			Parameter(in=query) page as Text
 			Parameter(in=query) thumb as Text
@@ -82,10 +88,12 @@ Service docservice as REST(host = "", port = "{port}")
 
 	Resource("/download/") downloadDocument
 		Get(description = "Download document")
+			Parameter(in=query) space as Text
 			Parameter(in=query) id as Text
 			Parameter(in=query) thumb as Text
 			Response as File
 		Post(description = "Download document")
+			Parameter(in=query) space as Text
 			Parameter(in=query) id as Text
 			Parameter(in=query) thumb as Text
 			Response as File

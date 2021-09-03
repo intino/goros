@@ -12,4 +12,8 @@ public class RouteDispatcher extends AbstractRouteDispatcher {
 	public void dispatchInstall(Soul soul) {
 	}
 
+	@Override
+	public void dispatchBanner(Soul soul) {
+	}
+
 }

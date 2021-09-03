@@ -42,6 +42,8 @@ public class DocumentAction extends io.intino.goros.documents.box.actions.Action
 	public String signsCountPattern;
 	public String documentXmlData;
 	public String documentId;
+	public String label;
+	public String space;
 
 	private Logger logger;
 	private ActionFactory actionsFactory;
@@ -99,6 +101,8 @@ public class DocumentAction extends io.intino.goros.documents.box.actions.Action
 			put("signsCountPattern", signsCountPattern);
 			put("documentXmlData", documentXmlData);
 			put("documentId", documentId);
+			put("label", label);
+			put("space", space);
 		}};
 	}
 }

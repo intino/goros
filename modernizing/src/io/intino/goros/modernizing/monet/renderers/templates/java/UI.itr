@@ -383,7 +383,7 @@ def type(definition & singleton) trigger(method)
     public void open$name+firstUpperCase() {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
-        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.refresh();
+        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code");
     }
 end
 

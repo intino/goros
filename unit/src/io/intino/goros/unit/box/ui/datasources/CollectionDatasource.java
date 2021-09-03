@@ -62,12 +62,19 @@ public class CollectionDatasource extends PageDatasource<Node> {
     }
 
     private NodeDataRequest request(String condition, List<Filter> filters, List<String> sortings) {
+        boolean filterByTitle = filterByTitle(filters);
         NodeDataRequest request = request(set);
         request.setCondition(condition);
-        request.setGroupsBy(NodeHelper.groupsByOf(filters));
+        if (filterByTitle) request.setConditionTag("title");
+        request.setGroupsBy(NodeHelper.groupsByOf(filters).stream().filter(g -> !g.attribute().equals("titleTag")).collect(toList()));
         request.setSortsBy(NodeHelper.sortsByOf(sortings));
         request.setCodeView(view.getCode());
         return request;
+    }
+
+    private boolean filterByTitle(List<Filter> filters) {
+        Filter titleFilter = filters.stream().filter(f -> f.grouping().equalsIgnoreCase("titleTag")).findFirst().orElse(null);
+        return titleFilter != null;
     }
 
     private static NodeDataRequest request(Node set) {

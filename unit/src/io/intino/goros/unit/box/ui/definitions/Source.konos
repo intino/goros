@@ -29,7 +29,8 @@ Template(layout=Vertical, format=rightBordered sourceLevelWidth) sourceLevelTemp
 		noItemsMessage = "No existen términos"
 		Mold
 			Item(height=90px) sourceLevelListItem
-				Block(layout=Horizontal, format=termReferenceStyle)
+				Block(layout=Horizontal, format=termReferenceStyle relative)
+					Block(format=termDisabledStyle, visible=false) disabledLayer
 					Block(layout=Vertical Flexible)
 						Block(layout=Horizontal Center)
 							Text(format=body2 legendPillStyle middleAirRight) type as Highlighted(textColor="white", backgroundColor="transparent")
@@ -50,8 +51,9 @@ Template publishTermsDialog
 		Block(format=bordered dialog)
 			Selector newTerms as CheckBox(layout=Horizontal)
 			Block(layout=Horizontal)
-				Block(format=airRight) as Absolute(width=150px) > Button(title="Publish", highlight=Outline, size=Small) publish as Action
-				Block as Absolute(width=150px) > Button(title="Publish all", highlight=Outline, size=Small) publishAll as Action
+				Block(format=airRight) as Absolute(width=120px) > Button(title="Publish", highlight=Outline, size=Small) publish as Action Readonly
+				Block(format=airRight) as Absolute(width=120px) > Button(title="Publish all", highlight=Outline, size=Small) publishAll as Action
+				Block as Absolute(width=120px) > Button(title="Delete", highlight=Outline, size=Small) delete as Action Readonly
 
 Template sourceTermDialog
 	Block(format=doubleAirBottom middleSpaced leftSpaced rightSpaced) generalView
@@ -65,6 +67,11 @@ Template sourceTermDialog
 			Switch(title="Contain other terms", format=doubleAirBottom) containOtherTerms as Action
 			Text(value="Tags", translate=true, format=grey)
 			TemplateStamp(template=sourceTermTagTemplate) tags as Multiple(noItemsMessage="No tags")
+			Block(layout=Horizontal, format=airTop airBottom)
+				Block(format=airRight, visible=false) enableBlock as Absolute(width=120px) > Button(title="Enable", highlight=Outline, size=Small) enable as Action
+				Block(format=airRight, visible=false) disableBlock as Absolute(width=120px) > Button(title="Disable", highlight=Outline, size=Small) disable as Action
+				Block(format=airRight, visible=false) deleteBlock as Absolute(width=120px) > Button(title="Delete", highlight=Outline, size=Small) delete as Action
+
 	Block(format=middleSpaced leftSpaced rightSpaced) childrenView
 		Text(format=h5 airBottom) addTitle
 		Block(format=bordered dialog)

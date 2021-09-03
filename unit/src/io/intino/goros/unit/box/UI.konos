@@ -7,6 +7,7 @@ Service UnitElements as UI(port = "{port}", title = "", favicon = "")
 
 	Resource(path = "/goros-home") home as Page(gorosAppTemplate) Main Confidential
 	Resource(path = "/install") install as Page(gorosInstallTemplate)
+	Resource(path = "/banner.jsp") banner as Page(gorosAppTemplate)
 
 Template gorosAppTemplate
 
@@ -33,12 +34,13 @@ Template(layout=Vertical) gorosInstallTemplate as Relative(height=100%)
 			Text logEntries as Multiple(noItemsMessage="No logging info available")
 
 Template businessUnitsTemplate
-	Text(value="Business units", translate=true)
-	TemplateStamp(template=businessUnitTemplate) units as Multiple
+	Text(format=h4 airBottom, value="Business units", translate=true)
+	Block(visible=true) loading > Spinner(mode=Bar)
+	Block(visible=false) unitsBlock > TemplateStamp(template=businessUnitTemplate) units as Multiple
 
 Template businessUnitTemplate
 	Block(layout=Horizontal)
-		Link(title="", format=middleAirRight, target=Blank, visible=false) label as OpenSite(site="")
-		Text(format=middleAirRight, visible=false) labelText
-		Text(value="(current)", translate=true, visible=false) active
+		Link(title="", format=h5 middleAirRight, target=Blank, visible=false) label as OpenSite(site="")
+		Text(format=h5 middleAirRight, visible=false) labelText
+		Text(format=h5, value="(current)", translate=true, visible=false) active
 	Frame(url="") unitFrame as Absolute(height=55px)

@@ -34,13 +34,19 @@ def type(nodedefinition & embedded)
             return this;
         }
 
+        public boolean editing() {
+            return !readonly;
+        }
+
         [$toolbar+editableEvents]
         [$toolbar+navigableEvents]
         [$toolbar+navigableMethods]
 
         public void openView(String view) {
             if (view == null) return;
-            viewSelector.select(io.intino.goros.unit.util.DisplayHelper.translation(node.getDefinition().getNodeView(view).getLabel()));
+            org.monet.metamodel.NodeViewProperty nodeView = node.getDefinition().getNodeView(view);
+            if (nodeView == null) nodeView = node.getDefinition().getDefaultView();
+            viewSelector.select(io.intino.goros.unit.util.DisplayHelper.translation(nodeView.getLabel()));
         }
 
         public String selectedView() {
@@ -69,9 +75,10 @@ def type(nodedefinition & embedded)
         }
 
         private void refreshToolbar() {
+            boolean readonly = node.isLocked() || this.readonly;
             restore.readonly(readonly);
             edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!node.getDefinition().isReadonly());
+            edit.visible(!node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
         }
@@ -127,6 +134,7 @@ def type(nodedefinition & singleton)
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
+    import io.intino.goros.unit.util.LayerHelper;
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
@@ -136,16 +144,30 @@ def type(nodedefinition & singleton)
             super(box);
         }
 
+        public void open(String code) {
+            node(LayerHelper.nodeLayer().locateNode(code));
+            refresh();
+        }
+
+        public $name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
+        }
+
         @Override
         public void init() {
             super.init();
             [$desktop]
             [$parent]
-            node = io.intino.goros.unit.util.NodeHelper.singleton("$code");
-            content.node(node);
-            content.readonly(readonly);
-            content.refresh();
             [$toolbar+removeListener]
+        }
+
+        @Override
+        public void refresh() {
+            super.refresh();
+            content.node(node);
+            content.readonly(node.isLocked() || readonly);
+            content.refresh();
             if (content.selectedView() == null) content.selectDefaultView();
         }
 
@@ -372,7 +394,7 @@ def type(nodeview) trigger(refreshMethod)
         if (node == null) return;
         [$contain+declaration]
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(node.isLocked() || readonly);
         [$contain+call]
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
@@ -443,6 +465,10 @@ def type(nodeView)
         public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         $show
@@ -537,7 +563,7 @@ def type(show & revisions)
 	public void refresh() {
 		super.refresh();
 		revisionsStamp.node(node);
-		revisionsStamp.readonly(readonly);
+		revisionsStamp.readonly(node.isLocked() || readonly);
 		revisionsStamp.onSelect(this::openRevision);
 		revisionsStamp.refresh();
 	}
@@ -547,7 +573,7 @@ def type(show & revisions)
 		revisionPage.visible(true);
 		currentRevisionStamp.node(node);
 		currentRevisionStamp.revision(revision);
-		currentRevisionStamp.readonly(readonly);
+		currentRevisionStamp.readonly(node.isLocked() || readonly);
 		currentRevisionStamp.refresh();
 	}
 end

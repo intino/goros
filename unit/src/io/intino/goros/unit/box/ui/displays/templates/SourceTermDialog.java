@@ -18,6 +18,7 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
     private Term term;
     private Consumer<Term> termAddedListener;
     private Consumer<Term> termModifiedListener;
+    private Consumer<Term> termDeletedListener;
     private boolean refreshing = false;
 
     public SourceTermDialog(UnitBox box) {
@@ -48,6 +49,11 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         return this;
     }
 
+    public SourceTermDialog onTermDeleted(Consumer<Term> listener) {
+        this.termDeletedListener = listener;
+        return this;
+    }
+
     @Override
     public void init() {
         super.init();
@@ -61,6 +67,7 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         type.onSelect(e -> save(t -> updateType()));
         containOtherTerms.onToggle(e -> save(t -> updateType()));
         childCode.onChange(e -> checkChildCode());
+        initToolbar();
     }
 
     @Override
@@ -68,6 +75,12 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         super.refresh();
         refreshGeneralView();
         refreshChildrenView();
+    }
+
+    private void initToolbar() {
+        enable.onExecute(e -> enable());
+        disable.onExecute(e -> disable());
+        delete.onExecute(e -> delete());
     }
 
     private void refreshGeneralView() {
@@ -81,6 +94,7 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         type.selection(term.isTerm() || term.isSuperTerm() ? "termType" : "categoryType");
         containOtherTerms.state(term.isSuperTerm() ? ToggleEvent.State.On : ToggleEvent.State.Off);
         refreshTags();
+        refreshToolbar();
         refreshing = false;
     }
 
@@ -88,6 +102,12 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         tags.clear();
         term.getTagsMap().forEach((name, value) -> fill(name, value, tags.add()));
         fill("", "", tags.add());
+    }
+
+    private void refreshToolbar() {
+        enableBlock.visible(!term.isEnabled() && !term.isNew());
+        disableBlock.visible(term.isEnabled() && !term.isNew());
+        deleteBlock.visible(term.isNew());
     }
 
     private void refreshChildrenView() {
@@ -100,7 +120,7 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
     private void addChild() {
         if (!checkChild()) return;
         Term child = new Term();
-        child.setCode(childCode.value());
+        child.setCode(childCode());
         child.setLabel(childLabel.value());
         child.setType(Term.TERM);
         child.setEnabled(true);
@@ -161,6 +181,29 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
         return Term.CATEGORY;
     }
 
+    private void enable() {
+        saveEnabled(true);
+        refresh();
+    }
+
+    private void disable() {
+        saveEnabled(false);
+        refresh();
+    }
+
+    private void delete() {
+        LayerHelper.sourceLayer().deleteSourceTerm(source, term.getCode());
+        notifyUser(translate("Term deleted"), UserMessage.Type.Success);
+        termDeletedListener.accept(term);
+    }
+
+    private void saveEnabled(boolean value) {
+        save(t -> {
+            term.setEnabled(value);
+            return true;
+        });
+    }
+
     private void save(Function<Term, Boolean> consumer) {
         Boolean modified = consumer.apply(term);
         if (!modified) return;
@@ -169,9 +212,13 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
     }
 
     private boolean checkChildCode() {
-        boolean exists = LayerHelper.sourceLayer().existsSourceTerm(source, childCode.value());
+        boolean exists = LayerHelper.sourceLayer().existsSourceTerm(source, childCode());
         childCode.error(exists ? translate("Term already exists") : null);
         return !exists;
+    }
+
+    private String childCode() {
+        return term.getCode() + "." + childCode.value();
     }
 
 }

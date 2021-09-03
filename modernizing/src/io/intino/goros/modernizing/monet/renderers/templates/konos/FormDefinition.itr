@@ -115,7 +115,7 @@ def type(field & serial)
 end
 
 def type(field & file & multiple)
-    File(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay documentos") Labeled("$label") Readonly
+    File(format=airBottom) $name+firstLowerCase as Editable(showPreview=false) Multiple(noItemsMessage="No hay documentos") Labeled("$label") Readonly
 end
 
 def type(field & file)

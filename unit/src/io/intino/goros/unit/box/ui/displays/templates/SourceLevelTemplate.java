@@ -15,6 +15,7 @@ import java.util.function.BiConsumer;
 public class SourceLevelTemplate extends AbstractSourceLevelTemplate<UnitBox> {
     private Source<SourceDefinition> source;
     private Term term;
+    private Term termSelected = null;
     private BiConsumer<Term, Integer> selectListener;
     private int level = -1;
 
@@ -48,8 +49,12 @@ public class SourceLevelTemplate extends AbstractSourceLevelTemplate<UnitBox> {
         return this;
     }
 
-    public void select(Term term) {
-        DelayerUtil.execute(this, (e) -> sourceLevelList.select(sourceLevelList.findItem(i -> ((Term)i).getCode().equals(term.getCode()))), 300);
+    public void selectDelayed(Term term) {
+        DelayerUtil.execute(this, (e) -> select(term), 300);
+    }
+
+    private void select(Term term) {
+        sourceLevelList.select(sourceLevelList.findItem(i -> ((Term) i).getCode().equals(term.getCode())));
     }
 
     @Override
@@ -59,6 +64,7 @@ public class SourceLevelTemplate extends AbstractSourceLevelTemplate<UnitBox> {
         sourceLevelList.onAddItem(e -> {
             Term term = e.item();
             SourceLevelListItem item = e.component();
+            item.disabledLayer.visible(!term.isEnabled());
             item.label.value(term.getLabel());
             item.code.value(term.getCode());
             item.type.value(translate(SourceHelper.typeLabel(term)));
@@ -70,7 +76,10 @@ public class SourceLevelTemplate extends AbstractSourceLevelTemplate<UnitBox> {
 
     private void selectTerm(List<Term> selection) {
         if (selectListener == null) return;
-        selectListener.accept(selection.size() > 0 ? selection.get(0) : null, level);
+        Term selected = selection.size() > 0 ? selection.get(0) : null;
+        if (selected == null && termSelected != null) selectDelayed(termSelected);
+        else selectListener.accept(selected, level);
+        termSelected = selected;
     }
 
     public long childrenCount() {

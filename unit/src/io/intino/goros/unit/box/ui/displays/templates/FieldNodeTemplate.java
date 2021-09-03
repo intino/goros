@@ -13,12 +13,14 @@ import org.monet.bpi.FieldNode;
 import org.monet.bpi.types.Link;
 import org.monet.metamodel.NodeDefinition;
 import org.monet.metamodel.NodeFieldProperty;
+import org.monet.metamodel.NodeFieldPropertyBase;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Language;
 import org.monet.space.kernel.model.Node;
 import io.intino.goros.unit.box.ui.DisplayProvider;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -92,7 +94,6 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
         refreshSelectNodeTypeDialog();
         refreshNode(node);
         refreshEmptyBlock(node);
-        refreshNoTypesDefinedBlock(node);
     }
 
     private Node loadNode() {
@@ -130,10 +131,6 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
         emptyBlock.visible(node == null);
     }
 
-    private void refreshNoTypesDefinedBlock(Node node) {
-        noTypesDefinedBlock.visible(types().size() <= 0);
-    }
-
     private void addNode() {
         addNode(types().get(0).getLabelString());
     }
@@ -148,7 +145,9 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
 
     private List<NodeDefinition> types() {
         Dictionary dictionary = Dictionary.getInstance();
-        return ((NodeFieldProperty)field.getDefinition()).getAdd().getNode().stream().map(ref -> dictionary.getNodeDefinition(ref.getValue())).collect(toList());
+        NodeFieldPropertyBase.AddProperty add = ((NodeFieldProperty) field.getDefinition()).getAdd();
+        if (add == null) return Collections.emptyList();
+        return add.getNode().stream().map(ref -> dictionary.getNodeDefinition(ref.getValue())).collect(toList());
     }
 
 }

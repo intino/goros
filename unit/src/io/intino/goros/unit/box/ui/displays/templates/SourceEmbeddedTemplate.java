@@ -40,15 +40,20 @@ public class SourceEmbeddedTemplate extends AbstractSourceEmbeddedTemplate<UnitB
             termView.termDialog.onTermAdded(term -> {
                 Term parent = termView.termDialog.term();
                 SourceLevelTemplate view = addOrGet(parent != null ? selectedLevel+1 : selectedLevel);
+                if (parent != null) view.term(parent);
                 view.refresh();
-                view.select(term);
+                view.selectDelayed(term);
                 save(term, source);
                 refreshPublishTermsDialog();
             });
             termView.termDialog.onTermModified(term -> {
                 addOrGet(selectedLevel).refresh(term);
                 if (term.isTerm()) hideLevels(selectedLevel+1);
-                else showLevel(selectedLevel+1);
+                else showLevel(selectedLevel+1, term);
+                save(term, source);
+            });
+            termView.termDialog.onTermDeleted(term -> {
+                refreshAfterDeleting();
                 save(term, source);
             });
         });
@@ -58,6 +63,13 @@ public class SourceEmbeddedTemplate extends AbstractSourceEmbeddedTemplate<UnitB
             refreshPublishTermsDialog();
             refreshTermDialog();
         });
+    }
+
+    private void refreshAfterDeleting() {
+        refreshPublishTermsDialog();
+        addOrGet(selectedLevel).refresh();
+        selectedLevel--;
+        refreshTermDialog();
     }
 
     @Override
@@ -118,10 +130,14 @@ public class SourceEmbeddedTemplate extends AbstractSourceEmbeddedTemplate<UnitB
         }
     }
 
-    private void showLevel(int level) {
+    private void showLevel(int level, Term term) {
         List<SourceLevelTemplate> children = levels.children(SourceLevelTemplate.class);
         for (SourceLevelTemplate child : children) {
-            if (child.level() == level) child.show();
+            if (child.level() == level) {
+                child.show();
+                child.term(term);
+                child.refresh();
+            }
         }
     }
 
@@ -134,6 +150,7 @@ public class SourceEmbeddedTemplate extends AbstractSourceEmbeddedTemplate<UnitB
         int count = LayerHelper.sourceLayer().loadSourceNewTerms(source).getCount();
         termView.publishTermsDialog.source(source);
         termView.publishTermsDialog.onPublish(e -> refreshPublishTermsDialog());
+        termView.publishTermsDialog.onDelete(e -> refreshAfterDeleting());
         termView.publishTermsDialog.visible(count > 0);
         if (count <= 0) return;
         termView.publishTermsDialog.refresh();

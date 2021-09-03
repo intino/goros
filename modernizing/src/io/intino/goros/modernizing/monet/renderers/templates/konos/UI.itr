@@ -67,7 +67,7 @@ def type(ui)
             MaterialIconButton(title="Aplicaciones", icon="Apps", format=black airRight) apps as OpenPopover(businessUnitsBlock)
             User(mode=OnlyPhoto)
 
-            Block(format=air) businessUnitsBlock as Popover Absolute(width=400px)
+            Block(format=air autoOverflow) businessUnitsBlock as Popover Absolute(width=400px, height=300px)
                 OwnerTemplateStamp(template="BusinessUnitsTemplate", owner=$module+firstUpperCase~Elements.goros) businessUnitsStamp
 
     Template(layout=Horizontal Flexible) DashboardTemplate

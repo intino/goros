@@ -74,6 +74,7 @@ Format("borderTop:'1px solid #eee',marginTop:'6px',paddingTop:'6px'") catalogInd
 Format("background:'white',padding:'10px 15px',borderRadius:'10px'") catalogMapItemStyle
 Format("borderTop:'1px solid #eee',marginTop:'6px',paddingTop:'6px'") catalogMapFooterItemStyle
 Format("background:'white',padding:'2px 0 2px 5px',borderRadius:'10px'") termReferenceStyle
+Format("background:'white',opacity:'0.4',position:'absolute',width:'100%',height:'100%'") termDisabledStyle
 Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") compositeFieldStyle
 Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
 Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-9px',marginRight:'-26px'") editDocumentButtonStyle

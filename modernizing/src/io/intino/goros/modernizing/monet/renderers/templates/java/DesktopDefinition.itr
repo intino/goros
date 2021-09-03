@@ -5,23 +5,56 @@ def type(desktopdefinition)
     import org.monet.space.kernel.model.Source;
     import org.monet.space.kernel.model.Node;
     import io.intino.goros.unit.util.AccountHelper;
-    import io.intino.goros.unit.util.NodeHelper;
+    import io.intino.goros.unit.util.LayerHelper;
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
+        private Node node;
 
         public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
+        public void open(String code) {
+            node(LayerHelper.nodeLayer().locateNode(code));
+            refresh();
+        }
+
+        public void open(String id, String view) {
+            node(LayerHelper.nodeLayer().loadNode(id));
+            refresh();
+        }
+
+        public $name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
+        }
+
+        @Override
+        public void init() {
+            super.init();
+            initToolbar();
+        }
+
         @Override
         public void refresh() {
             super.refresh();
+            refreshToolbar();
             refreshLabels();
         }
 
+        private void initToolbar() {
+            [$toolbar+editableInitCall]
+        }
+
+        private void refreshToolbar() {
+            [$toolbar+editableRefreshCall]
+        }
+
         private void refreshLabels() {
+            loading.visible(true);
             labels.visible(false);
             [$view+refreshCall...[$NL]]
+            loading.visible(false);
             labels.visible(true);
         }
 
@@ -67,4 +100,8 @@ def type(item) trigger(refreshMethod)
         $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase"));
         $name+firstLowerCase~Link.title(node.getLabel());
     }
+end
+
+def type(toolbar) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
 end

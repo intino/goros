@@ -2,6 +2,8 @@ package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.MimeTypes;
 import io.intino.alexandria.Resource;
+import io.intino.alexandria.logger.Logger;
+import io.intino.alexandria.ui.File;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.alexandria.ui.spark.UIFile;
 import io.intino.goros.unit.box.UnitBox;
@@ -12,6 +14,10 @@ import org.monet.space.kernel.model.Node;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class NodeDocumentTemplate extends AbstractNodeDocumentTemplate<UnitBox> {
     private Node node;
@@ -93,7 +99,15 @@ public class NodeDocumentTemplate extends AbstractNodeDocumentTemplate<UnitBox> 
     }
 
     private void refreshPreview() {
-        preview.value(NodeHelper.urlOf(node), NodeHelper.contentTypeOf(node));
+        preview.value(file());
+    }
+
+    private io.intino.alexandria.ui.File file() {
+        io.intino.alexandria.ui.File result = new io.intino.alexandria.ui.File();
+        result.filename(node.getLabel() + MimeTypes.extensionOf(ComponentDocuments.getInstance().getDocumentContentType(node.getId())));
+        result.value(NodeHelper.urlOf(node));
+        result.mimeType(NodeHelper.contentTypeOf(node));
+        return result;
     }
 
 }

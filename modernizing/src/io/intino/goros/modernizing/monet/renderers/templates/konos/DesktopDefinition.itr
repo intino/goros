@@ -10,7 +10,14 @@ def type(desktopdefinition)
                 Block(layout=Horizontal)
                     Text(value="$label", format=h4 bold) label
 
-        Block(layout=Vertical Wrap) labels
+        Block(layout=Horizontal)
+            Block(layout=Horizontal Flexible, format=middleAirTop middleAirBottom) toolbar
+                Block(layout=Vertical CenterJustified Flexible)
+                    Block(layout=Horizontal)
+                        $toolbar+editable
+
+    	Block(layout=Vertical CenterCenter Flexible, visible=true) loading > Spinner
+        Block(layout=Vertical Wrap, visible=false) labels
             [$view...[$NL]]
 end
 
@@ -28,4 +35,12 @@ def type(item)
     Block(format=doubleAirBottom, visible=false) $name+firstLowerCase
         Link(title="$label", format=h5) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType)
         Text(value="$description", format=description)
+end
+
+def type(toolbar) trigger(editable)
+    [$operation...[$NL]]
+end
+
+def type(toolbar) trigger(editableRefreshCall)
+    [$operation+editableRefreshCall...[$NL]]
 end

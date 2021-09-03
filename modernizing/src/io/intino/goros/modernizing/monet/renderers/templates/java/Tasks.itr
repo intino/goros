@@ -29,6 +29,10 @@ def type(tasks & nodetasks)
             return this;
         }
 
+        public boolean editing() {
+            return !readonly;
+        }
+
         @Override
         public void init() {
             super.init();
@@ -124,6 +128,10 @@ def type(tasks & embedded)
         public TasksEmbeddedTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         public TasksEmbeddedTemplate bindTo(SearchBox search) {
@@ -379,6 +387,10 @@ def type(tasks)
         public TasksTemplate readonly(boolean readonly) {
             this.readonly = readonly;
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         @Override

@@ -120,6 +120,10 @@ def type(collectionview & filter)
             return this;
         }
 
+        public boolean editing() {
+            return !readonly;
+        }
+
         public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             this.collection = collection;
             updateFilters();
@@ -203,6 +207,7 @@ def type(setdefinition & embedded)
     import io.intino.alexandria.ui.displays.components.BlockConditional;
     import io.intino.alexandria.ui.displays.components.Collection;
     import io.intino.alexandria.ui.displays.components.SearchBox;
+    import io.intino.alexandria.ui.displays.components.SelectorCheckBox;
     import io.intino.alexandria.ui.displays.events.Event;
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
@@ -229,7 +234,8 @@ def type(setdefinition & embedded)
         private java.util.function.Consumer<Boolean> showFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleViewListener;
-        private SearchBox searchBox;
+        private SearchBox<?, ?> searchBox;
+        private SelectorCheckBox<?, ?> filterByTitle;
         [$toolbar+editableDeclaration]
 
         public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
@@ -259,8 +265,16 @@ def type(setdefinition & embedded)
             return this;
         }
 
-        public $name+firstUpperCase~EmbeddedTemplate bindTo(SearchBox search) {
+        public boolean editing() {
+            return !readonly;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate bindTo(SearchBox<?, ?> search, SelectorCheckBox<?, ?> filterByTitle) {
             this.searchBox = search;
+            this.searchBox.onSearch(e -> toggleFilterByTitle(e.condition()));
+            this.filterByTitle = filterByTitle;
+            this.filterByTitle.onSelect(e -> filterByTitle());
+            this.filterByTitle();
             return this;
         }
 
@@ -391,6 +405,17 @@ def type(setdefinition & embedded)
             refresh();
         }
 
+        private void toggleFilterByTitle(String condition) {
+            if (condition == null || condition.isEmpty()) filterByTitle.hide();
+            else filterByTitle.show();
+        }
+
+        private void filterByTitle() {
+            if (currentCollection() == null) return;
+            if (filterByTitle.selection().size() > 0) currentCollection().filter("titleTag", Collections.singletonList("true"));
+            else currentCollection().removeFilter("titleTag");
+        }
+
         private void refreshFilters() {
             if (!filtersView.isVisible()) return;
             [$view+refreshFiltersCall...[$NL]]
@@ -444,10 +469,16 @@ def type(setdefinition & embedded)
         }
 
         private $name+firstUpperCase~EmbeddedTemplate open(Node node) {
+            refreshIfEditing();
             BlockConditional selectedView = selectedNodeView();
             selectedChild = selectedView != null && selectedView.isVisible() && node == null ? null : node;
             updateSelectedNodeViewVisibility(selectedChild != null);
             return this;
+        }
+
+        private void refreshIfEditing() {
+            if (selectedChild == null) return;
+            [$toolbar+ifEditingCall...[$NL]]
         }
 
         private $name+firstUpperCase~EmbeddedTemplate close() {
@@ -554,10 +585,20 @@ def type(setdefinition)
         [$toolbar+editableEvents]
         [$toolbar+navigableMethods]
 
+        public void open(String code) {
+            node(LayerHelper.nodeLayer().locateNode(code));
+            refresh();
+        }
+
         public void open(String id, String view) {
-            node = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(id);
+            node(LayerHelper.nodeLayer().loadNode(id));
             refresh();
             if (view != null) viewSelector.select(view);
+        }
+
+        public $name+firstUpperCase~Template node(Node node) {
+            this.node = node;
+            return this;
         }
 
         @Override
@@ -565,7 +606,6 @@ def type(setdefinition)
             super.init();
             [$desktop]
             [$parent]
-            [node = io.intino.goros.unit.util.NodeHelper.singleton("$singleton");]
             initToolbar();
             initSortings();
             initContent();
@@ -601,7 +641,7 @@ def type(setdefinition)
             content.onToggleFilters(this::refreshToggleFiltersButton);
             content.onToggleView(this::refreshToggleViewButton);
             content.onFinishEdition(e -> finishEdition());
-            content.bindTo(search);
+            content.bindTo(search, filterByTitle);
         }
 
         private void openView(SelectionEvent event) {
@@ -617,7 +657,7 @@ def type(setdefinition)
 
         private void refreshContent() {
             content.node(node);
-            content.readonly(readonly);
+            content.readonly(node.isLocked() || readonly);
             content.refresh();
         }
 
@@ -718,7 +758,7 @@ def type(collectionview) trigger(initCall)
         bindToolbars($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(node.isLocked() || readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
         showFilters(filtersView.$name+firstLowerCase~Filters);
         resetView();
@@ -750,7 +790,7 @@ end
 def type(collectionview) trigger(filter)
     filtersView.$name+firstLowerCase~Filters.onShow(e -> {
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.node(node);
-        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.readonly(readonly);
+        filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.readonly(node.isLocked() || readonly);
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.bindTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
     });
@@ -993,6 +1033,10 @@ def type(add) trigger(hideCollectionCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(null);
 end
 
+def type(add) trigger(ifEditingCall)
+    if (selectedChild.getCode().equals("$code") && $name+firstLowerCase~View.$name+firstLowerCase~Stamp.editing()) refresh(io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId()));
+end
+
 def type(add) trigger(equals)
     if (selectedChild.getCode().equals("$code")) return $name+firstLowerCase~View;
 end
@@ -1108,6 +1152,10 @@ end
 
 def type(toolbar) trigger(equals)
     [$add+equals...[$NL]]
+end
+
+def type(toolbar) trigger(ifEditingCall)
+    [$add+ifEditingCall...[$NL]]
 end
 
 def type(toolbar) trigger(hideCall)

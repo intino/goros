@@ -56,6 +56,8 @@ public class PostDocumentResource implements Resource {
 		action.signField = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("signField"), String.class);
 		action.signId = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("signId"), String.class);
 		action.signature = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("signature"), String.class);
+		action.label = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("label"), String.class);
+		action.space = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("space"), String.class);
 		return action;
 	}
 

@@ -28,7 +28,8 @@ module.exports = {
     },
     entry : {
         'home' : './gen/apps/Home.js',
-        'install' : './gen/apps/Install.js'
+        'install' : './gen/apps/Install.js',
+        'banner' : './gen/apps/Banner.js'
     },
     output: {
         path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
@@ -64,6 +65,13 @@ module.exports = {
             chunks: ['install'],
             template: "./src/install.html",
             filename: "./install.html"
+        }),
+        new HtmlWebPackPlugin({
+            hash: true,
+            title: "Test UI",
+            chunks: ['banner'],
+            template: "./src/banner.html",
+            filename: "./banner.html"
         })
     ]
 };

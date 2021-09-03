@@ -131,6 +131,12 @@ end
 def type(displayProvider)
     @Override
     public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
+        if (node != null && node.isDocument()) {
+            io.intino.goros.unit.box.ui.displays.templates.NodeDocumentTemplate display = new io.intino.goros.unit.box.ui.displays.templates.NodeDocumentTemplate(box().unit());
+            display.node(node);
+            display.readonly(readonly);
+            return display;
+        }
         [$display...[$NL]]
         return null;
     }
@@ -360,6 +366,7 @@ end
 
 def type(field & link) trigger(refresh)
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
+    else $name+firstLowerCase.selection(java.util.Collections.emptyList());
     $name+firstLowerCase~.readonly($readonly);
 end
 
@@ -522,6 +529,10 @@ def type(compositeView)
             this.readonly = readonly;
             [$editable+readonly]
             return this;
+        }
+
+        public boolean editing() {
+            return !readonly;
         }
 
         [$editable]

@@ -3,10 +3,10 @@ def type(artifact)
 
     Artifact(groupId = "$package", version = "1.0.0") model as Product
         Model(language = "Unit", version = "1.0.0-SNAPSHOT", sdk = "4.1.2")
-        Box(language = "Konos", version = "8.14.2")
+        Box(language = "Konos", version = "8.14.3")
 
         Imports
-            Compile("io.intino.alexandria", "ui-framework", "4.12.3")
+            Compile("io.intino.alexandria", "ui-framework", "4.12.6")
             Compile("io.intino.alexandria", "core-framework", "2.1.0")
 
             Web("$package", "model-elements", "1.0.0")
@@ -34,6 +34,7 @@ def type(artifact)
         Argument("jdbc-password", "")
         Argument("user-data-dir", "./temp/monet")
         Argument("component-documents-monet-url", "http://localhost:8080/docservice")
+        Argument("component-documents-monet-is-shared", "true")
         Argument("component-datawarehouse-monet-url", "http://localhost:8081/sumus")
         Argument("services-base-url", "http://127.0.0.1:9000")
         Argument("mobile-fcm-settings-filename", "./temp/monet/settings-fcm.json")
@@ -45,5 +46,6 @@ def type(artifact)
         Argument("mail-admin-to", "admin@monet.org")
         Argument("mail-admin-username", "admin")
         Argument("mail-admin-password", "")
+        Argument("is-debug-mode", "false")
         Argument("store-directory", "./temp/monetfederation/store")
 end

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class PublishTermsDialog extends AbstractPublishTermsDialog<UnitBox> {
     private Source<SourceDefinition> source;
     private Consumer<Boolean> publishListener;
+    private Consumer<Boolean> deleteListener;
 
     public PublishTermsDialog(UnitBox box) {
         super(box);
@@ -30,10 +31,16 @@ public class PublishTermsDialog extends AbstractPublishTermsDialog<UnitBox> {
         return this;
     }
 
+    public PublishTermsDialog onDelete(Consumer<Boolean> listener) {
+        this.deleteListener = listener;
+        return this;
+    }
+
     @Override
     public void init() {
         super.init();
         publish.onExecute(e -> publish(newTerms.selection()));
+        delete.onExecute(e -> delete(newTerms.selection()));
         publishAll.onExecute(e -> publishAll());
         newTerms.onSelect(e -> refresh());
     }
@@ -45,6 +52,7 @@ public class PublishTermsDialog extends AbstractPublishTermsDialog<UnitBox> {
         newTerms.clear();
         terms.forEach(t -> newTerms.add(t.getCode()));
         publish.readonly(newTerms.selection().size() <= 0);
+        delete.readonly(newTerms.selection().size() <= 0);
         publishAll.readonly(terms.size() <= 0);
     }
 
@@ -56,6 +64,13 @@ public class PublishTermsDialog extends AbstractPublishTermsDialog<UnitBox> {
         LayerHelper.sourceLayer().publishSourceTerms(source, selection.toArray(new String[0]));
         notifyUser(translate("Terms published"), UserMessage.Type.Success);
         publishListener.accept(true);
+        refresh();
+    }
+
+    private void delete(List<String> selection) {
+        selection.forEach(s -> LayerHelper.sourceLayer().deleteSourceTerm(source, s));
+        notifyUser(translate("Terms deleted"), UserMessage.Type.Success);
+        deleteListener.accept(true);
         refresh();
     }
 

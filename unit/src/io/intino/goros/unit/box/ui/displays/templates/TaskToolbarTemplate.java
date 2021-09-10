@@ -86,9 +86,9 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
         notifyUser(translate("Unassigning task..."), UserMessage.Type.Loading);
         TaskLayer taskLayer = LayerHelper.taskLayer();
         taskLayer.abortTask(task.getId());
+        notifyUser(translate("Task unassigned"), UserMessage.Type.Success);
         task(taskLayer.loadTask(this.task.getId()));
         abortListener.accept(task);
-        notifyUser(translate("Task unassigned"), UserMessage.Type.Success);
         unAssign.readonly(false);
     }
 
@@ -97,9 +97,9 @@ public class TaskToolbarTemplate extends AbstractTaskToolbarTemplate<UnitBox> {
         assignTaskOwnerDialogBox.close();
         notifyUser(translate("Assigning task..."), UserMessage.Type.Loading);
         saveTaskOwner(user, reason);
+        notifyUser(translate("Task assigned"), UserMessage.Type.Success);
         refresh();
         changeListener.accept(task);
-        notifyUser(translate("Task assigned"), UserMessage.Type.Success);
         assign.readonly(false);
     }
 

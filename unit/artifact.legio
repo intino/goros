@@ -21,6 +21,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0") unit as Platform
 		Web("io.intino.goros", "unit-elements", "1.0.0-SNAPSHOT")
 
 		Test("junit", "junit", "4.13")
+		Web(groupId = "io.intino.goros", artifactId = "unit-elements", version = "1.0.0")
 
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.unit.box.Main")
 		attachSources = true

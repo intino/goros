@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.0.0-SNAPSHOT") documents as Platform
+Artifact(groupId = "io.intino.goros", version = "1.0.0") documents as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
 	Box(language = "Konos", version = "8.14.5")
 	Code("io.intino.goros.documents")

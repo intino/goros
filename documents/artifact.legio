@@ -8,6 +8,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0") documents as Platform
 	Imports
 		Compile("org.siani.monet", "docservice", "2.0.0")
 			Exclude ("org.siani.monet","servlet-api")
+ 		Compile("io.intino.alexandria", "logger4j", "1.0.1")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
 		Compile("io.intino.alexandria", "core-framework", "2.1.0")
 		Compile("io.intino.alexandria", "rest", "3.1.9")

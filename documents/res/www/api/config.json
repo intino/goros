@@ -1,8 +1,8 @@
 {
   "urls": [
     {
-      "url": "./data/.json",
-      "name": ""
+      "url": "./data/docservice.json",
+      "name": "docservice"
     }
   ],
   "title": "Docservice API",

@@ -128,6 +128,7 @@ public abstract class AbstractBox extends io.intino.alexandria.core.Box {
 		handler.setFormatter(new io.intino.alexandria.logger.Formatter());
 		Logger.setUseParentHandlers(false);
 		Logger.addHandler(handler);
+		io.intino.alexandria.logger4j.Logger.init();
 	}
 
 	protected java.net.URL url(String url) {

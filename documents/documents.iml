@@ -80,7 +80,6 @@
     <orderEntry type="library" name="Intino: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" name="Intino: commons-logging:commons-logging:1.1" level="project" />
     <orderEntry type="library" name="Intino: com.itextpdf:itextpdf:5.0.2" level="project" />
-    <orderEntry type="library" name="Intino: org.slf4j:slf4j-api:1.7.13" level="project" />
     <orderEntry type="library" name="Intino: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.6.0.0" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ucp:19.6.0.0" level="project" />
@@ -97,7 +96,8 @@
     <orderEntry type="library" name="Intino: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" name="Intino: mysql:mysql-connector-java:8.0.23" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:docservice:2.0.0" level="project" />
-    <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
-    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:logger4j:1.0.1" level="project" />
+    <orderEntry type="library" name="Intino: org.slf4j:slf4j-log4j12:1.7.25" level="project" />
+    <orderEntry type="library" name="Intino: org.slf4j:slf4j-api:1.7.25" level="project" />
   </component>
 </module>

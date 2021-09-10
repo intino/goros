@@ -15,6 +15,7 @@ Service docservice as REST(host = "", port = "{port}")
 			Parameter(in=query) signsCount as Text
 			Parameter(in=query) signsCountPattern as Text
 			Parameter(in=query) documentCode as Text
+			Parameter(in=query) documentReferenced as Text
 			Parameter(in=form) documentData as File
 			Parameter(in=query) contentType as Text
 			Parameter(in=query) width as Text
@@ -55,6 +56,7 @@ Service docservice as REST(host = "", port = "{port}")
 			Parameter(in=query) asynchronous as Text
 			Parameter(in=query) nodeCode as Text
 			Parameter(in=query) copiedDocumentCode as Text
+			Parameter(in=query) documentReferenced as Text
 			Parameter(in=query) generatePreview as Text
 			Parameter(in=query) sourceDocumentId as Text
 			Parameter(in=query) destinationDocumentId as Text

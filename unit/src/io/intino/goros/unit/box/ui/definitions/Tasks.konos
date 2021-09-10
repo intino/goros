@@ -29,7 +29,7 @@ Template(layout=Vertical Flexible) tasksTableCatalog as Relative(height=100%)
 		Mold
 			Heading tasksTableOperationsHeading
 			Item(height=80px,width=10%) tasksTableOperationsItem
-				MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
+				MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small) urgent as Action
 
 Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 	List(itemClass="org.monet.space.kernel.model.Task", scrollingMark=false) tasksList as Selectable(multiple=false)

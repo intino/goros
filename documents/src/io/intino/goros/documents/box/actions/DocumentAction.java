@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class DocumentAction extends io.intino.goros.documents.box.actions.Action {
 	public String documentCode;
+	public String documentReferenced;
 	public String destinationDocumentId;
 	public String signature;
 	public String signField;
@@ -74,6 +75,7 @@ public class DocumentAction extends io.intino.goros.documents.box.actions.Action
 	private Map<String, Object> parametersToMap() {
 		return new HashMap<>() {{
 			put("documentCode", documentCode);
+			put("documentReferenced", documentReferenced);
 			put("destinationDocumentId", destinationDocumentId);
 			put("signature", signature);
 			put("signField", signField);

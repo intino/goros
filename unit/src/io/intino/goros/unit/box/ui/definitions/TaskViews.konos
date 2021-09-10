@@ -37,7 +37,7 @@ Template(layout=Vertical Flexible) taskPlaceDelegationTemplate as Relative(heigh
 		Text(format=grey) pendingMessage
 		Link(title="Ver roles") openRoles as Action Addressable(addressableResource=empty)
 		TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
-		Block(format=doubleAirTop) setupBlock
+		Block(format=doubleAirTop, visible=false) setupBlock
 			DisplayStamp(display=empty) setupFrame
 			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
 	Block failureView as Conditional

@@ -5,6 +5,7 @@ import io.intino.goros.documents.box.DocumentsBox;
 import io.intino.goros.documents.box.services.Response;
 import org.monet.http.Request;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public abstract class Action {
 
     protected io.intino.alexandria.Resource resource() {
         InputStream stream = response.stream();
-        if (stream == null) return null;
+        if (stream == null) stream = new ByteArrayInputStream(new byte[0]);
         io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(response.getFilename(), response.getContentType(), stream);
         response.deleteTempFile();
         return resource;

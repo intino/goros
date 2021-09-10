@@ -1,7 +1,14 @@
 package io.intino.goros.unit.util;
 
+import org.monet.space.kernel.model.DataRequest;
 import org.monet.space.kernel.model.MonetLink;
 import org.monet.space.kernel.model.Task;
+import org.monet.space.kernel.model.TaskSearchRequest;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
 
 public class TaskHelper {
 
@@ -16,6 +23,11 @@ public class TaskHelper {
 
     public static String nameOf(Task task) {
         return PathHelper.nameOf(task.getDefinition());
+    }
+
+    public static List<TaskSearchRequest.SortBy> sortsByOf(List<String> sortings) {
+        if (sortings == null) return emptyList();
+        return sortings.stream().map(TaskHelper::sortByOf).collect(Collectors.toList());
     }
 
     public static String state(Task task) {
@@ -66,6 +78,21 @@ public class TaskHelper {
 
     public static long secondsToMillis(int count) {
         return (long) count * 1000;
+    }
+
+    private static DataRequest.SortBy sortByOf(String sorting) {
+        String[] split = sorting.split("#");
+        return new TaskSearchRequest.SortBy() {
+            @Override
+            public String attribute() {
+                return split[0];
+            }
+
+            @Override
+            public String mode() {
+                return split.length > 1 ? split[1] : "ASC";
+            }
+        };
     }
 
 }

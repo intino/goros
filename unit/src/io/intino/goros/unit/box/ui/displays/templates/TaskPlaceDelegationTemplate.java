@@ -88,7 +88,7 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
         pendingView.openRoles.visible(roleList.getTotalCount() <= 0);
         pendingView.openRoles.address(path -> "/permisos");
         pendingView.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
-        pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
+        pendingView.setupBlock.visible(false);
 
         if (roleList.getTotalCount() <= 0) {
             RoleDefinition roleDefinition = roleDefinition(providerDefinition());
@@ -115,6 +115,7 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
         Node setupNode = setupNode(order);
         Role role = order.getRole();
 
+        pendingView.setupBlock.visible(true);
         pendingView.openRoles.visible(false);
         if (setupNode == null)
             pendingView.pendingMessage.value(translate("Sending order..."));

@@ -37,6 +37,7 @@ public class GetDocumentResource implements Resource {
 		action.signsCount = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("signsCount"), String.class);
 		action.signsCountPattern = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("signsCountPattern"), String.class);
 		action.documentCode = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("documentCode"), String.class);
+		action.documentReferenced = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("documentReferenced"), String.class);
 		action.documentData = manager.fromForm("documentData");
 		action.contentType = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("contentType"), String.class);
 		action.width = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("width"), String.class);

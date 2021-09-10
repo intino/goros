@@ -19,7 +19,7 @@
     "/document/": {
       "get": {
         "description": "Document operation",
-        "operationId": "DocService_8_2_1761294603",
+        "operationId": "DocService_8_2_0935826017",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -89,6 +89,13 @@
           },
           {
             "name": "documentCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "documentReferenced",
             "in": "query",
             "description": "",
             "required": false,
@@ -253,7 +260,7 @@
       },
       "post": {
         "description": "Document operation",
-        "operationId": "DocService_41_2_01279782731",
+        "operationId": "DocService_42_2_11389947791",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -378,6 +385,13 @@
             "type": "string"
           },
           {
+            "name": "documentReferenced",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "generatePreview",
             "in": "query",
             "description": "",
@@ -489,7 +503,7 @@
     "/preview/": {
       "get": {
         "description": "Previews document",
-        "operationId": "DocService_76_2_0538362498",
+        "operationId": "DocService_78_2_0538362498",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -538,7 +552,7 @@
       },
       "post": {
         "description": "Previews document",
-        "operationId": "DocService_82_2_11818610516",
+        "operationId": "DocService_84_2_11818610516",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -589,7 +603,7 @@
     "/download/": {
       "get": {
         "description": "Download document",
-        "operationId": "DocService_90_2_11043604678",
+        "operationId": "DocService_92_2_11043604678",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -631,7 +645,7 @@
       },
       "post": {
         "description": "Download document",
-        "operationId": "DocService_95_2_1604221208",
+        "operationId": "DocService_97_2_1604221208",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

@@ -19,7 +19,7 @@ def type(setdefinition)
                     Selector(format=body2 bold airRight, visible=false) sortingsMode as ComboBox(placeholder="Tipo", view=TextView)
                     Link(format=body2, title="quitar", visible=false) removeSorting
             Block(layout=Horizontal Center) rightToolbar
-                Block(format=relative doubleAirRight airTop)
+                Block(format=relative doubleAirRight smallAirTop)
                     SearchBox(collections = empty) search
                     Block(format=filterByTitleStyle) > Selector(visible=false) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
                 Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
@@ -37,7 +37,7 @@ def type(setdefinition)
 
         Block(layout=Horizontal, format=bottomBordered middleBottomSpaced leftSpaced middleTopSpaced)
             Block(layout=Vertical Flexible)
-                Toolbar(visible=false) toolbar
+                Toolbar toolbar
                     Button(title="Eliminar seleccionados", highlight=Outline, size=Small, format=airRight, visible=false) removeSelection as Action(context=Selection) Affirmed("Are you sure you want to remove selection?")
                     $toolbar+editable
             Block(layout=Horizontal EndJustified)
@@ -139,14 +139,8 @@ def type(nodeview) trigger(filterTemplate)
         Text(value="NOT IMPLEMENTED!!!")
 end
 
-def type(nodeview & visibleWhenEmbedded) trigger(page)
-end
-
 def type(nodeview) trigger(page)
     Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate, format=fullHeight) $name+firstLowerCase~ViewStamp
-end
-
-def type(nodeview & visibleWhenEmbedded) trigger(filter)
 end
 
 def type(nodeview) trigger(filter)

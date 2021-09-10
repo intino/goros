@@ -1,6 +1,6 @@
 {
     "name": "unit-elements",
-    "version": "1.0.0-SNAPSHOT",
+    "version": "1.0.0",
     "description": "",
     "main": "src/App.js",
     "scripts": {

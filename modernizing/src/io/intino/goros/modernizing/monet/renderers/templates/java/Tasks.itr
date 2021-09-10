@@ -106,6 +106,7 @@ def type(tasks & embedded)
         private Task selectedTask;
         private boolean readonly = true;
         private java.util.function.Consumer<Long> itemsCountListener;
+        private java.util.function.Consumer<Boolean> showFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleViewListener;
         private SearchBox searchBox;
@@ -141,6 +142,11 @@ def type(tasks & embedded)
 
         public TasksEmbeddedTemplate toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
             toggleFiltersViewVisibility(state);
+            return this;
+        }
+
+        public TasksEmbeddedTemplate onShowFilters(java.util.function.Consumer<Boolean> listener) {
+            this.showFiltersListener = listener;
             return this;
         }
 
@@ -197,6 +203,7 @@ def type(tasks & embedded)
                 tableView.tableViewStamp.inbox(inbox);
                 tableView.tableViewStamp.readonly(readonly);
                 tableView.tableViewStamp.refresh();
+                showFilters();
             });
             listView.onInit(e -> {
                 listView.listViewStamp.tasksList.onRefreshItemCount(this::refreshCount);
@@ -208,6 +215,7 @@ def type(tasks & embedded)
                 listView.listViewStamp.inbox(inbox);
                 listView.listViewStamp.readonly(readonly);
                 listView.listViewStamp.refresh();
+                showFilters();
             });
             filtersView.onInit(e -> initFilters());
             [$process+init...[$NL]]
@@ -308,6 +316,7 @@ def type(tasks & embedded)
         }
 
         private void showFilters() {
+            if (showFiltersListener != null) showFiltersListener.accept(true);
             if (!filtersView.isVisible()) return;
             filtersView.show();
             filtersView.refresh();
@@ -359,14 +368,18 @@ def type(tasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.events.Event;
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
     import io.intino.goros.unit.util.Formatters;
 
+    import java.util.List;
+
     public class TasksTemplate extends AbstractTasksTemplate<$boxName+firstUpperCase~Box> {
         private String view;
         private String folder;
+        private String sorting;
         private TaskListDatasource.Inbox inbox;
         private boolean readonly = true;
 
@@ -397,6 +410,7 @@ def type(tasks)
         public void init() {
             super.init();
             initToolbar();
+            initSortings();
             initContent();
         }
 
@@ -416,8 +430,17 @@ def type(tasks)
             toggleView.onToggle(e -> toggleView(e.state()));
         }
 
+        private void initSortings() {
+            sortings.onSelect(this::selectSortingMode);
+            sortingsMode.add("Ascendente");
+            sortingsMode.add("Descendente");
+            sortingsMode.onSelect(this::selectSorting);
+            removeSorting.onExecute(this::removeSorting);
+        }
+
         private void initContent() {
             content.onItemsCountChange(this::refreshCount);
+            content.onShowFilters(e -> refreshSortings());
             content.onToggleFilters(this::refreshToggleFiltersButton);
             content.onToggleView(this::refreshToggleViewButton);
             content.bindTo(search);
@@ -437,6 +460,50 @@ def type(tasks)
         private void selectView(SelectionEvent e) {
             content.view((String) e.selection().get(0));
             content.refresh();
+        }
+
+        private static final java.util.Map<String, List<String>> sortingsMap = new java.util.HashMap<>() {{
+            put("table", List.of("Título", "Fecha de creación", "Fecha de actualización"));
+            put("list", List.of("Título", "Fecha de creación", "Fecha de actualización"));
+        }};
+        private static final java.util.Map<String, String> sortingsCodesMap = new java.util.HashMap<>() {{
+            put("table_Título", "label");
+            put("table_Fecha de actualización", "update_date");
+            put("table_Fecha de creación", "create_date");
+            put("list_Título", "label");
+            put("list_Fecha de actualización", "update_date");
+            put("list_Fecha de creación", "create_date");
+        }};
+        private void refreshSortings() {
+            if (content.tableView.isVisible()) refreshSortings(sortingsMap.get("table"));
+            if (content.listView.isVisible()) refreshSortings(sortingsMap.get("list"));
+        }
+
+        private void refreshSortings(List<String> sortingList) {
+            sortingsBlock.visible(sortingList.size() > 0);
+            sortings.clear();
+            sortingList.forEach(s -> sortings.add(s));
+        }
+
+        private void selectSortingMode(SelectionEvent e) {
+            this.sorting = e.selection().size() > 0 ? (String) e.selection().get(0) : null;
+            this.sortingsMode.visible(sorting != null);
+            if (sortingsMode.selection().size() <= 0) sortingsMode.select("Ascendente");
+            else selectSorting(sorting, sorting != null ? sortingsMode.selection().get(0) : null);
+        }
+
+        private void selectSorting(SelectionEvent e) {
+            selectSorting(sorting, (String) e.selection().get(0));
+        }
+
+        private void selectSorting(String sorting, String mode) {
+            removeSorting.visible(sorting != null);
+            if (content.tableView.isVisible()) content.tableView.tableViewStamp.selectSorting(sortingsCodesMap.get("table_"+sorting), mode);
+            if (content.listView.isVisible()) content.listView.listViewStamp.selectSorting(sortingsCodesMap.get("list_"+sorting), mode);
+        }
+
+        private void removeSorting(Event event) {
+            sortings.select();
         }
 
         private void toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {

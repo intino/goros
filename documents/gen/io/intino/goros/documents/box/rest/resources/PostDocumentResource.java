@@ -44,6 +44,7 @@ public class PostDocumentResource implements Resource {
 		action.asynchronous = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("asynchronous"), String.class);
 		action.nodeCode = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("nodeCode"), String.class);
 		action.copiedDocumentCode = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("copiedDocumentCode"), String.class);
+		action.documentReferenced = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("documentReferenced"), String.class);
 		action.generatePreview = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("generatePreview"), String.class);
 		action.sourceDocumentId = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("sourceDocumentId"), String.class);
 		action.destinationDocumentId = io.intino.alexandria.rest.RequestAdapter.adapt(manager.fromQuery("destinationDocumentId"), String.class);

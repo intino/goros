@@ -369,11 +369,11 @@ def type(setdefinition & embedded)
         }
 
         private void refreshToolbar() {
-            toolbar.visible(toggleFiltersListener != null);
+            boolean embedded = toggleFiltersListener != null;
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
             edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!node.getDefinition().isReadonly());
+            edit.visible(!embedded && !node.getDefinition().isReadonly());
         }
 
         private void refreshCount(RefreshCountEvent event) {
@@ -745,9 +745,6 @@ end
 def type(collectionview & sharedprototypes) trigger(initCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(initCall)
-end
-
 def type(collectionview) trigger(initCall)
     $name+firstLowerCase~View.onInit(e -> {
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onRefreshItemCount(this::refreshCount);
@@ -771,9 +768,6 @@ end
 def type(collectionview & sharedprototypes) trigger(clearSelectionCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(clearSelectionCall)
-end
-
 def type(collectionview) trigger(clearSelectionCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.selection(Collections.emptyList());
 end
@@ -784,8 +778,6 @@ end
 def type(collectionview & sharedprototypes) trigger(filter)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(filter)
-end
 
 def type(collectionview) trigger(filter)
     filtersView.$name+firstLowerCase~Filters.onShow(e -> {
@@ -802,8 +794,6 @@ end
 def type(collectionview & sharedprototypes) trigger(showFilterCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(showFilterCall)
-end
 
 def type(collectionview) trigger(showFilterCall)
     if ($name+firstLowerCase~View.isVisible()) showFilters(filtersView.$name+firstLowerCase~Filters);
@@ -815,8 +805,6 @@ end
 def type(collectionview & sharedprototypes) trigger(hideFilterCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(hideFilterCall)
-end
 
 def type(collectionview) trigger(hideFilterCall)
     filtersView.$name+firstLowerCase~Filters.hide();
@@ -826,9 +814,6 @@ def type(collectionview & ownedprototypes) trigger(refreshCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshCall)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(refreshCall)
 end
 
 def type(collectionview) trigger(refreshCall)
@@ -841,9 +826,6 @@ end
 def type(collectionview & sharedprototypes) trigger(refreshFiltersCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(refreshFiltersCall)
-end
-
 def type(collectionview) trigger(refreshFiltersCall)
     if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
 end
@@ -852,9 +834,6 @@ def type(collectionview & ownedprototypes) trigger(refreshNodeCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshNodeCall)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(refreshNodeCall)
 end
 
 def type(collectionview) trigger(refreshNodeCall)
@@ -867,9 +846,6 @@ end
 def type(collectionview & sharedprototypes) trigger(selectNodeCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(selectNodeCall)
-end
-
 def type(collectionview) trigger(selectNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
 end
@@ -880,8 +856,6 @@ end
 def type(collectionview & sharedprototypes) trigger(selectViewCodeCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(selectViewCodeCall)
-end
 
 def type(collectionview) trigger(selectViewCodeCall)
     if (content.$name+firstLowerCase~View.isVisible()) return content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view();
@@ -893,20 +867,17 @@ end
 def type(collectionview & sharedprototypes) trigger(readonlyCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(readonlyCall)
-end
-
 def type(collectionview) trigger(readonlyCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly).refresh();
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly).refresh();
+        $name+firstLowerCase~View.show();
+    }
 end
 
 def type(collectionview & ownedprototypes) trigger(collection)
 end
 
 def type(collectionview & sharedprototypes) trigger(collection)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(collection)
 end
 
 def type(collectionview) trigger(collection)
@@ -919,9 +890,6 @@ end
 def type(collectionview & sharedprototypes) trigger(registerSorting)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(registerSorting)
-end
-
 def type(collectionview) trigger(registerSorting)
     put("$name+firstLowerCase", List.of("Título","Fecha de creación"[,$sorting...[,]]));
 end
@@ -930,9 +898,6 @@ def type(collectionview & ownedprototypes) trigger(registerSortingCode)
 end
 
 def type(collectionview & sharedprototypes) trigger(registerSortingCode)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(registerSortingCode)
 end
 
 def type(collectionview) trigger(registerSortingCode)
@@ -947,9 +912,6 @@ end
 def type(collectionview & sharedprototypes) trigger(refreshSortingCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(refreshSortingCall)
-end
-
 def type(collectionview) trigger(refreshSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) refreshSortings(sortingsMap.get("$name+firstLowerCase"));
 end
@@ -958,9 +920,6 @@ def type(collectionview & ownedprototypes) trigger(selectSortingCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(selectSortingCall)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(selectSortingCall)
 end
 
 def type(collectionview) trigger(selectSortingCall)
@@ -973,9 +932,6 @@ end
 def type(collectionview & sharedprototypes) trigger(showViewCall)
 end
 
-def type(collectionview & visibleWhenEmbedded) trigger(showViewCall)
-end
-
 def type(collectionview) trigger(showViewCall)
     if (view.equals("$name+firstLowerCase") || view.equals("$code")) $name+firstLowerCase~View.show();
 end
@@ -984,9 +940,6 @@ def type(collectionview & ownedprototypes) trigger(hideViewCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(hideViewCall)
-end
-
-def type(collectionview & visibleWhenEmbedded) trigger(hideViewCall)
 end
 
 def type(collectionview) trigger(hideViewCall)
@@ -1045,13 +998,13 @@ def type(add) trigger(hideCall)
     $name+firstLowerCase~View.hide();
 end
 
-def type(toolbar & singleton) trigger(editableInitCall)
+def type(toolbar) trigger(editableInitCall)
     [$operation+editableInitCall...[$NL]]
     removeSelection.onExecute(this::removeSelection);
     [$addList+execute]
 end
 
-def type(toolbar & singleton) trigger(editableRefreshCall)
+def type(toolbar) trigger(editableRefreshCall)
     [$operation+editableRefreshCall...[$NL]]
     removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
     [$addList+refresh]

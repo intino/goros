@@ -11,6 +11,8 @@ import io.intino.goros.unit.box.ui.datasources.model.task.TaskNatureGrouping;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskUrgentGrouping;
 import io.intino.goros.unit.util.AccountHelper;
 import io.intino.goros.unit.util.LayerHelper;
+import io.intino.goros.unit.util.NodeHelper;
+import io.intino.goros.unit.util.TaskHelper;
 import org.monet.space.kernel.model.*;
 
 import java.util.*;
@@ -18,6 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 public class TaskListDatasource extends PageDatasource<Task> {
     private final UnitBox box;
@@ -51,7 +54,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
 
     @Override
     public List<Task> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        TaskSearchRequest request = request(condition, filters);
+        TaskSearchRequest request = request(condition, filters, sortings);
         request.setStartPos(start);
         request.setLimit(count);
         box.linkSession(session);
@@ -61,7 +64,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
     @Override
     public long itemCount(String condition, List<Filter> filters) {
         box.linkSession(session);
-        return LayerHelper.taskLayer().searchTasksCount(account, request(condition, filters));
+        return LayerHelper.taskLayer().searchTasksCount(account, request(condition, filters, emptyList()));
     }
 
     @Override
@@ -76,7 +79,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
         return LayerHelper.taskLayer().searchTasksCount(account, request(inbox));
     }
 
-    private TaskSearchRequest request(String condition, List<Filter> filters) {
+    private TaskSearchRequest request(String condition, List<Filter> filters, List<String> sortings) {
         TaskSearchRequest request = request(inbox);
         request.setCondition(condition);
         addParameter(request, filters, FolderGrouping, Task.Parameter.SITUATION, value -> TaskFolderGrouping.from(value).name().toLowerCase());
@@ -84,6 +87,8 @@ public class TaskListDatasource extends PageDatasource<Task> {
         addParameter(request, filters, NatureGrouping, Task.Parameter.BACKGROUND, value -> "" + TaskNatureGrouping.from(value).value());
         if (request.getParameter(Task.Parameter.SITUATION) == null)
             request.addParameter(Task.Parameter.SITUATION, TaskFolderGrouping.Alive.name().toLowerCase());
+        if (sortings.size() <= 0) sortings = singletonList("update_date#DESC");
+        request.setSortsBy(TaskHelper.sortsByOf(sortings));
         return request;
     }
 

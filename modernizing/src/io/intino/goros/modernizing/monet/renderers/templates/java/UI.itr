@@ -128,7 +128,9 @@ def type(ui & app)
         }
 
         public void openHome() {
-            [open$defaultDesktop+firstUpperCase();]
+            Distribution distribution = BusinessUnit.getInstance().getDistribution();
+            Distribution.ShowProperty showProperty = distribution.getShow();
+            [$definition+openHome...[$NL]]
         }
 
         [$definition+method...[$NL]]
@@ -314,6 +316,10 @@ def type(ui & header)
             }
         }
     }
+end
+
+def type(definition & desktop) trigger(openHome)
+    if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~();
 end
 
 def type(definition & desktop) trigger(refreshDrawer)

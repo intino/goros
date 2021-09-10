@@ -12,14 +12,14 @@ def type(theme)
         Error("#f44336")
 
     // FONTS
-    Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'25pt'") h1
-    Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'20pt'") h2
-    Format("fontSize:'15pt'") h3
-    Format("fontSize:'14pt',fontWeight:'400'") h4
-    Format("fontSize:'13pt'") h5
-    Format("lineHeight:'17pt',fontSize:'12pt'") h6
-    Format("fontSize:'11pt !important'") body1
-    Format("fontSize:'10pt'") body2
+    Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'20pt'") h1
+    Format("color:'#05673c',textShadow:'2px 2px 2px #fff',fontSize:'15pt'") h2
+    Format("fontSize:'14pt'") h3
+    Format("fontSize:'13pt',fontWeight:'400'") h4
+    Format("fontSize:'12pt'") h5
+    Format("lineHeight:'17pt',fontSize:'11pt'") h6
+    Format("fontSize:'10pt !important'") body1
+    Format("fontSize:'8pt'") body2
     Format("") subtitle1
     Format("") subtitle2
     Format("fontWeight:'bold'") bold
@@ -90,7 +90,7 @@ def type(theme)
     Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-9px',marginRight:'-23px'") editDocumentButtonStyle
     Format("background:'white',border:'1px solid #e4e4e4'") desktopBlockStyle
     Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
-    Format("height:'20px'") pillStyle
+    Format("paddingTop:'1px',paddingBottom:'1px'") pillStyle
     Format("minWidth:'320px'") sourceLevelWidth
     Format("borderRadius:'10px',padding:'0 4px',fontSize:'8pt'") legendPillStyle
     Format("paddingBottom:'8px',paddingTop:'8px',paddingLeft:'10px',marginRight:'10px'") viewsToolbarStyle
@@ -98,5 +98,5 @@ def type(theme)
     Format("position:'absolute',top:'0',width:'100%',height:'100%'") homeLink
     Format("marginRight:'4px'") airMenuRight
     Format("width:'350px'") viewSelectorStyle
-    Format("top:'0',position:'absolute',marginTop:'-28px',right:'0',marginRight:'-13px'") filterByTitleStyle
+    Format("bottom:'0',position:'absolute',marginBottom:'-20px',left:'0',marginLeft:'9px'") filterByTitleStyle
 end

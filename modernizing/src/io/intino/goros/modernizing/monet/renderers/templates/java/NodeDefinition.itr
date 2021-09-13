@@ -123,7 +123,7 @@ def type(nodedefinition & embedded)
         }
 
         private void copy() {
-            notifier.redirect(io.intino.goros.unit.util.PathHelper.pathOf(io.intino.goros.unit.util.NodeHelper.copyNode(node), language()));
+            notifier.redirect(io.intino.goros.unit.util.PathHelper.pathOf(io.intino.goros.unit.util.NodeHelper.copyNode(node, language())));
         }
 
         private void restore() {

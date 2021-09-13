@@ -3,6 +3,8 @@ package io.intino.goros.documents.box.configuration;
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import io.intino.alexandria.logger.Logger;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

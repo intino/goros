@@ -130,10 +130,17 @@ def type(ui & app)
         public void openHome() {
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
+            if (false) {}
             [$definition+openHome...[$NL]]
+            else openForbiddenPage();
         }
 
         [$definition+method...[$NL]]
+
+        public void openForbiddenPage() {
+            loading.visible(false);
+            forbiddenPage.show();
+        }
 
         public void openDashboard() {
             if (initializationTaskOpened()) return;
@@ -319,7 +326,7 @@ def type(ui & header)
 end
 
 def type(definition & desktop) trigger(openHome)
-    if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~();
+    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~();
 end
 
 def type(definition & desktop) trigger(refreshDrawer)

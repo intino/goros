@@ -13,10 +13,11 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0") documents as Platform
 		Compile("io.intino.alexandria", "core-framework", "2.1.0")
 		Compile("io.intino.alexandria", "rest", "3.1.9")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
-			Exclude ("org.apache.tomcat", "servlet-api")
+			Exclude("org.apache.tomcat", "servlet-api")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("io.intino.itrules", "engine", "1.0.0")
-		Compile("io.intino.goros", "shared", "1.0.0-SNAPSHOT")
+		Compile("io.intino.goros", "shared", "1.0.0")
+		Compile("org.apache.tomcat", "tomcat-dbcp", "7.0.12")
 
 		Test("junit", "junit", "4.13")
 

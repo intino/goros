@@ -60,6 +60,17 @@ def type(setdefinition)
     [$view+filterTemplate...[$NL]]
 end
 
+def type(nodeview & ownedprototypes) trigger(template)
+    Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
+        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+            noItemsMessage = "No hay elementos"
+            Mold
+                Item(height=65px) $definition+firstLowerCase~$name+firstUpperCase~Item
+                    Block(layout=Vertical, format=catalogIndexReferenceStyle)
+                        Text label
+                        Date createDate as Labeled("Creado el")
+end
+
 def type(nodeview & items) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, format=bordered) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
@@ -191,6 +202,7 @@ end
 def type(addList) trigger(option)
     SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addSplit as Action
     Button(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, visible=false) add as Action
+    Button(title="Añadir", highlight=Outline, size=Small, format=airRight, visible=false) addPrototype as Action
 end
 
 def type(add) trigger(option)

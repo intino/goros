@@ -33,6 +33,7 @@ public class FieldRenderer extends Renderer {
 		result.add("label", clean(fieldProperty.getLabel()));
 		result.add("type", type());
 		result.add("readonly", fieldProperty.isReadonly() ? "true" : "readonly");
+		result.add("univocal", baseFrame().add("univocal").add(fieldProperty.isUnivocal() ? "prototype" : ""));
 		addTypes(result);
 		addMultipleProperties(result);
 		addTextProperties(result);

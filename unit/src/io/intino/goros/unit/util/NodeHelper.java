@@ -30,6 +30,8 @@ import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
+import org.monet.space.kernel.constants.LabelCode;
+import org.monet.space.kernel.constants.Strings;
 import org.monet.space.kernel.library.LibraryFile;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
@@ -83,6 +85,16 @@ public class NodeHelper {
     public static String internalValueOf(Instant instant) {
         if (instant == null) return null;
         return InternalFormat.format(java.util.Date.from(instant));
+    }
+
+    public static Node copyNode(Node node, String languageCode) {
+        Language language = Language.getInstance();
+        Node newNode = io.intino.goros.unit.util.LayerHelper.nodeLayer().addNode(node.getCode(), node.getParent());
+        String date = Formatters.shortDate(java.time.Instant.now());
+        String label = node.isPrototype() ? language.getLabel(LabelCode.CLONE_FROM, languageCode) + Strings.SPACE + node.getLabel() : node.getLabel();
+        String description = node.isPrototype() ? node.getDescription() + Strings.SPACE + language.getLabel(LabelCode.CLONE_AT, languageCode) + Strings.SPACE + date + Strings.DOT : node.getDescription();
+        io.intino.goros.unit.util.LayerHelper.nodeLayer().copyNode(newNode, node, label, description);
+        return newNode;
     }
 
     public static UIFile downloadOperation(Actionable actionable, Node node, String operation) {

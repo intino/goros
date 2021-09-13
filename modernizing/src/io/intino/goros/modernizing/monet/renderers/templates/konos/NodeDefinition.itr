@@ -58,21 +58,24 @@ end
 def type(toolbar & singleton) trigger(editable)
     [$operation...[$NL]]
     [$addList+option]
+    Button(title="Copiar", size=Small, highlight=Outline, format=airRight) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
 end
 
 def type(toolbar) trigger(editable)
     [$operation...[$NL]]
     [$addList+option]
+    Button(title="Copiar", size=Small, highlight=Outline, format=airRight) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
 end
 
 def type(toolbar & collectable) trigger(navigableExpanded)
-	Block(layout=Horizontal StartJustified, format=middleAirLeft)
+	Block(layout=Horizontal Center StartJustified, format=middleAirLeft)
 	    MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
 		MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
 		Text(format=bold middleAirLeft, visible=false) label
+		Block(format=middleAirLeft, visible=false) prototypeAdvise > Text(value="Plantilla", mode=Uppercase, format=prototypeAdviseStyle)
 end
 
 def type(toolbar) trigger(navigableExpanded)

@@ -99,4 +99,5 @@ def type(theme)
     Format("marginRight:'4px'") airMenuRight
     Format("width:'350px'") viewSelectorStyle
     Format("bottom:'0',position:'absolute',marginBottom:'-20px',left:'0',marginLeft:'9px'") filterByTitleStyle
+    Format("background:'#FFC46A',padding:'1px 10px',borderRadius:'3px',fontSize:'7pt'") prototypeAdviseStyle
 end

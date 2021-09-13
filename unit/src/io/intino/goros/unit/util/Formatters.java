@@ -9,12 +9,12 @@ import java.util.Locale;
 public class Formatters {
 
 	private static final String DateFormat = "EEEE, d MMM yyyy HH:mm:ss Z";
-	private static final String ShortDateFormat = "yyyy-MM-dd HH:mm";
-	private static final String DownloadDateFormat = "YYYYMMdd";
+	private static final String ShortDateFormat = "dd-MM-yyyy HH:mm";
+	private static final String DownloadDateFormat = "ddMMYYYY";
 	private static final String OnlyMonthFormat = "MMMM yyyy";
 	private static final String OnlyDateFormat = "EEEE, d MMMM yyyy";
-	private static final String OnlyShortDateFormat = "yyyy-MM-dd";
-	private static final String OnlyShortMonthFormat = "yyyy-MM";
+	private static final String OnlyShortDateFormat = "dd-MM-yyyy";
+	private static final String OnlyShortMonthFormat = "MM-yyyy";
 	private static final String OnlyDayFormat = "dd";
 	private static final String OnlyHourFormat = "HH:mm:ss Z";
 	private static final String OnlyShortHourFormat = "HH:mm";

@@ -7,6 +7,10 @@ import org.monet.space.kernel.model.Node;
 
 public class NodeOwnedPrototypesDatasource extends NodeDatasource {
 
+    public NodeOwnedPrototypesDatasource(UnitBox box, UISession session, Node node, String view) {
+        this(box, session, node, node.getDefinition().getNodeView(view));
+    }
+
     public NodeOwnedPrototypesDatasource(UnitBox box, UISession session, Node node, NodeViewProperty view) {
         super(box, session, node, view,"ownedprototypes");
     }

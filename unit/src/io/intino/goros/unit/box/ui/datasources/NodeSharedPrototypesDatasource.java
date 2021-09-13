@@ -7,6 +7,10 @@ import org.monet.space.kernel.model.Node;
 
 public class NodeSharedPrototypesDatasource extends NodeDatasource {
 
+    public NodeSharedPrototypesDatasource(UnitBox box, UISession session, Node node, String view) {
+        this(box, session, node, node.getDefinition().getNodeView(view));
+    }
+
     public NodeSharedPrototypesDatasource(UnitBox box, UISession session, Node node, NodeViewProperty view) {
         super(box, session, node, view,"sharedprototypes");
     }

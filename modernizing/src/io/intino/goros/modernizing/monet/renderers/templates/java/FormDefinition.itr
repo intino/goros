@@ -113,6 +113,7 @@ def type(show & fields)
     @Override
     public void refresh() {
         super.refresh();
+        boolean isPrototype = node.isPrototype();
         [$field+refresh...[$NL]]
     }
 
@@ -183,7 +184,7 @@ def type(field & text & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & text) trigger(init)
@@ -192,7 +193,7 @@ end
 
 def type(field & text) trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & number & multiple) trigger(init)
@@ -205,7 +206,7 @@ def type(field & number & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().mapToDouble(n -> n != null ? n.doubleValue() : 0).boxed().collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & number) trigger(init)
@@ -214,7 +215,7 @@ end
 
 def type(field & number) trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get() != null ? $name+firstLowerCase~Field.get().doubleValue() : null);
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & boolean) trigger(init)
@@ -223,7 +224,7 @@ end
 
 def type(field & boolean) trigger(refresh)
     $name+firstLowerCase~.state($name+firstLowerCase~Field.get() ? io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On : io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & date & multiple) trigger(init)
@@ -236,7 +237,7 @@ def type(field & date & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? f.getValue().toInstant() : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & date) trigger(init)
@@ -245,7 +246,7 @@ end
 
 def type(field & date) trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.instantOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & memo & multiple) trigger(init)
@@ -258,7 +259,7 @@ def type(field & memo & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & memo) trigger(init)
@@ -267,7 +268,7 @@ end
 
 def type(field & memo) trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & serial) trigger(init)
@@ -291,7 +292,7 @@ def type(field & file & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & file) trigger(init)
@@ -303,7 +304,7 @@ end
 
 def type(field & file) trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & picture & multiple) trigger(init)
@@ -319,7 +320,7 @@ def type(field & picture & multiple) trigger(refresh)
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & picture) trigger(init)
@@ -331,7 +332,7 @@ end
 
 def type(field & picture) trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & check) trigger(init)
@@ -342,7 +343,7 @@ def type(field & check) trigger(refresh)
     $name+firstLowerCase~.clear();
     new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & link & multiple) trigger(init)
@@ -355,7 +356,7 @@ end
 
 def type(field & link & multiple) trigger(refresh)
     $name+firstLowerCase.selection(io.intino.goros.unit.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
-    $name+firstLowerCase.readonly($readonly);
+    $name+firstLowerCase.readonly([$univocal ]$readonly);
 end
 
 def type(field & link) trigger(init)
@@ -367,7 +368,7 @@ end
 def type(field & link) trigger(refresh)
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     else $name+firstLowerCase.selection(java.util.Collections.emptyList());
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select & multiple) trigger(init)
@@ -381,7 +382,7 @@ def type(field & select & multiple) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select & inline) trigger(init)
@@ -392,7 +393,7 @@ def type(field & select & inline) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select) trigger(init)
@@ -403,7 +404,7 @@ def type(field & select) trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & composite & multiple) trigger(init)
@@ -426,10 +427,10 @@ def type(field & composite & multiple) trigger(refresh)
         $definition+firstUpperCase$name+firstUpperCase~Template display = e.component();
         display.node(node);
         display.field(fieldComposite);
-        display.readonly($readonly);
+        display.readonly([$univocal ]$readonly);
         display.refresh();
     }));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & composite) trigger(init)
@@ -439,7 +440,7 @@ end
 def type(field & composite) trigger(refresh)
     $name+firstLowerCase~.node(node);
     $name+firstLowerCase~.field($name+firstLowerCase~Field);
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
     $name+firstLowerCase~.refresh();
 end
 
@@ -464,10 +465,17 @@ def type(field & node & multiple) trigger(refresh)
         display.node(node);
         display.field(fieldNode);
         display.displayProvider(this);
-        display.readonly($readonly);
+        display.readonly([$univocal ]$readonly);
         display.refresh();
     }));
-    $name+firstLowerCase~.readonly($readonly);
+    $name+firstLowerCase~.readonly([$univocal ]$readonly);
+end
+
+def type(univocal & prototype)
+    isPrototype ||
+end
+
+def type(univocal)
 end
 
 def type(addProperties)

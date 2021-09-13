@@ -77,6 +77,7 @@ def type(nodedefinition & embedded)
         private void refreshToolbar() {
             boolean readonly = node.isLocked() || this.readonly;
             restore.readonly(readonly);
+            copy.visible(node.isPrototype());
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.visible(!node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
@@ -96,6 +97,7 @@ def type(nodedefinition & embedded)
             toolbar.visible(revision == null);
             restore.visible(revision != null);
             restore.onExecute(e -> restore());
+            copy.onExecute(e -> copy());
             edit.onExecute(e -> toggleEdition());
             [$toolbar+editableInitCall]
             [$toolbar+navigableInitCall]
@@ -118,6 +120,10 @@ def type(nodedefinition & embedded)
             readonly(!readonly);
             [$toolbar+editableCall]
             refresh();
+        }
+
+        private void copy() {
+            notifier.redirect(io.intino.goros.unit.util.PathHelper.pathOf(io.intino.goros.unit.util.NodeHelper.copyNode(node), language()));
         }
 
         private void restore() {
@@ -312,6 +318,7 @@ end
 
 def type(toolbar & collectable) trigger(navigableRefreshCall)
     label.value(node.getLabel());
+    prototypeAdvise.visible(node.isPrototype());
     open.address(path -> path.replace(":name", "$definition").replace(":id", node.getId()));
 end
 
@@ -357,7 +364,7 @@ def type(operation) trigger(editableInitCall)
 end
 
 def type(operation) trigger(editableRefreshCall)
-    $name+lowerCase.visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()));
+    $name+lowerCase.visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype());
 end
 
 def type(nodeview & visibleWhenEmbedded) trigger(initCall)

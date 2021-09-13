@@ -16,7 +16,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.0") unit as Platform
 			Exclude ("org.apache.tomcat", "servlet-api")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("io.intino.itrules", "engine", "1.0.0")
-		Compile("io.intino.goros", "shared", "1.0.0-SNAPSHOT")
+		Compile("io.intino.goros", "shared", "1.0.0")
 
 		Web("io.intino.goros", "unit-elements", "1.0.0-SNAPSHOT")
 

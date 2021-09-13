@@ -42,6 +42,7 @@ def type(ui)
                 TemplateStamp(template=HeaderTemplate)
 
             Block(layout=Vertical Flexible CenterCenter) loading > Spinner(format=secondary)
+            Block(layout=Vertical Flexible CenterCenter, visible=false) forbiddenPage > Text(value="No tiene permisos en este servicio", format=h4, translate=true)
 
             Block(layout=Vertical Flexible CenterCenter, visible=false) updateRequiredPage
                 Text(value="Hay una actualización pendiente. No se puede acceder en estos momentos. Inténtelo más tarde.", format=h4)

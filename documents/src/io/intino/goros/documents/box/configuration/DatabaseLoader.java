@@ -38,19 +38,38 @@ public class DatabaseLoader {
         }
     }
 
-    private static ConnectionPoolDataSource mysqlDataSource(DatabaseConfiguration database) {
-        MysqlConnectionPoolDataSource dataSource = new MysqlConnectionPoolDataSource();
-        dataSource.setURL(database.url());
-        dataSource.setUser(database.user());
-        dataSource.setPassword(database.password());
-        return dataSource;
+    private static ConnectionPoolDataSource mysqlDataSource(DatabaseConfiguration configuration) {
+        return dataSource(configuration, "com.mysql.jdbc.Driver");
     }
 
-    private static ConnectionPoolDataSource oracleDataSource(DatabaseConfiguration database) throws SQLException {
-        OracleConnectionPoolDataSource dataSource = new OracleConnectionPoolDataSource();
-        dataSource.setURL(database.url());
-        dataSource.setUser(database.user());
-        dataSource.setPassword(database.password());
-        return dataSource;
+    private static ConnectionPoolDataSource oracleDataSource(DatabaseConfiguration configuration) {
+        return dataSource(configuration, "oracle.jdbc.OracleDriver");
     }
+
+    private static ConnectionPoolDataSource dataSource(DatabaseConfiguration configuration, String driver) {
+        DataSource datasource = new DataSource();
+        datasource.setPoolProperties(poolProperties(configuration, driver));
+        return datasource;
+    }
+
+    private static PoolProperties poolProperties(DatabaseConfiguration configuration, String driver) {
+        PoolProperties p = new PoolProperties();
+        p.setUrl(configuration.url());
+        p.setUsername(configuration.user());
+        p.setPassword(configuration.password());
+        p.setDriverClassName(driver);
+        p.setMaxActive(15);
+        p.setMaxIdle(2);
+        p.setMaxWait(30000);
+        p.setRemoveAbandonedTimeout(5);
+        p.setLogAbandoned(true);
+        p.setAccessToUnderlyingConnectionAllowed(true);
+        p.setValidationQuery("SELECT 1");
+        p.setValidationQueryTimeout(10);
+        p.setValidationInterval(10000);
+        p.setTestOnBorrow(true);
+        p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+        return p;
+    }
+
 }

@@ -7,6 +7,10 @@ import org.monet.space.kernel.model.Node;
 
 public class NodeLinksInDatasource extends NodeDatasource {
 
+    public NodeLinksInDatasource(UnitBox box, UISession session, Node node, String view) {
+        this(box, session, node, node.getDefinition().getNodeView(view));
+    }
+
     public NodeLinksInDatasource(UnitBox box, UISession session, Node node, NodeViewProperty viewProperty) {
         super(box, session, node, viewProperty, "linksin");
     }

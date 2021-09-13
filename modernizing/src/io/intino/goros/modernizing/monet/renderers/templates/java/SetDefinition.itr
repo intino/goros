@@ -1,9 +1,6 @@
 def type(show & items) trigger(declaration)
 end
 
-def type(show & ownedprototypes)
-end
-
 def type(show & sharedprototypes)
 end
 
@@ -41,7 +38,7 @@ def type(show)
     public void refresh() {
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
-        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.Collection$datasourceType~Datasource(box().unit(), session(), node, view));
+        $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
         $definition+firstLowerCase~$view+firstUpperCase.reload();
     }
 end
@@ -55,43 +52,43 @@ def type(componentType)
 end
 
 def type(attribute & items & date)
-    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf(reference, "$code"));
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 end
 
 def type(attribute & items & picture)
-    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf(reference, "$code", true));
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 end
 
 def type(attribute & items)
-    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf(reference, "$code"));
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end
 
 def type(attribute & date)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 end
 
 def type(attribute & icon)
-    item.$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf(reference, "$code", true));
+    item.$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 end
 
 def type(attribute & picture)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf(reference, "$code", true));
+    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 end
 
 def type(attribute & real)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 end
 
 def type(attribute & integer)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 end
 
 def type(attribute)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf(reference, "$code"));
+    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end
 
 def type(attribute)
-    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf(reference, "$code"));
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end
 
 def type(collectionview & filter)
@@ -174,14 +171,25 @@ def type(sorting)
     "$label"
 end
 
+def type(addList) trigger(addCall)
+    [$add+addCall...[$NL]]
+end
+
+def type(add) trigger(addCall)
+    result.add("Añadir $label");
+end
+
 def type(addList) trigger(execute)
     add.onExecute(e -> addNode($defaultAdd+option));
     addSplit.onExecute(e -> addNode(e.option()));
+    addPrototype.onExecute(e -> addPrototype());
 end
 
 def type(addList) trigger(refresh)
-    add.visible($addVisibility);
-    addSplit.visible($addSplitVisibility);
+    add.visible(addOptions.size() <= 1 && !isPrototypeView && readonly && !node.getDefinition().isReadonly());
+    addSplit.options(addOptions);
+    addSplit.visible(!isPrototypeView && addOptions.size() > 1 && readonly && !node.getDefinition().isReadonly());
+    addPrototype.visible(isPrototypeView);
 end
 
 def type(addVisibility & visible)
@@ -370,10 +378,24 @@ def type(setdefinition & embedded)
 
         private void refreshToolbar() {
             boolean embedded = toggleFiltersListener != null;
+            boolean isPrototypeView = isPrototypeView();
+            List<String> addOptions = addOptions();
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.visible(!embedded && !node.getDefinition().isReadonly());
+        }
+
+        private boolean isPrototypeView() {
+            [$view+isPrototypeView...[$NL]]
+            return false;
+        }
+
+        private List<String> addOptions() {
+            List<String> result = new java.util.ArrayList<>();
+            [$toolbar+editableAddCall]
+            node.getOwnedPrototypes().forEach(n -> result.add("Añadir " + n.getLabel()));
+            return result;
         }
 
         private void refreshCount(RefreshCountEvent event) {
@@ -739,9 +761,6 @@ def type(setdefinition)
     }
 end
 
-def type(collectionview & ownedprototypes) trigger(initCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(initCall)
 end
 
@@ -762,9 +781,6 @@ def type(collectionview) trigger(initCall)
     });
 end
 
-def type(collectionview & ownedprototypes) trigger(clearSelectionCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(clearSelectionCall)
 end
 
@@ -772,12 +788,8 @@ def type(collectionview) trigger(clearSelectionCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.selection(Collections.emptyList());
 end
 
-def type(collectionview & ownedprototypes) trigger(filter)
-end
-
 def type(collectionview & sharedprototypes) trigger(filter)
 end
-
 
 def type(collectionview) trigger(filter)
     filtersView.$name+firstLowerCase~Filters.onShow(e -> {
@@ -788,29 +800,18 @@ def type(collectionview) trigger(filter)
     });
 end
 
-def type(collectionview & ownedprototypes) trigger(showFilterCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(showFilterCall)
 end
-
 
 def type(collectionview) trigger(showFilterCall)
     if ($name+firstLowerCase~View.isVisible()) showFilters(filtersView.$name+firstLowerCase~Filters);
 end
 
-def type(collectionview & ownedprototypes) trigger(hideFilterCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(hideFilterCall)
 end
 
-
 def type(collectionview) trigger(hideFilterCall)
     filtersView.$name+firstLowerCase~Filters.hide();
-end
-
-def type(collectionview & ownedprototypes) trigger(refreshCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshCall)
@@ -820,7 +821,15 @@ def type(collectionview) trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
 end
 
-def type(collectionview & ownedprototypes) trigger(refreshFiltersCall)
+def type(collectionview & ownedprototypes) trigger(isPrototypeView)
+    if ($name+firstLowerCase~View.isVisible()) return true;
+end
+
+def type(collectionview & sharedprototypes) trigger(isPrototypeView)
+end
+
+def type(collectionview) trigger(isPrototypeView)
+    if ($name+firstLowerCase~View.isVisible()) return false;
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshFiltersCall)
@@ -830,17 +839,11 @@ def type(collectionview) trigger(refreshFiltersCall)
     if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
 end
 
-def type(collectionview & ownedprototypes) trigger(refreshNodeCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(refreshNodeCall)
 end
 
 def type(collectionview) trigger(refreshNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh(node);
-end
-
-def type(collectionview & ownedprototypes) trigger(selectNodeCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(selectNodeCall)
@@ -850,18 +853,11 @@ def type(collectionview) trigger(selectNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
 end
 
-def type(collectionview & ownedprototypes) trigger(selectViewCodeCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(selectViewCodeCall)
 end
 
-
 def type(collectionview) trigger(selectViewCodeCall)
     if (content.$name+firstLowerCase~View.isVisible()) return content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view();
-end
-
-def type(collectionview & ownedprototypes) trigger(readonlyCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(readonlyCall)
@@ -874,9 +870,6 @@ def type(collectionview) trigger(readonlyCall)
     }
 end
 
-def type(collectionview & ownedprototypes) trigger(collection)
-end
-
 def type(collectionview & sharedprototypes) trigger(collection)
 end
 
@@ -884,17 +877,11 @@ def type(collectionview) trigger(collection)
     if ($name+firstLowerCase~View.isVisible()) return $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase;
 end
 
-def type(collectionview & ownedprototypes) trigger(registerSorting)
-end
-
 def type(collectionview & sharedprototypes) trigger(registerSorting)
 end
 
 def type(collectionview) trigger(registerSorting)
     put("$name+firstLowerCase", List.of("Título","Fecha de creación"[,$sorting...[,]]));
-end
-
-def type(collectionview & ownedprototypes) trigger(registerSortingCode)
 end
 
 def type(collectionview & sharedprototypes) trigger(registerSortingCode)
@@ -906,17 +893,11 @@ def type(collectionview) trigger(registerSortingCode)
     [$sorting+codeRegistration...[$NL]]
 end
 
-def type(collectionview & ownedprototypes) trigger(refreshSortingCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(refreshSortingCall)
 end
 
 def type(collectionview) trigger(refreshSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) refreshSortings(sortingsMap.get("$name+firstLowerCase"));
-end
-
-def type(collectionview & ownedprototypes) trigger(selectSortingCall)
 end
 
 def type(collectionview & sharedprototypes) trigger(selectSortingCall)
@@ -926,9 +907,6 @@ def type(collectionview) trigger(selectSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.selectSorting(sortingsCodesMap.get("$name+firstLowerCase~_"+sorting), mode);
 end
 
-def type(collectionview & ownedprototypes) trigger(showViewCall)
-end
-
 def type(collectionview & sharedprototypes) trigger(showViewCall)
 end
 
@@ -936,8 +914,6 @@ def type(collectionview) trigger(showViewCall)
     if (view.equals("$name+firstLowerCase") || view.equals("$code")) $name+firstLowerCase~View.show();
 end
 
-def type(collectionview & ownedprototypes) trigger(hideViewCall)
-end
 
 def type(collectionview & sharedprototypes) trigger(hideViewCall)
 end
@@ -998,6 +974,10 @@ def type(add) trigger(hideCall)
     $name+firstLowerCase~View.hide();
 end
 
+def type(toolbar) trigger(editableAddCall)
+    $addList+addCall
+end
+
 def type(toolbar) trigger(editableInitCall)
     [$operation+editableInitCall...[$NL]]
     removeSelection.onExecute(this::removeSelection);
@@ -1030,10 +1010,21 @@ def type(toolbar & singleton) trigger(selectedViewCode)
     private void addNode(String option) {
         Node result = null;
         [$add+toolbarTemplate...[$NL]]
+        else result = copyNode();
         if (result == null) return;
         nodeAdded = true;
         refresh();
         //select(result);
+        open(result);
+    }
+    private Node copyNode(String option) {
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        return NodeHelper.copyNode(prototype, language());
+    }
+    private void addPrototype() {
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("m45kAxw", node);
+        nodeAdded = true;
+        refresh();
         open(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
@@ -1046,10 +1037,21 @@ def type(toolbar & singleton) trigger(editableMethods)
     private void addNode(String option) {
         Node result = null;
         [$add+toolbarTemplate...[$NL]]
+        else result = copyNode();
         if (result == null) return;
         nodeAdded = true;
         refresh();
         //select(result);
+        open(result);
+    }
+    private Node copyNode(String option) {
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        return NodeHelper.copyNode(prototype, language());
+    }
+    private void addPrototype() {
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("m45kAxw", node);
+        nodeAdded = true;
+        refresh();
         open(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
@@ -1062,10 +1064,20 @@ def type(toolbar) trigger(editableMethods)
     private void addNode(String option) {
         Node result = null;
         [$add+toolbarTemplate...[$NL]]
+        else result = copyNode();
         if (result == null) return;
         nodeAdded = true;
         refresh();
-        //select(result);
+        open(result);
+    }
+    private Node copyNode(String option) {
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        return NodeHelper.copyNode(prototype, language());
+    }
+    private void addPrototype() {
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype(TODOOOOO, node);
+        nodeAdded = true;
+        refresh();
         open(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {

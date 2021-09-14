@@ -290,6 +290,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	private FrameBuilder attributeFrame(NodeViewProperty viewProperty, String key, String label, int width) {
 		FrameBuilder result = baseFrame().add("attribute");
 		result.add(typeOf(viewProperty));
+		result.add("reference", !viewProperty.getCode().equals(DescriptorDefinition.CODE) ? "reference" : "node.getReference()");
 		result.add("definition", nameOf(definition()));
 		result.add("view", nameOf(viewProperty));
 		result.add("name", normalize(key));

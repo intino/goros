@@ -1022,7 +1022,7 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype(TODOOOO, node);
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
         nodeAdded = true;
         refresh();
         open(result);
@@ -1049,7 +1049,7 @@ def type(toolbar & singleton) trigger(editableMethods)
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype(TODOOOO, node);
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
         nodeAdded = true;
         refresh();
         open(result);
@@ -1075,7 +1075,7 @@ def type(toolbar) trigger(editableMethods)
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype(TODOOOO, node);
+        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
         nodeAdded = true;
         refresh();
         open(result);

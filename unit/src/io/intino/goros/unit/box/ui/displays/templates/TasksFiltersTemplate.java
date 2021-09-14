@@ -28,7 +28,7 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
     public TasksFiltersTemplate bindTo(Collection collection) {
         this.collection = collection;
         updateFilters();
-        folder.select(TaskFolderGrouping.Alive);
+        folder.select(TaskFolderGrouping.Active);
         return this;
     }
 

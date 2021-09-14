@@ -30,6 +30,7 @@ import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
+import org.monet.space.kernel.components.layers.NodeLayer;
 import org.monet.space.kernel.constants.LabelCode;
 import org.monet.space.kernel.constants.Strings;
 import org.monet.space.kernel.library.LibraryFile;
@@ -45,6 +46,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static io.intino.goros.unit.util.LayerHelper.nodeLayer;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
@@ -54,7 +56,7 @@ public class NodeHelper {
     private static final SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public static Node singleton(String code) {
-        return LayerHelper.nodeLayer().locateNode(code);
+        return nodeLayer().locateNode(code);
     }
 
     public static String nameOf(Node node) {
@@ -89,17 +91,19 @@ public class NodeHelper {
 
     public static Node copyNode(Node node, String languageCode) {
         Language language = Language.getInstance();
-        Node newNode = io.intino.goros.unit.util.LayerHelper.nodeLayer().addNode(node.getCode(), node.getParent());
+        NodeLayer nodeLayer = nodeLayer();
+        Node newNode = node.isPrototype() ? nodeLayer.addPrototype(node.getCode(), node.getParent()) : nodeLayer.addNode(node.getCode(), node.getParent());
         String date = Formatters.shortDate(java.time.Instant.now());
         String label = node.isPrototype() ? language.getLabel(LabelCode.CLONE_FROM, languageCode) + Strings.SPACE + node.getLabel() : node.getLabel();
         String description = node.isPrototype() ? node.getDescription() + Strings.SPACE + language.getLabel(LabelCode.CLONE_AT, languageCode) + Strings.SPACE + date + Strings.DOT : node.getDescription();
-        io.intino.goros.unit.util.LayerHelper.nodeLayer().copyNode(newNode, node, label, description);
+        nodeLayer.copyNode(newNode, node, label, description);
+        if (node.isPrototype()) newNode.getReference().setPrototype(true);
         return newNode;
     }
 
     public static UIFile downloadOperation(Actionable actionable, Node node, String operation) {
         actionable.readonly(true);
-        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
         event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
         AgentNotifier.getInstance().notify(event);
@@ -120,7 +124,7 @@ public class NodeHelper {
 
     public static boolean isOperationConfirmationRequired(Node node, String operation) {
         OperationConfirmation confirmation = new OperationConfirmation();
-        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_WHEN, null, current);
         event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
         event.addParameter(MonetEvent.PARAMETER_COMMAND_CONFIRMATION_REQUIRED, confirmation);
@@ -134,7 +138,7 @@ public class NodeHelper {
 
     public static void executeOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
         actionable.readonly(true);
-        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
         event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
         AgentNotifier.getInstance().notify(event);
@@ -153,7 +157,7 @@ public class NodeHelper {
 
     public static void cancelOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
         actionable.readonly(true);
-        Node current = LayerHelper.nodeLayer().loadNode(node.getId());
+        Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_ON_CANCEL, null, current);
         event.addParameter(MonetEvent.PARAMETER_COMMAND, operation);
         AgentNotifier.getInstance().notify(event);
@@ -176,12 +180,12 @@ public class NodeHelper {
 
         switch (name) {
             case "shownode": {
-                Node node = LayerHelper.nodeLayer().loadNode(id);
+                Node node = nodeLayer().loadNode(id);
                 dispatcher.dispatch(soul, PathHelper.pathOf(node));
                 break;
             }
             case "shownodeview": {
-                Node node = LayerHelper.nodeLayer().loadNode(id);
+                Node node = nodeLayer().loadNode(id);
                 dispatcher.dispatch(soul, PathHelper.pathOf(node, operation.getData().get("IdView").toString()));
                 break;
             }
@@ -228,12 +232,12 @@ public class NodeHelper {
 
     public static Node nodeOf(MonetLink link) {
         if (link == null) return null;
-        return LayerHelper.nodeLayer().loadNode(link.getId());
+        return nodeLayer().loadNode(link.getId());
     }
 
     public static Node nodeOf(Link link) {
         if (link == null) return null;
-        return LayerHelper.nodeLayer().loadNode(link.getId());
+        return nodeLayer().loadNode(link.getId());
     }
 
     public static NodeItem nodeItemOf(Link link) {

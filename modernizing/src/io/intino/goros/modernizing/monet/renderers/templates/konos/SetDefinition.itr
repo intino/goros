@@ -202,7 +202,12 @@ end
 def type(addList) trigger(option)
     SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addSplit as Action
     Button(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, visible=false) add as Action
+    SplitButton(title=$defaultAddPrototype+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addPrototypeSplit as Action
     Button(title="Añadir", highlight=Outline, size=Small, format=airRight, visible=false) addPrototype as Action
+end
+
+def type(add & empty) trigger(option)
+    ""
 end
 
 def type(add) trigger(option)

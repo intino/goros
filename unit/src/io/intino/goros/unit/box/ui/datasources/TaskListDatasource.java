@@ -86,7 +86,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
         addParameter(request, filters, UrgentGrouping, Task.Parameter.URGENT, value -> "" + TaskUrgentGrouping.Urgent.value());
         addParameter(request, filters, NatureGrouping, Task.Parameter.BACKGROUND, value -> "" + TaskNatureGrouping.from(value).value());
         if (request.getParameter(Task.Parameter.SITUATION) == null)
-            request.addParameter(Task.Parameter.SITUATION, TaskFolderGrouping.Alive.name().toLowerCase());
+            request.addParameter(Task.Parameter.SITUATION, TaskFolderGrouping.Active.name().toLowerCase());
         if (sortings.size() <= 0) sortings = singletonList("update_date#DESC");
         request.setSortsBy(TaskHelper.sortsByOf(sortings));
         return request;

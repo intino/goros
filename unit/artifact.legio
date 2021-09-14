@@ -9,7 +9,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.2") unit as Platform
 		Compile("org.siani.monet", "space", "2.0.2")
 			Exclude ("org.siani.monet", "servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
- 		Compile("io.intino.alexandria", "ui-framework", "4.13.2")
+ 		Compile("io.intino.alexandria", "ui-framework", "4.13.3")
 		Compile("io.intino.alexandria", "core-framework", "2.1.0")
 		Compile("io.intino.alexandria", "rest", "3.3.0")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
@@ -21,7 +21,6 @@ Artifact(groupId = "io.intino.goros", version = "1.0.2") unit as Platform
 		Web("io.intino.goros", "unit-elements", "1.0.2")
 
 		Test("junit", "junit", "4.13")
-		Web(groupId = "io.intino.goros", artifactId = "unit-elements", version = "1.0.0")
 
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.unit.box.Main")
 		attachSources = true

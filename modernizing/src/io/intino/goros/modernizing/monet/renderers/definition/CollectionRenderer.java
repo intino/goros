@@ -8,6 +8,7 @@ import org.monet.metamodel.internal.Ref;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
@@ -27,6 +28,10 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 		FrameBuilder result = new FrameBuilder("addList");
 		Collection<Ref> addList = definition().getAdd().getNode().stream().collect(Collectors.toMap(Ref::getValue, a -> a, (a1, a2) -> a1)).values();
 		if (addList.size() > 0) result.add("defaultAdd", addFrame(dictionary.getNodeDefinition(addList.iterator().next().getValue())));
+		List<NodeDefinition> addPrototypeList = addList.stream().map(a -> dictionary.getNodeDefinition(a.getValue())).filter(NodeDefinition::isPrototypable).collect(Collectors.toList());
+		FrameBuilder addPrototypeFrame = addPrototypeList.size() > 0 ? addFrame(addPrototypeList.get(0)) : new FrameBuilder("add");
+		if (addPrototypeList.size() <= 0) addPrototypeFrame.add("empty");
+		result.add("defaultAddPrototype", addPrototypeFrame);
 		result.add("addVisibility", addVisibilityFrame(addList.size() == 1));
 		result.add("addSplitVisibility", addVisibilityFrame(addList.size() > 1));
 		addList.forEach(ref -> {
@@ -44,7 +49,14 @@ public class CollectionRenderer extends SetRenderer<CollectionDefinition> {
 
 	private void addRefAdd(Ref ref, FrameBuilder builder) {
 		ArrayList<NodeDefinition> nodeDefinitionList = dictionary.getAllImplementersOfNodeDefinition(ref.getValue());
-		nodeDefinitionList.stream().forEach(def -> builder.add("add", addFrame(def)));
+		nodeDefinitionList.forEach(def -> {
+			builder.add("add", addFrame(def));
+			if (def.isPrototypable()) builder.add("addPrototype", addPrototypeFrame(def));
+		});
+	}
+
+	private FrameBuilder addPrototypeFrame(NodeDefinition nodeDefinition) {
+		return addFrame(nodeDefinition).add("prototype");
 	}
 
 	private FrameBuilder addFrame(NodeDefinition nodeDefinition) {

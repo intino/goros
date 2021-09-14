@@ -175,6 +175,14 @@ def type(addList) trigger(addCall)
     [$add+addCall...[$NL]]
 end
 
+def type(addList) trigger(addPrototypeCall)
+    [$addPrototype+addPrototypeCall...[$NL]]
+end
+
+def type(add & prototype) trigger(addPrototypeCall)
+    result.add("Añadir $label");
+end
+
 def type(add) trigger(addCall)
     result.add("Añadir $label");
 end
@@ -182,7 +190,8 @@ end
 def type(addList) trigger(execute)
     add.onExecute(e -> addNode($defaultAdd+option));
     addSplit.onExecute(e -> addNode(e.option()));
-    addPrototype.onExecute(e -> addPrototype());
+    addPrototype.onExecute(e -> addPrototype($defaultAddPrototype+option));
+    addPrototypeSplit.onExecute(e -> addPrototype(e.option()));
 end
 
 def type(addList) trigger(refresh)
@@ -190,6 +199,8 @@ def type(addList) trigger(refresh)
     addSplit.options(addOptions);
     addSplit.visible(!isPrototypeView && addOptions.size() > 1 && readonly && !node.getDefinition().isReadonly());
     addPrototype.visible(isPrototypeView);
+    addPrototypeSplit.options(addPrototypeOptions);
+    addPrototypeSplit.visible(isPrototypeView && addPrototypeOptions.size() > 1);
 end
 
 def type(addVisibility & visible)
@@ -198,6 +209,10 @@ end
 
 def type(addVisibility)
     false
+end
+
+def type(add & prototype) trigger(toolbarTemplate)
+    if (option.equals("Añadir $label")) result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("$code", node);
 end
 
 def type(add) trigger(toolbarTemplate)
@@ -377,9 +392,10 @@ def type(setdefinition & embedded)
         }
 
         private void refreshToolbar() {
-            boolean embedded = toggleFiltersListener != null;
+            boolean embedded = toggleFiltersListener == null;
             boolean isPrototypeView = isPrototypeView();
             List<String> addOptions = addOptions();
+            List<String> addPrototypeOptions = addPrototypeOptions();
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
             edit.title(readonly ? "Editar" : "Finalizar edición");
@@ -395,6 +411,12 @@ def type(setdefinition & embedded)
             List<String> result = new java.util.ArrayList<>();
             [$toolbar+editableAddCall]
             node.getOwnedPrototypes().forEach(n -> result.add("Añadir " + n.getLabel()));
+            return result;
+        }
+
+        private List<String> addPrototypeOptions() {
+            List<String> result = new java.util.ArrayList<>();
+            [$toolbar+editableAddPrototypeCall]
             return result;
         }
 
@@ -978,6 +1000,10 @@ def type(toolbar) trigger(editableAddCall)
     $addList+addCall
 end
 
+def type(toolbar) trigger(editableAddPrototypeCall)
+    $addList+addPrototypeCall
+end
+
 def type(toolbar) trigger(editableInitCall)
     [$operation+editableInitCall...[$NL]]
     removeSelection.onExecute(this::removeSelection);
@@ -1021,8 +1047,10 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
-    private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
+    private void addPrototype(String option) {
+        Node result = null;
+        [$addPrototype+toolbarTemplate...[$NL]]
+        if (result == null) return;
         nodeAdded = true;
         refresh();
         open(result);
@@ -1048,8 +1076,10 @@ def type(toolbar & singleton) trigger(editableMethods)
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
-    private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
+    private void addPrototype(String option) {
+        Node result = null;
+        [$addPrototype+toolbarTemplate...[$NL]]
+        if (result == null) return;
         nodeAdded = true;
         refresh();
         open(result);
@@ -1074,8 +1104,10 @@ def type(toolbar) trigger(editableMethods)
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
-    private void addPrototype() {
-        Node result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("", node);
+    private void addPrototype(String option) {
+        Node result = null;
+        [$addPrototype+toolbarTemplate...[$NL]]
+        if (result == null) return;
         nodeAdded = true;
         refresh();
         open(result);

@@ -58,14 +58,14 @@ end
 def type(toolbar & singleton) trigger(editable)
     [$operation...[$NL]]
     [$addList+option]
-    Button(title="Copiar", size=Small, highlight=Outline, format=airRight) copy as Action
+    Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
 end
 
 def type(toolbar) trigger(editable)
     [$operation...[$NL]]
     [$addList+option]
-    Button(title="Copiar", size=Small, highlight=Outline, format=airRight) copy as Action
+    Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
 end

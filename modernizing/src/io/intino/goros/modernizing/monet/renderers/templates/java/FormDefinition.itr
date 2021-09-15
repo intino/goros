@@ -166,6 +166,15 @@ def type(field & select) trigger(update)
     $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource(box().unit(), session(), node, $name+firstLowerCase~Field);
 end
 
+def type(field & composite & multiple) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+end
+
+def type(field & composite) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+    $name+firstLowerCase.field($name+firstLowerCase~Field);
+end
+
 def type(field & link) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
 end

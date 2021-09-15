@@ -107,6 +107,7 @@ public class ConfigurationImpl implements Configuration {
 		put(OFFSET_Y, "sign-offset-y");
 		put(OFFSET_Y_FOR_BOTTOM, "sign-offset-y-for-bottom");
 		put(COUNT_SIGN, "sign-count");
+		put("PdfLicencePath", "pdf-licence-path");
 	}};
 
 }

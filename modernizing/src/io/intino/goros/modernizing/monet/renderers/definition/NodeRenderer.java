@@ -126,9 +126,11 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	}
 
 	protected FrameBuilder dispatchOperationListenerFrame() {
+		D definition = definition();
 		FrameBuilder result = baseFrame();
 		result.add("dispatchOperationListener");
-		if (definition().isSingleton()) result.add("singleton");
+		if (definition.getType() != null) result.add(definition.getType().name().toLowerCase());
+		if (definition.isSingleton()) result.add("singleton");
 		return result;
 	}
 

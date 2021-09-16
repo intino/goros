@@ -19,9 +19,9 @@ def type(setdefinition)
                     Selector(format=body2 bold airRight, visible=false) sortingsMode as ComboBox(placeholder="Tipo", view=TextView)
                     Link(format=body2, title="quitar", visible=false) removeSorting
             Block(layout=Horizontal Center) rightToolbar
-                Block(format=relative doubleAirRight smallAirTop)
+                Block(format=relative doubleAirRight)
                     SearchBox(collections = empty) search
-                    Block(format=filterByTitleStyle) > Selector(visible=false) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
+                    Block(format=filterByTitleStyle) > Selector(visible=false, format=body2) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
                 Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
                     [$view+selector...[$NL]]
                 MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)

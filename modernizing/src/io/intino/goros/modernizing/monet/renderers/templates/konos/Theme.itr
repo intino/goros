@@ -71,8 +71,8 @@ def type(theme)
     Format("zIndex:'1'") visible
     Format("position:'relative'") relative
     Format("minWidth:'72px',width:'auto !important',marginRight:'15px'") minLogoSize
-    Format("width:'100% !important'") fullWidth
-    Format("height:'100% !important'") fullHeight
+    Format("width:'100%'") fullWidth
+    Format("height:'100%'") fullHeight
     Format("minWidth:'48px'") minDrawerButtonSize
     Format("overflow:'auto'") autoOverflow
     Format("background:'white',padding:'10px'") dialog
@@ -98,6 +98,6 @@ def type(theme)
     Format("position:'absolute',top:'0',width:'100%',height:'100%'") homeLink
     Format("marginRight:'4px'") airMenuRight
     Format("width:'350px'") viewSelectorStyle
-    Format("bottom:'0',position:'absolute',marginBottom:'-20px',left:'0',marginLeft:'9px'") filterByTitleStyle
+    Format("bottom:'0',position:'absolute',marginBottom:'-29px',right:'0',marginRight:'-14px'") filterByTitleStyle
     Format("background:'#FFC46A',padding:'1px 10px',borderRadius:'3px',fontSize:'7pt'") prototypeAdviseStyle
 end

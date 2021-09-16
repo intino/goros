@@ -168,6 +168,9 @@ end
 
 def type(field & composite & multiple) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
+    java.util.List<FieldComposite> $name+firstLowerCase~Fields = $name+firstLowerCase~Field.getAllFields();
+    java.util.List<$definition+firstUpperCase$name+firstUpperCase~Template> $name+firstLowerCase~Children = $name+firstLowerCase~.children($definition+firstUpperCase$name+firstUpperCase~Template.class);
+    for (int i=0; i<$name+firstLowerCase~Fields.size(); i++) if ($name+firstLowerCase~Children.size() > i) $name+firstLowerCase~Children.get(i).field($name+firstLowerCase~Fields.get(i));
 end
 
 def type(field & composite) trigger(update)
@@ -496,11 +499,11 @@ def type(addPropertiesItem) trigger(label)
 end
 
 def type(addPropertiesItem & date)
-    ((Field~$type+firstUpperCase)field.getField("$code")).get().getFormattedValue()
+    io.intino.goros.unit.util.NodeHelper.valueOrDefault(((Field~$type+firstUpperCase)field.getField("$code")))
 end
 
 def type(addPropertiesItem & link)
-    ((Field~$type+firstUpperCase)field.getField("$code")).get().getLabel()
+    io.intino.goros.unit.util.NodeHelper.valueOrDefault(((Field~$type+firstUpperCase)field.getField("$code")))
 end
 
 def type(addPropertiesItem)

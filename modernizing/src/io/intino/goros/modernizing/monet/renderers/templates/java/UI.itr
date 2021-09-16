@@ -317,7 +317,7 @@ def type(ui & header)
 
         private URL logo() {
             try {
-                return new File(Kernel.getInstance().getConfiguration().getModelLogoFile()).toURI().toURL();
+                return new File(Kernel.getInstance().getConfiguration().getFederationLogoFile()).toURI().toURL();
             } catch (DataException | MalformedURLException ignored) {
                 return HeaderTemplate.class.getResource("/images/logo.png");
             }

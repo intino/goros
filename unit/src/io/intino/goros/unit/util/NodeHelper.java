@@ -16,10 +16,7 @@ import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource;
 import io.intino.goros.unit.box.ui.datasources.model.Column;
 import io.intino.goros.unit.printers.SetPrinter;
-import org.monet.bpi.FieldDate;
-import org.monet.bpi.FieldFile;
-import org.monet.bpi.FieldLink;
-import org.monet.bpi.FieldPicture;
+import org.monet.bpi.*;
 import org.monet.bpi.types.Date;
 import org.monet.bpi.types.Number;
 import org.monet.bpi.types.Term;
@@ -36,6 +33,9 @@ import org.monet.space.kernel.constants.Strings;
 import org.monet.space.kernel.library.LibraryFile;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
+import org.monet.space.kernel.model.MonetLink;
+import org.monet.space.kernel.model.Node;
+import org.monet.space.kernel.model.Task;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -56,6 +56,12 @@ import static java.util.stream.Collectors.toList;
 public class NodeHelper {
     private static final SimpleDateFormat InternalFormat = new SimpleDateFormat("dd/MM/yyyy/HH:mm:ss");
     private static final SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    public static final String OperationShowNode = "shownode";
+    public static final String OperationShowNodeView = "shownodeview";
+    public static final String OperationShowTask = "showtask";
+    public static final String OperationParamId = "Id";
+    public static final String OperationParamIdView = "IdView";
 
     public static Node singleton(String code) {
         return nodeLayer().locateNode(code);
@@ -86,6 +92,19 @@ public class NodeHelper {
         return new Column().code(attributeProperty.getCode()).label((String)attributeProperty.getLabel()).isDate(attributeProperty.getType() == AttributeProperty.TypeEnumeration.DATE);
     }
 
+    public static ClientOperation clientOperationOf(Revision revision) {
+        return clientOperationOf(revision.getIdNode(), null);
+    }
+
+    public static ClientOperation clientOperationOf(Node<?> node) {
+        return clientOperationOf(node.getId(), null);
+    }
+
+    public static ClientOperation clientOperationOf(String node, String view) {
+        Map<String, String> data = new HashMap<>() {{ put("Id", node); put("IdView", view); }};
+        return new ClientOperation(view != null ? OperationShowNodeView : OperationShowNode, new net.minidev.json.JSONObject(data));
+    }
+
     public static String internalValueOf(Instant instant) {
         if (instant == null) return null;
         return InternalFormat.format(java.util.Date.from(instant));
@@ -99,7 +118,6 @@ public class NodeHelper {
         String label = node.isPrototype() ? language.getLabel(LabelCode.CLONE_FROM, languageCode) + Strings.SPACE + node.getLabel() : node.getLabel();
         String description = node.isPrototype() ? node.getDescription() + Strings.SPACE + language.getLabel(LabelCode.CLONE_AT, languageCode) + Strings.SPACE + date + Strings.DOT : node.getDescription();
         nodeLayer.copyNode(newNode, node, label, description);
-        if (node.isPrototype()) newNode.getReference().setPrototype(true);
         return newNode;
     }
 
@@ -173,6 +191,16 @@ public class NodeHelper {
         actionable.notifyUser(successMessage, UserMessage.Type.Info);
     }
 
+    public static String valueOrDefault(FieldDate field) {
+        if (field == null || field.get() == null) return "Sin definir";
+        return field.get().getFormattedValue();
+    }
+
+    public static String valueOrDefault(FieldLink field) {
+        if (field == null || field.get() == null) return "Sin definir";
+        return field.get().getLabel();
+    }
+
     private static String agentUserClientMessage() {
         String message = AgentUserClient.getInstance().getMessageForUser(Thread.currentThread().getId());
         AgentUserClient.getInstance().clear(Thread.currentThread().getId());
@@ -181,22 +209,22 @@ public class NodeHelper {
 
     public static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
         String name = operation.getName().toLowerCase();
-        String id = operation.getData().get("Id").toString();
+        String id = operation.getData().get(OperationParamId).toString();
         Soul soul = session.client().soul();
 
         switch (name) {
-            case "shownode": {
+            case OperationShowNode: {
                 Node node = nodeLayer().loadNode(id);
                 dispatcher.dispatch(soul, PathHelper.pathOf(node));
                 break;
             }
-            case "shownodeview": {
+            case OperationShowNodeView: {
                 Node node = nodeLayer().loadNode(id);
-                dispatcher.dispatch(soul, PathHelper.pathOf(node, operation.getData().get("IdView").toString()));
+                dispatcher.dispatch(soul, PathHelper.pathOf(node, operation.getData().get(OperationParamIdView).toString()));
                 break;
             }
-            case "showtask":
-                Task task = LayerHelper.taskLayer().loadTask(operation.getData().get("Id").toString());
+            case OperationShowTask:
+                Task task = LayerHelper.taskLayer().loadTask(operation.getData().get(OperationParamId).toString());
                 dispatcher.dispatch(soul, PathHelper.pathOf(task));
                 break;
         }

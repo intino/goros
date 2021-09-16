@@ -79,6 +79,7 @@ def type(nodedefinition & embedded)
             restore.readonly(readonly);
             copy.visible(node.isPrototype());
             edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
@@ -123,12 +124,17 @@ def type(nodedefinition & embedded)
         }
 
         private void copy() {
-            notifier.redirect(io.intino.goros.unit.util.PathHelper.pathOf(io.intino.goros.unit.util.NodeHelper.copyNode(node, language())));
+            Node newNode = io.intino.goros.unit.util.NodeHelper.copyNode(node, language());
+            if (node.isPrototype()) {
+                newNode.getReference().setPrototype(true);
+                io.intino.goros.unit.util.LayerHelper.nodeLayer().saveNode(newNode);
+            }
+            if (dispatchOperationListener != null) dispatchOperationListener.accept(io.intino.goros.unit.util.NodeHelper.clientOperationOf(newNode));
         }
 
         private void restore() {
             io.intino.goros.unit.util.LayerHelper.nodeLayer().restoreNode(revision);
-            notifier.redirect(session().browser().requestUrl());
+            if (dispatchOperationListener != null) dispatchOperationListener.accept(io.intino.goros.unit.util.NodeHelper.clientOperationOf(revision));
         }
 
         [$toolbar+editableMethods]
@@ -381,6 +387,10 @@ end
 
 def type(operation) trigger(editableRefreshCall)
     $name+lowerCase.visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype());
+end
+
+def type (dispatchOperationListener & collection)
+    this::dispatch
 end
 
 def type (dispatchOperationListener & singleton)

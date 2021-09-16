@@ -400,6 +400,7 @@ def type(setdefinition & embedded)
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
             edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(!embedded && node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
         }
 
@@ -1064,7 +1065,7 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         open(result);
     }
     private Node copyNode(String option) {
-        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype(String option) {
@@ -1093,7 +1094,7 @@ def type(toolbar & singleton) trigger(editableMethods)
         open(result);
     }
     private Node copyNode(String option) {
-        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype(String option) {
@@ -1121,7 +1122,7 @@ def type(toolbar) trigger(editableMethods)
         open(result);
     }
     private Node copyNode(String option) {
-        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> n.getLabel().equals(option)).findFirst().orElse(null);
+        Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
         return NodeHelper.copyNode(prototype, language());
     }
     private void addPrototype(String option) {

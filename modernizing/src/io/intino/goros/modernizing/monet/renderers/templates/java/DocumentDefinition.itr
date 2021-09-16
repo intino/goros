@@ -61,6 +61,7 @@ def type(documentdefinition & embedded)
 
         private void refreshToolbar() {
             edit.title(readonly ? "Editar" : "Finalizar edición");
+            edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]

@@ -75,6 +75,13 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
     public void init() {
         super.init();
         initToolbar();
+        nodeDialog.onOpen(e -> refreshNodeDialog());
+    }
+
+    private void refreshNodeDialog() {
+        Node node = loadNode();
+        nodeDialog.title(node != null ? node.getLabel() : translate("No label"));
+        refreshNode(node);
     }
 
     private void initToolbar() {
@@ -92,7 +99,8 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
         title.value(Language.getInstance().getModelResource(field.getDefinition().getLabel()));
         refreshToolbar(node);
         refreshSelectNodeTypeDialog();
-        refreshNode(node);
+        openNodeTrigger.title(translate("Open") + "...");
+        openNodeTrigger.visible(node != null);
         refreshEmptyBlock(node);
     }
 

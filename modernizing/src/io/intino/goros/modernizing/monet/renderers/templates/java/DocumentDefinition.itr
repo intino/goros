@@ -61,7 +61,7 @@ def type(documentdefinition & embedded)
 
         private void refreshToolbar() {
             edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!node.getDefinition().isReadonly());
+            edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
         }
@@ -82,7 +82,7 @@ def type(documentdefinition & embedded)
         private void refreshPreviewView() {
             if (node == null) return;
             previewView.previewStamp.node(node);
-            previewView.previewStamp.readonly($readonly);
+            previewView.previewStamp.readonly($readonly || !node.isEditable() || node.isLocked());
             previewView.previewStamp.refresh();
         }
 

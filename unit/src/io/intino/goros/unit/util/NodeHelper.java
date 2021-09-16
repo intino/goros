@@ -44,6 +44,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static io.intino.goros.unit.util.LayerHelper.nodeLayer;
@@ -136,7 +138,11 @@ public class NodeHelper {
         return node.getDefinition().getOperationMap().getOrDefault(name, null);
     }
 
-    public static void executeOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
+    public static void executeOperation(UISession session, Actionable<?, ?> actionable, Node<?> node, String operation, String successMessage, DisplayRouteDispatcher dispatcher) {
+        executeOperation(session, actionable, node, operation, successMessage, clientOperation -> dispatchOperation(dispatcher, session, clientOperation));
+    }
+
+    public static void executeOperation(UISession session, Actionable actionable, Node node, String operation, String successMessage, Consumer<ClientOperation> dispatcher) {
         actionable.readonly(true);
         Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND, null, current);
@@ -147,7 +153,7 @@ public class NodeHelper {
         String message = agentUserClientMessage();
 
         if (clientOperation != null) {
-            dispatchOperation(dispatcher, session, clientOperation);
+            if (dispatcher != null) dispatcher.accept(clientOperation);
             if (message != null) actionable.notifyUser(successMessage, UserMessage.Type.Info);
         }
         else {
@@ -155,7 +161,7 @@ public class NodeHelper {
         }
     }
 
-    public static void cancelOperation(DisplayRouteDispatcher dispatcher, UISession session, Actionable actionable, Node node, String operation, String successMessage) {
+    public static void cancelOperation(UISession session, Actionable actionable, Node node, String operation, String successMessage, DisplayRouteDispatcher dispatcher) {
         actionable.readonly(true);
         Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_ON_CANCEL, null, current);
@@ -173,7 +179,7 @@ public class NodeHelper {
         return message;
     }
 
-    private static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
+    public static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
         String name = operation.getName().toLowerCase();
         String id = operation.getData().get("Id").toString();
         Soul soul = session.client().soul();

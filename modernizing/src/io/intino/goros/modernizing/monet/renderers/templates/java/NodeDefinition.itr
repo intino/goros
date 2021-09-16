@@ -79,7 +79,7 @@ def type(nodedefinition & embedded)
             restore.readonly(readonly);
             copy.visible(node.isPrototype());
             edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!node.getDefinition().isReadonly() && !node.isLocked());
+            edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
         }
@@ -253,6 +253,17 @@ def type(toolbar & collectable) trigger(navigableEvents)
         this.showCollectionListener = listener;
         return this;
     }
+    public $definition+firstUpperCase~EmbeddedTemplate onDispatchOperation(java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> listener) {
+        this.dispatchOperationListener = listener;
+        return this;
+    }
+end
+
+def type(toolbar) trigger(navigableEvents)
+    public $definition+firstUpperCase~EmbeddedTemplate onDispatchOperation(java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> listener) {
+        this.dispatchOperationListener = listener;
+        return this;
+    }
 end
 
 def type(toolbar & singleton) trigger(editableMethods)
@@ -267,6 +278,11 @@ end
 
 def type(toolbar & collectable) trigger(navigableDeclaration)
     private java.util.function.Consumer<Node> showCollectionListener;
+    private java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> dispatchOperationListener;
+end
+
+def type(toolbar) trigger(navigableDeclaration)
+    private java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> dispatchOperationListener;
 end
 
 def type(toolbar) trigger(editableDeclaration)
@@ -281,7 +297,7 @@ end
 
 def type(toolbar) trigger(editableRefreshCall)
     [$operation+editableRefreshCall...[$NL]]
-    remove.visible(!readonly && !node.isSingleton() && !node.getDefinition().isReadonly());
+    remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly());
 end
 
 def type(toolbar) trigger(editableCall)
@@ -354,13 +370,13 @@ def type(operation & download) trigger(editableInitCall)
 end
 
 def type(operation & confirmation) trigger(editableInitCall)
-    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(box().routeManager().routeDispatcher(), session(), $name+lowerCase, node, "$name", translate("Operation executed")));
+    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed")), dispatchOperationListener);
     $name+lowerCase.onBeforeAffirmed(e -> io.intino.goros.unit.util.NodeHelper.isOperationConfirmationRequired(node, "$name"));
-    $name+lowerCase.onCancelAffirmed(e -> io.intino.goros.unit.util.NodeHelper.cancelOperation(box().routeManager().routeDispatcher(), session(), $name+lowerCase, node, "$name", translate("Operation canceled")));
+    $name+lowerCase.onCancelAffirmed(e -> io.intino.goros.unit.util.NodeHelper.cancelOperation(session(), $name+lowerCase, node, "$name", translate("Operation canceled"), dispatchOperationListener));
 end
 
 def type(operation) trigger(editableInitCall)
-    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(box().routeManager().routeDispatcher(), session(), $name+lowerCase, node, "$name", translate("Operation executed")));
+    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed"), dispatchOperationListener));
 end
 
 def type(operation) trigger(editableRefreshCall)

@@ -17,7 +17,9 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
     }
 
     public TasksTableCatalog inbox(TaskListDatasource.Inbox inbox) {
+        if (this.inbox == inbox) return this;
         this.inbox = inbox;
+        tasksTable.source(new TaskListDatasource(box(), session(), inbox));
         return this;
     }
 
@@ -69,7 +71,6 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
     @Override
     public void refresh() {
         super.refresh();
-        tasksTable.source(new TaskListDatasource(box(), session(), inbox));
         tasksTable.reload();
     }
 

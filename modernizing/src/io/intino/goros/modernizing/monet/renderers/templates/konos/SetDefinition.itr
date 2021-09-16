@@ -25,7 +25,7 @@ def type(setdefinition)
                 Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
                     [$view+selector...[$NL]]
                 MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
-                MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=On) toggleView as Option
+                MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content

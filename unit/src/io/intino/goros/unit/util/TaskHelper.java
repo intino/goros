@@ -48,7 +48,7 @@ public class TaskHelper {
         if (task.isExpired()) return "#F44235"; // red
         if (task.isFinished()) return "#272C34"; // black
         if (task.isAborted()) return "#F44235"; // red
-        if (task.isFailure()) return "#F89804"; // orange
+        if (task.isFailure()) return "#F44235"; // red
         return null;
     }
 

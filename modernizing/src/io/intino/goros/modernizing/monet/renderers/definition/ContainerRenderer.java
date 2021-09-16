@@ -9,6 +9,7 @@ import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 
@@ -53,6 +54,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 		if (showProperty.getComponent().size() <= 0) return;
 		NodeDefinition containDefinition = dictionary.getNodeDefinition(showProperty.getComponent().get(0).getDefinition());
 		FrameBuilder result = baseFrame().add("contain");
+		result.add(containDefinition.getType().name().toLowerCase());
 		result.add("name", nameOf(viewProperty));
 		result.add("contain", containDefinition.getCode());
 		result.add("containName", nameOf(containDefinition));

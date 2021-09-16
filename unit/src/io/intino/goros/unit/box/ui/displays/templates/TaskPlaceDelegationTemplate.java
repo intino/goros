@@ -44,7 +44,10 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
             pendingView.setupBlock.setupToolbar.solveSetup.onExecute(e1 -> setup());
             refreshPendingView();
         });
-        failureView.onShow(e -> refreshFailureView());
+        failureView.onShow(e -> {
+            failureView.tryingView.retry.onExecute(e1 -> retry());
+            refreshFailureView();
+        });
     }
 
     @Override
@@ -187,6 +190,12 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private RoleDefinition roleDefinition(TaskProviderProperty providerDefinition) {
         String roleKey = providerDefinition.getRole().getValue();
         return Dictionary.getInstance().getRoleDefinition(roleKey);
+    }
+
+    private void retry() {
+        failureView.tryingView.retry.readonly(true);
+        task.getProcess().resume();
+        failureView.tryingView.retry.readonly(false);
     }
 
 }

@@ -252,7 +252,7 @@ def type(setdefinition & embedded)
         private Node selectedChild;
         private boolean nodeAdded = false;
         private List<Node> selection = Collections.emptyList();
-        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Full;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Compact;
         private java.util.function.Consumer<Long> itemsCountListener;
         private java.util.function.Consumer<Boolean> showFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
@@ -260,6 +260,7 @@ def type(setdefinition & embedded)
         private SearchBox<?, ?> searchBox;
         private SelectorCheckBox<?, ?> filterByTitle;
         [$toolbar+editableDeclaration]
+        [$toolbar+navigableDeclaration]
 
         public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
@@ -399,7 +400,7 @@ def type(setdefinition & embedded)
             [$toolbar+editableRefreshCall]
             [$toolbar+navigableRefreshCall]
             edit.title(readonly ? "Editar" : "Finalizar edición");
-            edit.visible(!embedded && !node.getDefinition().isReadonly());
+            edit.visible(!embedded && node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
         }
 
         private boolean isPrototypeView() {
@@ -571,6 +572,20 @@ def type(setdefinition & embedded)
             [$toolbar+hideCollectionCall]
         }
 
+        private void dispatch(org.monet.space.kernel.model.ClientOperation operation) {
+            String name = operation.getName().toLowerCase();
+            String view = name.equals("shownodeview") ? operation.getData().get("IdView").toString() : null;
+            String id = operation.getData().get("Id").toString();
+            Node<?> target = (name.equals("shownode") || name.equals("shownodeview")) ? LayerHelper.nodeLayer().loadNode(id) : null;
+            if (target != null && target.getParent() == node) open(target);
+            else NodeHelper.dispatchOperation(box().routeManager().routeDispatcher(), session(), operation);
+            if (view != null) openChildView(view);
+        }
+
+        private void openChildView(String id) {
+            [$toolbar+openChildViewCall...[$NL]]
+        }
+
         private void hideViewsBlock() {
             views.visible(false);
             enableCollapse(selectedChild != null);
@@ -667,7 +682,7 @@ def type(setdefinition)
 
         private void initToolbar() {
             filters.onToggle(e -> toggleFilters(e.state()));
-            toggleView.state(ToggleEvent.State.On);
+            toggleView.state(ToggleEvent.State.Off);
             toggleView.onToggle(e -> toggleView(e.state()));
         }
 
@@ -961,6 +976,7 @@ def type(add) trigger(initCall)
             }
             showViewsBlock();
         });
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onDispatchOperation(this::dispatch);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
@@ -994,6 +1010,10 @@ end
 
 def type(add) trigger(hideCall)
     $name+firstLowerCase~View.hide();
+end
+
+def type(add) trigger(openChildViewCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.openView(id);
 end
 
 def type(toolbar) trigger(editableAddCall)
@@ -1157,4 +1177,8 @@ end
 
 def type(toolbar) trigger(hideCall)
     [$add+hideCall...[$NL]]
+end
+
+def type(toolbar) trigger(openChildViewCall)
+    [$add+openChildViewCall...[$NL]]
 end

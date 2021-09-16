@@ -110,7 +110,7 @@ def type(tasks & embedded)
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleFiltersListener;
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleViewListener;
         private SearchBox searchBox;
-        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Full;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode = io.intino.goros.unit.box.ui.ViewMode.Compact;
 
         public TasksEmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
@@ -426,7 +426,7 @@ def type(tasks)
             if (view == null) view = "list";
             viewSelector.onSelect(this::selectView);
             filters.onToggle(e -> toggleFilters(e.state()));
-            toggleView.state(ToggleEvent.State.On);
+            toggleView.state(ToggleEvent.State.Off);
             toggleView.onToggle(e -> toggleView(e.state()));
         }
 

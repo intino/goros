@@ -15,6 +15,14 @@ def type(show & components)
 	}
 end
 
+def type(component & collection)
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.node(contain);
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.view("$viewCode");
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.toggleView(ToggleEvent.State.On);
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.readonly(readonly);
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.refresh();
+end
+
 def type(component)
     $name+firstLowerCase~$view+firstUpperCase~Stamp.node(contain);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.view("$viewCode");

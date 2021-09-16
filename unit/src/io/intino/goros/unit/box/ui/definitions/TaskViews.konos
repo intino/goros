@@ -45,7 +45,7 @@ Template(layout=Vertical Flexible) taskPlaceDelegationTemplate as Relative(heigh
 			Text(value="Trying to send order. Last sent request was at", translate=true, format=middleAirRight)
 			Date(pattern="DD/MM/YYYY HH:mm:ss") failureDate
 		Block(layout=Horizontal, visible=false) tryingView
-			Text(value="Trying to send order.", translate=true, format=middleAirRight)
+			Link(title="Retry") retry as Action
 
 Template(layout=Vertical Flexible, format=middleAirTop middleAirBottom) taskPlaceRoleTemplate as Relative(height=100%)
 	Link(title="") label as Action

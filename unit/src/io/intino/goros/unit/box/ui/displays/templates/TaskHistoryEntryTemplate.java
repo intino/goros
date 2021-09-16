@@ -1,9 +1,6 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
-import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
-import io.intino.goros.unit.util.LayerHelper;
-import io.intino.goros.unit.util.PathHelper;
 import org.monet.space.kernel.model.Fact;
 import org.monet.space.kernel.model.MonetLink;
 
@@ -23,10 +20,11 @@ public class TaskHistoryEntryTemplate extends AbstractTaskHistoryEntryTemplate<U
     public void refresh() {
         super.refresh();
         String userId = entry.getUserId();
+        String authorMessage = userId != null && !userId.isEmpty() && !userId.contains("|") ? translate("by") + " " + userId : "";
         date.value(entry.getInternalCreateDate().toInstant());
         title.value(entry.getTitle());
         subtitle.value(entry.getSubTitle());
-        author.value(userId != null && !userId.isEmpty() ? translate("by") + " " + LayerHelper.federationLayer(session()).loadUserByUsername(entry.getUserId()).getInfo().getFullname() : null);
+        author.value(authorMessage);
         linksBlock.clear();
         entry.getLinks().forEach(link -> fill(link, linksBlock.add()));
     }

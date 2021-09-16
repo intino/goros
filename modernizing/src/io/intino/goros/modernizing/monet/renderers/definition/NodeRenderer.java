@@ -120,8 +120,16 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		if (operation.getConfirmation() != null) result.add("confirmation");
 		result.add("name", operation.getName());
 		result.add("label", clean(operation.getLabel()));
+		result.add("dispatchOperationListener", dispatchOperationListenerFrame());
 		if (operation.getConfirmation() != null) result.add("confirmText", operation.getConfirmation().getDescription());
 		builder.add("operation", result);
+	}
+
+	protected FrameBuilder dispatchOperationListenerFrame() {
+		FrameBuilder result = baseFrame();
+		result.add("dispatchOperationListener");
+		if (definition().isSingleton()) result.add("singleton");
+		return result;
 	}
 
 	protected boolean isDownloadOperation(NodeDefinitionBase.OperationProperty operation) {

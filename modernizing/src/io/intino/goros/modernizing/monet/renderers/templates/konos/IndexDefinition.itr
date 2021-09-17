@@ -7,7 +7,7 @@ def type(indexdefinition)
 end
 
 def type(view)
-    Table(itemClass="org.monet.space.kernel.model.NodeItem", scrollingMark=false, format=bordered) $definition+firstUpperCase~$name+firstUpperCase~Table as Selectable(multiple=false)
+    Table(itemClass="org.monet.space.kernel.model.NodeItem", scrollingMark=false, pageSize=10, format=bordered) $definition+firstUpperCase~$name+firstUpperCase~Table as Selectable(multiple=false)
         noItemsMessage = "No hay elementos"
         [$attribute...[$NL]]
 end

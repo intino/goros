@@ -13,10 +13,15 @@ import org.monet.space.kernel.model.NodeDataRequest;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import static io.intino.goros.unit.util.NodeHelper.sortingOf;
+import static io.intino.goros.unit.util.NodeHelper.sortsByOf;
+import static java.util.Collections.singletonList;
 
 public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
     private Node node;
@@ -25,6 +30,8 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
     private Consumer<Boolean> terminateListener;
     private String condition;
     private List<Filter> filters;
+    private String sorting;
+    private String sortingMode;
 
     public NodeDownloadDialog(UnitBox box) {
         super(box);
@@ -52,6 +59,12 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
 
     public NodeDownloadDialog filters(List<Filter> filters) {
         this.filters = filters;
+        return this;
+    }
+
+    public NodeDownloadDialog sorting(String sorting, String mode) {
+        this.sorting = sorting;
+        this.sortingMode = mode;
         return this;
     }
 
@@ -110,6 +123,7 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         dataRequest.setCodeView(view);
         dataRequest.setCondition(condition);
         dataRequest.setGroupsBy(NodeHelper.groupsByOf(filters));
+        if (sorting != null) dataRequest.setSortsBy(sortsByOf(singletonList(sortingOf(sorting, sortingMode))));
         return dataRequest;
     }
 

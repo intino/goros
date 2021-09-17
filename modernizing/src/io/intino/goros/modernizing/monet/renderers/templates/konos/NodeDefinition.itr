@@ -34,7 +34,7 @@ def type(nodedefinition)
             Block(layout=Horizontal EndJustified)
                 MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) openContain as Action Addressable($module+firstUpperCase~Elements.instance)
 
-        Block(layout=Vertical Flexible)
+        Block(layout=Vertical Flexible) content as Relative(height=100%)
             [$view+page...[$NL]]
 
     [$view...[$NL]]

@@ -114,8 +114,9 @@ public abstract class Renderer {
 		return ((String)label).replace("\n", "");
 	}
 
-	protected FieldRenderer renderer(FieldProperty fieldProperty, CompositeFieldProperty composite) {
+	protected FieldRenderer renderer(FormDefinition formDefinition, FieldProperty fieldProperty, CompositeFieldProperty composite) {
 		FieldRenderer renderer = new FieldRenderer(dictionary, modernization, fieldProperty);
+		renderer.definition(formDefinition);
 		renderer.parent(composite);
 		return renderer;
 	}

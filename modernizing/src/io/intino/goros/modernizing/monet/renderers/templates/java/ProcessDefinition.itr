@@ -84,6 +84,7 @@ def type(process & embedded)
         public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
             showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
             showCollectionMenu.visible(value == io.intino.goros.unit.box.ui.ViewMode.Compact);
+            content.autoSize(value == null || value == io.intino.goros.unit.box.ui.ViewMode.Full);
         }
 
         @Override

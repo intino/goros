@@ -26,6 +26,10 @@ def type(show & fields & composite) trigger(refresh)
     [$field+refresh...[$NL]]
 end
 
+def type(show & fields & composite) trigger(refreshMethod)
+    [$field+refreshMethod...[$NL]]
+end
+
 def type(show & fields & composite) trigger(update)
     [$field+update...[$NL]]
 end
@@ -36,6 +40,10 @@ end
 
 def type(show & layout & composite) trigger(refresh)
     [$row+refresh...[$NL]]
+end
+
+def type(show & layout & composite) trigger(refreshMethod)
+    [$row+refreshMethod...[$NL]]
 end
 
 def type(show & layout & composite) trigger(update)
@@ -54,6 +62,8 @@ def type(show & layout)
         super.refresh();
         [$row+refresh...[$NL]]
     }
+
+    [$row+refreshMethod...[$NL]]
 
     private void save(java.util.function.Consumer<Boolean> consumer) {
         consumer.accept(true);
@@ -75,6 +85,10 @@ def type(layoutRow) trigger(refresh)
     [$element+refresh...[$NL]]
 end
 
+def type(layoutRow) trigger(refreshMethod)
+    [$element+refreshMethod...[$NL]]
+end
+
 def type(layoutRow) trigger(update)
     [$element+update...[$NL]]
 end
@@ -93,6 +107,14 @@ end
 
 def type(layoutElement) trigger(refresh)
     $field+refresh
+end
+
+def type(layoutElement & section) trigger(refreshMethod)
+    [$row+refreshMethod...[$NL]]
+end
+
+def type(layoutElement) trigger(refreshMethod)
+    $field+refreshMethod
 end
 
 def type(layoutElement & section) trigger(update)
@@ -116,6 +138,8 @@ def type(show & fields)
         boolean isPrototype = node.isPrototype();
         [$field+refresh...[$NL]]
     }
+
+    [$field+refreshMethod...[$NL]]
 
     private void save(java.util.function.Consumer<Boolean> consumer) {
         consumer.accept(true);
@@ -391,30 +415,33 @@ def type(field & select & multiple) trigger(init)
 end
 
 def type(field & select & multiple) trigger(refresh)
-    $name+firstLowerCase~.clear();
-    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
-def type(field & select & inline) trigger(init)
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
-end
-
 def type(field & select & inline) trigger(refresh)
-    $name+firstLowerCase~.clear();
-    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select) trigger(init)
-    $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()))));
+    $name+firstLowerCase~.onSelect(e -> {
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection())));
+        [$dependant+refresh...[$NL]]
+    });
+end
+
+def type(field & select) trigger(refreshMethod)
+    private void refresh$name+firstUpperCase~() {
+        $name+firstLowerCase~.clear();
+        $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    }
 end
 
 def type(field & select) trigger(refresh)
-    $name+firstLowerCase~.clear();
-    $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
@@ -481,6 +508,13 @@ def type(field & node & multiple) trigger(refresh)
         display.refresh();
     }));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
+end
+
+def type(field) trigger(refreshMethod)
+end
+
+def type(dependant) trigger(refresh)
+    refresh$name+firstUpperCase~();
 end
 
 def type(univocal & prototype)
@@ -584,6 +618,8 @@ def type(compositeView)
             super.refresh();
             [$show+refresh]
         }
+
+        [$show+refreshMethod]
 
         private void save(java.util.function.Consumer<Boolean> consumer) {
             consumer.accept(true);

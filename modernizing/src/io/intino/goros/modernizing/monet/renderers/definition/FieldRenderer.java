@@ -3,18 +3,29 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.Renderer;
+import io.intino.itrules.Frame;
 import io.intino.itrules.FrameBuilder;
+import org.monet.bpi.FieldSelect;
 import org.monet.metamodel.*;
 import org.monet.metamodel.TextFieldProperty.EditionProperty.ModeEnumeration;
 import org.monet.metamodel.internal.Ref;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FieldRenderer extends Renderer {
 	private final FieldProperty fieldProperty;
+	private FormDefinition formDefinition;
 	private CompositeFieldProperty parentProperty;
 
 	public FieldRenderer(Dictionary dictionary, Modernization modernization, FieldProperty fieldProperty) {
 		super(dictionary, modernization);
 		this.fieldProperty = fieldProperty;
+	}
+
+	public FieldRenderer definition(FormDefinition definition) {
+		this.formDefinition = definition;
+		return this;
 	}
 
 	public FieldRenderer parent(CompositeFieldProperty composite) {
@@ -39,7 +50,35 @@ public class FieldRenderer extends Renderer {
 		addTextProperties(result);
 		addLinkProperties(result);
 		addCompositeProperties(result);
+		addSelectProperties(result);
 		return result;
+	}
+
+	private void addSelectProperties(FrameBuilder result) {
+		dependantFields().forEach(f -> result.add("dependant", dependantFrameOf(f)));
+	}
+
+	private FrameBuilder dependantFrameOf(FieldProperty field) {
+		FrameBuilder result = baseFrame();
+		result.add("dependant");
+		result.add("code", field.getCode());
+		result.add("name", field.getName());
+		return result;
+	}
+
+	private List<FieldProperty> dependantFields() {
+		List<FieldProperty> fieldPropertyList = parentProperty != null ? parentProperty.getAllFieldPropertyList() : formDefinition.getAllFieldPropertyList();
+		return fieldPropertyList.stream().filter(this::isDependantField).collect(Collectors.toList());
+	}
+
+	private boolean isDependantField(FieldProperty f) {
+		if (!f.isSelect()) return false;
+		SelectFieldProperty field = (SelectFieldProperty) f;
+		SelectFieldPropertyBase.SelectProperty select = field.getSelect();
+		if (select == null || select.getRoot() == null) return false;
+		Object root = select.getRoot();
+		if (!(root instanceof Ref)) return false;
+		return ((Ref)root).getValue().equals(fieldProperty.getName());
 	}
 
 	private void addTypes(FrameBuilder builder) {
@@ -133,7 +172,7 @@ public class FieldRenderer extends Renderer {
 		if (!fieldProperty.isComposite()) return;
 		CompositeFieldProperty compositeField = (CompositeFieldProperty) fieldProperty;
 		compositeField.getAllFieldPropertyList().forEach(f -> {
-			FieldRenderer renderer = renderer(f, compositeField);
+			FieldRenderer renderer = renderer(formDefinition, f, compositeField);
 			builder.add("field", renderer.buildFrame());
 		});
 	}

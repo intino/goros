@@ -727,6 +727,7 @@ def type(setdefinition)
             DownloadDialog.dialog.view(selectedViewCode());
             DownloadDialog.dialog.condition(java.util.Objects.requireNonNull(currentCollection()).condition());
             DownloadDialog.dialog.filters(java.util.Objects.requireNonNull(currentCollection()).filters());
+            DownloadDialog.dialog.sorting(selectedSortingCode(), sortingsMode.selection().size() > 0 ? sortingsMode.selection().get(0) : "Ascendente");
             DownloadDialog.dialog.columns(io.intino.goros.unit.util.NodeHelper.downloadColumns(node, selectedViewCode()));
             DownloadDialog.dialog.refresh();
         }
@@ -790,6 +791,11 @@ def type(setdefinition)
         private void selectSorting(String sorting, String mode) {
             removeSorting.visible(sorting != null);
             [$view+selectSortingCall...[$NL]]
+        }
+
+        private String selectedSortingCode() {
+            [$view+selectedSortingCodeCall...[$NL]]
+            return "label";
         }
 
         private void removeSorting(Event event) {
@@ -942,7 +948,14 @@ def type(collectionview & sharedprototypes) trigger(selectSortingCall)
 end
 
 def type(collectionview) trigger(selectSortingCall)
-    if (content.$name+firstLowerCase~View.isVisible()) content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.selectSorting(sortingsCodesMap.get("$name+firstLowerCase~_"+sorting), mode);
+    if (content.$name+firstLowerCase~View.isVisible()) content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.selectSorting(selectedSortingCode(), mode);
+end
+
+def type(collectionview & sharedprototypes) trigger(selectedSortingCodeCall)
+end
+
+def type(collectionview) trigger(selectedSortingCodeCall)
+    if (content.$name+firstLowerCase~View.isVisible()) return sortingsCodesMap.get("$name+firstLowerCase~_"+sorting);
 end
 
 def type(collectionview & sharedprototypes) trigger(showViewCall)
@@ -1061,8 +1074,8 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         if (result == null) return;
         nodeAdded = true;
         refresh();
-        //select(result);
         open(result);
+        if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1090,8 +1103,8 @@ def type(toolbar & singleton) trigger(editableMethods)
         if (result == null) return;
         nodeAdded = true;
         refresh();
-        //select(result);
         open(result);
+        if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1120,6 +1133,7 @@ def type(toolbar) trigger(editableMethods)
         nodeAdded = true;
         refresh();
         open(result);
+        if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);

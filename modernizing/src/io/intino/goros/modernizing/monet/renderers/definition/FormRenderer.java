@@ -269,8 +269,9 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		}
 		else if (element.isBox()) {
 			LayoutElementBoxDefinition box = (LayoutElementBoxDefinition) element;
-			FieldProperty field = definition().getField(box.getLink());
-			if (field != null) result.add("field", renderer(definition().getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition())));
+			FormDefinition definition = definition();
+			FieldProperty field = definition.getField(box.getLink());
+			if (field != null) result.add("field", renderer(definition, definition.getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition)));
 		}
 		builder.add("element", result);
 	}
@@ -318,7 +319,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	}
 
 	private void addField(FieldProperty fieldProperty, CompositeFieldProperty composite, FrameBuilder builder) {
-		builder.add("field", renderer(fieldProperty, composite).buildFrame().add("definition", nameOf(definition())));
+		builder.add("field", renderer(definition(), fieldProperty, composite).buildFrame().add("definition", nameOf(definition())));
 	}
 
 }

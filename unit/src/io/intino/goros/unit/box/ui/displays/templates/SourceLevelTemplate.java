@@ -77,7 +77,7 @@ public class SourceLevelTemplate extends AbstractSourceLevelTemplate<UnitBox> {
     private void selectTerm(List<Term> selection) {
         if (selectListener == null) return;
         Term selected = selection.size() > 0 ? selection.get(0) : null;
-        if (selected == null && termSelected != null) selectDelayed(termSelected);
+        if (selected == null && termSelected != null && termSelected.getParent() != null) selectDelayed(termSelected);
         else selectListener.accept(selected, level);
         termSelected = selected;
     }

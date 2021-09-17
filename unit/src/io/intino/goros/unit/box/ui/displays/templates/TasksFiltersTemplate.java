@@ -38,6 +38,13 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
         reset.onExecute(e -> resetFilters());
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        folder.multipleSelection(false);
+        nature.multipleSelection(false);
+    }
+
     private void updateFilters() {
         udpateFolder();
         udpateNature();

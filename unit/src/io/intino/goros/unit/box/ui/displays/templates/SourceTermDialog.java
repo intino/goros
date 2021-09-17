@@ -218,7 +218,7 @@ public class SourceTermDialog extends AbstractSourceTermDialog<UnitBox> {
     }
 
     private String childCode() {
-        return term.getCode() + "." + childCode.value();
+        return (term != null ? term.getCode() + "." : "") + childCode.value();
     }
 
 }

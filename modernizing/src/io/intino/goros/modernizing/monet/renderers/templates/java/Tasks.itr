@@ -218,6 +218,7 @@ def type(tasks & embedded)
                 showFilters();
             });
             filtersView.onInit(e -> initFilters());
+            filtersView.onShow(e -> filtersView.tasksFiltersStamp.refresh());
             [$process+init...[$NL]]
         }
 

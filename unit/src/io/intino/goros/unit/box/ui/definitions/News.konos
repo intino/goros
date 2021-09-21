@@ -15,4 +15,14 @@ Template(layout=Vertical Flexible, format=smallAir) newsTemplate
 
 	Block(layout=Horizontal Flexible, format=smallAirTop)
 		Block(layout=Vertical Flexible, format=bordered)
-			Block(layout=Vertical Flexible CenterCenter) > Text(value="Pendiente de implementar")
+			List(itemClass="org.monet.space.kernel.model.news.Post", scrollingMark=false) newsList
+				noItemsMessage = "No hay noticias"
+				Mold
+					Item(height=80px) newsListItem
+						Block(layout=Vertical, format=catalogIndexReferenceStyle)
+							Text(mode=Uppercase, format=body2) type as Highlighted(textColor="white", backgroundColor="#001E3C")
+							Text(visible=false) title
+							Link(title="", visible=false) titleLink as Action Addressable(addressableResource=empty)
+							Date(format=body2 grey, pattern="DD/MM/YYYY HH:mm:ss") date
+							Text(format=airTop) body
+

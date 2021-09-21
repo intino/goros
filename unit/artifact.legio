@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.0.7") unit as Platform
+Artifact(groupId = "io.intino.goros", version = "1.0.8") unit as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
 	Box(language = "Konos", version = "8.14.6")
 	Code("io.intino.goros.unit")
@@ -18,7 +18,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.7") unit as Platform
 		Compile("io.intino.itrules", "engine", "1.0.0")
 		Compile("io.intino.goros", "shared", "1.0.0")
 
-		Web("io.intino.goros", "unit-elements", "1.0.7")
+		Web("io.intino.goros", "unit-elements", "1.0.8")
 
 		Test("junit", "junit", "4.13")
 
@@ -140,9 +140,9 @@ RunConfiguration local-mysql
 	Argument("certificate-password", "1234")
 	Argument("jdbc-datasource", "jdbc/CoordinacionDatabaseSource")
 	Argument("jdbc-type", "mysql")
-	Argument("jdbc-url", "jdbc:mysql://localhost:3306/viasyobras-coordinacion?autoReconnect=true&useSSL=false")
+	Argument("jdbc-url", "jdbc:mysql://localhost:3306/salud-publica-coordinacion?autoReconnect=true&useSSL=false")
 	Argument("jdbc-user", "root")
-	Argument("jdbc-password", "")
+	Argument("jdbc-password", "1234")
 	Argument("user-data-dir", "./temp/.coordinacion")
 	Argument("component-documents-monet-url", "http://localhost:9001")
 	Argument("component-datawarehouse-monet-url", "http://localhost:8081/sumus")

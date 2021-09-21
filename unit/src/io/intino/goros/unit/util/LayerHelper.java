@@ -29,6 +29,10 @@ public class LayerHelper {
 		return ComponentFederation.getInstance().getRoleLayer();
 	}
 
+	public static NewsLayer newsLayer() {
+		return ComponentPersistence.getInstance().getNewsLayer();
+	}
+
 	public static NotificationLayer notificationLayer() {
 		return ComponentPersistence.getInstance().getNotificationLayer();
 	}

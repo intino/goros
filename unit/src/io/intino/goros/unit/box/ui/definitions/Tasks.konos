@@ -30,7 +30,7 @@ Template(layout=Vertical Flexible) tasksTableCatalog as Relative(height=100%)
 			Heading tasksTableOperationsHeading
 			Item(height=80px,width=10%) tasksTableOperationsItem
 				Block(layout=Horizontal EndJustified)
-					MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty) Readonly
+					MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver) Readonly
 					MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
 
 	Block(format=spaced) taskComments as Popover
@@ -48,7 +48,7 @@ Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 							Text(value="Loading...", format=h4 airRight) label
 							Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="#33942F")
 						Block(layout=Horizontal EndJustified, format=airLeft)
-							MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty) Readonly
+							MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver) Readonly
 							MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
 					Text(format=body2) description
 					Text(format=body2) owner as Labeled("Responsable")

@@ -62,11 +62,13 @@ Template(layout=Horizontal, format=air) rolesToolbarTemplate
 
 	Dialog(title="Add role") addRoleDialog as Relative(width=60%, height=80%)
 		Block(layout=Vertical Flexible) content as Relative(height=100%, offsetHeight=50px)
-			Selector(format=doubleAirBottom) type as ComboBox(placeholder="Select type") Labeled("Type")
-			Selector(format=doubleAirBottom) definition as ComboBox(placeholder="Select class") Labeled("Class")
 			Block(layout=Horizontal, format=airBottom)
-				Block as Relative(width=50%) > Date(format=airRight) beginDate as Editable Labeled("Start date")
-				Block as Relative(width=50%) > Date(allowEmpty=true) endDate as Editable Labeled("End date")
+				Block(layout=Vertical Flexible, format=doubleAirRight)
+					Selector(format=doubleAirBottom) type as ComboBox(placeholder="Select type") Labeled("Type")
+					Selector(format=doubleAirBottom) definition as ComboBox(placeholder="Select class") Labeled("Class")
+				Block(format=rolesDateDialog)
+					Block > Date beginDate as Editable Labeled("Start date")
+					Block > Date(allowEmpty=true) endDate as Editable Labeled("End date")
 
 			Block(layout=Vertical Flexible) userRoleBlock as Conditional
 				SearchBox(collections = addRoleUserTable)

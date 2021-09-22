@@ -30,7 +30,7 @@ public class FederationUnitServiceListDatasource extends PageDatasource<Federati
 
     @Override
     public List<FederationUnitService> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<FederationUnitService> result = new ArrayList<>(federationUnitsServices(box, session, roleDefinition));
+        List<FederationUnitService> result = new ArrayList<>(filter(federationUnitsServices(box, session, roleDefinition), condition, filters));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -51,6 +51,12 @@ public class FederationUnitServiceListDatasource extends PageDatasource<Federati
         box.linkSession(session);
         ArrayList<FederationUnit> federationUnitList = new ArrayList<>(LayerHelper.federationLayer(session).loadPartners().get().values());
         return federationUnitList.stream().map(fu -> fu.getServiceList().get().values()).flatMap(Collection::stream).filter(service -> conforms(service, definition)).collect(Collectors.toList());
+    }
+
+    private List<FederationUnitService> filter(List<FederationUnitService> federationUnitsServices, String condition, List<Filter> filters) {
+        if (condition == null) return federationUnitsServices;
+        String[] lowerCondition = condition.toLowerCase().split(" ");
+        return federationUnitsServices.stream().filter(fu -> DatasourceHelper.matches(fu.getLabel(), lowerCondition) || DatasourceHelper.matches(fu.getName(), lowerCondition)).collect(Collectors.toList());
     }
 
     private static boolean conforms(FederationUnitService service, RoleDefinition definition) {

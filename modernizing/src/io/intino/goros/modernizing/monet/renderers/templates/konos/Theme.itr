@@ -101,4 +101,5 @@ def type(theme)
     Format("width:'350px'") viewSelectorStyle
     Format("bottom:'0',position:'absolute',marginBottom:'-29px',right:'0',marginRight:'-14px'") filterByTitleStyle
     Format("background:'#FFC46A',padding:'1px 10px',borderRadius:'3px',fontSize:'7pt'") prototypeAdviseStyle
+    Format("padding:'20px'") rolesDateDialog
 end

@@ -43,7 +43,7 @@ Template(layout=Vertical Flexible) rolesTableCatalog as Relative(height=100%)
 			Item(height=50px,width=20%) rolesTableDefinitionItem > Block(layout=Horizontal CenterJustified) > Text definition
 		Mold
 			Heading rolesTableTypeHeading > Block(layout=Horizontal CenterJustified) > Text(value="Type", translate=true)
-			Item(height=50px,width=10%) rolesTableTypeItem > Block(layout=Horizontal CenterJustified) > Text type
+			Item(height=50px,width=10%) rolesTableTypeItem > Block(layout=Horizontal CenterJustified) > Text(format=centered) type
 		Mold
 			Heading rolesTableNatureHeading > Block(layout=Horizontal CenterJustified) > Text(value="Nature", translate=true)
 			Item(height=50px,width=10%) rolesTableNatureItem > Block(layout=Horizontal CenterJustified) > Text nature

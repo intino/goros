@@ -11,6 +11,7 @@ import org.monet.space.kernel.model.Task;
 public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
     private TaskListDatasource.Inbox inbox;
     private boolean readonly = true;
+    private Task selected = null;
 
     public TasksTableCatalog(UnitBox box) {
         super(box);
@@ -44,6 +45,7 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
     public void init() {
         super.init();
         tasksTable.onAddItem(this::refreshTask);
+        taskComments.onOpen(e -> refreshTaskComments());
     }
 
     private void refreshTask(io.intino.alexandria.ui.displays.events.AddItemEvent event) {
@@ -51,6 +53,7 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
     }
 
     private void refreshTask(Task<?> task, TasksTableRow display) {
+        String comments = task.getComments();
         display.tasksTableLabelItem.label.value(task.getLabel());
         display.tasksTableLabelItem.state.value(translate(TaskHelper.state(task)));
         display.tasksTableLabelItem.state.backgroundColor(TaskHelper.stateColor(task));
@@ -58,8 +61,22 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
         display.tasksTableCountMessagesItem.countMessages.value(task.getNewMessagesCount());
         display.tasksTableCreateDateItem.createDate.value(task.getInternalCreateDate().toInstant());
         display.tasksTableUpdateDateItem.updateDate.value(task.getInternalUpdateDate().toInstant());
+        display.tasksTableOperationsItem.commentsTrigger.readonly(comments == null || comments.isEmpty());
+        display.tasksTableOperationsItem.commentsTrigger.bindTo(taskComments);
+        display.tasksTableOperationsItem.commentsTrigger.onOpen(e -> refreshTaskComments(task));
         display.tasksTableOperationsItem.urgent.onExecute(e -> toggleUrgent(task, display));
         display.tasksTableOperationsItem.urgent.color(task.isUrgent() ? "#F44335" : "#ddd");
+    }
+
+    private void refreshTaskComments(Task<?> task) {
+        selected = task;
+        refreshTaskComments();
+    }
+
+    private void refreshTaskComments() {
+        if (selected == null) return;
+        taskComments.comments.content(selected.getComments());
+        taskComments.comments.refresh();
     }
 
     private void toggleUrgent(Task<?> task, TasksTableRow display) {

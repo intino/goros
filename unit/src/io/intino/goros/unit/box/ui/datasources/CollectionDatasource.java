@@ -22,14 +22,28 @@ import static java.util.stream.Collectors.toList;
 public class CollectionDatasource extends PageDatasource<Node> {
     private final UnitBox box;
     private final UISession session;
-    private final Node set;
-    private final NodeViewProperty view;
+    private Node set;
+    private NodeViewProperty view;
+    private String condition;
+    private List<Filter> filters = new ArrayList<>();
 
     public CollectionDatasource(UnitBox box, UISession session, Node set, String view) {
         this.box = box;
         this.session = session;
         this.set = set;
         this.view = set.getDefinition().getNodeView(view);
+    }
+
+    public void node(Node set) {
+        this.set = set;
+    }
+
+    public void view(String view) {
+        this.view = set.getDefinition().getNodeView(view);
+    }
+
+    public long itemCount() {
+        return itemCount(condition, filters);
     }
 
     @Override
@@ -43,6 +57,8 @@ public class CollectionDatasource extends PageDatasource<Node> {
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
+        this.condition = condition;
+        this.filters = filters;
         box.linkSession(session);
         return LayerHelper.nodeLayer().requestNodeListItemsCount(set.getId(), request(condition, filters));
     }

@@ -25,8 +25,8 @@ def type(tasks)
             Block(layout=Horizontal Center) rightToolbar
                 SearchBox(collections = empty, format=airRight smallAirTop) search
                 Selector(selected="tableView", format=airRight) viewSelector as ToggleBox(size=Small)
-                    MaterialIconButton(title="Tabla", icon="ViewHeadline", size=Small) table as Option
-                    MaterialIconButton(title="Listado", icon="ViewList", size=Small) list as Option
+                    MaterialIcon(icon="ViewHeadline", format=black middleAirTop) table as Option
+                    MaterialIcon(icon="ViewList", format=black middleAirTop) list as Option
                 MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
                 MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option

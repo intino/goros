@@ -58,6 +58,13 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         return groups.stream().map(o -> new Group().label(o)).collect(toList());
     }
 
+    public static PlaceMark<Node> placeMarkOf(Node node) {
+        Location location = node.getLocation();
+        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location != null && location.getGeometry() != null ? location.getGeometry().toText() : null);
+        placeMark.item(node);
+        return placeMark;
+    }
+
     public static long itemCount(Node set) {
         return LayerHelper.nodeLayer().requestNodeListItemsCount(set.getId(), request(set));
     }
@@ -74,13 +81,6 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         NodeDataRequest request = new NodeDataRequest();
         request.setCodeReference(((SetDefinition)set.getDefinition()).getIndex().getValue());
         return request;
-    }
-
-    private PlaceMark<Node> placeMarkOf(Node node) {
-        Location location = node.getLocation();
-        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location != null && location.getGeometry() != null ? location.getGeometry().toText() : null);
-        placeMark.item(node);
-        return placeMark;
     }
 
     private Polygon boundingBoxOf(BoundingBox boundingBox) {

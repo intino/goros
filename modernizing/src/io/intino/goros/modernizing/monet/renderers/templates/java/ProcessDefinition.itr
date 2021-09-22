@@ -58,6 +58,10 @@ def type(process & embedded)
         }
 
         public void openView(String view) {
+            openView(view, true);
+        }
+
+        public void openView(String view, boolean readonly) {
         }
 
         public String selectedView() {

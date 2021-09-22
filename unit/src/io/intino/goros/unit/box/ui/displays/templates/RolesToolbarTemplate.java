@@ -43,8 +43,12 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
 
     private void initAddDialog() {
         accept.onExecute(e -> addRole());
-        type.onSelect(e -> updateDefinitions(RoleTypeGrouping.from((String) e.selection().get(0))));
+        type.onSelect(e -> {
+            if (e.selection().size() <= 0) return;
+            updateDefinitions(RoleTypeGrouping.from((String) e.selection().get(0)));
+        });
         definition.onSelect(e -> {
+            if (e.selection().size() <= 0) return;
             clearSelection();
             showRoleView();
         });
@@ -126,8 +130,11 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
 
     private void refreshAddDialog() {
         definition.clear();
+        definition.select();
         type.clear();
+        type.select();
         endDate.value(null);
+        hideViews();
         Arrays.stream(RoleTypeGrouping.values()).forEach(v -> type.add(v.title()));
     }
 

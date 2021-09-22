@@ -36,6 +36,10 @@ def type(documentdefinition & embedded)
         [$toolbar+navigableMethods]
 
         public void openView(String view) {
+            openView(view, true);
+        }
+
+        public void openView(String view, boolean readonly) {
         }
 
         public String selectedView() {

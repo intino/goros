@@ -12,6 +12,7 @@ import org.monet.space.kernel.model.Task;
 public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
     private TaskListDatasource.Inbox inbox;
     private boolean readonly = true;
+    private Task selected = null;
 
     public TasksListCatalog(UnitBox box) {
         super(box);
@@ -45,6 +46,7 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
     public void init() {
         super.init();
         tasksList.onAddItem(this::refreshTask);
+        taskComments.onOpen(e -> refreshTaskComments());
     }
 
     private void refreshTask(io.intino.alexandria.ui.displays.events.AddItemEvent event) {
@@ -52,6 +54,7 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
     }
 
     private void refreshTask(Task<?> task, TasksListItem display) {
+        String comments = task.getComments();
         display.label.value(task.getLabel());
         display.state.value(translate(TaskHelper.state(task)));
         display.state.backgroundColor(TaskHelper.stateColor(task));
@@ -60,8 +63,22 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
         display.countMessages.value(task.getNewMessagesCount());
         display.createDate.value(task.getInternalCreateDate().toInstant());
         display.updateDate.value(task.getInternalUpdateDate().toInstant());
+        display.commentsTrigger.readonly(comments == null || comments.isEmpty());
+        display.commentsTrigger.bindTo(taskComments);
+        display.commentsTrigger.onOpen(e -> refreshTaskComments(task));
         display.urgent.onExecute(e -> toggleUrgent(task, display));
         display.urgent.color(task.isUrgent() ? "#F44335" : "#ddd");
+    }
+
+    private void refreshTaskComments(Task<?> task) {
+        selected = task;
+        refreshTaskComments();
+    }
+
+    private void refreshTaskComments() {
+        if (selected == null) return;
+        taskComments.comments.content(selected.getComments());
+        taskComments.comments.refresh();
     }
 
     private void toggleUrgent(Task<?> task, TasksListItem display) {

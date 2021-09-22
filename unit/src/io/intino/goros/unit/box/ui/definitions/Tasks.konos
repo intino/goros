@@ -30,7 +30,12 @@ Template(layout=Vertical Flexible) tasksTableCatalog as Relative(height=100%)
 			Heading tasksTableOperationsHeading
 			Item(height=80px,width=10%) tasksTableOperationsItem
 				Block(layout=Horizontal EndJustified)
-					MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small) urgent as Action
+					MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty) Readonly
+					MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
+
+	Block(format=spaced) taskComments as Popover
+		Text(value="Más información", format=h6 airBottom)
+		HtmlViewer comments
 
 Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 	List(itemClass="org.monet.space.kernel.model.Task", scrollingMark=false) tasksList as Selectable(multiple=false)
@@ -42,7 +47,8 @@ Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 						Block(layout=Horizontal Flexible)
 							Text(value="Loading...", format=h4 airRight) label
 							Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="#33942F")
-						Block(layout=Horizontal EndJustified)
+						Block(layout=Horizontal EndJustified, format=airLeft)
+							MaterialIconButton(title="Más información", icon="MoreHoriz", size=Small, format=airRight) commentsTrigger as OpenPopover(popover=empty) Readonly
 							MaterialIconButton(title="Marcar/Desmarcar como urgente", icon="Alarm", size=Small, color="#ddd") urgent as Action
 					Text(format=body2) description
 					Text(format=body2) owner as Labeled("Responsable")
@@ -50,6 +56,10 @@ Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 					Block(layout=Horizontal, format=middleAirTop)
 						Date(format=body2 doubleAirRight) createDate as Labeled("Fecha creación")
 						Date(format=body2) updateDate as Labeled("Fecha actualización")
+
+	Block(format=spaced) taskComments as Popover
+		Text(value="Más información", format=h6 airBottom)
+		HtmlViewer comments
 
 Template(layout=Horizontal, format=air) tasksToolbarTemplate
 	//Button(title="Asignar...", highlight=Outline, size=Small, format=airRight) assign as Action

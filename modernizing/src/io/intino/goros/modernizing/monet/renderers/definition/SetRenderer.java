@@ -125,6 +125,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("definition", nameOf(definition()));
 		result.add("componentType", componentTypeFrame(viewProperty));
 		result.add("datasourceType", datasourceType(showProperty));
+		result.add("datasourceAddType", datasourceAddType(showProperty));
 		if (showProperty.getItems() != null) addItemsShow(viewProperty, showProperty, result);
 		else if (showProperty.getIndex() != null) addIndexShow(viewProperty, showProperty, result);
 		else if (showProperty.getOwnedPrototypes() != null) addIndexOwnedPrototypes(viewProperty, showProperty, result);
@@ -138,6 +139,12 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		else if (showProperty.getOwnedPrototypes() != null) return "NodeOwnedPrototypesDatasource";
 		else if (showProperty.getSharedPrototypes() != null) return "NodeSharedPrototypesDatasource";
 		return "CollectionDatasource";
+	}
+
+	private FrameBuilder datasourceAddType(SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty) {
+		FrameBuilder result = new FrameBuilder("datasourceAddType");
+		if (showProperty.getLocations() != null) result.add("map");
+		return result;
 	}
 
 	private void addItemsShow(SetDefinition.SetViewProperty viewProperty, SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty, FrameBuilder builder) {

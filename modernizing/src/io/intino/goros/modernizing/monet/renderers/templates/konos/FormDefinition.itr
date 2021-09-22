@@ -16,7 +16,7 @@ def type(show & layout) trigger(use)
 end
 
 def type(show & layout)
-    Block[ $absoluteFacet][ $relativeFacet]
+    Block(format=compositeFieldStyle)[ $absoluteFacet][ $relativeFacet]
         [$row...[$NL]]
 end
 
@@ -38,8 +38,8 @@ def type(layoutElement) trigger(use)
 end
 
 def type(layoutElement & section)
-    Block(layout=Vertical Flexible)
-        [Text(value="$label")]
+    Block(layout=Vertical Flexible, format=compositeFieldStyle)
+        [Text(value="$label", format=h5 airBottom)]
         [$row...[$NL]]
 end
 

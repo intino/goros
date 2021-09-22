@@ -67,6 +67,7 @@ Format("height:'100% !important'") fullHeight
 Format("minWidth:'48px'") minDrawerButtonSize
 Format("overflow:'auto'") autoOverflow
 Format("background:'white',padding:'10px'") dialog
+Format("textAlign:'center'") centered
 
 // OTHER
 Format("background:'white',padding:'10px 15px',borderRadius:'10px'") catalogIndexReferenceStyle

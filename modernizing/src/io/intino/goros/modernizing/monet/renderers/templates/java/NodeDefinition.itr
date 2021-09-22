@@ -43,6 +43,11 @@ def type(nodedefinition & embedded)
         [$toolbar+navigableMethods]
 
         public void openView(String view) {
+            openView(view, true);
+        }
+
+        public void openView(String view, boolean readonly) {
+            readonly(readonly);
             if (view == null) return;
             org.monet.metamodel.NodeViewProperty nodeView = node.getDefinition().getNodeView(view);
             if (nodeView == null) nodeView = node.getDefinition().getDefaultView();

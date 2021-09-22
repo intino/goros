@@ -11,6 +11,11 @@ def type(show) trigger(declaration)
 end
 
 def type(show)
+    public void addAndSelect(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
+        select(node);
+    }
+
     public void select(Node node) {
         io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
     }
@@ -41,6 +46,14 @@ def type(show)
         $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
         $definition+firstLowerCase~$view+firstUpperCase.reload();
     }
+end
+
+def type(datasourceAddType & map)
+    io.intino.goros.unit.box.ui.datasources.CollectionMapDatasource.placeMarkOf(node)
+end
+
+def type(datasourceAddType)
+    node
 end
 
 def type(componentType & items)
@@ -504,7 +517,7 @@ def type(setdefinition & embedded)
             [$view+refreshNodeCall...[$NL]]
         }
 
-        private void select(Node node) {
+        private void addAndSelect(Node node) {
             [$view+selectNodeCall...[$NL]]
         }
 
@@ -515,6 +528,7 @@ def type(setdefinition & embedded)
         }
 
         private $name+firstUpperCase~EmbeddedTemplate open(Node node) {
+            if (selectedChild == node) return this;
             refreshIfEditing();
             BlockConditional selectedView = selectedNodeView();
             selectedChild = selectedView != null && selectedView.isVisible() && node == null ? null : node;
@@ -576,14 +590,20 @@ def type(setdefinition & embedded)
         private void dispatch(org.monet.space.kernel.model.ClientOperation operation) {
             String name = operation.getName().toLowerCase();
             String view = name.equals("shownodeview") ? operation.getData().get("IdView").toString() : null;
+            String mode = operation.getData().get("Mode") != null ? operation.getData().get("Mode").toString() : null;
+            boolean readonly = mode == null || !mode.contains("edit.html");
             String id = operation.getData().get("Id").toString();
             Node<?> target = (name.equals("shownode") || name.equals("shownodeview")) ? LayerHelper.nodeLayer().loadNode(id) : null;
             if (target != null && target.getParent() == node) open(target);
             else NodeHelper.dispatchOperation(box().routeManager().routeDispatcher(), session(), operation);
-            if (view != null) openChildView(view);
+            openChildView(view, readonly);
         }
 
         private void openChildView(String id) {
+            openChildView(id, false);
+        }
+
+        private void openChildView(String id, boolean readonly) {
             [$toolbar+openChildViewCall...[$NL]]
         }
 
@@ -894,7 +914,7 @@ def type(collectionview & sharedprototypes) trigger(selectNodeCall)
 end
 
 def type(collectionview) trigger(selectNodeCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.addAndSelect(node);
 end
 
 def type(collectionview & sharedprototypes) trigger(selectViewCodeCall)
@@ -1027,7 +1047,7 @@ def type(add) trigger(hideCall)
 end
 
 def type(add) trigger(openChildViewCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.openView(id);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.openView(id, readonly);
 end
 
 def type(toolbar) trigger(editableAddCall)
@@ -1073,9 +1093,9 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
+        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1086,8 +1106,8 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         [$addPrototype+toolbarTemplate...[$NL]]
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
+        addAndSelect(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
@@ -1102,9 +1122,9 @@ def type(toolbar & singleton) trigger(editableMethods)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
+        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1115,8 +1135,8 @@ def type(toolbar & singleton) trigger(editableMethods)
         [$addPrototype+toolbarTemplate...[$NL]]
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
+        addAndSelect(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
@@ -1131,9 +1151,9 @@ def type(toolbar) trigger(editableMethods)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
+        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1144,8 +1164,8 @@ def type(toolbar) trigger(editableMethods)
         [$addPrototype+toolbarTemplate...[$NL]]
         if (result == null) return;
         nodeAdded = true;
-        refresh();
         open(result);
+        addAndSelect(result);
     }
     private void bindToolbars(io.intino.alexandria.ui.displays.components.Collection collection) {
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);

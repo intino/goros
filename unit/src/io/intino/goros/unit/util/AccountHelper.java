@@ -61,6 +61,7 @@ public class AccountHelper {
 
 	public static int activeTaskBoardTasksCount(UISession session) {
 		Account account = AccountHelper.account(session);
+		if (account == null) return 0;
 		TaskLayer taskLayer = LayerHelper.taskLayer();
 		TaskSearchRequest request = new TaskSearchRequest();
 		request.addParameter(Task.Parameter.SITUATION, Task.Situation.ACTIVE);
@@ -70,6 +71,7 @@ public class AccountHelper {
 
 	public static int aliveTaskTrayTasksCount(UISession session) {
 		Account account = AccountHelper.account(session);
+		if (account == null) return 0;
 		TaskLayer taskLayer = LayerHelper.taskLayer();
 		TaskSearchRequest request = new TaskSearchRequest();
 		request.addParameter(Task.Parameter.SITUATION, Task.Situation.ALIVE);

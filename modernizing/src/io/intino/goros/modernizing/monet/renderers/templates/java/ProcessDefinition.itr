@@ -433,7 +433,7 @@ def type(view) trigger(refreshViewMethod)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
-        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(true);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
 end

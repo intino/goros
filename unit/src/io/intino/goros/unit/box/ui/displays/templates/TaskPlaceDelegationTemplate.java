@@ -4,7 +4,11 @@ import io.intino.alexandria.ui.displays.Display;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.*;
+import org.monet.bpi.java.FieldBooleanImpl;
+import org.monet.bpi.java.FieldDateImpl;
+import org.monet.bpi.java.FieldTextImpl;
 import org.monet.metamodel.*;
+import org.monet.metamodel.internal.TaskOrderDefinition;
 import org.monet.space.kernel.machines.ttm.behavior.ProviderBehavior;
 import org.monet.space.kernel.model.*;
 import io.intino.goros.unit.box.ui.DisplayProvider;
@@ -152,9 +156,24 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private void setup() {
         notifyUser(translate("Setting up delegation..."), UserMessage.Type.Loading);
         solveSetup.readonly(true);
+        fillOrder();
         task.getProcess().setupDelegationAction();
         solveSetup.readonly(false);
         notifyUser(translate("Delegation setup"), UserMessage.Type.Success);
+    }
+
+    private void fillOrder() {
+        TaskOrder order = order();
+        if (order == null) return;
+        Node<?> setupNode = setupNode(order);
+        if (setupNode == null) return;
+        org.monet.bpi.types.Date startDate = FieldDateImpl.get(setupNode.getAttribute(TaskOrderDefinition.SuggestedStartDateProperty.CODE));
+        org.monet.bpi.types.Date endDate = FieldDateImpl.get(setupNode.getAttribute(TaskOrderDefinition.SuggestedEndDateProperty.CODE));
+        order.setSuggestedStartDate(startDate != null ? startDate.getValue() : null);
+        order.setSuggestedEndDate(endDate != null ? endDate.getValue() : null);
+        order.setComments(FieldTextImpl.get(setupNode.getAttribute(TaskOrderDefinition.CommentsProperty.CODE)));
+        order.setUrgent(FieldBooleanImpl.get(setupNode.getAttribute(TaskOrderDefinition.UrgentProperty.CODE)));
+        LayerHelper.taskLayer().saveTaskOrder(order);
     }
 
     private TaskOrder order() {

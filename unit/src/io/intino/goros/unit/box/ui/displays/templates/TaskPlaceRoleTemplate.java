@@ -29,6 +29,10 @@ public class TaskPlaceRoleTemplate extends AbstractTaskPlaceRoleTemplate<UnitBox
         return this;
     }
 
+    public void readonly(boolean value) {
+        label.readonly(value);
+    }
+
     @Override
     public void init() {
         super.init();
@@ -41,5 +45,4 @@ public class TaskPlaceRoleTemplate extends AbstractTaskPlaceRoleTemplate<UnitBox
         label.title(role.getLabel());
         label.affirmed(confirmText);
     }
-
 }

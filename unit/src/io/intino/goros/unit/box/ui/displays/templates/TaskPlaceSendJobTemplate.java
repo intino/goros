@@ -4,10 +4,15 @@ import io.intino.alexandria.ui.displays.Display;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.*;
+import org.monet.bpi.java.FieldBooleanImpl;
+import org.monet.bpi.java.FieldDateImpl;
+import org.monet.bpi.java.FieldTextImpl;
+import org.monet.bpi.types.Date;
 import org.monet.metamodel.Distribution;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.RoleDefinition;
 import org.monet.metamodel.SendJobActionProperty;
+import org.monet.metamodel.internal.TaskOrderDefinition;
 import org.monet.space.kernel.model.*;
 import io.intino.goros.unit.box.ui.DisplayProvider;
 
@@ -41,7 +46,7 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
         waitingView.onShow(e -> refreshWaitingView());
         pendingView.onShow(e -> {
             pendingView.setupBlock.setupToolbar.solveSetup.onExecute(e1 -> setup());
-            pendingView.unAssignedRole.onExecute(e1 -> selectNone());
+            pendingView.rolesSetupBlock.unAssignedRole.onExecute(e1 -> selectNone());
             refreshPendingView();
         });
         failureView.onShow(e -> refreshFailureView());
@@ -76,13 +81,15 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
     }
 
     private void refreshSelectRoleStep(TaskOrder order) {
-        if (order != null && order.getRole() != null) return;
+        boolean roleSelected = order != null && order.getRole() != null;
+        pendingView.rolesSetupBlock.visible(!roleSelected);
+        if (roleSelected) return;
 
         RoleList roleList = roles();
-        pendingView.openRoles.visible(roleList.getTotalCount() <= 0);
-        pendingView.openRoles.address(path -> "/permisos");
-        pendingView.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
-        pendingView.unAssignedRole.affirmed(translate(DisplayHelper.requireConfirmationMessage(property)));
+        pendingView.rolesSetupBlock.openRoles.visible(roleList.getTotalCount() <= 0);
+        pendingView.rolesSetupBlock.openRoles.address(path -> "/permisos");
+        pendingView.rolesSetupBlock.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
+        pendingView.rolesSetupBlock.unAssignedRole.affirmed(translate(DisplayHelper.requireConfirmationMessage(property)));
         pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
 
         if (roleList.getTotalCount() <= 0) {
@@ -92,17 +99,19 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
         }
 
         pendingView.pendingMessage.value(translate("Select user to whom send order:"));
-        pendingView.roles.clear();
-        roleList.get().values().forEach(role -> fill(role, pendingView.roles.add()));
+        pendingView.rolesSetupBlock.roles.clear();
+        roleList.get().values().forEach(role -> fill(role, pendingView.rolesSetupBlock.roles.add()));
     }
 
     private void refreshSetupStep(TaskOrder order) {
-        if (order == null || order.getRole() == null || order.getSetupNodeId() == null) return;
+        boolean roleNotSelected = order == null || order.getRole() == null || order.getSetupNodeId() == null;
+        pendingView.setupBlock.visible(!roleNotSelected);
+        if (roleNotSelected) return;
         Node setupNode = setupNode(order);
         Role role = order.getRole();
 
-        pendingView.openRoles.visible(false);
-        pendingView.unAssignedRole.visible(false);
+        pendingView.rolesSetupBlock.openRoles.visible(false);
+        pendingView.rolesSetupBlock.unAssignedRole.visible(false);
 
         if (setupNode == null)
             pendingView.pendingMessage.value(translate("Sending order..."));
@@ -128,24 +137,44 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
     private void fill(Role role, TaskPlaceRoleTemplate view) {
         view.role(role);
         view.confirmText(translate(DisplayHelper.requireConfirmationMessage(property)));
-        view.onSelect(e -> select(role));
+        view.onSelect(e -> {
+            view.readonly(true);
+            select(role);
+        });
         view.refresh();
     }
 
     private void select(Role role) {
         task.getProcess().selectSendJobActionRole(role);
+        refresh();
     }
 
     private void selectNone() {
+        unAssignedRole.readonly(true);
         select(null);
     }
 
     private void setup() {
         notifyUser(translate("Setting up job..."), UserMessage.Type.Loading);
         solveSetup.readonly(true);
+        fillOrder();
         task.getProcess().setupSendJobAction();
         solveSetup.readonly(false);
         notifyUser(translate("Job setup"), UserMessage.Type.Success);
+    }
+
+    private void fillOrder() {
+        TaskOrder order = order();
+        if (order == null) return;
+        Node<?> setupNode = setupNode(order);
+        if (setupNode == null) return;
+        Date startDate = FieldDateImpl.get(setupNode.getAttribute(TaskOrderDefinition.SuggestedStartDateProperty.CODE));
+        Date endDate = FieldDateImpl.get(setupNode.getAttribute(TaskOrderDefinition.SuggestedEndDateProperty.CODE));
+        order.setSuggestedStartDate(startDate != null ? startDate.getValue() : null);
+        order.setSuggestedEndDate(endDate != null ? endDate.getValue() : null);
+        order.setComments(FieldTextImpl.get(setupNode.getAttribute(TaskOrderDefinition.CommentsProperty.CODE)));
+        order.setUrgent(FieldBooleanImpl.get(setupNode.getAttribute(TaskOrderDefinition.UrgentProperty.CODE)));
+        LayerHelper.taskLayer().saveTaskOrder(order);
     }
 
     private TaskOrder order() {

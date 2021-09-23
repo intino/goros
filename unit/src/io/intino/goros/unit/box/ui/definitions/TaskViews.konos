@@ -58,10 +58,11 @@ Template(layout=Vertical Flexible) taskPlaceSendJobTemplate as Relative(height=1
 		Text(value="Sending to selected worker...", translate=true)
 	Block pendingView as Conditional
 		Text(format=grey) pendingMessage
-		Link(title="Ver roles") openRoles as Action Addressable(addressableResource=empty)
-		TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
-		Link(title="Unassigned", format=middleAirTop middleAirBottom doubleAirLeft) unAssignedRole as Action
-		Block(format=doubleAirTop) setupBlock
+		Block(visible=false) rolesSetupBlock
+			Link(title="Ver roles") openRoles as Action Addressable(addressableResource=empty)
+			TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
+			Link(title="Unassigned", format=middleAirTop middleAirBottom) unAssignedRole as Action
+		Block(format=doubleAirTop, visible=false) setupBlock
 			DisplayStamp(display=empty) setupFrame
 			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
 	Block failureView as Conditional

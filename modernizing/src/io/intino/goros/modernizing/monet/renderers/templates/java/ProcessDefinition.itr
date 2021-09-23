@@ -78,7 +78,6 @@ def type(process & embedded)
             previous.visible(collection != null);
             next.bindTo(collection);
             next.visible(collection != null);
-            open.visible(collection != null);
         }
 
         public void showLabel(boolean value) {
@@ -127,16 +126,10 @@ def type(process & embedded)
         }
 
         private void refreshToolbar() {
-            open.address(this::preparePath);
             toolbar.task(task);
             toolbar.readonly(readonly);
             toolbar.refresh();
             label.value(task.getLabel());
-        }
-
-        private String preparePath(String path) {
-            if (task == null) return path;
-            return path.replace(":name", io.intino.goros.unit.util.TaskHelper.nameOf(task)).replace(":task", task.getId()).replace(":inbox", inboxPath());
         }
 
         private String inboxPath() {

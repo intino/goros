@@ -56,6 +56,7 @@ def type(toolbar) trigger(import)
 end
 
 def type(toolbar & singleton) trigger(editable)
+    [$operationsGroup]
     [$operation...[$NL]]
     [$addList+option]
     Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
@@ -63,6 +64,7 @@ def type(toolbar & singleton) trigger(editable)
 end
 
 def type(toolbar) trigger(editable)
+    [$operationsGroup]
     [$operation...[$NL]]
     [$addList+option]
     Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
@@ -84,7 +86,6 @@ end
 def type(toolbar & collectable) trigger(navigable)
     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-    MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) open as Action Addressable($module+firstUpperCase~Elements.$resourceType)
 end
 
 def type(toolbar) trigger(navigable)
@@ -93,8 +94,16 @@ end
 def type(addList)
 end
 
+def type(operationsGroup)
+    SplitButton(title = "Operaciones", options = [$operation+option...[ ]], defaultOption = "$defaultOperation", size=Small, format=airRight, visible=false) operaciones
+end
+
 def type(operation & download)
     Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Download[ Affirmed("$confirmText")]
+end
+
+def type(operation) trigger(option)
+    "$label"
 end
 
 def type(operation)

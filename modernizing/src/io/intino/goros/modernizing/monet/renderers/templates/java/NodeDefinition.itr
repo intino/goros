@@ -240,6 +240,7 @@ def type(nodedefinition)
 end
 
 def type(toolbar & singleton) trigger(editableInitCall)
+    [$operationsGroup+editableInitCall]
     [$operation+editableInitCall...[$NL]]
 end
 
@@ -249,6 +250,7 @@ def type(toolbar & collectable) trigger(navigableInitCall)
 end
 
 def type(toolbar & singleton) trigger(editableRefreshCall)
+    [$operationsGroup+editableRefreshCall]
     [$operation+editableRefreshCall...[$NL]]
 end
 
@@ -278,6 +280,7 @@ def type(toolbar) trigger(navigableEvents)
 end
 
 def type(toolbar & singleton) trigger(editableMethods)
+    [$operationsGroup+editableMethods]
 end
 
 def type(toolbar & singleton) trigger(removeListener)
@@ -302,11 +305,13 @@ def type(toolbar) trigger(editableDeclaration)
 end
 
 def type(toolbar) trigger(editableInitCall)
+    [$operationsGroup+editableInitCall]
     [$operation+editableInitCall...[$NL]]
     remove.onExecute(e -> removeNode());
 end
 
 def type(toolbar) trigger(editableRefreshCall)
+    [$operationsGroup+editableRefreshCall]
     [$operation+editableRefreshCall...[$NL]]
     remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly());
 end
@@ -332,6 +337,7 @@ def type(toolbar) trigger(editableEvents)
 end
 
 def type(toolbar) trigger(editableMethods)
+    [$operationsGroup+editableMethods]
     private void removeNode() {
         String message = io.intino.goros.unit.util.NodeHelper.canRemove(node);
         if (message != null) {
@@ -346,7 +352,6 @@ end
 def type(toolbar & collectable) trigger(navigableRefreshCall)
     label.value(node.getLabel());
     prototypeAdvise.visible(node.isPrototype());
-    open.address(path -> path.replace(":name", "$definition").replace(":id", node.getId()));
 end
 
 def type(toolbar) trigger(navigableRefreshCall)
@@ -358,7 +363,6 @@ def type(toolbar & collectable) trigger(navigableMethods)
         previous.visible(collection != null);
         next.bindTo(collection);
         next.visible(collection != null);
-        open.visible(collection != null);
     }
     public void showLabel(boolean value) {
         label.visible(value);
@@ -377,6 +381,30 @@ end
 def type(toolbar) trigger(navigableMethods)
 end
 
+def type(operationsGroup) trigger(editableMethods)
+    private List<String> addOptions() {
+        java.util.List<String> result = new java.util.ArrayList<>();
+        [$operation+addOptionsMethodCall...[$NL]]
+        return result;
+    }
+
+    private void executeOperation(String option) {
+        [$operation+executeMethodCall...[$NL]]
+    }
+end
+
+def type(operationsGroup) trigger(editableInitCall)
+    operaciones.onExecute(e -> executeOperation(e.option()));
+end
+
+def type(operation) trigger(addOptionsMethodCall)
+    if (io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype()) result.add("$label");
+end
+
+def type(operation) trigger(executeMethodCall)
+    if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), dispatchOperationListener);
+end
+
 def type(operation & download) trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.downloadOperation($name+lowerCase, node, "$name"));
 end
@@ -389,6 +417,11 @@ end
 
 def type(operation) trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed"), $dispatchOperationListener));
+end
+
+def type(operationsGroup) trigger(editableRefreshCall)
+    operaciones.options(addOptions());
+    operaciones.visible(addOptions().size() > 0);
 end
 
 def type(operation) trigger(editableRefreshCall)

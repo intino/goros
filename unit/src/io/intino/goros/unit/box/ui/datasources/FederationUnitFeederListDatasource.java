@@ -9,6 +9,7 @@ import io.intino.goros.unit.util.LayerHelper;
 import org.monet.metamodel.RoleDefinition;
 import org.monet.space.kernel.model.FederationUnit;
 import org.monet.space.kernel.model.FederationUnitFeeder;
+import org.monet.space.kernel.model.FederationUnitService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +31,7 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
 
     @Override
     public List<FederationUnitFeeder> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
-        List<FederationUnitFeeder> result = new ArrayList<>(federationUnitsFeeders(box, session, roleDefinition));
+        List<FederationUnitFeeder> result = new ArrayList<>(filter(federationUnitsFeeders(box, session, roleDefinition), condition, filters));
         int from = Math.min(start, result.size());
         int end = Math.min(start + count, result.size());
         return result.subList(from, end);
@@ -51,6 +52,12 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
         box.linkSession(session);
         ArrayList<FederationUnit> federationUnitList = new ArrayList<>(LayerHelper.federationLayer(session).loadPartners().get().values());
         return federationUnitList.stream().map(fu -> fu.getFeederList().get().values()).flatMap(Collection::stream).filter(feeder -> conforms(feeder, definition)).collect(Collectors.toList());
+    }
+
+    private List<FederationUnitFeeder> filter(List<FederationUnitFeeder> federationUnitFeeders, String condition, List<Filter> filters) {
+        if (condition == null) return federationUnitFeeders;
+        String[] lowerCondition = condition.toLowerCase().split(" ");
+        return federationUnitFeeders.stream().filter(fu -> DatasourceHelper.matches(fu.getLabel(), lowerCondition) || DatasourceHelper.matches(fu.getName(), lowerCondition)).collect(Collectors.toList());
     }
 
     private static boolean conforms(FederationUnitFeeder feeder, RoleDefinition definition) {

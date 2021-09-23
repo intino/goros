@@ -3,7 +3,6 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
-import io.intino.goros.modernizing.monet.renderers.templates.java.TasksTemplate;
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.*;
@@ -13,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionRenderer<D> {
 
@@ -23,6 +23,8 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	protected abstract FrameBuilder viewFrame(NodeViewProperty view);
 	protected abstract boolean hasTemplate(NodeViewProperty view);
 	protected abstract boolean isVisibleOnRevision(NodeViewProperty view);
+
+	private static final int MaxOperationsInToolbar = 2;
 
 	@Override
 	public void write() {
@@ -111,7 +113,31 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 	}
 
 	protected void addOperations(D definition, FrameBuilder result) {
-		definition.getOperationList().forEach(o -> addOperation(o, result));
+		List<NodeDefinition.OperationProperty> allowGroupOperations = allowGroupOperations(definition);
+		if (allowGroupOperations.size() >= MaxOperationsInToolbar) {
+			addOperationsGroup(definition, allowGroupOperations, result);
+			disallowGroupOperations(definition).forEach(o -> addOperation(o, result));
+		}
+		else definition.getOperationList().forEach(o -> addOperation(o, result));
+	}
+
+	private List<NodeDefinition.OperationProperty> allowGroupOperations(D definition) {
+		return definition.getOperationList().stream().filter(this::allowGrouping).collect(Collectors.toList());
+	}
+
+	private List<NodeDefinition.OperationProperty> disallowGroupOperations(D definition) {
+		return definition.getOperationList().stream().filter(o -> !allowGrouping(o)).collect(Collectors.toList());
+	}
+
+	private boolean allowGrouping(NodeDefinitionBase.OperationProperty o) {
+		return !isDownloadOperation(o) && o.getConfirmation() == null;
+	}
+
+	protected void addOperationsGroup(D definition, List<NodeDefinitionBase.OperationProperty> groupableOperations, FrameBuilder builder) {
+		FrameBuilder result = new FrameBuilder("operationsGroup");
+		groupableOperations.forEach(o -> addOperation(o, result));
+		result.add("defaultOperation", groupableOperations.get(0).getLabel());
+		builder.add("operationsGroup", result);
 	}
 
 	protected void addOperation(NodeDefinitionBase.OperationProperty operation, FrameBuilder builder) {

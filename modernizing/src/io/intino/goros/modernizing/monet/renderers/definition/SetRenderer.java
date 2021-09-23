@@ -68,6 +68,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		LocationsProperty locations = viewProperty.getShow().getLocations();
 		if (locations == null) return;
 		if (locations.getLayer() == LocationsProperty.LayerEnumeration.HEAT) builder.add("heatmap", "Heatmap");
+		else builder.add("clustermap", "Cluster");
 	}
 
 	private int calculateHeight(SetDefinition.SetViewProperty viewProperty) {
@@ -185,15 +186,19 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	}
 
 	private void addItemsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 30));
+		builder.add("attribute", attributeTitleFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 30));
 		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_DESCRIPTION, "Descripción", 30));
 		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_CREATE_DATE, "Fecha creación", 15));
 		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_UPDATE_DATE, "Fecha actualización", 15));
 	}
 
+	private boolean isLocations(SetDefinition.SetViewProperty viewProperty) {
+		return viewProperty.getShow().getLocations() != null;
+	}
+
 	private void addDescriptorAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		DescriptorDefinition definition = new DescriptorDefinition();
-		addIndexViewAttribute("title", attributeFrame(viewProperty, definition, new Ref("label"), 1), builder);
+		addIndexViewAttribute("title", attributeTitleFrame(viewProperty, definition, new Ref("label"), 1), builder);
 		addIndexViewAttribute("line", attributeFrame(viewProperty, definition, new Ref("create_date"), 1), builder);
 	}
 
@@ -212,7 +217,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		int countAttributes = RendererHelper.countAttributes(indexView);
-		addIndexViewAttribute("title", show.getTitle() != null ? attributeFrame(viewProperty, definition, show.getTitle(), countAttributes) : attributeFrame(viewProperty, definition, new Ref("label"), countAttributes), builder);
+		addIndexViewAttribute("title", show.getTitle() != null ? attributeTitleFrame(viewProperty, definition, show.getTitle(), countAttributes) : attributeFrame(viewProperty, definition, new Ref("label"), countAttributes), builder);
 		if (show.getPicture() != null) addIndexViewAttribute("picture", attributeFrame(viewProperty, definition, show.getPicture(), countAttributes), builder);
 		if (show.getIcon() != null) addIndexViewAttribute("icon", attributeFrame(viewProperty, definition, show.getIcon(), countAttributes), builder);
 		show.getHighlight().forEach(h -> addIndexViewAttribute("highlight", attributeFrame(viewProperty, definition, h, countAttributes), builder));
@@ -285,14 +290,10 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return result;
 	}
 
-	private String shortName(SetDefinition.SetViewProperty viewProperty, AttributeProperty attributeProperty) {
-		return shortName(viewProperty, normalize(attributeProperty.getName()));
-	}
-
-	private String shortName(NodeViewProperty viewProperty, String attributeName) {
-		String name = nameOf(definition());
-		String viewName = nameOf(viewProperty);
-		return RendererHelper.shortName(name) + RendererHelper.shortName(viewName) + attributeName;
+	private FrameBuilder attributeTitleFrame(SetDefinition.SetViewProperty viewProperty, IndexDefinition definition, Ref attribute, int countAttributes) {
+		FrameBuilder result = attributeFrame(viewProperty, definition, attribute, countAttributes);
+		if (isLocations(viewProperty)) result.add("location");
+		return result;
 	}
 
 	private FrameBuilder attributeFrame(NodeViewProperty viewProperty, String key, String label, int width) {
@@ -307,6 +308,23 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("label", clean(label));
 		result.add("width", width);
 		return result;
+	}
+
+	private FrameBuilder attributeTitleFrame(NodeViewProperty viewProperty, String key, String label, int width) {
+		FrameBuilder result = attributeFrame(viewProperty, key, label, width);
+		if (!(viewProperty instanceof SetDefinition.SetViewProperty)) return result;
+		if (isLocations((SetDefinition.SetViewProperty) viewProperty)) result.add("location");
+		return result;
+	}
+
+	private String shortName(SetDefinition.SetViewProperty viewProperty, AttributeProperty attributeProperty) {
+		return shortName(viewProperty, normalize(attributeProperty.getName()));
+	}
+
+	private String shortName(NodeViewProperty viewProperty, String attributeName) {
+		String name = nameOf(definition());
+		String viewName = nameOf(viewProperty);
+		return RendererHelper.shortName(name) + RendererHelper.shortName(viewName) + attributeName;
 	}
 
 	private String materialIcon(NodeViewProperty viewProperty) {

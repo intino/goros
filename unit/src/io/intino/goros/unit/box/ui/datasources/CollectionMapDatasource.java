@@ -6,12 +6,16 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import io.intino.alexandria.ui.model.PlaceMark;
 import io.intino.alexandria.ui.model.datasource.*;
+import io.intino.alexandria.ui.model.locations.Point;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
+import io.intino.goros.unit.util.DictionaryHelper;
 import io.intino.goros.unit.util.LayerHelper;
 import io.intino.goros.unit.util.NodeHelper;
+import org.monet.metamodel.AbstractManifestBase;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.SetDefinition;
+import org.monet.space.kernel.model.BusinessUnit;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.NodeDataRequest;
 import org.monet.space.kernel.model.map.GeometryHelper;
@@ -19,6 +23,7 @@ import org.monet.space.kernel.model.map.Location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -43,7 +48,7 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         request.setLimit(1000000);
         request.setBoundingBox(boundingBoxOf(boundingBox));
         box.linkSession(session);
-        return new ArrayList<>(LayerHelper.nodeLayer().requestNodeListItems(set.getId(), request).values().stream().map(node -> placeMarkOf(node)).collect(toList()));
+        return new ArrayList<>(LayerHelper.nodeLayer().requestNodeListItems(set.getId(), request).values().stream().map(CollectionMapDatasource::placeMarkOf).collect(toList()));
     }
 
     @Override
@@ -59,10 +64,28 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
     }
 
     public static PlaceMark<Node> placeMarkOf(Node node) {
-        Location location = node.getLocation();
-        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location != null && location.getGeometry() != null ? location.getGeometry().toText() : null);
+        String location = locationOf(node);
+        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location);
         placeMark.item(node);
         return placeMark;
+    }
+
+    private static String locationOf(Node node) {
+        Location location = node.getLocation();
+        if (location != null) return location.getGeometry().toText();
+        return defaultLocation();
+    }
+
+    private static String defaultLocation() {
+        AbstractManifestBase.DefaultLocationProperty defaultLocation = DictionaryHelper.defaultLocation();
+        if (defaultLocation == null) return null;
+        return new Point(defaultLocation.getLatitude() + randomMargin(), defaultLocation.getLongitude() + randomMargin()).toWkt();
+    }
+
+    private static double randomMargin() {
+        Random generator = new Random();
+        int number = generator.nextInt(7);
+        return number / 100.0;
     }
 
     public static long itemCount(Node set) {

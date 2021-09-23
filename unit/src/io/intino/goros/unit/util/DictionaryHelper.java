@@ -3,11 +3,19 @@ package io.intino.goros.unit.util;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.SetDefinition.SetViewProperty;
+import org.monet.space.kernel.model.BusinessUnit;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.Task;
 
 public class DictionaryHelper {
+
+    public static AbstractManifestBase.DefaultLocationProperty defaultLocation() {
+        BusinessUnit businessUnit = BusinessUnit.getInstance();
+        AbstractManifestBase.DefaultLocationProperty defaultLocation = businessUnit.getDistribution().getDefaultLocation();
+        if (defaultLocation == null) defaultLocation = businessUnit.getBusinessModel().getProject().getDefaultLocation();
+        return defaultLocation;
+    }
 
     public static NodeViewProperty view(Node node, String code) {
         return node.getDefinition().getViewDefinitionList().stream().filter(v -> v.getCode().equals(code)).findFirst().orElse(null);

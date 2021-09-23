@@ -57,7 +57,11 @@ public class FederationUnitFeederListDatasource extends PageDatasource<Federatio
     private List<FederationUnitFeeder> filter(List<FederationUnitFeeder> federationUnitFeeders, String condition, List<Filter> filters) {
         if (condition == null) return federationUnitFeeders;
         String[] lowerCondition = condition.toLowerCase().split(" ");
-        return federationUnitFeeders.stream().filter(fu -> DatasourceHelper.matches(fu.getLabel(), lowerCondition) || DatasourceHelper.matches(fu.getName(), lowerCondition)).collect(Collectors.toList());
+        return federationUnitFeeders.stream().filter(fu ->
+                DatasourceHelper.matches(fu.getLabel(), lowerCondition) ||
+                DatasourceHelper.matches(fu.getName(), lowerCondition) ||
+                DatasourceHelper.matches(DatasourceHelper.partnerLabel(session, fu), lowerCondition)
+        ).collect(Collectors.toList());
     }
 
     private static boolean conforms(FederationUnitFeeder feeder, RoleDefinition definition) {

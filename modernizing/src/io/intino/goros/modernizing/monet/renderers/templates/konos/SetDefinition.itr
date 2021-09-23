@@ -105,7 +105,7 @@ end
 
 def type(nodeview & locations) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase]
+        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
             Zoom(defaultZoom = 6, min = 1, max = 18)
             Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
             noItemsMessage = "No hay elementos"
@@ -169,6 +169,10 @@ def type(attribute) trigger(mold)
     Mold
         Heading $shortName+firstLowerCase~Heading > Text(value="$label")
         Item(height=50px,width=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase
+end
+
+def type(attribute & location) trigger(title)
+    Link(title="Cargando...", format=h4) $name+firstLowerCase
 end
 
 def type(attribute) trigger(title)

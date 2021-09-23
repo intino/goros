@@ -96,6 +96,12 @@ def type(attribute & integer)
     item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 end
 
+def type(attribute & location)
+    String title = io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code");
+    item.$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
+    item.$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))));
+end
+
 def type(attribute)
     item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end

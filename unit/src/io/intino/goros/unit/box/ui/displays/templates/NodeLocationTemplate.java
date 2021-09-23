@@ -12,6 +12,7 @@ import io.intino.goros.unit.util.LayerHelper;
 import org.monet.metamodel.AbstractManifestBase;
 import org.monet.metamodel.NodeViewProperty;
 import org.monet.space.kernel.model.BusinessUnit;
+import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.map.GeometryHelper;
 
@@ -42,7 +43,7 @@ public class NodeLocationTemplate extends AbstractNodeLocationTemplate<UnitBox> 
     @Override
     public void init() {
         super.init();
-        AbstractManifestBase.DefaultLocationProperty location = BusinessUnit.getInstance().getDistribution().getDefaultLocation();
+        AbstractManifestBase.DefaultLocationProperty location = DictionaryHelper.defaultLocation();
         this.location.onChange(e -> saveLocation(e.value()));
         if (location != null) this.location.center(location.getLatitude(), location.getLongitude());
     }
@@ -52,6 +53,7 @@ public class NodeLocationTemplate extends AbstractNodeLocationTemplate<UnitBox> 
         super.refresh();
         org.monet.space.kernel.model.map.Location location = node.getLocation();
         this.location.value(location != null && location.getGeometry() != null ? location.getGeometry().toText() : null);
+        if (location != null) this.location.center(location.getGeometry().getCentroid().getX(), location.getGeometry().getCentroid().getY());
         this.location.readonly(readonly);
     }
 

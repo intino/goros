@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "host": "",
-  "basePath": "/mobileservice",
+  "basePath": "/mobile/api",
   "schemes": [
     "https"
   ],

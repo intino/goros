@@ -2,7 +2,7 @@ dsl Konos
 
 Service fmsservice as REST(host = "", port = "{port}")
 	title = "Mobile API"
-	basePath = "/mobileservice"
+	basePath = "/mobile/api"
 
 	//AuthenticatedWithToken
 

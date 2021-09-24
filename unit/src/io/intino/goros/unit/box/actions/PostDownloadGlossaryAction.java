@@ -12,9 +12,7 @@ public class PostDownloadGlossaryAction extends MobileNonTypedAction {
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            DownloadGlossaryRequest deserialized = serializer.read(DownloadGlossaryRequest.class, request);
-            new ActionDoDownloadGlossary().execute(request(parameters(String.valueOf(ActionCode.DownloadGlossary), deserialized)), response);
+            new ActionDoDownloadGlossary().execute(request(parameters(String.valueOf(ActionCode.DownloadGlossary), request)), response);
         } catch (Exception ignored) {
         }
         return resource();

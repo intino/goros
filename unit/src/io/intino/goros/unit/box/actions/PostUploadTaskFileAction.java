@@ -7,7 +7,6 @@ import org.monet.space.mobile.control.actions.ActionDoUploadTaskFile;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class PostUploadTaskFileAction extends MobileNonTypedAction {
 	public io.intino.alexandria.core.Box box;
 	public Resource request;
@@ -19,6 +18,7 @@ public class PostUploadTaskFileAction extends MobileNonTypedAction {
             Map<String, Object> p = new HashMap<>();
             p.put("id", id);
             p.put("extra", extra);
+            p.put("request", request);
             new ActionDoUploadTaskFile().execute(request(parameters(String.valueOf(ActionCode.UploadTaskFile), p)), response);
         } catch (Exception ignored) {
         }

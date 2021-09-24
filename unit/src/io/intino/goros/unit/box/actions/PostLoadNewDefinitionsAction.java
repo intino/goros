@@ -13,9 +13,7 @@ public class PostLoadNewDefinitionsAction extends MobileTypedAction {
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            LoadNewDefinitionsRequest deserialized = serializer.read(LoadNewDefinitionsRequest.class, request);
-            Response result = new Response(new ActionDoLoadNewDefinitions().execute(request(parameters(String.valueOf(ActionCode.LoadNewDefinitions), deserialized)), response));
+            Response result = new Response(new ActionDoLoadNewDefinitions().execute(request(parameters(String.valueOf(ActionCode.LoadNewDefinitions), request)), response));
             writeResultInResponse(result);
         } catch (Exception ignored) {
         }

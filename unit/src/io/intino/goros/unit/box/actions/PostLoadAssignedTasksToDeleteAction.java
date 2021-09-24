@@ -7,16 +7,13 @@ import org.monet.space.mobile.control.actions.ActionDoLoadAssignedTasksToDelete;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-
 public class PostLoadAssignedTasksToDeleteAction extends MobileTypedAction {
 	public io.intino.alexandria.core.Box box;
 	public String request;
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            LoadNewAssignedTasksRequest deserialized = serializer.read(LoadNewAssignedTasksRequest.class, request);
-            Response result = new Response(new ActionDoLoadAssignedTasksToDelete().execute(request(parameters(String.valueOf(ActionCode.LoadAssignedTasksToDelete), deserialized)), response));
+            Response result = new Response(new ActionDoLoadAssignedTasksToDelete().execute(request(parameters(String.valueOf(ActionCode.LoadAssignedTasksToDelete), request)), response));
             writeResultInResponse(result);
         } catch (Exception ignored) {
         }

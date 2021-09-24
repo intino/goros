@@ -4,7 +4,6 @@ import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.Response;
 import org.monet.space.mobile.control.actions.ActionDoHelo;
 
-
 public class PostHeloAction extends MobileTypedAction {
 	public io.intino.alexandria.core.Box box;
 	public String request;

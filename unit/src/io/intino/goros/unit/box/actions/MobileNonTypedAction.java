@@ -1,14 +1,9 @@
 package io.intino.goros.unit.box.actions;
 
-import io.intino.goros.unit.box.services.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class MobileNonTypedAction extends Action {
-    MobileNonTypedAction() {
-        this.response = new Response(context);
-    }
+public class MobileNonTypedAction extends MobileAction {
 
     Map<String, Object> parameters(String operation, Object deserializedRequest) {
         HashMap<String, Object> paramMap = new HashMap<>();

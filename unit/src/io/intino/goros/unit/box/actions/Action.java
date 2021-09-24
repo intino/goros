@@ -16,7 +16,8 @@ public abstract class Action {
     protected io.intino.alexandria.Resource resource() {
         InputStream stream = response.stream();
         if (stream == null) return null;
-        io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(response.getFilename(), response.getContentType(), stream);
+        String filename = response.getFilename() != null ? response.getFilename() : "out.zip";
+        io.intino.alexandria.Resource resource = new io.intino.alexandria.Resource(filename, response.getContentType(), stream);
         response.deleteTempFile();
         return resource;
     }

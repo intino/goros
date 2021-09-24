@@ -17,6 +17,7 @@ public class PostUploadTaskSchemaAction extends MobileNonTypedAction {
         try {
             Map<String, Object> p = new HashMap<>();
             p.put("id", id);
+            p.put("request", request);
             new ActionDoUploadTaskSchema().execute(request(parameters(String.valueOf(ActionCode.UploadTaskSchema), p)), response);
         } catch (Exception ignored) {
         }

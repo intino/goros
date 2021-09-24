@@ -1,7 +1,10 @@
 package io.intino.goros.unit.box.services;
 
-import io.intino.alexandria.Context;
+import io.intino.alexandria.Resource;
+import io.intino.alexandria.http.spark.SparkContext;
+import org.monet.space.kernel.model.Context;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -10,12 +13,14 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Request implements org.monet.http.Request {
-    private final Context context;
+    private final SparkContext context;
     private final Map<String, Object> parameters;
+    private final InputStream inputStream;
 
-    public Request(Context context, Map<String, Object> parameters) {
+    public Request(SparkContext context, Map<String, Object> parameters) {
         this.context = context;
         this.parameters = parameters;
+        this.inputStream = parameters.values().stream().filter(p -> p instanceof Resource).map(r -> ((Resource) r).stream()).findFirst().orElse(null);
     }
 
     @Override
@@ -25,7 +30,7 @@ public class Request implements org.monet.http.Request {
 
     @Override
     public String getSessionId() {
-        return null;
+        return Context.getInstance().getIdSession(Thread.currentThread().getId());
     }
 
     @Override
@@ -46,7 +51,7 @@ public class Request implements org.monet.http.Request {
 
     @Override
     public String getHeader(String param) {
-        return context.containsKey(param) ? context.get(param) : null;
+        return context.header(param);
     }
 
     @Override
@@ -56,7 +61,8 @@ public class Request implements org.monet.http.Request {
 
     @Override
     public String getParameter(String name) {
-        return parameters.containsKey(name) ? parameters.get(name).toString() : null;
+        Object result = parameters.getOrDefault(name, null);
+        return result != null ? result.toString() : null;
     }
 
     @Override
@@ -65,8 +71,8 @@ public class Request implements org.monet.http.Request {
     }
 
     @Override
-    public InputStream getInputStream() throws IOException {
-        return null;
+    public InputStream getInputStream() {
+        return inputStream != null ? inputStream : new ByteArrayInputStream(new byte[0]);
     }
 
     @Override

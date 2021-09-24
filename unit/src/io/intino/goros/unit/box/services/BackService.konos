@@ -1,6 +1,6 @@
 dsl Konos
 
-Service backservice as REST(host = "", port = "{port}")
+Service backService as REST(host = "", port = "{port}")
 	title = "Backservice API"
 	basePath = "/backservice"
 

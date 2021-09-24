@@ -1,20 +1,20 @@
 {
   "urls": [
     {
-      "url": "./data/fmsservice.json",
-      "name": "fmsservice"
+      "url": "./data/mobileService.json",
+      "name": "mobileService"
     },
     {
-      "url": "./data/frontservice.json",
-      "name": "frontservice"
+      "url": "./data/frontService.json",
+      "name": "frontService"
     },
     {
-      "url": "./data/backservice.json",
-      "name": "backservice"
+      "url": "./data/backService.json",
+      "name": "backService"
     },
     {
-      "url": "./data/setupservice.json",
-      "name": "setupservice"
+      "url": "./data/setupService.json",
+      "name": "setupService"
     }
   ],
   "title": "Mobile API",

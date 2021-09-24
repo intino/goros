@@ -211,7 +211,6 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-client:9.4.42.v20210604" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-api:9.4.42.v20210604" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.0.2" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.3.0" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:catalina:6.0.43" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:coyote:6.0.43" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:juli:6.0.43" level="project" />
@@ -257,11 +256,12 @@
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-annotations:2.10.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-core:2.10.3" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:backservice:4.0" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.4.0" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:tomcat-jdbc:9.0.2" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:tomcat-juli:9.0.2" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:space:2.0.3" level="project" />
     <orderEntry type="module" module-name="unit-elements" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.13.8" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.13.9" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.4.1" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.4.1" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:space:2.0.4" level="project" />
   </component>
 </module>

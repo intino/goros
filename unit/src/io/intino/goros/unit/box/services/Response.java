@@ -1,12 +1,12 @@
 package io.intino.goros.unit.box.services;
 
-import io.intino.alexandria.Context;
+import io.intino.alexandria.http.spark.SparkContext;
 import io.intino.alexandria.logger.Logger;
 
 import java.io.*;
 
 public class Response implements org.monet.http.Response {
-    private Context context;
+    private SparkContext context;
     private FileOutputStream stream;
     private File tempFile;
     private String contentType;
@@ -14,13 +14,17 @@ public class Response implements org.monet.http.Response {
     private int status;
     private String encoding;
 
-    public Response(Context context) {
+    public Response(SparkContext context) {
+        this.context = context;
+    }
+
+    public void setContext(SparkContext context) {
         this.context = context;
     }
 
     @Override
     public void setContentType(String type) {
-        context.add("content-type", type);
+        context.header("content-type", type);
         contentType = type;
     }
 
@@ -31,7 +35,7 @@ public class Response implements org.monet.http.Response {
 
     @Override
     public void setHeader(String name, String value) {
-        context.add(name, value);
+        context.header(name, value);
         if(name.equals("Content-Disposition")) filename = value.substring(value.indexOf("filename=") + 9);
     }
 

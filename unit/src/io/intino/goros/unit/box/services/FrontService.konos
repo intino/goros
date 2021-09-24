@@ -1,6 +1,6 @@
 dsl Konos
 
-Service frontservice as REST(host = "", port = "{port}")
+Service frontService as REST(host = "", port = "{port}")
 	title = "Front Service API"
 	basePath = "/service"
 

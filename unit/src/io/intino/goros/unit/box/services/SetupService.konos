@@ -1,6 +1,6 @@
 dsl Konos
 
-Service setupservice as REST(host = "", port = "{port}")
+Service setupService as REST(host = "", port = "{port}")
 	title = "Setup Service API"
 	basePath = "/setupservice"
 

@@ -7,16 +7,13 @@ import org.monet.space.mobile.control.actions.ActionDoSyncChats;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-
 public class PostSyncChatsAction extends MobileTypedAction {
 	public io.intino.alexandria.core.Box box;
 	public String request;
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            SyncChatsRequest deserialized = serializer.read(SyncChatsRequest.class, request);
-            Response result = new Response(new ActionDoSyncChats().execute(request(parameters(String.valueOf(ActionCode.SyncChats), deserialized)), response));
+            Response result = new Response(new ActionDoSyncChats().execute(request(parameters(String.valueOf(ActionCode.SyncChats), request)), response));
             writeResultInResponse(result);
         } catch (Exception ignored) {
         }

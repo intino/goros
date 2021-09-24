@@ -7,16 +7,13 @@ import org.monet.space.mobile.control.actions.ActionDoUnassignTask;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-
 public class PostUnassignTaskAction extends MobileTypedAction {
 	public io.intino.alexandria.core.Box box;
 	public String request;
 
     public io.intino.alexandria.Resource execute() {
         try {
-            Serializer serializer = new Persister();
-            UnassignTaskRequest deserialized = serializer.read(UnassignTaskRequest.class, request);
-            Response result = new Response(new ActionDoUnassignTask().execute(request(parameters(String.valueOf(ActionCode.UnassignTask), deserialized)), response));
+            Response result = new Response(new ActionDoUnassignTask().execute(request(parameters(String.valueOf(ActionCode.UnassignTask), request)), response));
             writeResultInResponse(result);
         } catch (Exception ignored) {
         }

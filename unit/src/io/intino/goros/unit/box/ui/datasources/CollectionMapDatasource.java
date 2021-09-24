@@ -72,20 +72,7 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
 
     private static String locationOf(Node node) {
         Location location = node.getLocation();
-        if (location != null) return location.getGeometry().toText();
-        return defaultLocation();
-    }
-
-    private static String defaultLocation() {
-        AbstractManifestBase.DefaultLocationProperty defaultLocation = DictionaryHelper.defaultLocation();
-        if (defaultLocation == null) return null;
-        return new Point(defaultLocation.getLatitude() + randomMargin(), defaultLocation.getLongitude() + randomMargin()).toWkt();
-    }
-
-    private static double randomMargin() {
-        Random generator = new Random();
-        int number = generator.nextInt(7);
-        return number / 100.0;
+        return location != null ? location.getGeometry().toText() : null;
     }
 
     public static long itemCount(Node set) {

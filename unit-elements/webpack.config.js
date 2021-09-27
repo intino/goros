@@ -27,9 +27,8 @@ module.exports = {
         ]
     },
     entry : {
-        'home' : './gen/apps/Home.js',
-        'install' : './gen/apps/Install.js',
-        'banner' : './gen/apps/Banner.js'
+        'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js',
+        'gorosInstallTemplate' : './gen/apps/GorosInstallTemplate.js'
     },
     output: {
         path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
@@ -55,23 +54,16 @@ module.exports = {
         new HtmlWebPackPlugin({
             hash: true,
             title: "Test UI",
-            chunks: ['home'],
-            template: "./src/home.html",
-            filename: "./home.html"
+            chunks: ['gorosAppTemplate'],
+            template: "./src/gorosAppTemplate.html",
+            filename: "./gorosAppTemplate.html"
         }),
         new HtmlWebPackPlugin({
             hash: true,
             title: "Test UI",
-            chunks: ['install'],
-            template: "./src/install.html",
-            filename: "./install.html"
-        }),
-        new HtmlWebPackPlugin({
-            hash: true,
-            title: "Test UI",
-            chunks: ['banner'],
-            template: "./src/banner.html",
-            filename: "./banner.html"
+            chunks: ['gorosInstallTemplate'],
+            template: "./src/gorosInstallTemplate.html",
+            filename: "./gorosInstallTemplate.html"
         })
     ]
 };

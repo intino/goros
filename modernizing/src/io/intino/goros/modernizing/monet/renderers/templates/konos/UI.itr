@@ -19,7 +19,7 @@ def type(ui)
         Resource(path = "/instancia/:name/:id/:view") instance as Page(AppTemplate) Confidential
         Resource(path = "/tarea/:name/:inbox/:task") task as Page(AppTemplate) Confidential
         Resource(path = "/permisos") roles as Page(AppTemplate) Confidential
-        Resource(path = "/papelera") trash as Page(AppTemplate) Confidential
+        Resource(path = "/desechos") trash as Page(AppTemplate) Confidential
         Resource(path = "/noticias") news as Page(AppTemplate) Confidential
 
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)

@@ -195,13 +195,15 @@ end
 def type(field & composite & multiple) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
     java.util.List<FieldComposite> $name+firstLowerCase~Fields = $name+firstLowerCase~Field.getAllFields();
-    java.util.List<$definition+firstUpperCase$name+firstUpperCase~Template> $name+firstLowerCase~Children = $name+firstLowerCase~.children($definition+firstUpperCase$name+firstUpperCase~Template.class);
-    for (int i=0; i<$name+firstLowerCase~Fields.size(); i++) if ($name+firstLowerCase~Children.size() > i) $name+firstLowerCase~Children.get(i).field($name+firstLowerCase~Fields.get(i));
+    if ($name+firstLowerCase~ != null) {
+        java.util.List<$definition+firstUpperCase$name+firstUpperCase~Template> $name+firstLowerCase~Children = $name+firstLowerCase~.children($definition+firstUpperCase$name+firstUpperCase~Template.class);
+        for (int i=0; i<$name+firstLowerCase~Fields.size(); i++) if ($name+firstLowerCase~Children.size() > i) $name+firstLowerCase~Children.get(i).field($name+firstLowerCase~Fields.get(i));
+    }
 end
 
 def type(field & composite) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-    $name+firstLowerCase.field($name+firstLowerCase~Field);
+    if ($name+firstLowerCase != null) $name+firstLowerCase.field($name+firstLowerCase~Field);
 end
 
 def type(field & link) trigger(update)

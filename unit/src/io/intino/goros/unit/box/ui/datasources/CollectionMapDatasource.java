@@ -6,16 +6,12 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import io.intino.alexandria.ui.model.PlaceMark;
 import io.intino.alexandria.ui.model.datasource.*;
-import io.intino.alexandria.ui.model.locations.Point;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
-import io.intino.goros.unit.util.DictionaryHelper;
 import io.intino.goros.unit.util.LayerHelper;
 import io.intino.goros.unit.util.NodeHelper;
-import org.monet.metamodel.AbstractManifestBase;
-import org.monet.metamodel.NodeViewProperty;
-import org.monet.metamodel.SetDefinition;
-import org.monet.space.kernel.model.BusinessUnit;
+import org.monet.metamodel.*;
+import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.NodeDataRequest;
 import org.monet.space.kernel.model.map.GeometryHelper;
@@ -23,7 +19,6 @@ import org.monet.space.kernel.model.map.Location;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -43,12 +38,10 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
 
     @Override
     public List<PlaceMark<Node>> placeMarks(String condition, List<Filter> filters, BoundingBox boundingBox) {
-        NodeDataRequest request = request(condition, filters);
-        request.setStartPos(0);
-        request.setLimit(1000000);
-        request.setBoundingBox(boundingBoxOf(boundingBox));
         box.linkSession(session);
-        return new ArrayList<>(LayerHelper.nodeLayer().requestNodeListItems(set.getId(), request).values().stream().map(CollectionMapDatasource::placeMarkOf).collect(toList()));
+        SetDefinition definition = (SetDefinition) set.getDefinition();
+        IndexDefinition indexDefinition = Dictionary.getInstance().getIndexDefinition(definition.getIndex().getValue());
+        return new ArrayList<>(LayerHelper.nodeLayer().loadLocationsInNode(set, boundingBoxOf(boundingBox), indexDefinition.getCode()).get().values().stream().map(CollectionMapDatasource::placeMarkOf).collect(toList()));
     }
 
     @Override
@@ -63,16 +56,18 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         return groups.stream().map(o -> new Group().label(o)).collect(toList());
     }
 
-    public static PlaceMark<Node> placeMarkOf(Node node) {
-        String location = locationOf(node);
-        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location);
-        placeMark.item(node);
+    public static PlaceMark<Node> placeMarkOf(Location location) {
+        PlaceMark<Node> placeMark = PlaceMark.build(location.getLabel(), wktOf(location));
+        placeMark.item(nodeOf(location));
         return placeMark;
     }
 
-    private static String locationOf(Node node) {
-        Location location = node.getLocation();
+    private static String wktOf(Location location) {
         return location != null ? location.getGeometry().toText() : null;
+    }
+
+    private static Node nodeOf(Location location) {
+        return LayerHelper.nodeLayer().loadNode(location.getNodeId());
     }
 
     public static long itemCount(Node set) {

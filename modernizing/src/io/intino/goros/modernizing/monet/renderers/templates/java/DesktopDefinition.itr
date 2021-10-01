@@ -102,6 +102,10 @@ def type(item) trigger(refreshMethod)
     }
 end
 
+def type(toolbar & singleton) trigger(editableInitCall)
+    [$operation+editableInitCall...[$NL]]
+end
+
 def type(toolbar) trigger(editableInitCall)
     [$operation+editableInitCall...[$NL]]
 end

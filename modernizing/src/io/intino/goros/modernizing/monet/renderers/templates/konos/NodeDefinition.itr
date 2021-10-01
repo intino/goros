@@ -28,10 +28,10 @@ def type(nodedefinition)
                     $toolbar+navigable
 
         Block(layout=Horizontal) header
-            Block(layout=Vertical) headerToolbar as Relative(width=100%)
+            Block(layout=Vertical) headerToolbar as Relative(width=100%, offsetWidth=40px)
                 Selector viewSelector as Tabs(scrollButtons=Auto)
                     [$view+declaration...[$NL]]
-            Block(layout=Horizontal EndJustified)
+            Block(layout=Horizontal EndJustified Center)
                 MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) openContain as Action Addressable($module+firstUpperCase~Elements.instance)
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)

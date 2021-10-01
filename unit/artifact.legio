@@ -18,7 +18,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.18") unit as Platform
 		Compile("io.intino.itrules", "engine", "1.0.0")
 		Compile("io.intino.goros", "shared", "1.0.0")
 
-		Web("io.intino.goros", "unit-elements", "1.0.17")
+		Web("io.intino.goros", "unit-elements", "1.0.18")
 
 		Test("junit", "junit", "4.13")
 

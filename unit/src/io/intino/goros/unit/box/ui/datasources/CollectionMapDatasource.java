@@ -56,10 +56,21 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         return groups.stream().map(o -> new Group().label(o)).collect(toList());
     }
 
+    public static PlaceMark<Node> placeMarkOf(Node node) {
+        String location = locationOf(node);
+        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location);
+        placeMark.item(node);
+        return placeMark;
+    }
+
     public static PlaceMark<Node> placeMarkOf(Location location) {
         PlaceMark<Node> placeMark = PlaceMark.build(location.getLabel(), wktOf(location));
         placeMark.item(nodeOf(location));
         return placeMark;
+    }
+
+    private static String locationOf(Node node) {
+        return wktOf(node.getLocation());
     }
 
     private static String wktOf(Location location) {

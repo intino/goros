@@ -12,6 +12,7 @@ public class DesktopDefinitionTemplate extends Template {
 			rule().condition((type("show"))).output(expression().output(mark("item").multiple("\n"))),
 			rule().condition((type("item"))).output(literal("Block(format=doubleAirBottom, visible=false) ")).output(mark("name", "firstLowerCase")).output(literal("\n    Link(title=\"")).output(mark("label")).output(literal("\", format=h5) ")).output(mark("name", "firstLowerCase")).output(literal("Link as Action Addressable(")).output(mark("module", "firstUpperCase")).output(literal("Elements.")).output(mark("resourceType")).output(literal(")\n    Text(value=\"")).output(mark("description")).output(literal("\", format=description)")),
 			rule().condition((type("toolbar")), (trigger("editable"))).output(expression().output(mark("operation").multiple("\n"))),
+			rule().condition((allTypes("toolbar","singleton")), (trigger("editablerefreshcall"))).output(expression().output(mark("operation", "editableRefreshCall").multiple("\n"))),
 			rule().condition((type("toolbar")), (trigger("editablerefreshcall"))).output(expression().output(mark("operation", "editableRefreshCall").multiple("\n")))
 		);
 	}

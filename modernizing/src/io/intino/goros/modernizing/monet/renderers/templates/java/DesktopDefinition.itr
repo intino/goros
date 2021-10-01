@@ -7,6 +7,8 @@ def type(desktopdefinition)
     import io.intino.goros.unit.util.AccountHelper;
     import io.intino.goros.unit.util.LayerHelper;
 
+    import java.util.List;
+
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
 
@@ -59,6 +61,7 @@ def type(desktopdefinition)
         }
 
         [$view+refreshMethod...[$NL]]
+        [$toolbar+editableMethods]
     }
 end
 
@@ -102,10 +105,11 @@ def type(item) trigger(refreshMethod)
     }
 end
 
-def type(toolbar & singleton) trigger(editableInitCall)
+def type(toolbar) trigger(editableInitCall)
+    [$operationsGroup+editableInitCall]
     [$operation+editableInitCall...[$NL]]
 end
 
-def type(toolbar) trigger(editableInitCall)
-    [$operation+editableInitCall...[$NL]]
+def type(operation) trigger(executeMethodCall)
+    if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), (java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation>)null);
 end

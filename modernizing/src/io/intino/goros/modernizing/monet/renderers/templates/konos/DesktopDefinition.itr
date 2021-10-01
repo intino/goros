@@ -38,13 +38,11 @@ def type(item)
 end
 
 def type(toolbar) trigger(editable)
+    [$operationsGroup]
     [$operation...[$NL]]
 end
 
-def type(toolbar & singleton) trigger(editableRefreshCall)
-    [$operation+editableRefreshCall...[$NL]]
-end
-
 def type(toolbar) trigger(editableRefreshCall)
+    [$operationsGroup+editableInitCall]
     [$operation+editableRefreshCall...[$NL]]
 end

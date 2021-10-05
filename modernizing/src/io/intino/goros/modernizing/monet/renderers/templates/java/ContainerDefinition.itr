@@ -2,6 +2,10 @@ def type(show & components) trigger(declaration)
     private Node contain;
 end
 
+def type(show & components) trigger(hideToolbar)
+    [$component+hideToolbar...[$NL]]
+end
+
 def type(show & components)
 	public $definition+firstUpperCase~$view+firstUpperCase~ViewTemplate contain(Node contain) {
 		this.contain = contain;
@@ -13,6 +17,10 @@ def type(show & components)
 		super.refresh();
 		[$component...[$NL]]
 	}
+end
+
+def type(component) trigger(hideToolbar)
+    $name+firstLowerCase~$view+firstUpperCase~Stamp.hideToolbar();
 end
 
 def type(component & collection)

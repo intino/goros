@@ -77,7 +77,7 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
 
     private void refreshTaskComments() {
         if (selected == null) return;
-        taskComments.comments.content(selected.getComments());
+        taskComments.comments.content(selected.getComments().replace("\n", "<br/>"));
         taskComments.comments.refresh();
     }
 

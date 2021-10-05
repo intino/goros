@@ -38,6 +38,11 @@ def type(nodedefinition & embedded)
             return !readonly;
         }
 
+        public $name+firstUpperCase~EmbeddedTemplate hideToolbar() {
+            toolbar.visible(false);
+            return this;
+        }
+
         [$toolbar+editableEvents]
         [$toolbar+navigableEvents]
         [$toolbar+navigableMethods]
@@ -551,6 +556,11 @@ def type(nodeView)
             return !readonly;
         }
 
+        public $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate hideToolbar() {
+            $show+hideToolbar
+            return this;
+        }
+
         $show
         [$displayProvider]
     }
@@ -558,6 +568,9 @@ end
 
 def type(updateFields) trigger(call)
     updateFields();
+end
+
+def type(show) trigger(hideToolbar)
 end
 
 def type(show & recenttask) trigger(declaration)

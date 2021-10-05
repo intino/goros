@@ -42,6 +42,11 @@ def type(process & embedded)
             return !readonly;
         }
 
+        public $name+firstUpperCase~EmbeddedTemplate hideToolbar() {
+            toolbar.visible(false);
+            return this;
+        }
+
         public $name+firstUpperCase~EmbeddedTemplate onChange(java.util.function.Consumer<Task> listener) {
             this.changeListener = listener;
             return this;
@@ -467,6 +472,7 @@ def type(show)
     private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(task.getShortcutInstance("$shortcut"));
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.readonly(readonly);
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.hideToolbar();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
     }

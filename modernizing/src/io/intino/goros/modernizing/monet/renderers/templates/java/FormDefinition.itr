@@ -50,6 +50,9 @@ def type(show & layout & composite) trigger(update)
     [$row+update...[$NL]]
 end
 
+def type(show) trigger(hideToolbar)
+end
+
 def type(show & layout)
     @Override
     public void init() {

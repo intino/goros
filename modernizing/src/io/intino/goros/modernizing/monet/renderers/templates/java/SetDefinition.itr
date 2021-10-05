@@ -10,6 +10,9 @@ end
 def type(show) trigger(declaration)
 end
 
+def type(show) trigger(hideToolbar)
+end
+
 def type(show)
     public void addAndSelect(Node node) {
         $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
@@ -310,6 +313,11 @@ def type(setdefinition & embedded)
 
         public boolean editing() {
             return !readonly;
+        }
+
+        public $name+firstUpperCase~EmbeddedTemplate hideToolbar() {
+            toolbar.visible(false);
+            return this;
         }
 
         public $name+firstUpperCase~EmbeddedTemplate bindTo(SearchBox<?, ?> search, SelectorCheckBox<?, ?> filterByTitle) {

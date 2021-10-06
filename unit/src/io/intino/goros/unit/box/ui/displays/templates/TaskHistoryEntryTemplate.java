@@ -1,11 +1,15 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
+import io.intino.alexandria.ui.displays.components.Layer;
 import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.kernel.model.Fact;
 import org.monet.space.kernel.model.MonetLink;
 
+import java.util.function.BiConsumer;
+
 public class TaskHistoryEntryTemplate extends AbstractTaskHistoryEntryTemplate<UnitBox> {
     private Fact entry;
+    private BiConsumer<String, Layer<?, ?>> openLayerListener;
 
     public TaskHistoryEntryTemplate(UnitBox box) {
         super(box);
@@ -13,6 +17,11 @@ public class TaskHistoryEntryTemplate extends AbstractTaskHistoryEntryTemplate<U
 
     public TaskHistoryEntryTemplate entry(Fact entry) {
         this.entry = entry;
+        return this;
+    }
+
+    public TaskHistoryEntryTemplate onOpenLayer(BiConsumer<String, Layer<?, ?>> listener) {
+        this.openLayerListener = listener;
         return this;
     }
 
@@ -31,6 +40,7 @@ public class TaskHistoryEntryTemplate extends AbstractTaskHistoryEntryTemplate<U
 
     private void fill(MonetLink link, TaskHistoryEntryLinkTemplate display) {
         display.monetLink(link);
+        display.onOpenLayer((title, layer) -> openLayerListener.accept(title, layer));
         display.refresh();
     }
 

@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
+import io.intino.alexandria.ui.displays.components.Layer;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.TaskHelper;
 import org.monet.metamodel.*;
@@ -8,9 +9,12 @@ import org.monet.space.kernel.model.Task;
 import org.monet.space.kernel.model.User;
 import io.intino.goros.unit.box.ui.DisplayProvider;
 
+import java.util.function.BiConsumer;
+
 public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox> {
     private Task task;
     private DisplayProvider displayProvider;
+    private BiConsumer<String, Layer<?, ?>> openLayerListener;
 
     public TaskStateViewTemplate(UnitBox box) {
         super(box);
@@ -23,6 +27,11 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
 
     public TaskStateViewTemplate displayProvider(DisplayProvider provider) {
         this.displayProvider = provider;
+        return this;
+    }
+
+    public TaskStateViewTemplate onOpenLayer(BiConsumer<String, Layer<?, ?>> listener) {
+        this.openLayerListener = listener;
         return this;
     }
 
@@ -92,6 +101,7 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
 
     private void refreshHistoryView() {
         historyViewStamp.task(task);
+        historyViewStamp.onOpenLayer((title, layer) -> openLayerListener.accept(title, layer));
         historyViewStamp.refresh();
     }
 

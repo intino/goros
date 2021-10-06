@@ -4,6 +4,7 @@ import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.ProcessDefinitionTemplate;
+import io.intino.itrules.Frame;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import io.intino.itrules.formatters.StringFormatters;
@@ -118,7 +119,26 @@ public abstract class ProcessRenderer<D extends ProcessDefinition> extends Defin
 		result.add("name", nameOf(viewProperty));
 		result.add("viewCode", nodeViewProperty != null ? nodeViewProperty.getCode() : nodeDefinition.getCode());
 		result.add("viewName", nodeViewProperty != null ? nameOf(nodeViewProperty) + "ViewTemplate" : "EmbeddedTemplate");
+		addContain(nodeDefinition, nodeViewProperty, result);
 		return result;
+	}
+
+	private void addContain(NodeDefinition nodeDefinition, NodeViewProperty nodeViewProperty, FrameBuilder builder) {
+		if (!nodeDefinition.isContainer() || nodeViewProperty == null) return;
+		ContainerDefinitionBase.ViewProperty containViewProperty = ((ContainerDefinitionBase.ViewProperty) nodeViewProperty);
+		if (containViewProperty.getShow().getComponent() == null || containViewProperty.getShow().getComponent().isEmpty()) return;
+		Ref ref = containViewProperty.getShow().getComponent().get(0);
+		NodeDefinition containDefinition = dictionary.getNodeDefinition(ref.getDefinition());
+		FrameBuilder result = new FrameBuilder("showContain");
+		result.add("definitionName", nameOf(nodeDefinition));
+		result.add("definitionCode", nodeDefinition.getCode());
+		result.add("code", nodeViewProperty.getCode());
+		result.add("name", nameOf(nodeViewProperty));
+		result.add("viewCode", nodeViewProperty.getCode());
+		result.add("viewName", nameOf(nodeViewProperty) + "ViewTemplate");
+		result.add("containDefinitionName", nameOf(containDefinition));
+		result.add("containDefinitionCode", containDefinition.getCode());
+		builder.add("showContain", result);
 	}
 
 	private void addTargetDisplays(FrameBuilder builder) {

@@ -3,6 +3,7 @@ def type(process & embedded)
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import io.intino.alexandria.ui.displays.components.Collection;
+    import org.monet.space.kernel.model.Node;
     import org.monet.space.kernel.model.Task;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
@@ -87,6 +88,7 @@ def type(process & embedded)
 
         public void showLabel(boolean value) {
             label.visible(value);
+            description.visible(value);
         }
 
         public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
@@ -135,6 +137,7 @@ def type(process & embedded)
             toolbar.readonly(readonly);
             toolbar.refresh();
             label.value(task.getLabel());
+            description.value(io.intino.goros.unit.util.DisplayHelper.description(task, this::translate, org.monet.space.kernel.library.LibraryDate.Format.NUMERIC));
         }
 
         private String inboxPath() {
@@ -148,6 +151,7 @@ def type(process & embedded)
 
         private void refreshStateView() {
             if (task == null) return;
+            openInstance.visible(false);
             stateView.stateViewStamp.task(task);
             stateView.stateViewStamp.readonly(readonly);
             stateView.stateViewStamp.refresh();
@@ -157,6 +161,20 @@ def type(process & embedded)
 
         private void refreshSelector() {
             [$view+refreshSelectorCall...[$NL]]
+        }
+
+        private void setupOpenInstance(Node<?> node) {
+            openInstance.visible(true);
+            if (node == null) return;
+            openInstance.onOpen(e -> fillLayer(node, e.layer()));
+            openInstance.address(path -> io.intino.goros.unit.util.PathHelper.pathOf(node));
+        }
+
+        private void fillLayer(Node<?> node, io.intino.alexandria.ui.displays.components.Layer<?, ?> layer) {
+            layer.title(node.getLabel());
+            AppTemplate template = new AppTemplate(box());
+            layer.template(template);
+            template.embedded(true);
         }
 
         private void notifyResume(Task task) {
@@ -218,6 +236,7 @@ def type(process & stateview)
             super.refresh();
             state.task(task);
             state.displayProvider(this);
+            state.onOpenLayer(this::fillLayer);
             state.refresh();
         }
 
@@ -232,6 +251,12 @@ def type(process & stateview)
             return null;
         }
 
+        private void fillLayer(String title, io.intino.alexandria.ui.displays.components.Layer<?, ?> layer) {
+            layer.title(title);
+            AppTemplate template = new AppTemplate(box());
+            layer.template(template);
+            template.embedded(true);
+        }
     }
 end
 
@@ -391,6 +416,7 @@ def type(process)
 
         private void refreshHeader() {
             label.value(task.getLabel());
+            description.value(io.intino.goros.unit.util.DisplayHelper.description(task, this::translate));
             tasks.address(p -> p.replace(":folder", "default"));
             tasks.visible(inbox == Inbox.TaskBoard);
             myTasks.address(p -> p.replace(":folder", "default"));
@@ -434,9 +460,20 @@ def type(view & target) trigger(refreshSelectorCall)
     else viewSelector.hideOption("$name+firstLowerCase");
 end
 
+def type(view & shortcut) trigger(refreshViewMethod)
+    private void refresh$name+firstUpperCase~View() {
+        if (task == null) return;
+        setupOpenInstance(task.getShortcutInstance("$shortcut"));
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(true);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
+end
+
 def type(view) trigger(refreshViewMethod)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
+        setupOpenInstance(task.getTarget());
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(true);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
@@ -468,12 +505,30 @@ def type(show) trigger(showCall)
     if (definition.getCode().equals("$definitionCode")) $definitionName+firstLowerCase$viewName+firstUpperCase~Block.show();
 end
 
-def type(show)
+def type(show & shortcut)
     private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
-        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(task.getShortcutInstance("$shortcut"));
+        Node<?> node = task.getShortcutInstance("$shortcut");
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(node);
+        $showContain
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.readonly(readonly);
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.hideToolbar();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
     }
+end
+
+def type(show)
+    private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
+        Node<?> node = task.getTarget();
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(node);
+        $showContain
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.readonly(readonly);
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.hideToolbar();
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
+        $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
+    }
+end
+
+def type(showContain)
+    $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.contain(io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.unit.util.NodeHelper.getContainerContain(node,"$containDefinitionCode")));
 end

@@ -7,34 +7,41 @@ def type(process)
     [$display+use...[$NL]]
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
-        Block(layout=Horizontal, format=bordered spaced) header
+        Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
                     Link(title="Tareas", format=h4 middleAirRight, visible=false) tasks as Action Addressable($module+firstUpperCase~Elements.taskBoard)
                     Link(title="Mis tareas", format=h4 middleAirRight, visible=false) myTasks as Action Addressable($module+firstUpperCase~Elements.taskTray)
                     Text(value="/", format=h4 middleAirRight)
                     Text(format=h4 bold) label
+                Text(format=body2 grey) description
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
         Block(layout=Horizontal, format=bottomBordered)
-            Block(layout=Horizontal StartJustified, format=middleAirLeft)
+            Block(layout=Horizontal Center StartJustified, format=middleAirLeft airRight)
                 MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
                 MaterialIconButton(title="Mostrar listado", icon="Menu", size=Small, format=middleAirRight, visible=false) showCollectionMenu
-                Text(format=bold middleAirLeft airRight, visible=false) label
+                Block(format=middleAirLeft)
+                    Text(format=bold, visible=false) label
+                    Text(format=body2 grey, visible=false) description
             Block(layout=Horizontal Flexible, format=middleAirBottom middleAirTop)
                 Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
                 Block(layout=Horizontal EndJustified)
                     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
                     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
 
-        Selector viewSelector as Tabs
-            Text(value="Estado") state as Option
-            [$view+declaration...[$NL]]
+        Block(layout=Horizontal) header
+            Block(layout=Vertical) headerToolbar as Relative(width=100%, offsetWidth=40px)
+                Selector viewSelector as Tabs
+                    Text(value="Estado") state as Option
+                    [$view+declaration...[$NL]]
+            Block(layout=Horizontal EndJustified Center)
+                MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) openInstance as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)
-            Block(layout=Vertical Flexible) stateView as Conditional(viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) stateViewStamp
+            Block(layout=Vertical Flexible) stateView as Conditional(header.headerToolbar.viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) stateViewStamp
             [$view+page...[$NL]]
 
     Template(format=spaced) $name+firstUpperCase~StateViewTemplate as Relative(height=100%)
@@ -62,7 +69,7 @@ def type(view) trigger(declaration)
 end
 
 def type(view) trigger(page)
-    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
 end
 
 def type(view)

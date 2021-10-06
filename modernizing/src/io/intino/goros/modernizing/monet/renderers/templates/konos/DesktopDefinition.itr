@@ -5,12 +5,13 @@ def type(desktopdefinition)
     use Theme
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
-        Block(layout=Horizontal, format=bordered spaced) header
+        Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
                     Text(value="$label", format=h4 bold) label
+                Text(format=body2 grey) description
 
-        Block(layout=Horizontal)
+        Block(layout=Horizontal, format=headerSpaced)
             Block(layout=Horizontal Flexible, format=middleAirTop middleAirBottom) toolbar
                 Block(layout=Vertical CenterJustified Flexible)
                     Block(layout=Horizontal)
@@ -22,7 +23,7 @@ def type(desktopdefinition)
 end
 
 def type(nodeview)
-    Block(layout=Vertical Flexible, format=smallAirTop spaced desktopBlockStyle)
+    Block(layout=Vertical Flexible, format=desktopBlockStyle)
         Text(value="$label", format=h4 airBottom)
         $show
 end

@@ -129,7 +129,7 @@ Template(layout=Vertical Flexible, format=middleTopSpaced middleBottomSpaced top
 	TemplateStamp(template=taskHistoryEntryLinkTemplate) linksBlock as Multiple
 
 Template taskHistoryEntryLinkTemplate as Relative(height=100%)
-	Link(title="", visible=false) link as OpenSite(site=empty, target=Blank)
+	Link(title="", visible=false) link as OpenLayer Addressable(empty)
 	Link(title="", visible=false) documentLink as OpenDialog(dialog=documentDialog)
 
 	Dialog(title="Document") documentDialog as FullScreen

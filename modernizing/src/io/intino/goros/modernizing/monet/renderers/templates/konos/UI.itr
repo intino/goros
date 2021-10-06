@@ -38,7 +38,7 @@ def type(ui)
             Block(layout=Horizontal Center, visible=false) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Text(value="Papelera")
 
         Block(layout=Vertical Flexible)
-            Header(color="white", elevation=0, format=spaced bottomBordered) as Absolute(height=80px)
+            Header(color="white", elevation=0, format=spaced bottomBordered) header as Absolute(height=80px)
                 TemplateStamp(template=HeaderTemplate)
 
             Block(layout=Vertical Flexible CenterCenter) loading > Spinner(format=secondary)

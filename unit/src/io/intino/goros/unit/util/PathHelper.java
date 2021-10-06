@@ -3,6 +3,7 @@ package io.intino.goros.unit.util;
 import io.intino.alexandria.ui.Soul;
 import io.intino.alexandria.ui.displays.DisplayRouteManager;
 import org.monet.metamodel.Definition;
+import org.monet.space.kernel.configuration.Configuration;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.MonetLink;
 import org.monet.space.kernel.model.Node;
@@ -40,15 +41,15 @@ public class PathHelper {
 	}
 
 	public static String pathOf(Node node, String view) {
-		return "/" + subPathOf(node) + "/" + (view != null ? view : "default");
+		return withRootPath(subPathOf(node) + "/" + (view != null ? view : "default"));
 	}
 
 	public static String pathOf(Task task) {
-		return "/" + subPathOf(task);
+		return withRootPath(subPathOf(task));
 	}
 
 	public static String pathOfNews() {
-		return "/noticias";
+		return withRootPath("noticias");
 	}
 
 	private static String subPathOf(Node node) {
@@ -62,6 +63,11 @@ public class PathHelper {
 
 	private static String pathIdOf(Node node) {
 		return node.isSingleton() ? "" : node.getId();
+	}
+
+	private static String withRootPath(String path) {
+		String rootPath = Configuration.getInstance().getPath();
+		return rootPath != null && !rootPath.isEmpty() ? rootPath + "/" + path : "/" + path;
 	}
 
 	private static String prefixOf(Definition definition, String basePackage) {

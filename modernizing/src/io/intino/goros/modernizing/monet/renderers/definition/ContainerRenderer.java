@@ -58,6 +58,7 @@ public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 		result.add("name", nameOf(viewProperty));
 		result.add("contain", containDefinition.getCode());
 		result.add("containName", nameOf(containDefinition));
+		result.add("containView", nameOf(containDefinition.getNodeView(showProperty.getComponent().get(0).getValue())));
 		builder.add("contain", result);
 	}
 

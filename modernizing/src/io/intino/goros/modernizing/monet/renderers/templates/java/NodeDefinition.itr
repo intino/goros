@@ -53,10 +53,11 @@ def type(nodedefinition & embedded)
 
         public void openView(String view, boolean readonly) {
             readonly(readonly);
-            if (view == null) return;
-            org.monet.metamodel.NodeViewProperty nodeView = node.getDefinition().getNodeView(view);
+            org.monet.metamodel.NodeViewProperty nodeView = view != null ? node.getDefinition().getNodeView(view) : node.getDefinition().getDefaultView();
             if (nodeView == null) nodeView = node.getDefinition().getDefaultView();
+            if (nodeView == null) return;
             viewSelector.select(io.intino.goros.unit.util.DisplayHelper.translation(nodeView.getLabel()));
+            refreshToolbar();
         }
 
         public String selectedView() {
@@ -147,6 +148,13 @@ def type(nodedefinition & embedded)
             if (dispatchOperationListener != null) dispatchOperationListener.accept(io.intino.goros.unit.util.NodeHelper.clientOperationOf(revision));
         }
 
+        private void fillLayer(Node<?> contain, io.intino.alexandria.ui.displays.components.Layer<?, ?> layer) {
+            layer.title(contain.getLabel());
+            AppTemplate template = new AppTemplate(box());
+            layer.template(template);
+            template.embedded(true);
+        }
+
         [$toolbar+editableMethods]
     }
 end
@@ -233,6 +241,7 @@ def type(nodedefinition)
 
         private void refreshHeader(Node node) {
             label.value(node.getLabel());
+            description.value(io.intino.goros.unit.util.DisplayHelper.description(node, this::translate));
         }
 
         private void refreshContent(Node node) {
@@ -356,6 +365,7 @@ end
 
 def type(toolbar & collectable) trigger(navigableRefreshCall)
     label.value(node.getLabel());
+    description.value(io.intino.goros.unit.util.DisplayHelper.description(node, this::translate, org.monet.space.kernel.library.LibraryDate.Format.NUMERIC));
     prototypeAdvise.visible(node.isPrototype());
 end
 
@@ -371,6 +381,7 @@ def type(toolbar & collectable) trigger(navigableMethods)
     }
     public void showLabel(boolean value) {
         label.visible(value);
+        description.visible(value);
     }
     public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
         showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
@@ -498,7 +509,10 @@ def type(contain) trigger(call)
 end
 
 def type(contain) trigger(open)
-    if (contain != null) openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()));
+    if (contain != null) {
+        openContain.onOpen(e -> fillLayer(contain, e.layer()));
+        openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()).replace(":view", "$containView+firstLowerCase"));
+    }
     openContain.visible(contain != null && contain.isSet());
 end
 

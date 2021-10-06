@@ -8,7 +8,7 @@ def type(ui & routedispatcher)
 
         @Override
         public void dispatchHome(Soul soul) {
-            soul.display(AppTemplate.class).openHome();
+            soul.currentLayer(AppTemplate.class).openHome();
         }
 
         @Override
@@ -17,47 +17,47 @@ def type(ui & routedispatcher)
 
         @Override
         public void dispatchSingleton(Soul soul, String name) {
-            AppTemplate display = soul.display(AppTemplate.class);
+            AppTemplate display = soul.currentLayer(AppTemplate.class);
             [$definition+dispatchSingleton...[$NL]]
         }
 
         @Override
         public void dispatchInstance(Soul soul, String name, String id, String view) {
-            AppTemplate display = soul.display(AppTemplate.class);
+            AppTemplate display = soul.currentLayer(AppTemplate.class);
             if (view != null && view.equals("undefined")) view = null;
             [$definition+dispatchInstance...[$NL]]
         }
 
         @Override
         public void dispatchTask(Soul soul, String name, String inbox, String task) {
-            AppTemplate display = soul.display(AppTemplate.class);
+            AppTemplate display = soul.currentLayer(AppTemplate.class);
             if (task != null && task.equals("undefined")) task = null;
             [$definition+dispatchTask...[$NL]]
         }
 
         @Override
         public void dispatchTaskTray(Soul soul, String folder) {
-            soul.display(AppTemplate.class).openTaskTray(folder);
+            soul.currentLayer(AppTemplate.class).openTaskTray(folder);
         }
 
         @Override
         public void dispatchTaskBoard(Soul soul, String folder) {
-            soul.display(AppTemplate.class).openTaskBoard(folder);
+            soul.currentLayer(AppTemplate.class).openTaskBoard(folder);
         }
 
         @Override
         public void dispatchRoles(Soul soul) {
-            soul.display(AppTemplate.class).openRoles();
+            soul.currentLayer(AppTemplate.class).openRoles();
         }
 
         @Override
         public void dispatchTrash(Soul soul) {
-            soul.display(AppTemplate.class).openTrash();
+            soul.currentLayer(AppTemplate.class).openTrash();
         }
 
         @Override
         public void dispatchNews(Soul soul) {
-            soul.display(AppTemplate.class).openNews();
+            soul.currentLayer(AppTemplate.class).openNews();
         }
     }
 end
@@ -125,6 +125,12 @@ def type(ui & app)
             super.remove();
             box().notifier().unTaskCreated(this);
             box().notifier().unTaskStateChange(this);
+        }
+
+        public void embedded(boolean embedded) {
+            if (!embedded) return;
+            header.hide();
+            drawer.hide();
         }
 
         public void openHome() {

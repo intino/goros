@@ -5,12 +5,13 @@ def type(documentdefinition)
     use Theme
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
-        Block(layout=Horizontal, format=bordered spaced) header
+        Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
                     [$desktop]
                     [$parent]
                     Text(value="$label", format=h4 bold) label
+                Text(format=body2 grey) description
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 

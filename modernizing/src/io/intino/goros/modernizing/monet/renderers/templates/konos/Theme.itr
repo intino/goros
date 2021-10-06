@@ -57,6 +57,7 @@ def type(theme)
     Format("paddingBottom:'10px'") bottomSpaced
     Format("paddingBottom:'5px'") middleBottomSpaced
     Format("paddingRight:'10px'") rightSpaced
+    Format("padding:'5px 10px 0 10px'") headerSpaced
 
     // BORDERED
     Format("border:'1px solid #e4e4e4'") bordered
@@ -89,7 +90,7 @@ def type(theme)
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") compositeFieldStyle
     Format("padding:'10px',border:'1px solid #efefef',borderRadius:'5px',background:'white',marginBottom:'32px'") nodeFieldStyle
     Format("position:'absolute',top:'0',background:'white',right:'0',borderRadius:'34px',border:'1px solid #ddd',marginTop:'-9px',marginRight:'-23px'") editDocumentButtonStyle
-    Format("background:'white',border:'1px solid #e4e4e4'") desktopBlockStyle
+    Format("background:'white',margin:'0 10px 10px 10px',padding:'10px'") desktopBlockStyle
     Format("fontSize:'10pt',color:'#0000008a',marginBottom:'5px'") fieldLabel
     Format("paddingTop:'1px',paddingBottom:'1px'") pillStyle
     Format("minWidth:'320px'") sourceLevelWidth

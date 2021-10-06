@@ -281,6 +281,7 @@ def type(setdefinition & embedded)
         private java.util.function.Consumer<io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State> toggleViewListener;
         private SearchBox<?, ?> searchBox;
         private SelectorCheckBox<?, ?> filterByTitle;
+        private org.monet.space.kernel.model.ClientOperation layerOperation;
         [$toolbar+editableDeclaration]
         [$toolbar+navigableDeclaration]
 
@@ -370,6 +371,7 @@ def type(setdefinition & embedded)
         private void initToolbar() {
             [$toolbar+editableInitCall]
             edit.onExecute(e -> toggleEdition());
+            openLayerTrigger.onOpen(e -> fillLayer(e.layer()));
         }
 
         @Override
@@ -609,8 +611,20 @@ def type(setdefinition & embedded)
             String id = operation.getData().get("Id").toString();
             Node<?> target = (name.equals("shownode") || name.equals("shownodeview")) ? LayerHelper.nodeLayer().loadNode(id) : null;
             if (target != null && target.getParent() == node) open(target);
-            else NodeHelper.dispatchOperation(box().routeManager().routeDispatcher(), session(), operation);
+            else {
+                layerOperation = operation;
+                openLayerTrigger.address(path -> NodeHelper.operationPath(operation));
+                openLayerTrigger.openLayer();
+            }
             openChildView(view, readonly);
+        }
+
+        private void fillLayer(io.intino.alexandria.ui.displays.components.Layer<?, ?> layer) {
+            org.monet.space.kernel.model.Entity<?> entity = NodeHelper.operationEntity(layerOperation);
+            if (entity != null) layer.title(entity.getLabel());
+            AppTemplate template = new AppTemplate(box());
+            layer.template(template);
+            template.embedded(true);
         }
 
         private void openChildView(String id) {
@@ -709,6 +723,7 @@ def type(setdefinition)
         @Override
         public void refresh() {
             super.refresh();
+            refreshHeader();
             refreshContent();
             viewSelector.visible(viewSelector.options().size() > 1);
             if (viewSelector.selection().size() <= 0) io.intino.goros.unit.util.DisplayHelper.selectDefaultView(viewSelector, node);
@@ -747,6 +762,10 @@ def type(setdefinition)
         private void refreshCount(long countValue) {
             String label = DictionaryHelper.referenceLabel(node);
             count.value(Formatters.countMessage(countValue, label, label + " " + translate("available")));
+        }
+
+        private void refreshHeader() {
+            description.value(io.intino.goros.unit.util.DisplayHelper.description(node, this::translate));
         }
 
         private void refreshContent() {

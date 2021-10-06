@@ -263,5 +263,7 @@
     <orderEntry type="library" name="Intino: org.siani.monet:space:2.0.4" level="project" />
     <orderEntry type="module" module-name="unit-elements" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.13.15" level="project" />
+    <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
+    <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
   </component>
 </module>

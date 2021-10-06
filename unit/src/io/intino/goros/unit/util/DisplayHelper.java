@@ -1,16 +1,16 @@
 package io.intino.goros.unit.util;
 
-import io.intino.alexandria.ui.displays.components.SelectorCollectionBox;
-import io.intino.alexandria.ui.displays.components.SelectorComboBox;
-import io.intino.alexandria.ui.displays.components.SelectorTabs;
-import io.intino.alexandria.ui.displays.components.SelectorToggleBox;
+import io.intino.alexandria.ui.displays.components.*;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
 import org.monet.metamodel.*;
 import org.monet.space.kernel.agents.AgentSession;
 import org.monet.space.kernel.constants.ApplicationInterface;
 import org.monet.space.kernel.constants.Database;
+import org.monet.space.kernel.constants.Strings;
+import org.monet.space.kernel.library.LibraryDate;
 import org.monet.space.kernel.model.*;
+import org.monet.space.kernel.model.User;
 import org.monet.space.office.ApplicationOffice;
 
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class DisplayHelper {
 
@@ -36,6 +37,31 @@ public class DisplayHelper {
 		context.setUserServerConfig(thread, "localhost", "", Integer.valueOf(box.configuration().port()));
 		context.setSessionId(thread, session.id());
 		context.setDatabaseConnectionType(thread, Database.ConnectionTypes.AUTO_COMMIT);
+	}
+
+	public static String description(Task task, Function<String, String> translator) {
+		return description(task, translator, LibraryDate.Format.TEXT);
+	}
+
+	public static String description(Task task, Function<String, String> translator, String format) {
+		if (task == null) return null;
+		return description(task.getOwner(), task.getInternalCreateDate(), translator, format);
+	}
+
+	public static String description(Node node, Function<String, String> translator) {
+		return description(node, translator, LibraryDate.Format.TEXT);
+	}
+
+	public static String description(Node node, Function<String, String> translator, String format) {
+		if (node == null) return null;
+		return description(node.getOwner(), node.getReference().getCreateDate().getValue(), translator, format);
+	}
+
+	public static String description(User owner, java.util.Date createDate, Function<String, String> translator, String format) {
+		String fullName = owner != null ? owner.getInfo().getFullname() : null;
+		String createDateValue = LibraryDate.getDateAndTimeString(createDate, org.monet.space.office.core.model.Language.getCurrent(), org.monet.space.office.core.model.Language.getCurrentTimeZone(), format, true, Strings.BAR45);
+		String result = translator.apply("Created at") + " " + createDateValue;
+		return fullName != null ? result + " " + translator.apply("by") + " " + owner.getInfo().getFullname() : result;
 	}
 
 	public static void executeDelayed(Consumer<Boolean> consumer) {

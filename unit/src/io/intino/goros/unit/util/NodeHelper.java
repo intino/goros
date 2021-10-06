@@ -207,27 +207,26 @@ public class NodeHelper {
         return message;
     }
 
-    public static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
+    public static Entity<?> operationEntity(ClientOperation operation) {
         String name = operation.getName().toLowerCase();
         String id = operation.getData().get(OperationParamId).toString();
-        Soul soul = session.client().soul();
+        if (OperationShowNode.equals(name) || OperationShowNodeView.equals(name)) return nodeLayer().loadNode(id);
+        else if (OperationShowTask.equals(name)) return LayerHelper.taskLayer().loadTask(operation.getData().get(OperationParamId).toString());
+        return null;
+    }
 
-        switch (name) {
-            case OperationShowNode: {
-                Node node = nodeLayer().loadNode(id);
-                dispatcher.dispatch(soul, PathHelper.pathOf(node));
-                break;
-            }
-            case OperationShowNodeView: {
-                Node node = nodeLayer().loadNode(id);
-                dispatcher.dispatch(soul, PathHelper.pathOf(node, operation.getData().get(OperationParamIdView).toString()));
-                break;
-            }
-            case OperationShowTask:
-                Task task = LayerHelper.taskLayer().loadTask(operation.getData().get(OperationParamId).toString());
-                dispatcher.dispatch(soul, PathHelper.pathOf(task));
-                break;
-        }
+    public static String operationPath(ClientOperation operation) {
+        Entity<?> entity = operationEntity(operation);
+        String name = operation.getName().toLowerCase();
+        if (OperationShowNode.equals(name)) return PathHelper.pathOf((Node<?>) entity);
+        else if (OperationShowNodeView.equals(name)) return PathHelper.pathOf((Node<?>) entity, operation.getData().get(OperationParamIdView).toString());
+        else if (OperationShowTask.equals(name)) return PathHelper.pathOf((Task<?>) entity);
+        return null;
+    }
+
+    public static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
+        Soul soul = session.client().soul();
+        dispatcher.dispatch(soul, operationPath(operation));
     }
 
     public static Task recentTask(Node node, String view) {

@@ -40,6 +40,8 @@ import org.monet.space.kernel.model.Task;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -363,7 +365,7 @@ public class NodeHelper {
 
     public static URL urlOf(Picture picture, boolean preview) {
         if (picture == null || picture.getFilename() == null) return null;
-        return urlOf(picture.getFilename(), preview ? "1" : "0");
+        return urlOf(URLEncoder.encode(picture.getFilename(), StandardCharsets.UTF_8), preview ? "1" : "0");
     }
 
     public static URL urlOf(Node node) {
@@ -405,7 +407,7 @@ public class NodeHelper {
         try {
             if (file == null || file.getFilename() == null) return null;
             Map<String, String> params = new HashMap<>();
-            params.put("id", file.getFilename());
+            params.put("id", URLEncoder.encode(file.getFilename(), StandardCharsets.UTF_8));
             return new URL(ComponentDocuments.getInstance().getDownloadUrl(params));
         } catch (MalformedURLException e) {
             Logger.error(e);

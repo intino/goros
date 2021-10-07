@@ -449,7 +449,7 @@ def type (dispatchOperationListener & collection)
 end
 
 def type (dispatchOperationListener & singleton)
-    (java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation>)null
+    box().routeManager().routeDispatcher()
 end
 
 def type (dispatchOperationListener)

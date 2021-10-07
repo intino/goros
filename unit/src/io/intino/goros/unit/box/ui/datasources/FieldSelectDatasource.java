@@ -11,11 +11,9 @@ import org.monet.bpi.types.TermList;
 import org.monet.metamodel.SelectFieldProperty;
 import org.monet.metamodel.SelectFieldPropertyBase;
 import org.monet.metamodel.internal.Ref;
+import org.monet.space.kernel.components.layers.NodeLayer;
 import org.monet.space.kernel.components.layers.SourceLayer;
-import org.monet.space.kernel.model.DataRequest;
-import org.monet.space.kernel.model.Dictionary;
-import org.monet.space.kernel.model.Node;
-import org.monet.space.kernel.model.SerializerData;
+import org.monet.space.kernel.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +55,7 @@ public class FieldSelectDatasource extends TermDatasource {
     private Collection<Term> loadFromSource() {
         SourceLayer sourceLayer = LayerHelper.sourceLayer();
         Ref sourceRef = definition.getSource();
+        String source = this.source != null && !this.source.isEmpty() ? this.source : locateSourceIdFromContext(sourceRef.getValue(), definition.getSelect());
         String sourceId = locateSourceId(sourceRef.getValue(), source);
         TermList result = new TermList();
 

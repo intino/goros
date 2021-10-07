@@ -61,6 +61,9 @@ public class FieldRenderer extends Renderer {
 	private FrameBuilder dependantFrameOf(FieldProperty field) {
 		FrameBuilder result = baseFrame();
 		result.add("dependant");
+		if (field.isMultiple()) result.add("multiple");
+		result.add("anchorCode", fieldProperty.getCode());
+		result.add("anchorName", fieldProperty.getName());
 		result.add("code", field.getCode());
 		result.add("name", field.getName());
 		return result;
@@ -75,10 +78,12 @@ public class FieldRenderer extends Renderer {
 		if (!f.isSelect()) return false;
 		SelectFieldProperty field = (SelectFieldProperty) f;
 		SelectFieldPropertyBase.SelectProperty select = field.getSelect();
-		if (select == null || select.getRoot() == null) return false;
-		Object root = select.getRoot();
-		if (!(root instanceof Ref)) return false;
-		return ((Ref)root).getValue().equals(fieldProperty.getName());
+		if (select == null) return false;
+		Object ref = select.getRoot() != null ? select.getRoot() : null;
+		if (ref == null) ref = select.getContext() != null ? select.getContext() : null;
+		if (ref == null) return false;
+		if (!(ref instanceof Ref)) return false;
+		return ((Ref) ref).getValue().equals(fieldProperty.getName());
 	}
 
 	private void addTypes(FrameBuilder builder) {

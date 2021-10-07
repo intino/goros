@@ -42,7 +42,7 @@ public class NodeDefinitionTemplate extends Template {
 			rule().condition((type("operationsGroup")), (trigger("editablerefreshcall"))).output(literal("operaciones.options(addOptions());\noperaciones.visible(addOptions().size() > 0);")),
 			rule().condition((type("operation")), (trigger("editablerefreshcall"))).output(mark("name", "lowerCase")).output(literal(".visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, \"")).output(mark("name")).output(literal("\"), session()) && !node.isPrototype());")),
 			rule().condition((allTypes("dispatchOperationListener","collection"))).output(literal("this::dispatch")),
-			rule().condition((allTypes("dispatchOperationListener","singleton"))).output(literal("(java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation>)null")),
+			rule().condition((allTypes("dispatchOperationListener","singleton"))).output(literal("box().routeManager().routeDispatcher()")),
 			rule().condition((type("dispatchOperationListener"))).output(literal("dispatchOperationListener")),
 			rule().condition((allTypes("nodeview","visibleWhenEmbedded")), (trigger("initcall"))),
 			rule().condition((type("nodeview")), (trigger("initcall"))).output(mark("name", "firstLowerCase")).output(literal("View.onShow(e -> refresh")).output(mark("name", "firstUpperCase")).output(literal("View());")),

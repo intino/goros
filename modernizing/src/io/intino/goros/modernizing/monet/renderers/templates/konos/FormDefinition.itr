@@ -95,11 +95,11 @@ def type(field & boolean)
 end
 
 def type(field & date & multiple)
-    Date(format=airBottom) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
+    Date(format=airBottom[, pattern="$pattern"]) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
 end
 
 def type(field & date)
-    Date(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
+    Date(format=airBottom[, pattern="$pattern"]) $name+firstLowerCase as Editable[(timePicker=$timePicker)] Labeled("$label") Readonly
 end
 
 def type(field & memo & multiple)

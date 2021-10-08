@@ -7,6 +7,7 @@ import io.intino.itrules.Frame;
 import io.intino.itrules.FrameBuilder;
 import org.monet.bpi.FieldSelect;
 import org.monet.metamodel.*;
+import org.monet.metamodel.DateFieldPropertyBase.PrecisionEnumeration;
 import org.monet.metamodel.TextFieldProperty.EditionProperty.ModeEnumeration;
 import org.monet.metamodel.internal.Ref;
 
@@ -48,6 +49,7 @@ public class FieldRenderer extends Renderer {
 		addTypes(result);
 		addMultipleProperties(result);
 		addTextProperties(result);
+		addDateProperties(result);
 		addLinkProperties(result);
 		addCompositeProperties(result);
 		addSelectProperties(result);
@@ -152,6 +154,29 @@ public class FieldRenderer extends Renderer {
 		if (mode == ModeEnumeration.UPPERCASE) builder.add("textMode", "Uppercase");
 		else if (mode == ModeEnumeration.LOWERCASE) builder.add("textMode", "Lowercase");
 		else if (mode == ModeEnumeration.TITLE) builder.add("textMode", "Capitalize");
+	}
+
+	private void addDateProperties(FrameBuilder builder) {
+		if (!fieldProperty.isDate()) return;
+		DateFieldProperty dateField = (DateFieldProperty) fieldProperty;
+		builder.add("pattern", pattern(dateField));
+		if (isDateTime(dateField)) builder.add("timePicker", "true");
+	}
+
+	private String pattern(DateFieldProperty dateField) {
+		PrecisionEnumeration precision = dateField.getPrecision();
+		if (precision == null) return "DD/MM/YYYY";
+		if (precision == PrecisionEnumeration.YEARS) return "YYYY";
+		else if (precision == PrecisionEnumeration.MONTHS) return "MM/YYYY";
+		else if (precision == PrecisionEnumeration.DAYS) return "DD/MM/YYYY";
+		else if (precision == PrecisionEnumeration.HOURS) return "DD/MM/YYYY HH";
+		else if (precision == PrecisionEnumeration.MINUTES) return "DD/MM/YYYY HH:mm";
+		return "DD/MM/YYYY HH:mm:ss";
+	}
+
+	private boolean isDateTime(DateFieldProperty dateField) {
+		PrecisionEnumeration precision = dateField.getPrecision();
+		return precision == PrecisionEnumeration.HOURS || precision == PrecisionEnumeration.MINUTES || precision == PrecisionEnumeration.SECONDS;
 	}
 
 	private void addLinkProperties(FrameBuilder builder) {

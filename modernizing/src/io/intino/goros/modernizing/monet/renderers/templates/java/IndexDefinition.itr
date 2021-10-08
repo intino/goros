@@ -33,13 +33,13 @@ def type(attribute & picture)
 end
 
 def type(attribute & real)
-    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(item, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(item, "$code+lowerCase"));
 end
 
 def type(attribute & integer)
-    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(item, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf(item, "$code+lowerCase"));
 end
 
 def type(attribute)
-    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf(item, "$code"));
+    row.$definition+firstLowerCase$view+firstUpperCase~Table$name+firstUpperCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf(item, "$code+lowerCase"));
 end

@@ -182,6 +182,10 @@ public class NodeHelper {
     }
 
     public static void cancelOperation(UISession session, Actionable actionable, Node node, String operation, String successMessage, DisplayRouteDispatcher dispatcher) {
+        cancelOperation(session, actionable, node, operation, successMessage, clientOperation -> {});
+    }
+
+    public static void cancelOperation(UISession session, Actionable actionable, Node node, String operation, String successMessage, Consumer<ClientOperation> dispatcher) {
         actionable.readonly(true);
         Node current = nodeLayer().loadNode(node.getId());
         MonetEvent event = new MonetEvent(MonetEvent.NODE_EXECUTE_COMMAND_CONFIRMATION_ON_CANCEL, null, current);

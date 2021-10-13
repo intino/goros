@@ -426,7 +426,7 @@ def type(operation & download) trigger(editableInitCall)
 end
 
 def type(operation & confirmation) trigger(editableInitCall)
-    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed")), $dispatchOperationListener);
+    $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed"), $dispatchOperationListener));
     $name+lowerCase.onBeforeAffirmed(e -> io.intino.goros.unit.util.NodeHelper.isOperationConfirmationRequired(node, "$name"));
     $name+lowerCase.onCancelAffirmed(e -> io.intino.goros.unit.util.NodeHelper.cancelOperation(session(), $name+lowerCase, node, "$name", translate("Operation canceled"), $dispatchOperationListener));
 end

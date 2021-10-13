@@ -123,11 +123,11 @@ def type(field & file)
 end
 
 def type(field & picture & multiple)
-    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly Absolute(width=150px,height=150px)
+    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly Relative(width=50%)
 end
 
 def type(field & picture)
-    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)
+    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Relative(width=50%)
 end
 
 def type(field & check)

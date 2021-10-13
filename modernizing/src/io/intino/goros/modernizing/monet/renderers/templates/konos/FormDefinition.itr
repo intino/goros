@@ -127,7 +127,7 @@ def type(field & picture & multiple)
 end
 
 def type(field & picture)
-    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Relative(width=50%)
+    Image(format=airBottom) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)
 end
 
 def type(field & check)

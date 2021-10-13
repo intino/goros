@@ -43,7 +43,9 @@ public abstract class TermDatasource {
         if (!(ref instanceof Ref)) return null;
         String sourceCode = Dictionary.getInstance().getDefinitionCode(sourceKey);
         String field = ((Ref) ref).getValue();
-        String context = LayerHelper.nodeLayer().loadNode(node.getFieldValue(field)).getPartnerContext();
+        String fieldValue = node.getFieldValue(field);
+        if (fieldValue == null || fieldValue.isEmpty()) return null;
+        String context = LayerHelper.nodeLayer().loadNode(fieldValue).getPartnerContext();
         SourceList sources = locateSources(sourceCode, context);
         return sources.get().size() > 0 ? sources.get().values().iterator().next().getId() : null;
     }

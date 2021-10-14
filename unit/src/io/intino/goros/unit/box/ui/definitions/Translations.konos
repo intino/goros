@@ -17,6 +17,7 @@ Translator(language = Spanish)
 	Translation(text = "Next", value = "Siguiente")
 	Translation(text = "Drag and drop a file here or click", value = "Arrastre y suelte un archivo aquí o haga click")
 	Translation(text = "Remove location", value = "Quitar ubicación")
+	Translation(text = "goto space", value = "ir al espacio")
 
 	// Goros
 	Translation(text = "available", value = "disponibles")

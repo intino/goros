@@ -8,6 +8,7 @@ Service UnitElements as UI(port = "{port}", title = "", favicon = "")
 	Resource(path = "/goros-home") home as Page(gorosAppTemplate) Main Confidential
 	Resource(path = "/install") install as Page(gorosInstallTemplate)
 	Resource(path = "/banner.jsp") banner as Page(gorosAppTemplate)
+		Parameter view
 
 Template gorosAppTemplate
 

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "host": "",
-  "basePath": "/backservice",
+  "basePath": "/",
   "schemes": [
     "https"
   ],
@@ -16,10 +16,47 @@
     "multipart/form-data"
   ],
   "paths": {
-    "/adddatastorecubefact": {
+    "/servlet/backservice": {
+      "post": {
+        "description": "Dispatchs operation",
+        "operationId": "BackService_10_2_01500493634",
+        "consumes": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "text/plain; charset\u003dutf-8",
+          " application/json",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "op",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/backservice/adddatastorecubefact": {
       "post": {
         "description": "Adds a fact to a datastore cube",
-        "operationId": "BackService_10_2_11289260438",
+        "operationId": "BackService_16_2_11289260438",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -60,10 +97,10 @@
         }
       }
     },
-    "/adddatastorecubefacts": {
+    "/backservice/adddatastorecubefacts": {
       "post": {
         "description": "Adds facts to a datastore cube",
-        "operationId": "BackService_17_2_1810473616",
+        "operationId": "BackService_23_2_1810473616",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -104,10 +141,10 @@
         }
       }
     },
-    "/adddatastoredimensioncomponent": {
+    "/backservice/adddatastoredimensioncomponent": {
       "post": {
         "description": "Adds a component to a datastore dimension",
-        "operationId": "BackService_24_2_11582763927",
+        "operationId": "BackService_30_2_11582763927",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -148,10 +185,10 @@
         }
       }
     },
-    "/addnodeflag": {
+    "/backservice/addnodeflag": {
       "post": {
         "description": "Adds a flag to a node",
-        "operationId": "BackService_31_2_01904406801",
+        "operationId": "BackService_37_2_01904406801",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -192,10 +229,10 @@
         }
       }
     },
-    "/addnodenote": {
+    "/backservice/addnodenote": {
       "post": {
         "description": "Adds a note to a node",
-        "operationId": "BackService_38_2_01795721931",
+        "operationId": "BackService_44_2_01795721931",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -236,10 +273,10 @@
         }
       }
     },
-    "/addsourceterm": {
+    "/backservice/addsourceterm": {
       "post": {
         "description": "Adds a term to a source",
-        "operationId": "BackService_45_2_01156532150",
+        "operationId": "BackService_51_2_01156532150",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -301,10 +338,10 @@
         }
       }
     },
-    "/addtaskflact": {
+    "/backservice/addtaskflact": {
       "post": {
         "description": "Adds a fact to a task",
-        "operationId": "BackService_55_2_0660853360",
+        "operationId": "BackService_61_2_0660853360",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -359,10 +396,10 @@
         }
       }
     },
-    "/addtaskflag": {
+    "/backservice/addtaskflag": {
       "post": {
         "description": "Adds a flag to a task",
-        "operationId": "BackService_64_2_02144371220",
+        "operationId": "BackService_70_2_02144371220",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -403,10 +440,10 @@
         }
       }
     },
-    "/addtaskshortcut": {
+    "/backservice/addtaskshortcut": {
       "post": {
         "description": "Adds a shortcut to a task",
-        "operationId": "BackService_71_2_1528074246",
+        "operationId": "BackService_77_2_1528074246",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -447,10 +484,10 @@
         }
       }
     },
-    "/consolidatenode": {
+    "/backservice/consolidatenode": {
       "post": {
         "description": "Consolidates a node",
-        "operationId": "BackService_78_2_01200687373",
+        "operationId": "BackService_84_2_01200687373",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -477,10 +514,10 @@
         }
       }
     },
-    "/createaccount": {
+    "/backservice/createaccount": {
       "post": {
         "description": "Creates an account",
-        "operationId": "BackService_83_2_0168862038",
+        "operationId": "BackService_89_2_0168862038",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -528,10 +565,10 @@
         }
       }
     },
-    "/createnode": {
+    "/backservice/createnode": {
       "post": {
         "description": "Creates a node",
-        "operationId": "BackService_91_2_0859474299",
+        "operationId": "BackService_97_2_0859474299",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -565,10 +602,10 @@
         }
       }
     },
-    "/createtask": {
+    "/backservice/createtask": {
       "post": {
         "description": "Creates a task",
-        "operationId": "BackService_97_2_0524727396",
+        "operationId": "BackService_103_2_0524727396",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -595,10 +632,10 @@
         }
       }
     },
-    "/deletenodeflag": {
+    "/backservice/deletenodeflag": {
       "post": {
         "description": "Deletes a flag for a node",
-        "operationId": "BackService_102_2_0470065358",
+        "operationId": "BackService_108_2_0470065358",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -632,10 +669,10 @@
         }
       }
     },
-    "/deletenodenote": {
+    "/backservice/deletenodenote": {
       "post": {
         "description": "Deletes a note for a node",
-        "operationId": "BackService_108_2_1552239148",
+        "operationId": "BackService_114_2_1552239148",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -669,10 +706,10 @@
         }
       }
     },
-    "/createtaskflag": {
+    "/backservice/createtaskflag": {
       "post": {
         "description": "Deletes a flag for a task",
-        "operationId": "BackService_114_2_057172625",
+        "operationId": "BackService_120_2_057172625",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -706,10 +743,10 @@
         }
       }
     },
-    "/deletetaskshortcut": {
+    "/backservice/deletetaskshortcut": {
       "post": {
         "description": "Deletes a shortcut for a task",
-        "operationId": "BackService_120_2_01515384811",
+        "operationId": "BackService_126_2_01515384811",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -743,10 +780,10 @@
         }
       }
     },
-    "/downloaddistribution": {
+    "/backservice/downloaddistribution": {
       "post": {
         "description": "Downloads the distribution",
-        "operationId": "BackService_126_2_01120599960",
+        "operationId": "BackService_132_2_01120599960",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -764,10 +801,10 @@
         }
       }
     },
-    "/emptytrash": {
+    "/backservice/emptytrash": {
       "post": {
         "description": "Empties the trash",
-        "operationId": "BackService_130_2_043731039",
+        "operationId": "BackService_136_2_043731039",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -785,10 +822,10 @@
         }
       }
     },
-    "/executeexporter": {
+    "/backservice/executeexporter": {
       "post": {
         "description": "Executes an exporter",
-        "operationId": "BackService_134_2_1108562539",
+        "operationId": "BackService_140_2_1108562539",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -822,10 +859,10 @@
         }
       }
     },
-    "/executenodecommand": {
+    "/backservice/executenodecommand": {
       "post": {
         "description": "Executes a node command",
-        "operationId": "BackService_140_2_0162976447",
+        "operationId": "BackService_146_2_0162976447",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -859,10 +896,10 @@
         }
       }
     },
-    "/existsnode": {
+    "/backservice/existsnode": {
       "post": {
         "description": "Checks if a node exists",
-        "operationId": "BackService_146_2_01533428335",
+        "operationId": "BackService_152_2_01533428335",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -889,10 +926,10 @@
         }
       }
     },
-    "/exportnode": {
+    "/backservice/exportnode": {
       "post": {
         "description": "Exports a node",
-        "operationId": "BackService_151_2_11731949072",
+        "operationId": "BackService_157_2_11731949072",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -919,10 +956,10 @@
         }
       }
     },
-    "/exportnodes": {
+    "/backservice/exportnodes": {
       "post": {
         "description": "Exports a set of nodes",
-        "operationId": "BackService_156_2_11640490859",
+        "operationId": "BackService_162_2_11640490859",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -949,10 +986,10 @@
         }
       }
     },
-    "/getnodeancestors": {
+    "/backservice/getnodeancestors": {
       "post": {
         "description": "Gets the ancestors for a node",
-        "operationId": "BackService_161_2_0375089390",
+        "operationId": "BackService_167_2_0375089390",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -979,10 +1016,10 @@
         }
       }
     },
-    "/getnodedocument": {
+    "/backservice/getnodedocument": {
       "post": {
         "description": "Gets a document for node",
-        "operationId": "BackService_166_2_0851436247",
+        "operationId": "BackService_172_2_0851436247",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1009,10 +1046,10 @@
         }
       }
     },
-    "/getnodedocumentcontenttype": {
+    "/backservice/getnodedocumentcontenttype": {
       "post": {
         "description": "Gets the content type for a node document",
-        "operationId": "BackService_171_2_0812690604",
+        "operationId": "BackService_177_2_0812690604",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1039,10 +1076,10 @@
         }
       }
     },
-    "/getnodefile": {
+    "/backservice/getnodefile": {
       "post": {
         "description": "Gets a file for a node",
-        "operationId": "BackService_176_2_0589315142",
+        "operationId": "BackService_182_2_0589315142",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1076,10 +1113,10 @@
         }
       }
     },
-    "/getnodeflags": {
+    "/backservice/getnodeflags": {
       "post": {
         "description": "Gets the flags for a node",
-        "operationId": "BackService_182_2_156919609",
+        "operationId": "BackService_188_2_156919609",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1106,10 +1143,10 @@
         }
       }
     },
-    "/getnodelocation": {
+    "/backservice/getnodelocation": {
       "post": {
         "description": "Gets the node location",
-        "operationId": "BackService_187_2_1381804549",
+        "operationId": "BackService_193_2_1381804549",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1136,10 +1173,10 @@
         }
       }
     },
-    "/getnodenotes": {
+    "/backservice/getnodenotes": {
       "post": {
         "description": "Gets the notes for a node",
-        "operationId": "BackService_192_2_02084171981",
+        "operationId": "BackService_198_2_02084171981",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1166,10 +1203,10 @@
         }
       }
     },
-    "/getnodereference": {
+    "/backservice/getnodereference": {
       "post": {
         "description": "Gets a reference for a node",
-        "operationId": "BackService_197_2_08777104",
+        "operationId": "BackService_203_2_08777104",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1203,10 +1240,10 @@
         }
       }
     },
-    "/getnodereferences": {
+    "/backservice/getnodereferences": {
       "post": {
         "description": "Gets a set of filtered references for a node",
-        "operationId": "BackService_203_2_0313112390",
+        "operationId": "BackService_209_2_0313112390",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1268,10 +1305,10 @@
         }
       }
     },
-    "/getnodereferencescount": {
+    "/backservice/getnodereferencescount": {
       "post": {
         "description": "Gets the count of filtered references for a node",
-        "operationId": "BackService_213_2_0568508045",
+        "operationId": "BackService_219_2_0568508045",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1312,10 +1349,10 @@
         }
       }
     },
-    "/getnodeschema": {
+    "/backservice/getnodeschema": {
       "post": {
         "description": "Gets the schema for a node",
-        "operationId": "BackService_220_2_01647049623",
+        "operationId": "BackService_226_2_01647049623",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1342,10 +1379,10 @@
         }
       }
     },
-    "/getnodetasks": {
+    "/backservice/getnodetasks": {
       "post": {
         "description": "Gets the tasks for a node",
-        "operationId": "BackService_225_2_0690046368",
+        "operationId": "BackService_231_2_0690046368",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1372,10 +1409,10 @@
         }
       }
     },
-    "/getsourceparentterm": {
+    "/backservice/getsourceparentterm": {
       "post": {
         "description": "Gets the parent term for a term of a source",
-        "operationId": "BackService_230_2_1376547032",
+        "operationId": "BackService_236_2_1376547032",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1409,10 +1446,10 @@
         }
       }
     },
-    "/getsourceterms": {
+    "/backservice/getsourceterms": {
       "post": {
         "description": "Gets the terms for a parent term",
-        "operationId": "BackService_236_2_0532988399",
+        "operationId": "BackService_242_2_0532988399",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1446,10 +1483,10 @@
         }
       }
     },
-    "/gettaskfacts": {
+    "/backservice/gettaskfacts": {
       "post": {
         "description": "Gets the facts for a task",
-        "operationId": "BackService_242_2_01384890020",
+        "operationId": "BackService_248_2_01384890020",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1476,10 +1513,10 @@
         }
       }
     },
-    "/gettaskflags": {
+    "/backservice/gettaskflags": {
       "post": {
         "description": "Gets the flags for a task",
-        "operationId": "BackService_247_2_01331537828",
+        "operationId": "BackService_253_2_01331537828",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1506,10 +1543,10 @@
         }
       }
     },
-    "/gettaskprocess": {
+    "/backservice/gettaskprocess": {
       "post": {
         "description": "Gets the process for a task",
-        "operationId": "BackService_252_2_11175164420",
+        "operationId": "BackService_258_2_11175164420",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1536,10 +1573,10 @@
         }
       }
     },
-    "/gettasks": {
+    "/backservice/gettasks": {
       "post": {
         "description": "Gets a set of filtered tasks",
-        "operationId": "BackService_257_2_01329538568",
+        "operationId": "BackService_263_2_01329538568",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1601,10 +1638,10 @@
         }
       }
     },
-    "/gettaskshortcuts": {
+    "/backservice/gettaskshortcuts": {
       "post": {
         "description": "Gets the shortcuts for a task",
-        "operationId": "BackService_267_2_1737345410",
+        "operationId": "BackService_273_2_1737345410",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1631,10 +1668,10 @@
         }
       }
     },
-    "/getuserlinkedtonode": {
+    "/backservice/getuserlinkedtonode": {
       "post": {
         "description": "Gets the user linked to a node",
-        "operationId": "BackService_272_2_0487283014",
+        "operationId": "BackService_278_2_0487283014",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1661,10 +1698,10 @@
         }
       }
     },
-    "/getusernode": {
+    "/backservice/getusernode": {
       "post": {
         "description": "Gets the environment node for a user",
-        "operationId": "BackService_277_2_0448495049",
+        "operationId": "BackService_283_2_0448495049",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1698,10 +1735,10 @@
         }
       }
     },
-    "/getusertasks": {
+    "/backservice/getusertasks": {
       "post": {
         "description": "Gets the tasks for a user",
-        "operationId": "BackService_283_2_11869894199",
+        "operationId": "BackService_289_2_11869894199",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1728,10 +1765,10 @@
         }
       }
     },
-    "/gotoplaceintask": {
+    "/backservice/gotoplaceintask": {
       "post": {
         "description": "Goes to a place in a task",
-        "operationId": "BackService_288_2_11962630593",
+        "operationId": "BackService_294_2_11962630593",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1772,10 +1809,10 @@
         }
       }
     },
-    "/haspermissions": {
+    "/backservice/haspermissions": {
       "post": {
         "description": "Checks if user has permissions",
-        "operationId": "BackService_295_2_11843458350",
+        "operationId": "BackService_301_2_11843458350",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1802,10 +1839,10 @@
         }
       }
     },
-    "/importnode": {
+    "/backservice/importnode": {
       "post": {
         "description": "Imports a node",
-        "operationId": "BackService_300_2_11011744049",
+        "operationId": "BackService_306_2_11011744049",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1846,10 +1883,10 @@
         }
       }
     },
-    "/loadsource": {
+    "/backservice/loadsource": {
       "post": {
         "description": "Loads a source",
-        "operationId": "BackService_307_2_01682162565",
+        "operationId": "BackService_313_2_01682162565",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1876,10 +1913,10 @@
         }
       }
     },
-    "/loaduser": {
+    "/backservice/loaduser": {
       "post": {
         "description": "Loads a user",
-        "operationId": "BackService_312_2_11968773913",
+        "operationId": "BackService_318_2_11968773913",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1906,10 +1943,10 @@
         }
       }
     },
-    "/locatenode": {
+    "/backservice/locatenode": {
       "post": {
         "description": "Locates a node",
-        "operationId": "BackService_317_2_01014123339",
+        "operationId": "BackService_323_2_01014123339",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1943,10 +1980,10 @@
         }
       }
     },
-    "/locatesource": {
+    "/backservice/locatesource": {
       "post": {
         "description": "Locates a source",
-        "operationId": "BackService_323_2_0526627838",
+        "operationId": "BackService_329_2_0526627838",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -1980,10 +2017,10 @@
         }
       }
     },
-    "/makenodedeleteable": {
+    "/backservice/makenodedeleteable": {
       "post": {
         "description": "Makes a node deletable",
-        "operationId": "BackService_329_2_1317266896",
+        "operationId": "BackService_335_2_1317266896",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2010,10 +2047,10 @@
         }
       }
     },
-    "/makenodeeditable": {
+    "/backservice/makenodeeditable": {
       "post": {
         "description": "Makes a node editable",
-        "operationId": "BackService_334_2_1952956078",
+        "operationId": "BackService_340_2_1952956078",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2040,10 +2077,10 @@
         }
       }
     },
-    "/makenodeprivate": {
+    "/backservice/makenodeprivate": {
       "post": {
         "description": "Makes a node private",
-        "operationId": "BackService_339_2_1700370527",
+        "operationId": "BackService_345_2_1700370527",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2070,10 +2107,10 @@
         }
       }
     },
-    "/makenodepublic": {
+    "/backservice/makenodepublic": {
       "post": {
         "description": "Makes a node public",
-        "operationId": "BackService_344_2_1523308755",
+        "operationId": "BackService_350_2_1523308755",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2100,10 +2137,10 @@
         }
       }
     },
-    "/makenodeundeleteable": {
+    "/backservice/makenodeundeleteable": {
       "post": {
         "description": "Makes a node undeletable",
-        "operationId": "BackService_349_2_0702924489",
+        "operationId": "BackService_355_2_0702924489",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2130,10 +2167,10 @@
         }
       }
     },
-    "/makenodeuneditable": {
+    "/backservice/makenodeuneditable": {
       "post": {
         "description": "Makes a node uneditable",
-        "operationId": "BackService_354_2_11474236007",
+        "operationId": "BackService_360_2_11474236007",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2160,10 +2197,10 @@
         }
       }
     },
-    "/opendatastore": {
+    "/backservice/opendatastore": {
       "post": {
         "description": "Loads a datastore",
-        "operationId": "BackService_359_2_179649965",
+        "operationId": "BackService_365_2_179649965",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2190,10 +2227,10 @@
         }
       }
     },
-    "/opennode": {
+    "/backservice/opennode": {
       "post": {
         "description": "Loads a node",
-        "operationId": "BackService_364_2_131221915",
+        "operationId": "BackService_370_2_131221915",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2227,10 +2264,10 @@
         }
       }
     },
-    "/opentask": {
+    "/backservice/opentask": {
       "post": {
         "description": "Loads a task",
-        "operationId": "BackService_370_2_1755115493",
+        "operationId": "BackService_376_2_1755115493",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2257,10 +2294,10 @@
         }
       }
     },
-    "/recovernode": {
+    "/backservice/recovernode": {
       "post": {
         "description": "Recovers a node",
-        "operationId": "BackService_375_2_01782358098",
+        "operationId": "BackService_381_2_01782358098",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2287,10 +2324,10 @@
         }
       }
     },
-    "/removenode": {
+    "/backservice/removenode": {
       "post": {
         "description": "Removes a node",
-        "operationId": "BackService_380_2_02043236128",
+        "operationId": "BackService_386_2_02043236128",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2317,10 +2354,10 @@
         }
       }
     },
-    "/removetask": {
+    "/backservice/removetask": {
       "post": {
         "description": "Removes a task",
-        "operationId": "BackService_385_2_1863273731",
+        "operationId": "BackService_391_2_1863273731",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2347,10 +2384,10 @@
         }
       }
     },
-    "/resetnodeform": {
+    "/backservice/resetnodeform": {
       "post": {
         "description": "Resets a node form",
-        "operationId": "BackService_390_2_01763107843",
+        "operationId": "BackService_396_2_01763107843",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2377,10 +2414,10 @@
         }
       }
     },
-    "/resumetask": {
+    "/backservice/resumetask": {
       "post": {
         "description": "Resumes a task",
-        "operationId": "BackService_395_2_11267311564",
+        "operationId": "BackService_401_2_11267311564",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2407,10 +2444,10 @@
         }
       }
     },
-    "/runtask": {
+    "/backservice/runtask": {
       "post": {
         "description": "Runs a task",
-        "operationId": "BackService_400_2_1110068229",
+        "operationId": "BackService_406_2_1110068229",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2444,10 +2481,10 @@
         }
       }
     },
-    "/savenode": {
+    "/backservice/savenode": {
       "post": {
         "description": "Saves a node",
-        "operationId": "BackService_406_2_0959583899",
+        "operationId": "BackService_412_2_0959583899",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2481,10 +2518,10 @@
         }
       }
     },
-    "/savenodedocument": {
+    "/backservice/savenodedocument": {
       "post": {
         "description": "Saves a node",
-        "operationId": "BackService_412_2_051685985",
+        "operationId": "BackService_418_2_051685985",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2525,10 +2562,10 @@
         }
       }
     },
-    "/savenodefile": {
+    "/backservice/savenodefile": {
       "post": {
         "description": "Saves a file in a node",
-        "operationId": "BackService_419_2_01966261346",
+        "operationId": "BackService_425_2_01966261346",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2562,10 +2599,10 @@
         }
       }
     },
-    "/savenodeparent": {
+    "/backservice/savenodeparent": {
       "post": {
         "description": "Saves the node parent",
-        "operationId": "BackService_425_2_0539240277",
+        "operationId": "BackService_431_2_0539240277",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2599,10 +2636,10 @@
         }
       }
     },
-    "/savenodepartnercontext": {
+    "/backservice/savenodepartnercontext": {
       "post": {
         "description": "Saves the partner context in a node",
-        "operationId": "BackService_431_2_01819617322",
+        "operationId": "BackService_437_2_01819617322",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2629,10 +2666,10 @@
         }
       }
     },
-    "/savenodepicture": {
+    "/backservice/savenodepicture": {
       "post": {
         "description": "Saves a picture in a node",
-        "operationId": "BackService_437_2_11548891428",
+        "operationId": "BackService_443_2_11548891428",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2666,10 +2703,10 @@
         }
       }
     },
-    "/savenodereference": {
+    "/backservice/savenodereference": {
       "post": {
         "description": "Saves a node reference",
-        "operationId": "BackService_443_2_01090169458",
+        "operationId": "BackService_449_2_01090169458",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2710,10 +2747,10 @@
         }
       }
     },
-    "/savenodesattribute": {
+    "/backservice/savenodesattribute": {
       "post": {
         "description": "Saves nodes attribute",
-        "operationId": "BackService_450_2_01516360223",
+        "operationId": "BackService_456_2_01516360223",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2747,10 +2784,10 @@
         }
       }
     },
-    "/savetask": {
+    "/backservice/savetask": {
       "post": {
         "description": "Saves a task",
-        "operationId": "BackService_456_2_0546691166",
+        "operationId": "BackService_462_2_0546691166",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2784,10 +2821,10 @@
         }
       }
     },
-    "/saveuser": {
+    "/backservice/saveuser": {
       "post": {
         "description": "Saves a user",
-        "operationId": "BackService_462_2_11359049390",
+        "operationId": "BackService_468_2_11359049390",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2821,10 +2858,10 @@
         }
       }
     },
-    "/searchevent": {
+    "/backservice/searchevent": {
       "post": {
         "description": "Searches an event",
-        "operationId": "BackService_468_2_0907680607",
+        "operationId": "BackService_474_2_0907680607",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2865,10 +2902,10 @@
         }
       }
     },
-    "/searchnodes": {
+    "/backservice/searchnodes": {
       "post": {
         "description": "Searches nodes",
-        "operationId": "BackService_475_2_01339180828",
+        "operationId": "BackService_481_2_01339180828",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2909,10 +2946,10 @@
         }
       }
     },
-    "/api": {
+    "/backservice/api": {
       "post": {
         "description": "Shows the api",
-        "operationId": "BackService_482_2_01338873132",
+        "operationId": "BackService_488_2_01338873132",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2930,10 +2967,10 @@
         }
       }
     },
-    "/subscribe": {
+    "/backservice/subscribe": {
       "post": {
         "description": "Subscribes to an event type",
-        "operationId": "BackService_486_2_1613506080",
+        "operationId": "BackService_492_2_1613506080",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -2967,10 +3004,10 @@
         }
       }
     },
-    "/unlocktask": {
+    "/backservice/unlocktask": {
       "post": {
         "description": "Unlocks a task",
-        "operationId": "BackService_492_2_11341790932",
+        "operationId": "BackService_498_2_11341790932",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

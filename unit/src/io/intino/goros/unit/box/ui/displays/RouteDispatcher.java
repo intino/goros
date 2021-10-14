@@ -13,7 +13,7 @@ public class RouteDispatcher extends AbstractRouteDispatcher {
 	}
 
 	@Override
-	public void dispatchBanner(Soul soul) {
+	public void dispatchBanner(Soul soul, String view) {
 	}
 
 }

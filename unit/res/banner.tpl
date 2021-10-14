@@ -91,22 +91,30 @@
     </style>
 </head>
 
-<body class="minimal">
+<body class="::view::">
 
     <div class="widget hidden_::hasPermissions::">
+        <div class="widget-image">
+            <img class="activator" src="::logo::" />
+        </div>
         <div class="widget-content">
-            <div class="widget-message">
-    			<div class="no-permissions">::noPermissionsMessage::</div>
-            </div>
+            <span class="title">::title::. ::subtitle::</span>
+            <div class="widget-message"><div class="no-permissions">::noPermissionsMessage::</div></div>
+            <a href="::spaceUrl::">::gotoSpace::</a>
         </div>
     </div>
 
     <div class="widget hidden_::noHasPermissions::">
+        <div class="widget-image">
+            <img class="activator" src="::logo::" />
+        </div>
         <div class="widget-content">
+            <span class="title">::title::. ::subtitle::</span>
             <div class="widget-message">
                 <div class="count-active-tasks">::activeTasksMessage::</div>
                 <div class="count-active-tasks">::pendingTasksMessage::</div>
             </div>
+            <a href="::spaceUrl::">::gotoSpace::</a>
         </div>
     </div>
 

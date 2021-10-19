@@ -116,7 +116,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		addShow(fieldProperty, result);
 		fieldProperty.getAllFieldPropertyList().forEach(f -> {
 			if (f instanceof CompositeFieldProperty) addCompositeView((CompositeFieldProperty) f, builder);
-			addField(f, fieldProperty, result);
+			addField(f, fieldProperty, null, result);
 		});
 		return result;
 	}
@@ -211,33 +211,33 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 	}
 
 	private void addFieldShow(FormViewProperty viewProperty, FrameBuilder builder) {
-		viewProperty.getShow().getField().forEach(ref -> addField(fieldProperty(ref), null, builder));
+		viewProperty.getShow().getField().forEach(ref -> addField(fieldProperty(ref), null, viewProperty, builder));
 	}
 
 	private void addFieldShow(CompositeFieldProperty field, CompositeFieldPropertyBase.ViewProperty viewProperty, FrameBuilder builder) {
-		fields(viewProperty.getShow()).forEach(ref -> addField(fieldProperty(ref, field), field, builder));
+		fields(viewProperty.getShow()).forEach(ref -> addField(fieldProperty(ref, field), field, null, builder));
 	}
 
 	private void addFieldShow(List<FieldProperty> fieldList, CompositeFieldProperty compositeField, FrameBuilder builder) {
-		fieldList.forEach(field -> addField(field, compositeField, builder));
+		fieldList.forEach(field -> addField(field, compositeField, null, builder));
 	}
 
 	private void addLayoutShow(FormViewProperty viewProperty, FrameBuilder builder) {
-		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), builder);
+		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), viewProperty, builder);
 	}
 
 	private void addLayoutShow(CompositeFieldPropertyBase.ViewProperty viewProperty, FrameBuilder builder) {
-		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), builder);
+		addLayoutShow(this.dictionary.getLayoutDefinition(viewProperty.getShow().getLayout()), null, builder);
 	}
 
-	private void addLayoutShow(LayoutDefinition definition, FrameBuilder builder) {
+	private void addLayoutShow(LayoutDefinition definition, FormDefinition.FormViewProperty viewProperty, FrameBuilder builder) {
 		String width = definition.getWidth();
 		String height = definition.getHeight();
 		if (width == null && height == null) builder.add("relativeFacet", sizeFacetFrame("relative", "90", null));
 		else if (isUnitRelative(width) || isUnitRelative(height)) builder.add("relativeFacet", relativeFacetFrame(definition));
 		else builder.add("absoluteFacet", absoluteFacetFrame(definition));
 		builder.add("width", definition.getWidth() != null ? definition.getWidth() : "100%");
-		rowsOf(definition.getElements()).forEach(row -> addLayoutRow(row, null, builder));
+		rowsOf(definition.getElements()).forEach(row -> addLayoutRow(row, null, viewProperty, builder));
 	}
 
 	private List<List<LayoutElementDefinition>> rowsOf(List<LayoutElementDefinition> elements) {
@@ -252,26 +252,26 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		return result;
 	}
 
-	private void addLayoutRow(List<LayoutElementDefinition> row, CompositeFieldProperty composite, FrameBuilder builder) {
+	private void addLayoutRow(List<LayoutElementDefinition> row, CompositeFieldProperty composite, FormDefinition.FormViewProperty viewProperty, FrameBuilder builder) {
 		FrameBuilder result = baseFrame().add("layoutRow");
-		row.forEach(e -> addLayoutElement(e, composite, result));
+		row.forEach(e -> addLayoutElement(e, composite, viewProperty, result));
 		builder.add("row", result);
 	}
 
-	private void addLayoutElement(LayoutElementDefinition element, CompositeFieldProperty composite, FrameBuilder builder) {
+	private void addLayoutElement(LayoutElementDefinition element, CompositeFieldProperty composite, FormDefinition.FormViewProperty viewProperty, FrameBuilder builder) {
 		FrameBuilder result = baseFrame().add("layoutElement");
 		result.add(typeOf(element));
 		addLayoutSizeToElement(element, result);
 		if (element.isSection()) {
 			LayoutElementSectionDefinition section = (LayoutElementSectionDefinition) element;
 			result.add("label", clean(section.getLabel()));
-			rowsOf(section.getElements()).forEach(r -> addLayoutRow(r, composite, result));
+			rowsOf(section.getElements()).forEach(r -> addLayoutRow(r, composite, viewProperty, result));
 		}
 		else if (element.isBox()) {
 			LayoutElementBoxDefinition box = (LayoutElementBoxDefinition) element;
 			FormDefinition definition = definition();
 			FieldProperty field = definition.getField(box.getLink());
-			if (field != null) result.add("field", renderer(definition, definition.getField(box.getLink()), composite).buildFrame().add("definition", nameOf(definition)));
+			if (field != null) result.add("field", renderer(definition, definition.getField(box.getLink()), composite).view(viewProperty).buildFrame().add("definition", nameOf(definition)));
 		}
 		builder.add("element", result);
 	}
@@ -318,8 +318,8 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		return size.replace("px", "").replace("%", "");
 	}
 
-	private void addField(FieldProperty fieldProperty, CompositeFieldProperty composite, FrameBuilder builder) {
-		builder.add("field", renderer(definition(), fieldProperty, composite).buildFrame().add("definition", nameOf(definition())));
+	private void addField(FieldProperty fieldProperty, CompositeFieldProperty composite, FormDefinition.FormViewProperty viewProperty, FrameBuilder builder) {
+		builder.add("field", renderer(definition(), fieldProperty, composite).view(viewProperty).buildFrame().add("definition", nameOf(definition())));
 	}
 
 }

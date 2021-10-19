@@ -8,16 +8,21 @@ import io.intino.itrules.FrameBuilder;
 import org.monet.bpi.FieldSelect;
 import org.monet.metamodel.*;
 import org.monet.metamodel.DateFieldPropertyBase.PrecisionEnumeration;
+import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.TextFieldProperty.EditionProperty.ModeEnumeration;
+import org.monet.metamodel.internal.LayoutElementBoxDefinition;
+import org.monet.metamodel.internal.LayoutElementDefinition;
+import org.monet.metamodel.internal.LayoutElementSectionDefinition;
 import org.monet.metamodel.internal.Ref;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FieldRenderer extends Renderer {
 	private final FieldProperty fieldProperty;
 	private FormDefinition formDefinition;
 	private CompositeFieldProperty parentProperty;
+	private ViewProperty viewProperty;
 
 	public FieldRenderer(Dictionary dictionary, Modernization modernization, FieldProperty fieldProperty) {
 		super(dictionary, modernization);
@@ -31,6 +36,11 @@ public class FieldRenderer extends Renderer {
 
 	public FieldRenderer parent(CompositeFieldProperty composite) {
 		this.parentProperty = composite;
+		return this;
+	}
+
+	public FieldRenderer view(ViewProperty viewProperty) {
+		this.viewProperty = viewProperty;
 		return this;
 	}
 
@@ -72,8 +82,37 @@ public class FieldRenderer extends Renderer {
 	}
 
 	private List<FieldProperty> dependantFields() {
-		List<FieldProperty> fieldPropertyList = parentProperty != null ? parentProperty.getAllFieldPropertyList() : formDefinition.getAllFieldPropertyList();
+		List<FieldProperty> fieldPropertyList = visibleFields();
 		return fieldPropertyList.stream().filter(this::isDependantField).collect(Collectors.toList());
+	}
+
+	private List<FieldProperty> visibleFields() {
+		if (viewProperty != null) return viewFields().stream().filter(Objects::nonNull).collect(Collectors.toList());
+		if (parentProperty != null) return parentProperty.getAllFieldPropertyList();
+		return formDefinition.getAllFieldPropertyList();
+	}
+
+	private List<FieldProperty> viewFields() {
+		if (!(viewProperty instanceof FormViewProperty)) return Collections.emptyList();
+		FormViewProperty.ShowProperty show = ((FormViewProperty) viewProperty).getShow();
+		if (show.getLayout() != null) return layoutFields(this.dictionary.getLayoutDefinition(show.getLayout()).getElements());
+		else if (show.getField() != null) return show.getField().stream().map(ref -> field(ref.getValue())).collect(Collectors.toList());
+		return Collections.emptyList();
+	}
+
+	private List<FieldProperty> layoutFields(ArrayList<LayoutElementDefinition> elements) {
+		return elements.stream().map(this::layoutFields).flatMap(Collection::stream).collect(Collectors.toList());
+	}
+
+	private List<FieldProperty> layoutFields(LayoutElementDefinition element) {
+		if (element.isBox()) return Collections.singletonList(field(((LayoutElementBoxDefinition)element).getLink()));
+		else if (element.isSection()) return layoutFields(((LayoutElementSectionDefinition)element).getElements());
+		return Collections.emptyList();
+	}
+
+	private FieldProperty field(String code) {
+		if (parentProperty != null) return parentProperty.getField(code);
+		return formDefinition.getField(code);
 	}
 
 	private boolean isDependantField(FieldProperty f) {

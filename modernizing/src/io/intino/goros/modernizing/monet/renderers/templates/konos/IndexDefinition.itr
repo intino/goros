@@ -15,5 +15,5 @@ end
 def type(attribute)
     Mold
         Heading $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Heading > Text(value="$label")
-        Item(height=50px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Item > $type+firstUpperCase[(value="$value")] $name+firstLowerCase
+        Item(height=25px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Item > $type+firstUpperCase[(value="$value")] $name+firstLowerCase
 end

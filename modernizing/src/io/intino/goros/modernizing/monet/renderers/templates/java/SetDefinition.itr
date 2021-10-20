@@ -1092,12 +1092,14 @@ def type(toolbar) trigger(editableAddPrototypeCall)
 end
 
 def type(toolbar) trigger(editableInitCall)
+    [$operationsGroup+editableInitCall]
     [$operation+editableInitCall...[$NL]]
     removeSelection.onExecute(this::removeSelection);
     [$addList+execute]
 end
 
 def type(toolbar) trigger(editableRefreshCall)
+    [$operationsGroup+editableRefreshCall]
     [$operation+editableRefreshCall...[$NL]]
     removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
     [$addList+refresh]
@@ -1149,6 +1151,7 @@ def type(toolbar & singleton) trigger(selectedViewCode)
 end
 
 def type(toolbar & singleton) trigger(editableMethods)
+    [$operationsGroup+editableMethods]
     private void addNode(String option) {
         Node result = null;
         [$add+toolbarTemplate...[$NL]]
@@ -1178,6 +1181,7 @@ def type(toolbar & singleton) trigger(editableMethods)
 end
 
 def type(toolbar) trigger(editableMethods)
+    [$operationsGroup+editableMethods]
     private void addNode(String option) {
         Node result = null;
         [$add+toolbarTemplate...[$NL]]

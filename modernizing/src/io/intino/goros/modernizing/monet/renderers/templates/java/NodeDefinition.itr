@@ -398,9 +398,9 @@ def type(toolbar) trigger(navigableMethods)
 end
 
 def type(operationsGroup) trigger(editableMethods)
-    private List<String> addOptions() {
+    private List<String> operacionesOptions() {
         java.util.List<String> result = new java.util.ArrayList<>();
-        [$operation+addOptionsMethodCall...[$NL]]
+        [$operation+operacionesOptionsMethodCall...[$NL]]
         return result;
     }
 
@@ -413,7 +413,7 @@ def type(operationsGroup) trigger(editableInitCall)
     operaciones.onExecute(e -> executeOperation(e.option()));
 end
 
-def type(operation) trigger(addOptionsMethodCall)
+def type(operation) trigger(operacionesOptionsMethodCall)
     if (io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype()) result.add("$label");
 end
 
@@ -436,8 +436,8 @@ def type(operation) trigger(editableInitCall)
 end
 
 def type(operationsGroup) trigger(editableRefreshCall)
-    operaciones.options(addOptions());
-    operaciones.visible(addOptions().size() > 0);
+    operaciones.options(operacionesOptions());
+    operaciones.visible(operacionesOptions().size() > 0);
 end
 
 def type(operation) trigger(editableRefreshCall)

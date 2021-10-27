@@ -56,6 +56,11 @@ def type(ui)
             Block(layout=Vertical Flexible, visible=false) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
             [$definition+page...[$NL]]
 
+        Dialog(title="Sesión cerrada") sessionClosedDialog as Modal
+            Block
+                Text(format=h6 airBottom, value="Se ha cerrado la sesión por inactividad o porque ha salido de su sesión en la federación")
+                Block(layout=Horizontal CenterJustified, format=airBottom) > Button(title="Volver a cargar la página") as OpenPage(page=EjecucionElements.home)
+
     Template(layout=Horizontal Flexible) HeaderTemplate
         Block(layout=Horizontal Flexible Center)
             Block(format=relative)

@@ -480,7 +480,7 @@ public class NodeHelper {
     }
 
     public static File fileOf(Resource resource) {
-        return resource != null ? File.fromInputStream(resource.metadata().contentType(), resource.stream()) : null;
+        return resource != null ? File.fromInputStream(resource.name(), resource.metadata().contentType(), resource.stream()) : null;
     }
 
     public static io.intino.alexandria.ui.File alexandriaFileOf(FieldFile file) {

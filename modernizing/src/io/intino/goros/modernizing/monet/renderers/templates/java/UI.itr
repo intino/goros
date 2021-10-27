@@ -83,11 +83,14 @@ def type(ui & app)
     import io.intino.goros.unit.util.LayerHelper;
 
     import java.util.List;
+    import java.util.Timer;
+    import java.util.TimerTask;
 
     import static java.util.Collections.emptyList;
 
     public class AppTemplate extends AbstractAppTemplate<$boxName+firstUpperCase~Box> {
         private View current = null;
+        private boolean sessionClosedDialogOpened = false;
 
         public enum View { Dashboard, Roles, TaskTray, TaskBoard, News, Trash[, $definition+declaration...[, ]] }
 
@@ -103,6 +106,7 @@ def type(ui & app)
                 return;
             }
             box().unit().initSession(session());
+            initLoggedChecker();
             taskTrayLink.address(path -> path.replace(":folder", "activas"));
             taskBoardLink.address(path -> path.replace(":folder", "activas"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
@@ -286,6 +290,21 @@ def type(ui & app)
             if (taskTray.isVisible()) taskTray.value(AccountHelper.aliveTaskTrayTasksCount(session()));
             if (taskBoard.isVisible()) taskBoard.value(AccountHelper.activeTaskBoardTasksCount(session()));
         }
+
+        private void initLoggedChecker() {
+            Timer timer = new Timer();
+            sessionClosedDialog.onClose(e -> sessionClosedDialogOpened = false);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (LayerHelper.federationLayer(session()).isLogged()) return;
+                    if (sessionClosedDialogOpened) return;
+                    sessionClosedDialog.open();
+                    sessionClosedDialogOpened = true;
+                }
+            }, 10_000, 10_000);
+        }
+
     }
 end
 

@@ -5,6 +5,7 @@ import io.intino.alexandria.ui.model.datasource.Group;
 import io.intino.alexandria.ui.model.datasource.PageDatasource;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.services.push.UISession;
+import io.intino.goros.unit.box.I18n;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskFolderGrouping;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskNatureGrouping;
@@ -31,6 +32,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
     public static final String FolderGrouping = "folder";
     public static final String UrgentGrouping = "urgent";
     public static final String NatureGrouping = "nature";
+    public static final String TypeGrouping = "type";
 
     public enum Inbox {
         TaskTray, TaskBoard;
@@ -72,6 +74,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
         if (key.equalsIgnoreCase(FolderGrouping)) return Arrays.stream(TaskFolderGrouping.values()).map(f -> new Group().label(f.title())).collect(Collectors.toList());
         else if (key.equalsIgnoreCase(UrgentGrouping)) return Arrays.stream(TaskUrgentGrouping.values()).map(f -> new Group().label(f.title())).collect(Collectors.toList());
         else if (key.equalsIgnoreCase(NatureGrouping)) return Arrays.stream(TaskNatureGrouping.values()).map(f -> new Group().label(f.title())).collect(Collectors.toList());
+        else if (key.equalsIgnoreCase(TypeGrouping)) return taskTypes();
         return emptyList();
     }
 
@@ -85,6 +88,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
         addParameter(request, filters, FolderGrouping, Task.Parameter.SITUATION, value -> TaskFolderGrouping.from(value).name().toLowerCase());
         addParameter(request, filters, UrgentGrouping, Task.Parameter.URGENT, value -> "" + TaskUrgentGrouping.Urgent.value());
         addParameter(request, filters, NatureGrouping, Task.Parameter.BACKGROUND, value -> "" + TaskNatureGrouping.from(value).value());
+        addParameter(request, filters, TypeGrouping, Task.Parameter.TYPE, this::taskType);
         if (request.getParameter(Task.Parameter.SITUATION) == null)
             request.addParameter(Task.Parameter.SITUATION, TaskFolderGrouping.Active.name().toLowerCase());
         if (sortings.size() <= 0) sortings = singletonList("update_date#DESC");
@@ -95,6 +99,8 @@ public class TaskListDatasource extends PageDatasource<Task> {
     private void addParameter(TaskSearchRequest request, List<Filter> filters, String name, String parameter, Function<String, String> value) {
         GroupFilter filter = (GroupFilter) filters.stream().filter(f -> f.grouping().equals(name)).findFirst().orElse(null);
         if (filter == null || filter.groups().size() <= 0) return;
+        String label = new ArrayList<>(filter.groups()).get(0);
+        if (label.equalsIgnoreCase(allTypesLabel())) return;
         request.addParameter(parameter, value.apply(new ArrayList<>(filter.groups()).get(0)));
     }
 
@@ -104,4 +110,19 @@ public class TaskListDatasource extends PageDatasource<Task> {
         return request;
     }
 
+    private List<Group> taskTypes() {
+        TaskFilters taskFilters = LayerHelper.taskLayer().loadTasksFilters(session.discoverLanguage());
+        List<Group> result = taskFilters.types.stream().map(t -> new Group().label(t.getLabel()).name(t.getCode())).collect(Collectors.toList());
+        result.add(0, new Group().label(allTypesLabel()).name("all"));
+        return result;
+    }
+
+    private String taskType(String value) {
+        Group result = taskTypes().stream().filter(t -> t.label().equals(value)).findFirst().orElse(null);
+        return result != null ? result.name() : null;
+    }
+
+    private String allTypesLabel() {
+        return I18n.translate("All types", session.discoverLanguage());
+    }
 }

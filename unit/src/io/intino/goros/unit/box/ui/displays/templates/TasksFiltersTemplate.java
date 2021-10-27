@@ -43,18 +43,21 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
         super.refresh();
         folder.multipleSelection(false);
         nature.multipleSelection(false);
+        type.multipleSelection(false);
     }
 
     private void updateFilters() {
         udpateFolder();
         udpateNature();
         udpateUrgent();
+        updateType();
     }
 
     private void resetFilters() {
         folder.clearSelection();
         nature.clearSelection();
         urgent.clearSelection();
+        type.clearSelection();
         collection.clearFilters();
     }
 
@@ -79,6 +82,14 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
         urgent.attribute(TaskListDatasource.UrgentGrouping);
         urgent.bindTo(collection);
         urgent.refresh();
+    }
+
+    private void updateType() {
+        type.label(translate("Type"));
+        type.attribute(TaskListDatasource.TypeGrouping);
+        type.multipleSelection(false);
+        type.bindTo(collection);
+        type.refresh();
     }
 
 }

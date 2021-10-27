@@ -1,15 +1,15 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.0.30") unit as Platform
+Artifact(groupId = "io.intino.goros", version = "1.0.31") unit as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
-	Box(language = "Konos", version = "8.15.5")
+	Box(language = "Konos", version = "8.16.0")
 	Code("io.intino.goros.unit")
 
 	Imports
 		Compile("org.siani.monet", "space", "2.0.5")
 			Exclude ("org.siani.monet", "servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
- 		Compile("io.intino.alexandria", "ui-framework", "4.14.4")
+ 		Compile("io.intino.alexandria", "ui-framework", "4.14.6")
 		Compile("io.intino.alexandria", "core-framework", "2.1.0")
 		Compile("io.intino.alexandria", "rest", "3.4.1")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
@@ -19,7 +19,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.30") unit as Platform
 		Compile("io.intino.goros", "shared", "1.0.0")
 		Compile("io.intino.alexandria", "logger4j", "1.0.1")
 
-		Web("io.intino.goros", "unit-elements", "1.0.30")
+		Web("io.intino.goros", "unit-elements", "1.0.31")
 
 		Test("junit", "junit", "4.13")
 

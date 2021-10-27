@@ -83,7 +83,7 @@ Template(layout=Vertical Flexible) taskPlaceEditionTemplate as Relative(height=1
 	Text(format=h5) label
 	DisplayStamp(display=empty) formFrame
 	Block(visible=false) noEditionBlock > Text(value="No form defined", translate=true)
-	Block(visible=false, format=airTop) solveErrorMessageBlock > Text solveErrorMessage
+	Block(visible=false, format=airTop airBottom) solveErrorMessageBlock > Text(format=red) solveErrorMessage
 	Block as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solve as Action
 
 Template(layout=Vertical Flexible) taskPlaceEnrollTemplate as Relative(height=100%)

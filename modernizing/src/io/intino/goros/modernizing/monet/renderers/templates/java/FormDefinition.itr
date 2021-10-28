@@ -384,7 +384,7 @@ end
 
 def type(field & check) trigger(refresh)
     $name+firstLowerCase~.clear();
-    new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+    $name+firstLowerCase~.addAll(new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).items().stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
@@ -452,7 +452,7 @@ end
 def type(field & select) trigger(refreshMethod)
     private void refresh$name+firstUpperCase~() {
         $name+firstLowerCase~.clear();
-        $name+firstLowerCase~Source.items().forEach(term -> $name+firstLowerCase~.add(term.getLabel()));
+        $name+firstLowerCase~.addAll($name+firstLowerCase~Source.items().stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
     }
 end
 

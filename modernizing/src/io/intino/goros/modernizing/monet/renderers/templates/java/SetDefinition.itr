@@ -47,7 +47,6 @@ def type(show)
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
         $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
-        $definition+firstLowerCase~$view+firstUpperCase.reload();
     }
 end
 

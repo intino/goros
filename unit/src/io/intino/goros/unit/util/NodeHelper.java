@@ -1,6 +1,5 @@
 package io.intino.goros.unit.util;
 
-import io.intino.alexandria.MimeTypes;
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.ui.Soul;
@@ -16,7 +15,10 @@ import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource;
 import io.intino.goros.unit.box.ui.datasources.model.Column;
 import io.intino.goros.unit.printers.SetPrinter;
-import org.monet.bpi.*;
+import org.monet.bpi.FieldDate;
+import org.monet.bpi.FieldFile;
+import org.monet.bpi.FieldLink;
+import org.monet.bpi.FieldPicture;
 import org.monet.bpi.types.Date;
 import org.monet.bpi.types.Number;
 import org.monet.bpi.types.Term;
@@ -30,12 +32,8 @@ import org.monet.space.kernel.components.ComponentDocuments;
 import org.monet.space.kernel.components.layers.NodeLayer;
 import org.monet.space.kernel.constants.LabelCode;
 import org.monet.space.kernel.constants.Strings;
-import org.monet.space.kernel.library.LibraryFile;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
-import org.monet.space.kernel.model.MonetLink;
-import org.monet.space.kernel.model.Node;
-import org.monet.space.kernel.model.Task;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -46,7 +44,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -75,6 +72,36 @@ public class NodeHelper {
 
 	public static InputStream download(UnitBox box, Node node, NodeDataRequest request, String format, List<String> columns, String language) {
         return new SetPrinter(box, node, request, format, columns).print(language);
+    }
+
+    public static boolean isEnvironment(Node node) {
+        NodeDefinition definition = node.getDefinition();
+        if (definition instanceof ContainerDefinition) return node.getDefinition().isEnvironment();
+        return false;
+    }
+
+    public static String getEnvironmentNodeId(Account account, String key) {
+        Node result = getEnvironmentNode(account, key);
+        return result != null ? result.getId() : null;
+    }
+
+    public static Node getEnvironmentNode(Account account, String key) {
+        Dictionary dictionary = Dictionary.getInstance();
+        NodeDefinition definition = dictionary.getNodeDefinition(key);
+        String code = definition.getCode();
+        Node result = null;
+
+        if (definition.isDesktop())
+            result = LayerHelper.nodeLayer().locateNode(code);
+        else if (definition.isEnvironment()) {
+            ArrayList<Node> environmentNodes = account.getEnvironmentNodes();
+            for (Node environmentNode : environmentNodes) {
+                if (environmentNode.getDefinition().getCode().equals(code))
+                    return environmentNode;
+            }
+        }
+
+        return result;
     }
 
 	public static List<Column> downloadColumns(Node node, String view) {

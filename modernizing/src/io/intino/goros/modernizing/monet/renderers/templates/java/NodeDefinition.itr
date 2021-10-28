@@ -327,7 +327,7 @@ end
 def type(toolbar) trigger(editableRefreshCall)
     [$operationsGroup+editableRefreshCall]
     [$operation+editableRefreshCall...[$NL]]
-    remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly());
+    remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly() && !io.intino.goros.unit.util.NodeHelper.isEnvironment(node));
 end
 
 def type(toolbar) trigger(editableCall)

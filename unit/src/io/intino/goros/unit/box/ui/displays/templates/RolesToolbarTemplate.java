@@ -12,6 +12,7 @@ import io.intino.goros.unit.box.ui.displays.rows.AddRoleUserTableRow;
 import io.intino.goros.unit.util.AccountHelper;
 import io.intino.goros.unit.util.LayerHelper;
 import org.monet.metamodel.RoleDefinition;
+import org.monet.space.kernel.components.layers.FederationLayer;
 import org.monet.space.kernel.components.layers.RoleLayer;
 import org.monet.space.kernel.model.*;
 
@@ -149,14 +150,27 @@ public class RolesToolbarTemplate extends AbstractRolesToolbarTemplate<UnitBox> 
         if (existNonExpiredRole(definitionValue, roleDefinition)) return;
         addRoleDialog.close();
 
+        Account account = registerAccount(typeValue);
         RoleLayer roleLayer = LayerHelper.roleLayer();
         Role role;
         if (typeValue == RoleTypeGrouping.User) role = roleLayer.addUserRole(roleDefinition.getCode(), selectedUser, beginValue, expireValue);
         else if (typeValue == RoleTypeGrouping.Service) role = roleLayer.addServiceRole(roleDefinition.getCode(), partner(selectedService), selectedService, beginValue, expireValue);
         else role = roleLayer.addFeederRole(roleDefinition.getCode(), partner(selectedFeeder), selectedFeeder, beginValue, expireValue);
 
-        LayerHelper.federationLayer(session()).createOrUpdateAccount(AccountHelper.account(session()));
+        LayerHelper.federationLayer(session()).createOrUpdateAccount(account);
         addListener.accept(role);
+    }
+
+    private Account registerAccount(RoleTypeGrouping typeValue) {
+        if (typeValue != RoleTypeGrouping.User) return AccountHelper.account(session());
+        FederationLayer federationLayer = LayerHelper.federationLayer(session());
+        Account account = federationLayer.locateAccount(selectedUser.getName());
+        if (account == null) {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setFullname(selectedUser.getName());
+            account = federationLayer.createAccount(null, selectedUser.getName(), userInfo);
+        }
+        return account;
     }
 
     private boolean existNonExpiredRole(String definitionValue, RoleDefinition roleDefinition) {

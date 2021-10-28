@@ -46,6 +46,7 @@ public class UIRenderer extends Renderer {
 		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isSingleton()) result.add("singleton");
 		if (definition instanceof NodeDefinition && ((NodeDefinition)definition).isComponent()) result.add("component");
 		if (definition instanceof ProcessDefinition) result.add("process");
+		if ((definition instanceof ContainerDefinition) && ((ContainerDefinition)definition).isEnvironment()) result.add("environment");
 		result.add("name", nameOf(definition));
 		result.add("code", definition.getCode());
 		result.add("label", clean(definition.getLabel()));

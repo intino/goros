@@ -101,6 +101,10 @@ def type(definition) trigger(use)
     use $name+firstUpperCase
 end
 
+def type(definition & container & environment) trigger(declaration)
+    Block(layout=Horizontal Center, visible=false) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType); Text(value="$label")
+end
+
 def type(definition & desktop) trigger(declaration)
     Block(layout=Horizontal Center, visible=false) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType); Text(value="$label")
 end

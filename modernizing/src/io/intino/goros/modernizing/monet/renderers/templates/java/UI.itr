@@ -350,8 +350,17 @@ def type(ui & header)
     }
 end
 
+def type(definition & container & environment) trigger(openHome)
+    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code"), null);
+end
+
 def type(definition & desktop) trigger(openHome)
     else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~();
+end
+
+def type(definition & container & environment) trigger(refreshDrawer)
+    $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase").replace(":id", io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code")).replace(":view", "default"));
+    $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
 end
 
 def type(definition & desktop) trigger(refreshDrawer)
@@ -360,6 +369,12 @@ def type(definition & desktop) trigger(refreshDrawer)
 end
 
 def type(definition) trigger(refreshDrawer)
+end
+
+def type(definition & container & environment) trigger(rolesMethod)
+    private List<Ref> $name+firstLowerCase~Roles(Distribution.ShowProperty showProperty) {
+        return nodeDefinitionRoles(showProperty, "$code");
+    }
 end
 
 def type(definition & desktop) trigger(rolesMethod)

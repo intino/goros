@@ -246,6 +246,7 @@ def type(nodedefinition)
 
         private void refreshContent(Node node) {
             content.node(node);
+            content.readonly(true);
             content.refresh();
             if (view != null) content.openView(view);
             else if (content.selectedView() == null) content.selectDefaultView();

@@ -207,6 +207,7 @@ def type(ui & app)
         }
 
         [$definition+rolesMethod...[$NL]]
+        [$definition+setupAddressMethod...[$NL]]
 
         private List<Ref> nodeDefinitionRoles(Distribution.ShowProperty showProperty, String code) {
             NodeDefinition definition = showProperty.getTabEnvironment().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getNodeDefinition(te.getValue())).filter(d -> d.getCode().equals(code)).findFirst().orElse(null);
@@ -297,7 +298,16 @@ def type(ui & app)
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (LayerHelper.federationLayer(session()).isLogged()) return;
+                    try {
+                        if (LayerHelper.federationLayer(session()).isLogged()) return;
+                        showSessionClosedDialog();
+                    }
+                    catch (Throwable ignored) {
+                        showSessionClosedDialog();
+                    }
+                }
+
+                private void showSessionClosedDialog() {
                     if (sessionClosedDialogOpened) return;
                     sessionClosedDialog.open();
                     sessionClosedDialogOpened = true;
@@ -359,8 +369,7 @@ def type(definition & desktop) trigger(openHome)
 end
 
 def type(definition & container & environment) trigger(refreshDrawer)
-    $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase").replace(":id", io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code")).replace(":view", "default"));
-    $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
+    $name+firstLowerCase~Link.address(this::setup$name+firstUpperCase~Link);
 end
 
 def type(definition & desktop) trigger(refreshDrawer)
@@ -381,6 +390,16 @@ def type(definition & desktop) trigger(rolesMethod)
     private List<Ref> $name+firstLowerCase~Roles(Distribution.ShowProperty showProperty) {
         return nodeDefinitionRoles(showProperty, "$code");
     }
+end
+
+def type(definition & container & environment) trigger(setupAddressMethod)
+    private String setup$name+firstUpperCase~Link(String path) {
+        String id = io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code");
+        return path.replace(":name", "$name+lowercase").replace(":id", id != null ? id : "").replace(":view", "default");
+    }
+end
+
+def type(definition) trigger(setupAddressMethod)
 end
 
 def type(definition) trigger(rolesMethod)

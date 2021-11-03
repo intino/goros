@@ -26,8 +26,6 @@ public class SetPrinter extends NodePrinter {
 	Map<String, Integer> columnDataSizes = new HashMap<>();
 	Map<String, Integer> columnPercentages = new HashMap<>();
 
-	private static final int WordLengthOffset = 10;
-
 	public SetPrinter(UnitBox box, Node node, NodeDataRequest request, String format, List<String> columns) {
 		super(box, node, request, format, columns);
 		request.setCodeReference(index().getCode());
@@ -324,21 +322,4 @@ public class SetPrinter extends NodePrinter {
 		return totalSize;
 	}
 
-	int wordLength(String label) {
-		if (label == null)
-			return 0;
-
-		String[] labelArray = label.split(" ");
-		int result = 0;
-		for (int i=0; i<labelArray.length; i++) {
-			if (labelArray[i].length() > result)
-				result = labelArray[i].length();
-		}
-
-		return result + WordLengthOffset;
-	}
-
-	protected int maxColumnPercentageWith(int countColumns) {
-		return 100/countColumns;
-	}
 }

@@ -1,5 +1,6 @@
 dsl Konos
 
+use UI
 use Theme
 
 Template(layout=Flexible) NodeDownloadDialog as Relative(height=100%)
@@ -11,17 +12,14 @@ Template(layout=Flexible) NodeDownloadDialog as Relative(height=100%)
 				Text(value="Valores separados por coma (csv)") csv as Option
 				Text(value="Documento de Excel (xls)") xls as Option
 		Block(format=airBottom doubleAirTop) columnsBlock
-			Text(value="Indique las columnas de la cabecera del documento", format=airBottom)
-			TemplateStamp(template=NodeDownloadDialogOption) options as Multiple
+			Selector columnModeSelector as RadioBox Labeled("Indique las columnas de la cabecera del documento")
+				Text(value="Todas las columnas") allColumns as Option
+				Text(value="Seleccionar las columnas del documento") customColumns as Option
+			Block(visible=false) customColumnsBlock > TemplateStamp(template=DownloadDialogOption) options as Multiple
 	Divider
 	Block(layout=Horizontal EndJustified)
 		Button(title="Cancelar", size=Small, format=airRight) downloadCancel as Action
 		Button(title="Aceptar", size=Small) downloadAccept as Download
-
-Template(layout=Horizontal, format=airBottom) NodeDownloadDialogOption
-	Block as Relative(width=25%) > Text name
-	Block(layout=Flexible) > Selector options as ComboBox(placeholder="Seleccione una columna")
-
 
 
 

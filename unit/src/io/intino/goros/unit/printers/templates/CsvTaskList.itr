@@ -1,0 +1,39 @@
+def type(tasklist)
+	$content
+end
+
+def type(content & empty)
+end
+
+def type(content)
+    $header
+    $references
+end
+
+def type(header)
+    [$reference+header...[$NL]]
+end
+
+def type(references)
+    [$reference...[$NL]]
+end
+
+def type(reference) trigger(header)
+    [$attribute+header...[;]]
+end
+
+def type(reference)
+    [$attribute...[;]]
+end
+
+def type(attribute) trigger(header)
+    $label
+end
+
+def type(attribute)
+    $value
+end
+
+def type(comma)
+    ;
+end

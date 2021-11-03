@@ -45,3 +45,7 @@ Template businessUnitTemplate
 		Text(format=h5 middleAirRight, visible=false) labelText
 		Text(format=h5, value="(current)", translate=true, visible=false) active
 	Frame(url="") unitFrame as Absolute(height=55px)
+
+Template(layout=Horizontal, format=airBottom) DownloadDialogOption
+	Block as Relative(width=25%) > Text name
+	Block(layout=Flexible) > Selector options as ComboBox(placeholder="Seleccione una columna") Traceable

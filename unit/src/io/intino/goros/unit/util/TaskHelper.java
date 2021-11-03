@@ -1,20 +1,54 @@
 package io.intino.goros.unit.util;
 
+import io.intino.alexandria.ui.services.push.UISession;
+import io.intino.goros.unit.box.UnitBox;
+import io.intino.goros.unit.box.ui.datasources.model.Column;
+import io.intino.goros.unit.printers.TaskListPrinter;
 import org.monet.space.kernel.model.DataRequest;
 import org.monet.space.kernel.model.MonetLink;
 import org.monet.space.kernel.model.Task;
 import org.monet.space.kernel.model.TaskSearchRequest;
+import org.monet.space.office.presentation.user.renders.TaskListPrintRender;
 
+import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 public class TaskHelper {
 
     public static Task taskOf(MonetLink link) {
         if (link == null) return null;
         return LayerHelper.taskLayer().loadTask(link.getId());
+    }
+
+    public static InputStream download(UnitBox box, TaskSearchRequest request, String format, String language, List<String> columns, UISession session) {
+        return new TaskListPrinter(box, AccountHelper.account(session), request, format, columns).print(language);
+    }
+
+    public static List<Column> downloadColumns(String language) {
+        return TaskListPrintRender.attributes.stream().map(a -> columnOf(a, language)).collect(toList());
+    }
+
+    private static Column columnOf(String attribute, String language) {
+        language = TaskListPrintRender.attributesLabels.containsKey(language) ? language : "es";
+        List<String> translations = TaskListPrintRender.attributesLabels.get(language);
+        return new Column().code(attribute).label(translations.get(positionOf(attribute)));
+    }
+
+    private static int positionOf(String attribute) {
+        int pos = 0;
+
+        for(Iterator iterator = TaskListPrintRender.attributes.iterator(); iterator.hasNext(); ++pos) {
+            String currentAttribute = (String)iterator.next();
+            if (currentAttribute.equals(attribute)) {
+                return pos;
+            }
+        }
+
+        return -1;
     }
 
     public static boolean isAlive(Task task) {
@@ -27,7 +61,7 @@ public class TaskHelper {
 
     public static List<TaskSearchRequest.SortBy> sortsByOf(List<String> sortings) {
         if (sortings == null) return emptyList();
-        return sortings.stream().map(TaskHelper::sortByOf).collect(Collectors.toList());
+        return sortings.stream().map(TaskHelper::sortByOf).collect(toList());
     }
 
     public static String state(Task task) {

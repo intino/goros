@@ -5,27 +5,28 @@ import io.intino.goros.unit.box.ui.datasources.model.Column;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
-public class NodeDownloadDialogOption extends AbstractNodeDownloadDialogOption<UnitBox> {
+public class DownloadDialogOption extends AbstractDownloadDialogOption<UnitBox> {
     private int index;
     private List<Column> columns;
     private Consumer<Column> selectListener;
 
-    public NodeDownloadDialogOption(UnitBox box) {
+    public DownloadDialogOption(UnitBox box) {
         super(box);
     }
 
-    public NodeDownloadDialogOption index(int index) {
+    public DownloadDialogOption index(int index) {
         this.index = index;
         return this;
     }
 
-    public NodeDownloadDialogOption columns(List<Column> columns) {
+    public DownloadDialogOption columns(List<Column> columns) {
         this.columns = columns;
         return this;
     }
 
-    public NodeDownloadDialogOption onSelect(Consumer<Column> listener) {
+    public DownloadDialogOption onSelect(Consumer<Column> listener) {
         this.selectListener = listener;
         return this;
     }
@@ -51,8 +52,11 @@ public class NodeDownloadDialogOption extends AbstractNodeDownloadDialogOption<U
     public void refresh() {
         super.refresh();
         name.value(translate("Column") + " " + (index+1));
+        Column selected = selectedColumn();
+        options.clear();
         options.add(translate("None"));
-        columns.forEach(o -> options.add(o.label()));
+        options.addAll(columns.stream().map(Column::label).collect(Collectors.toList()));
+        if (selected != null) options.selection(selected.label());
     }
 
     private void notifySelect() {

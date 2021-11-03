@@ -107,8 +107,8 @@ def type(ui & app)
             }
             box().unit().initSession(session());
             initLoggedChecker();
-            taskTrayLink.address(path -> path.replace(":folder", "activas"));
-            taskBoardLink.address(path -> path.replace(":folder", "activas"));
+            taskTrayLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskBoardLink.address(path -> path.replace(":folder", "Pendientes"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
             io.intino.goros.unit.util.DisplayHelper.initAgentSession(session());
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());

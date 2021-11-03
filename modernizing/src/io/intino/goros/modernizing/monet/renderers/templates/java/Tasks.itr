@@ -184,6 +184,11 @@ def type(tasks & embedded)
             box().notifier().unTaskCreated(this);
         }
 
+        public Collection currentCollection() {
+            if (tableView.isVisible()) return tableView.tableViewStamp.tasksTable;
+            return listView.listViewStamp.tasksList;
+        }
+
         @Override
         public void refresh() {
             super.refresh();
@@ -270,11 +275,6 @@ def type(tasks & embedded)
             filtersView.tasksFiltersStamp.readonly(readonly);
             filtersView.tasksFiltersStamp.bindTo(currentCollection());
             filtersView.tasksFiltersStamp.refresh();
-        }
-
-        private Collection currentCollection() {
-            if (tableView.isVisible()) return tableView.tableViewStamp.tasksTable;
-            return listView.listViewStamp.tasksList;
         }
 
         private Task reloadSelected() {
@@ -369,6 +369,7 @@ def type(tasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
+    import io.intino.alexandria.ui.displays.components.Collection;
     import io.intino.alexandria.ui.displays.events.Event;
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
@@ -429,6 +430,7 @@ def type(tasks)
             filters.onToggle(e -> toggleFilters(e.state()));
             toggleView.state(ToggleEvent.State.Off);
             toggleView.onToggle(e -> toggleView(e.state()));
+            DownloadDialog.onOpen(e -> refreshDownloadDialog());
         }
 
         private void initSortings() {
@@ -456,6 +458,16 @@ def type(tasks)
             content.inbox(inbox);
             content.readonly(readonly);
             content.refresh();
+        }
+
+        private void refreshDownloadDialog() {
+            DownloadDialog.dialog.onTerminate(e -> DownloadDialog.close());
+            DownloadDialog.dialog.inbox(inbox.name().toLowerCase());
+            DownloadDialog.dialog.condition(java.util.Objects.requireNonNull(currentCollection()).condition());
+            DownloadDialog.dialog.filters(java.util.Objects.requireNonNull(currentCollection()).filters());
+            DownloadDialog.dialog.sorting(selectedSortingCode(), sortingsMode.selection().size() > 0 ? sortingsMode.selection().get(0) : "Ascendente");
+            DownloadDialog.dialog.columns(io.intino.goros.unit.util.TaskHelper.downloadColumns(language()));
+            DownloadDialog.dialog.refresh();
         }
 
         private void selectView(SelectionEvent e) {
@@ -503,8 +515,18 @@ def type(tasks)
             if (content.listView.isVisible()) content.listView.listViewStamp.selectSorting(sortingsCodesMap.get("list_"+sorting), mode);
         }
 
+        private String selectedSortingCode() {
+            if (content.tableView.isVisible()) return sortingsCodesMap.get("table_"+sorting);
+            if (content.listView.isVisible()) return sortingsCodesMap.get("list_"+sorting);
+            return "label";
+        }
+
         private void removeSorting(Event event) {
             sortings.select();
+        }
+
+        private Collection currentCollection() {
+            return content.currentCollection();
         }
 
         private void toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {

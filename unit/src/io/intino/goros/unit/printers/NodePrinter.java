@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public abstract class NodePrinter {
+public abstract class NodePrinter extends Printer {
 	protected final UnitBox box;
 	protected final Node node;
 	protected final NodeDataRequest request;

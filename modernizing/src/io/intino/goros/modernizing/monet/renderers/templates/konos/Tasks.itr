@@ -27,11 +27,14 @@ def type(tasks)
                 Selector(selected="tableView", format=airRight) viewSelector as ToggleBox(size=Small)
                     MaterialIcon(icon="ViewHeadline", format=black middleAirTop) table as Option
                     MaterialIcon(icon="ViewList", format=black middleAirTop) list as Option
-                MaterialIconButton(title="Descargar", icon = "Archive", format=airRight black) download
+                MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
                 MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
                 MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=TasksEmbeddedTemplate) content
+
+        Dialog(title="Descargar...") DownloadDialog as Relative(height=90%, width=60%)
+            OwnerTemplateStamp(template="TaskDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
 
     Template(layout=Vertical Flexible) TasksEmbeddedTemplate as Relative(height=100%)
 

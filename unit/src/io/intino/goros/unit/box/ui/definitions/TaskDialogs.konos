@@ -1,5 +1,6 @@
 dsl Konos
 
+use UI
 use Theme
 
 Template(layout=Horizontal) taskToolbarTemplate
@@ -26,3 +27,21 @@ Template(layout=Horizontal) taskToolbarTemplate
 		Block(layout=Horizontal EndJustified)
 			Button(title="Cancel", format=airRight) cancel as CloseDialog(dialog=assignTaskOwnerDialogBox)
 			Button(title="OK", highlight=Fill) accept as Action Readonly
+
+Template(layout=Flexible) TaskDownloadDialog as Relative(height=100%)
+	Block(layout=Flexible, format=autoOverflow) as Relative(height=100%, offsetHeight=50px)
+		Block(format=airBottom)
+			Text(value="Indique el formato de descarga", format=airBottom)
+			Selector format as ComboBox(placeholder="Seleccione un formato")
+				Text(value="Formato de documento portátil (pdf)") pdf as Option
+				Text(value="Valores separados por coma (csv)") csv as Option
+				Text(value="Documento de Excel (xls)") xls as Option
+		Block(format=airBottom doubleAirTop) columnsBlock
+			Selector columnModeSelector as RadioBox Labeled("Indique las columnas de la cabecera del documento")
+				Text(value="Todas las columnas") allColumns as Option
+				Text(value="Seleccionar las columnas del documento") customColumns as Option
+			Block(visible=false) customColumnsBlock > TemplateStamp(template=DownloadDialogOption) options as Multiple
+	Divider
+	Block(layout=Horizontal EndJustified)
+		Button(title="Cancelar", size=Small, format=airRight) downloadCancel as Action
+		Button(title="Aceptar", size=Small) downloadAccept as Download

@@ -2,18 +2,24 @@ package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.alexandria.ui.model.datasource.Filter;
+import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.spark.UIFile;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.model.Column;
+import io.intino.goros.unit.box.ui.datasources.model.task.TaskFolderGrouping;
+import io.intino.goros.unit.box.ui.datasources.model.task.TaskNatureGrouping;
+import io.intino.goros.unit.box.ui.datasources.model.task.TaskUrgentGrouping;
 import io.intino.goros.unit.util.Formatters;
-import io.intino.goros.unit.util.NodeHelper;
-import org.monet.space.kernel.model.Node;
-import org.monet.space.kernel.model.NodeDataRequest;
+import io.intino.goros.unit.util.LayerHelper;
+import io.intino.goros.unit.util.TaskHelper;
+import org.monet.space.kernel.model.Task;
+import org.monet.space.kernel.model.TaskFilters;
+import org.monet.space.kernel.model.TaskSearchRequest;
+import org.monet.space.kernel.model.TaskType;
 
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -23,52 +29,46 @@ import static io.intino.goros.unit.util.NodeHelper.sortingOf;
 import static io.intino.goros.unit.util.NodeHelper.sortsByOf;
 import static java.util.Collections.singletonList;
 
-public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
-    private Node node;
-    private String view;
-    private List<Column> columns = new ArrayList<>();
+public class TaskDownloadDialog extends AbstractTaskDownloadDialog<UnitBox> {
+    private String inbox;
     private Consumer<Boolean> terminateListener;
     private String condition;
     private List<Filter> filters;
     private String sorting;
     private String sortingMode;
+    private List<Column> columns = new ArrayList<>();
 
-    public NodeDownloadDialog(UnitBox box) {
+    public TaskDownloadDialog(UnitBox box) {
         super(box);
     }
 
-    public NodeDownloadDialog onTerminate(Consumer<Boolean> listener) {
+    public TaskDownloadDialog onTerminate(Consumer<Boolean> listener) {
         this.terminateListener = listener;
         return this;
     }
 
-    public NodeDownloadDialog node(Node node) {
-        this.node = node;
+    public TaskDownloadDialog inbox(String inbox) {
+        this.inbox = inbox;
         return this;
     }
 
-    public NodeDownloadDialog view(String view) {
-        this.view = view;
-        return this;
-    }
-
-    public NodeDownloadDialog condition(String condition) {
+    public TaskDownloadDialog condition(String condition) {
         this.condition = condition;
         return this;
     }
 
-    public NodeDownloadDialog filters(List<Filter> filters) {
+    public TaskDownloadDialog filters(List<Filter> filters) {
         this.filters = filters;
         return this;
     }
 
-    public NodeDownloadDialog sorting(String sorting, String mode) {
+    public TaskDownloadDialog sorting(String sorting, String mode) {
         this.sorting = sorting;
         this.sortingMode = mode;
         return this;
     }
 
-    public NodeDownloadDialog columns(List<Column> columns) {
+    public TaskDownloadDialog columns(List<Column> columns) {
         this.columns = columns;
         return this;
     }
@@ -102,12 +102,12 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         notifyUser(translate("Downloading data..."), UserMessage.Type.Info);
         String format = this.format.selection().get(0);
         List<String> selection = selectedColumns();
-        InputStream result = NodeHelper.download(box(), node, request(), format, selection, language());
+        InputStream result = TaskHelper.download(box(), request(), format, language(), selection, session());
         notifyUser(translate("Download finished"), UserMessage.Type.Success);
         return new UIFile() {
             @Override
             public String label() {
-                return node.getLabel() + "_" + Formatters.downloadDate(Instant.now()) + "." + format.toLowerCase();
+                return "Tareas_" + Formatters.downloadDate(Instant.now()) + "." + format.toLowerCase();
             }
 
             @Override
@@ -117,14 +117,47 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         };
     }
 
-    private NodeDataRequest request() {
-        NodeDataRequest dataRequest = new NodeDataRequest();
-        dataRequest.setCodeDomainNode(node.getDefinition().getCode());
-        dataRequest.setCodeView(view);
-        dataRequest.setCondition(condition);
-        dataRequest.setGroupsBy(NodeHelper.groupsByOf(filters));
-        if (sorting != null) dataRequest.setSortsBy(sortsByOf(singletonList(sortingOf(sorting, sortingMode))));
-        return dataRequest;
+    private TaskSearchRequest request() {
+        TaskSearchRequest request = new TaskSearchRequest();
+        request.setCondition(condition);
+        request.addParameter(Task.Parameter.TYPE, taskType());
+        request.addParameter(Task.Parameter.STATE, filterValue("state"));
+        request.addParameter(Task.Parameter.INBOX, inbox);
+        request.addParameter(Task.Parameter.SITUATION, folder());
+        request.addParameter(Task.Parameter.BACKGROUND, filterValue("nature") != null ? TaskNatureGrouping.from(filterValue("nature")).value() + "": null);
+        request.addParameter(Task.Parameter.ROLE, filterValue("role"));
+        request.addParameter(Task.Parameter.URGENT, filterValue("urgent") != null ? "" + TaskUrgentGrouping.Urgent.value() : null);
+        request.addParameter(Task.Parameter.OWNER, filterValue("owner"));
+        if (sorting != null) request.setSortsBy(sortsByOf(singletonList(sortingOf(sorting, sortingMode))));
+        if (request.getParameter(Task.Parameter.SITUATION) == null)
+            request.addParameter(Task.Parameter.SITUATION, TaskFolderGrouping.Active.name().toLowerCase());
+        request.setStartPos(0);
+        request.setLimit(-1);
+        return request;
+    }
+
+    private String folder() {
+        String folder = filterValue("folder");
+        TaskFolderGrouping grouping = folder != null ? TaskFolderGrouping.from(folder) : TaskFolderGrouping.Active;
+        return grouping.name().toLowerCase();
+    }
+
+    private String taskType() {
+        String type = filterValue("type");
+        if (type == null) return null;
+        TaskFilters taskFilters = LayerHelper.taskLayer().loadTasksFilters(language());
+        TaskType taskType = taskFilters.types.stream().filter(t -> t.getLabel().equals(type)).findFirst().orElse(null);
+        return taskType != null ? taskType.getCode() : null;
+    }
+
+    private String filterValue(String name) {
+        Filter filter = filters.stream().filter(f -> f.grouping().equals(name)).findFirst().orElse(null);
+        return filter != null ? firstGroup(filter) : null;
+    }
+
+    private String firstGroup(Filter filter) {
+        GroupFilter groupFilter = (GroupFilter) filter;
+        return groupFilter.groups().size() > 0 ? groupFilter.groups().iterator().next() : null;
     }
 
     private List<String> selectedColumns() {

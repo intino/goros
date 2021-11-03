@@ -15,7 +15,6 @@ import org.monet.space.kernel.model.DataRequest;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.SerializerData;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,20 +29,20 @@ public class FieldCheckDatasource extends TermDatasource {
     }
 
     public List<Term> items() {
-        Collection<Term> result;
+        TermList result;
         if (definition.getTerms() != null) result = loadFromTerms();
         else if (definition.getSource() != null) result = loadFromSource();
         else result = loadFromCheckList();
-        return new ArrayList<>(result);
+        return sorted(result);
     }
 
-    private Collection<Term> loadFromTerms() {
+    private TermList loadFromTerms() {
         TermList termList = new TermList(definition.getTerms().getTermPropertyList());
         if (termList.getAll().size() == 0) termList = field.get().toTermList();
-        return termList.getAll();
+        return termList;
     }
 
-    private Collection<Term> loadFromSource() {
+    private TermList loadFromSource() {
         SourceLayer sourceLayer = LayerHelper.sourceLayer();
         Ref sourceRef = definition.getSource();
         CheckFieldProperty.SelectProperty checkDefinition = definition.getSelect();
@@ -54,16 +53,18 @@ public class FieldCheckDatasource extends TermDatasource {
         if (from.isEmpty()) from = getSourceFrom(node, checkDefinition != null ? checkDefinition.getRoot() : null);
         if (sourceId != null && !sourceId.isEmpty()) result = new TermList(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(from), true));
 
-        return result.getAll();
+        return result;
     }
 
-    private Collection<Term> loadFromCheckList() {
-        return field.get().toTermList().getAll();
+    private TermList loadFromCheckList() {
+        return field.get().toTermList();
     }
 
     private DataRequest request(String from) {
         CheckFieldProperty.SelectProperty selectDefinition = definition.getSelect();
         DataRequest result = new DataRequest();
+        result.setStartPos(0);
+        result.setLimit(-1);
         result.addParameter(DataRequest.MODE, (selectDefinition != null && selectDefinition.getFlatten() != null && selectDefinition.getFlatten().equals(CheckFieldProperty.SelectProperty.FlattenEnumeration.ALL)) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE);
         result.addParameter(DataRequest.FLATTEN, (selectDefinition != null && selectDefinition.getFlatten() != null) ? selectDefinition.getFlatten().toString() : CheckFieldProperty.SelectProperty.FlattenEnumeration.NONE.toString());
         result.addParameter(DataRequest.DEPTH, (selectDefinition != null && selectDefinition.getDepth() != null) ? String.valueOf(selectDefinition.getDepth()) : null);

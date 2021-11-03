@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.LayerHelper;
 import org.monet.bpi.types.Term;
+import org.monet.bpi.types.TermList;
 import org.monet.metamodel.CheckFieldProperty;
 import org.monet.metamodel.FieldPropertyBase;
 import org.monet.metamodel.SelectFieldPropertyBase;
@@ -14,6 +15,8 @@ import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.Source;
 import org.monet.space.kernel.model.SourceList;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class TermDatasource {
@@ -68,6 +71,12 @@ public abstract class TermDatasource {
         }
 
         return fromParameter;
+    }
+
+    protected List<Term> sorted(TermList result) {
+        List<Term> sortedTerms = new ArrayList<>(result.getAll());
+        sortedTerms.sort(Comparator.comparing(Term::getLabel));
+        return sortedTerms;
     }
 
 }

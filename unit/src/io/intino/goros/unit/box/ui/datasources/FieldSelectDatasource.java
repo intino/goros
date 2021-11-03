@@ -11,7 +11,6 @@ import org.monet.bpi.types.TermList;
 import org.monet.metamodel.SelectFieldProperty;
 import org.monet.metamodel.SelectFieldPropertyBase;
 import org.monet.metamodel.internal.Ref;
-import org.monet.space.kernel.components.layers.NodeLayer;
 import org.monet.space.kernel.components.layers.SourceLayer;
 import org.monet.space.kernel.model.*;
 
@@ -38,21 +37,21 @@ public class FieldSelectDatasource extends TermDatasource {
     }
 
     public List<Term> items() {
-        Collection<Term> result;
+        TermList result;
         if (definition.getTerms() != null) result = loadFromTerms();
         else result = loadFromSource();
-        return new ArrayList<>(result);
+        return sorted(result);
     }
 
     public Term item(String key) {
         return items().stream().filter(i -> i.getLabel().equals(key)).findFirst().orElse(null);
     }
 
-    private Collection<Term> loadFromTerms() {
-        return new TermList(definition.getTerms().getTermPropertyList()).getAll();
+    private TermList loadFromTerms() {
+        return new TermList(definition.getTerms().getTermPropertyList());
     }
 
-    private Collection<Term> loadFromSource() {
+    private TermList loadFromSource() {
         SourceLayer sourceLayer = LayerHelper.sourceLayer();
         Ref sourceRef = definition.getSource();
         String source = this.source != null && !this.source.isEmpty() ? this.source : locateSourceIdFromContext(sourceRef.getValue(), definition.getSelect());
@@ -61,7 +60,7 @@ public class FieldSelectDatasource extends TermDatasource {
 
         if (sourceId != null && !sourceId.isEmpty()) result = new TermList(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(), true));
 
-        return result.getAll();
+        return result;
     }
 
     private DataRequest request() {
@@ -70,6 +69,8 @@ public class FieldSelectDatasource extends TermDatasource {
         Long depth = selectDefinition != null ? selectDefinition.getDepth() : null;
         Object root = selectDefinition != null ? selectDefinition.getRoot() : null;
         DataRequest result = new DataRequest();
+        result.setStartPos(0);
+        result.setLimit(-1);
         result.addParameter(DataRequest.MODE, (flatten != null && flatten.equals(SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL)) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE);
         result.addParameter(DataRequest.FLATTEN, (flatten != null) ? flatten.toString() : SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.NONE.toString());
         result.addParameter(DataRequest.DEPTH, (depth != null) ? String.valueOf(depth) : null);

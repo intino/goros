@@ -463,7 +463,7 @@ public class NodeHelper {
 
     public static Picture pictureOf(Resource value) {
         if (value == null) return null;
-        return Picture.fromInputStream(value.metadata().contentType(), value.stream());
+        return Picture.fromInputStream(value.name(), value.metadata().contentType(), value.stream());
     }
 
     public static Link linkOf(Node node, String attribute) {

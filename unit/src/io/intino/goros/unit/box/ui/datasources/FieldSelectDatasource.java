@@ -87,7 +87,7 @@ public class FieldSelectDatasource extends TermDatasource {
         result.setStartPos(0);
         result.setLimit(-1);
         result.addParameter(DataRequest.MODE, mode());
-        result.addParameter(DataRequest.FLATTEN, (flatten != null) ? flatten.toString() : SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.NONE.toString());
+        result.addParameter(DataRequest.FLATTEN, (flatten != null) ? flatten.toString() : SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL.toString());
         result.addParameter(DataRequest.DEPTH, (depth != null) ? String.valueOf(depth) : null);
         result.addParameter(DataRequest.FROM, getSourceFrom(node, root));
         result.addParameter(DataRequest.FILTERS, SerializerData.serializeSet(NodeHelper.getFieldFilters(node, definition, false)));
@@ -97,7 +97,7 @@ public class FieldSelectDatasource extends TermDatasource {
     private String mode() {
         SelectFieldProperty.SelectProperty selectDefinition = definition.getSelect();
         SelectFieldPropertyBase.SelectProperty.FlattenEnumeration flatten = selectDefinition != null ? selectDefinition.getFlatten() : null;
-        return flatten != null && flatten.equals(SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE;
+        return flatten == null || flatten.equals(SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE;
     }
 
     private static String sourceOf(FieldMultiple<?, ?> field) {

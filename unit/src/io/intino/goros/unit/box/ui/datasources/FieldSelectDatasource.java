@@ -10,6 +10,7 @@ import org.monet.bpi.types.Term;
 import org.monet.bpi.types.TermList;
 import org.monet.metamodel.SelectFieldProperty;
 import org.monet.metamodel.SelectFieldPropertyBase;
+import org.monet.metamodel.TermProperty;
 import org.monet.metamodel.internal.Ref;
 import org.monet.space.kernel.components.layers.SourceLayer;
 import org.monet.space.kernel.model.*;
@@ -17,6 +18,8 @@ import org.monet.space.kernel.model.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class FieldSelectDatasource extends TermDatasource {
     private final String source;
@@ -57,10 +60,22 @@ public class FieldSelectDatasource extends TermDatasource {
         String source = this.source != null && !this.source.isEmpty() ? this.source : locateSourceIdFromContext(sourceRef.getValue(), definition.getSelect());
         String sourceId = locateSourceId(sourceRef.getValue(), source);
         TermList result = new TermList();
-
-        if (sourceId != null && !sourceId.isEmpty()) result = new TermList(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(), true));
-
+        if (sourceId != null && !sourceId.isEmpty()) result = terms(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(), true));
         return result;
+    }
+
+    private TermList terms(org.monet.space.kernel.model.TermList monetTermList) {
+        TermList result = new TermList();
+        monetTermList.forEach(term -> result.add(termOf(term)));
+        return result;
+    }
+
+    private Term termOf(org.monet.space.kernel.model.Term term) {
+        return new Term(term.getCode(), labelOf(term));
+    }
+
+    private String labelOf(org.monet.space.kernel.model.Term term) {
+        return mode().equals(DataRequest.Mode.FLATTEN) ? term.getFlattenLabel() : term.getLabel();
     }
 
     private DataRequest request() {
@@ -71,12 +86,18 @@ public class FieldSelectDatasource extends TermDatasource {
         DataRequest result = new DataRequest();
         result.setStartPos(0);
         result.setLimit(-1);
-        result.addParameter(DataRequest.MODE, (flatten != null && flatten.equals(SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL)) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE);
+        result.addParameter(DataRequest.MODE, mode());
         result.addParameter(DataRequest.FLATTEN, (flatten != null) ? flatten.toString() : SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.NONE.toString());
         result.addParameter(DataRequest.DEPTH, (depth != null) ? String.valueOf(depth) : null);
         result.addParameter(DataRequest.FROM, getSourceFrom(node, root));
         result.addParameter(DataRequest.FILTERS, SerializerData.serializeSet(NodeHelper.getFieldFilters(node, definition, false)));
         return result;
+    }
+
+    private String mode() {
+        SelectFieldProperty.SelectProperty selectDefinition = definition.getSelect();
+        SelectFieldPropertyBase.SelectProperty.FlattenEnumeration flatten = selectDefinition != null ? selectDefinition.getFlatten() : null;
+        return flatten != null && flatten.equals(SelectFieldPropertyBase.SelectProperty.FlattenEnumeration.ALL) ? DataRequest.Mode.FLATTEN : DataRequest.Mode.TREE;
     }
 
     private static String sourceOf(FieldMultiple<?, ?> field) {

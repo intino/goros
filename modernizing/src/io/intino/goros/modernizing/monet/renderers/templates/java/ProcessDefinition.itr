@@ -64,7 +64,7 @@ def type(process & embedded)
         }
 
         public void openView(String view) {
-            openView(view, true);
+            openView(view, readonly);
         }
 
         public void openView(String view, boolean readonly) {

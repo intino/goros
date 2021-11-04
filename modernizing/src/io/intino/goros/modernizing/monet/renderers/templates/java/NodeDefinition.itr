@@ -48,7 +48,7 @@ def type(nodedefinition & embedded)
         [$toolbar+navigableMethods]
 
         public void openView(String view) {
-            openView(view, true);
+            openView(view, readonly);
         }
 
         public void openView(String view, boolean readonly) {
@@ -174,13 +174,19 @@ def type(nodedefinition & singleton)
             super(box);
         }
 
-        public void open(String code) {
+        public void open(String code, boolean readonly) {
             node(LayerHelper.nodeLayer().locateNode(code));
+            readonly(readonly);
             refresh();
         }
 
         public $name+firstUpperCase~Template node(Node node) {
             this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~Template readonly(boolean value) {
+            this.readonly = value;
             return this;
         }
 
@@ -214,6 +220,7 @@ def type(nodedefinition)
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
         private String view;
+        private boolean readonly = false;
 
         public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
@@ -224,9 +231,10 @@ def type(nodedefinition)
             return this;
         }
 
-        public void open(String id, String view) {
+        public void open(String id, String view, boolean readonly) {
             node(ComponentPersistence.getInstance().getNodeLayer().loadNode(id));
             this.view = view;
+            this.readonly = readonly;
             refresh();
         }
 
@@ -246,7 +254,7 @@ def type(nodedefinition)
 
         private void refreshContent(Node node) {
             content.node(node);
-            content.readonly(true);
+            content.readonly(readonly);
             content.refresh();
             if (view != null) content.openView(view);
             else if (content.selectedView() == null) content.selectDefaultView();
@@ -512,7 +520,7 @@ end
 def type(contain) trigger(open)
     if (contain != null) {
         openContain.onOpen(e -> fillLayer(contain, e.layer()));
-        openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()).replace(":view", "$containView+firstLowerCase"));
+        openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()).replace(":view", "$containView+firstLowerCase").replace(":mode", readonly ? "default" : "edit"));
     }
     openContain.visible(contain != null && contain.isSet());
 end
@@ -687,14 +695,14 @@ def type(show & revisions)
 end
 
 def type(desktop)
-    desktopLink.address(path -> path.replace(":name", "$name+lowerCase"));
+    desktopLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
 end
 
 def type(parent) trigger(refresh)
-    parentLink.address(path -> path.replace(":name", io.intino.goros.unit.util.NodeHelper.nameOf(node.getParent())));
+    parentLink.address(path -> path.replace(":name", io.intino.goros.unit.util.NodeHelper.nameOf(node.getParent())).replace(":mode", readonly ? "default" : "edit"));
     parentLink.title(node.getParent() != null ? node.getParent().getLabel() : "Inicio");
 end
 
 def type(parent)
-    parentLink.address(path -> path.replace(":name", "$name+lowerCase"));
+    parentLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "edit" : "default"));
 end

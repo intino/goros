@@ -15,8 +15,8 @@ def type(ui)
         Resource(path = "/error") error as Page(ErrorTemplate) Confidential
         Resource(path = "/mistareas/vista/:folder") taskTray as Page(AppTemplate) Confidential
         Resource(path = "/tareas/vista/:folder") taskBoard as Page(AppTemplate) Confidential
-        Resource(path = "/elemento/:name") singleton as Page(AppTemplate) Confidential
-        Resource(path = "/instancia/:name/:id/:view") instance as Page(AppTemplate) Confidential
+        Resource(path = "/elemento/:name/:mode") singleton as Page(AppTemplate) Confidential
+        Resource(path = "/instancia/:name/:id/:view/:mode") instance as Page(AppTemplate) Confidential
         Resource(path = "/tarea/:name/:inbox/:task") task as Page(AppTemplate) Confidential
         Resource(path = "/permisos") roles as Page(AppTemplate) Confidential
         Resource(path = "/desechos") trash as Page(AppTemplate) Confidential

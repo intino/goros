@@ -596,7 +596,7 @@ def type(compositeView)
     public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$boxName+firstUpperCase~Box>[ implements $implements...[,]] {
         private Node node;
         private FieldComposite field;
-        private boolean readonly;
+        private boolean readonly = false;
         private ChangeListener changeListener;
         [$show+declaration]
 

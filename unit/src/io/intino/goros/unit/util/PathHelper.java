@@ -41,7 +41,11 @@ public class PathHelper {
 	}
 
 	public static String pathOf(Node node, String view) {
-		return withRootPath(subPathOf(node) + "/" + (view != null ? view : "default"));
+		return pathOf(node, view, null);
+	}
+
+	public static String pathOf(Node node, String view, String mode) {
+		return withRootPath(subPathOf(node) + "/" + (view != null ? view : "default")) + "/" + (mode != null ? mode : "default");
 	}
 
 	public static String pathOf(Task task) {

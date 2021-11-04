@@ -696,19 +696,26 @@ def type(setdefinition)
         [$toolbar+editableEvents]
         [$toolbar+navigableMethods]
 
-        public void open(String code) {
+        public void open(String code, boolean readonly) {
             node(LayerHelper.nodeLayer().locateNode(code));
+            readonly(readonly);
             refresh();
         }
 
-        public void open(String id, String view) {
+        public void open(String id, String view, boolean readonly) {
             node(LayerHelper.nodeLayer().loadNode(id));
+            readonly(readonly);
             refresh();
             if (view != null) viewSelector.select(view);
         }
 
         public $name+firstUpperCase~Template node(Node node) {
             this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~Template readonly(boolean value) {
+            this.readonly = value;
             return this;
         }
 

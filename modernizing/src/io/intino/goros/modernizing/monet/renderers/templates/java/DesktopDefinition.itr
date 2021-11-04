@@ -11,23 +11,31 @@ def type(desktopdefinition)
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Node node;
+        private boolean readonly = false;
 
         public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
-        public void open(String code) {
+        public void open(String code, boolean readonly) {
             node(LayerHelper.nodeLayer().locateNode(code));
+            readonly(readonly);
             refresh();
         }
 
-        public void open(String id, String view) {
+        public void open(String id, String view, boolean readonly) {
             node(LayerHelper.nodeLayer().loadNode(id));
+            readonly(readonly);
             refresh();
         }
 
         public $name+firstUpperCase~Template node(Node node) {
             this.node = node;
+            return this;
+        }
+
+        public $name+firstUpperCase~Template readonly(boolean value) {
+            this.readonly = value;
             return this;
         }
 
@@ -100,7 +108,7 @@ def type(item) trigger(refreshMethod)
         Node node = io.intino.goros.unit.util.NodeHelper.singleton("$code");
         $name+firstLowerCase.visible(node != null && AccountHelper.hasRoles(node.getDefinition(), session()));
         if (node == null) return;
-        $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase"));
+        $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
         $name+firstLowerCase~Link.title(node.getLabel());
     }
 end

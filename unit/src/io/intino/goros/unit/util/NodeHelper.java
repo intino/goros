@@ -251,8 +251,10 @@ public class NodeHelper {
     public static String operationPath(ClientOperation operation) {
         Entity<?> entity = operationEntity(operation);
         String name = operation.getName().toLowerCase();
-        if (OperationShowNode.equals(name)) return PathHelper.pathOf((Node<?>) entity);
-        else if (OperationShowNodeView.equals(name)) return PathHelper.pathOf((Node<?>) entity, operation.getData().get(OperationParamIdView).toString());
+        String mode = operation.getData().get("Mode") != null ? operation.getData().get("Mode").toString() : null;
+        boolean readonly = mode == null || !mode.contains("edit.html");
+        if (OperationShowNode.equals(name)) return PathHelper.pathOf((Node<?>) entity, null, readonly ? "default" : "edit");
+        else if (OperationShowNodeView.equals(name)) return PathHelper.pathOf((Node<?>) entity, operation.getData().get(OperationParamIdView).toString(), readonly ? "default" : "edit");
         else if (OperationShowTask.equals(name)) return PathHelper.pathOf((Task<?>) entity);
         return null;
     }

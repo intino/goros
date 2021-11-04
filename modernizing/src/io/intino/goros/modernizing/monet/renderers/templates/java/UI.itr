@@ -16,15 +16,19 @@ def type(ui & routedispatcher)
         }
 
         @Override
-        public void dispatchSingleton(Soul soul, String name) {
+        public void dispatchSingleton(Soul soul, String name, String mode) {
             AppTemplate display = soul.currentLayer(AppTemplate.class);
+            if (mode != null && mode.equals("undefined")) mode = null;
+            boolean readonly = mode != null && !mode.equalsIgnoreCase("edit");
             [$definition+dispatchSingleton...[$NL]]
         }
 
         @Override
-        public void dispatchInstance(Soul soul, String name, String id, String view) {
+        public void dispatchInstance(Soul soul, String name, String id, String view, String mode) {
             AppTemplate display = soul.currentLayer(AppTemplate.class);
             if (view != null && view.equals("undefined")) view = null;
+            if (mode != null && mode.equals("undefined")) mode = null;
+            boolean readonly = mode != null && !mode.equalsIgnoreCase("edit");
             [$definition+dispatchInstance...[$NL]]
         }
 
@@ -361,11 +365,11 @@ def type(ui & header)
 end
 
 def type(definition & container & environment) trigger(openHome)
-    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code"), null);
+    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code"), null, true);
 end
 
 def type(definition & desktop) trigger(openHome)
-    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~();
+    else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(true);
 end
 
 def type(definition & container & environment) trigger(refreshDrawer)
@@ -373,7 +377,7 @@ def type(definition & container & environment) trigger(refreshDrawer)
 end
 
 def type(definition & desktop) trigger(refreshDrawer)
-    $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase"));
+    $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase").replace(":mode", "default"));
     $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
 end
 
@@ -395,7 +399,7 @@ end
 def type(definition & container & environment) trigger(setupAddressMethod)
     private String setup$name+firstUpperCase~Link(String path) {
         String id = io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code");
-        return path.replace(":name", "$name+lowercase").replace(":id", id != null ? id : "").replace(":view", "default");
+        return path.replace(":name", "$name+lowercase").replace(":id", id != null ? id : "").replace(":view", "default").replace(":mode", "default");
     }
 end
 
@@ -452,19 +456,21 @@ def type(definition) trigger(taskInitialization)
 end
 
 def type(definition & singleton) trigger(method)
-    public void open$name+firstUpperCase() {
+    public void open$name+firstUpperCase(boolean readonly) {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
-        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code");
+        if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) {
+            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code", readonly);
+        }
     }
 end
 
 def type(definition) trigger(method)
-    public void open$name+firstUpperCase(String id, String view) {
+    public void open$name+firstUpperCase(String id, String view, boolean readonly) {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
         if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) {
-            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(id, view);
+            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(id, view, readonly);
         }
     }
 end
@@ -481,7 +487,7 @@ def type(definition & source) trigger(dispatchSingleton)
 end
 
 def type(definition & singleton) trigger(dispatchSingleton)
-    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase();
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(readonly);
 end
 
 def type(definition) trigger(dispatchSingleton)
@@ -500,7 +506,7 @@ def type(definition & index) trigger(dispatchInstance)
 end
 
 def type(definition) trigger(dispatchInstance)
-    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id, view);
+    if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id, view, readonly);
 end
 
 def type(definition & index) trigger(block)

@@ -34,7 +34,10 @@ public class SourceDatasource extends PageDatasource<Term> {
         DataRequest request = request(condition, filters, from);
         request.setStartPos(start);
         request.setLimit(count);
-        return new ArrayList<>(terms(source, request, box, session));
+        List<Term> result = new ArrayList<>(terms(source, request, box, session));
+        int from = Math.min(start, result.size());
+        int end = Math.min(start + count, result.size());
+        return result.subList(from, end);
     }
 
     @Override

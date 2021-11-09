@@ -80,7 +80,7 @@ public class Formatters {
 	public static String countMessage(long count, String singleLabel, String pluralLabel) {
 		if (count <= 0) return "Sin " + pluralLabel;
 		if (count == 1) return "1 " + singleLabel;
-		return count + " " + pluralLabel;
+		return formattedNumber(count) + " " + pluralLabel;
 	}
 
 	public static String formattedNumber(double value) {

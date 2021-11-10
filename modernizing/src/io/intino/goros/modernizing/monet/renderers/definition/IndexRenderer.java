@@ -63,6 +63,8 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 	private FrameBuilder attributeFrame(IndexDefinitionBase.IndexViewProperty viewProperty, Ref attribute, int countAttributes) {
 		AttributeProperty attributeProperty = definition().getAttribute(attribute.getValue());
 		FrameBuilder result = baseFrame().add("attribute");
+		AttributeProperty.TypeEnumeration type = attributeProperty.getType();
+		long width = countAttributes > 0 ? Math.round(100.0/countAttributes) : 0;
 		result.add(attributeProperty.getType().name().toLowerCase());
 		result.add("definition", nameOf(definition()));
 		result.add("view", nameOf(viewProperty));
@@ -70,7 +72,8 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 		result.add("code", attributeProperty.getCode());
 		result.add("label", clean(attributeProperty.getLabel()));
 		result.add("type", RendererHelper.attributeTypeOf(attributeProperty));
-		result.add("width", countAttributes > 0 ? Math.round(100.0/countAttributes) : 0);
+		result.add("width", width);
+		if (type == AttributeProperty.TypeEnumeration.STRING) result.add("cropWithEllipsis", width);
 		return result;
 	}
 

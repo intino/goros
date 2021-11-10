@@ -462,6 +462,7 @@ def type(setdefinition & embedded)
         private void toggleEdition() {
             readonly = !readonly;
             if (!readonly) hideChildViews();
+            clearSelection();
             [$toolbar+editableCall]
             [$view+readonlyCall...[$NL]]
             refreshToolbar();

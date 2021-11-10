@@ -15,9 +15,11 @@ import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.Source;
 import org.monet.space.kernel.model.SourceList;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class TermDatasource {
     protected final UnitBox box;
@@ -75,7 +77,8 @@ public abstract class TermDatasource {
 
     protected List<Term> sorted(TermList result) {
         List<Term> sortedTerms = new ArrayList<>(result.getAll());
-        sortedTerms.sort(Comparator.comparing(Term::getLabel));
+        Collator collator = Collator.getInstance(new Locale(session.discoverLanguage()));
+        sortedTerms.sort((o1, o2) -> collator.compare(o1.getLabel(), o2.getLabel()));
         return sortedTerms;
     }
 

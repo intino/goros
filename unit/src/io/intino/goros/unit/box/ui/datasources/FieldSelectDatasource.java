@@ -39,10 +39,18 @@ public class FieldSelectDatasource extends TermDatasource {
         this.definition = definition;
     }
 
+    public List<Term> allItems() {
+        return items(true);
+    }
+
     public List<Term> items() {
+        return items(false);
+    }
+
+    public List<Term> items(boolean all) {
         TermList result;
         if (definition.getTerms() != null) result = loadFromTerms();
-        else result = loadFromSource();
+        else result = loadFromSource(all);
         return sorted(result);
     }
 
@@ -54,13 +62,13 @@ public class FieldSelectDatasource extends TermDatasource {
         return new TermList(definition.getTerms().getTermPropertyList());
     }
 
-    private TermList loadFromSource() {
+    private TermList loadFromSource(boolean all) {
         SourceLayer sourceLayer = LayerHelper.sourceLayer();
         Ref sourceRef = definition.getSource();
         String source = this.source != null && !this.source.isEmpty() ? this.source : locateSourceIdFromContext(sourceRef.getValue(), definition.getSelect());
         String sourceId = locateSourceId(sourceRef.getValue(), source);
         TermList result = new TermList();
-        if (sourceId != null && !sourceId.isEmpty()) result = terms(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(), true));
+        if (sourceId != null && !sourceId.isEmpty()) result = terms(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(), !all));
         return result;
     }
 

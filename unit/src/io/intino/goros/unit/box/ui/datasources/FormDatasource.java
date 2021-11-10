@@ -6,6 +6,7 @@ import org.monet.bpi.Field;
 import org.monet.bpi.NodeForm;
 import org.monet.bpi.NodeService;
 import org.monet.bpi.java.NodeFormImpl;
+import org.monet.metamodel.NodeDefinition;
 import org.monet.metamodel.internal.TaskOrderDefinition;
 import org.monet.space.kernel.model.Node;
 

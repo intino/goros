@@ -177,6 +177,11 @@ def type(field & select & multiple) trigger(declaration)
     private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
 end
 
+def type(field & link & multiple) trigger(declaration)
+    private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
+    private io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource $name+firstLowerCase~Source;
+end
+
 def type(field & multiple) trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
 end
@@ -186,6 +191,11 @@ def type(field & select) trigger(declaration)
     private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
 end
 
+def type(field & link) trigger(declaration)
+    private Field$type+firstUpperCase $name+firstLowerCase~Field;
+    private io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource $name+firstLowerCase~Source;
+end
+
 def type(field) trigger(declaration)
     private Field$type+firstUpperCase $name+firstLowerCase~Field;
 end
@@ -193,6 +203,11 @@ end
 def type(field & select) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
     $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource(box().unit(), session(), node, $name+firstLowerCase~Field);
+end
+
+def type(field & link) trigger(update)
+    $name+firstLowerCase~Field = datasource.getField("$code");
+    $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode"));
 end
 
 def type(field & composite & multiple) trigger(update)
@@ -384,14 +399,14 @@ end
 
 def type(field & check) trigger(refresh)
     $name+firstLowerCase~.clear();
-    $name+firstLowerCase~.addAll(new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).items().stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
-    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    java.util.List<org.monet.bpi.types.Term> $name+firstLowercase~Terms = new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).allItems();
+    $name+firstLowerCase~.addAll($name+firstLowercase~Terms.stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowercase~Terms, $name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & link & multiple) trigger(init)
     $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
-    $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     $name+firstLowerCase~.onSelect(e -> save(b -> {
         $name+firstLowerCase~Field.removeAll();
         $name+firstLowerCase~Field.addNewAll(io.intino.goros.unit.util.NodeHelper.linksOf(e.selection()));
@@ -399,13 +414,13 @@ def type(field & link & multiple) trigger(init)
 end
 
 def type(field & link & multiple) trigger(refresh)
+    $name+firstLowerCase~.source($name+firstLowerCase~Source);
     $name+firstLowerCase.selection(io.intino.goros.unit.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase.readonly([$univocal ]$readonly);
 end
 
 def type(field & link) trigger(init)
     $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
-    $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     $name+firstLowerCase~.onSelect(e -> {
         save(b -> {
             [$dependant+clear...[$NL]]
@@ -416,6 +431,7 @@ def type(field & link) trigger(init)
 end
 
 def type(field & link) trigger(refresh)
+    $name+firstLowerCase~.source($name+firstLowerCase~Source);
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     else $name+firstLowerCase.selection(java.util.Collections.emptyList());
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
@@ -430,13 +446,13 @@ end
 
 def type(field & select & multiple) trigger(refresh)
     refresh$name+firstUpperCase~();
-    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.getAll()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select & inline) trigger(refresh)
     refresh$name+firstUpperCase~();
-    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
@@ -459,7 +475,7 @@ end
 
 def type(field & select) trigger(refresh)
     refresh$name+firstUpperCase~();
-    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Field.get()));
+    $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 

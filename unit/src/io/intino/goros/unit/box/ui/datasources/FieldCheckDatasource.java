@@ -28,10 +28,18 @@ public class FieldCheckDatasource extends TermDatasource {
         this.definition = (CheckFieldProperty) ((FormDefinition)node.getDefinition()).getField(field.getCode());
     }
 
+    public List<Term> allItems() {
+        return items(true);
+    }
+
     public List<Term> items() {
+        return items(false);
+    }
+
+    public List<Term> items(boolean all) {
         TermList result;
         if (definition.getTerms() != null) result = loadFromTerms();
-        else if (definition.getSource() != null) result = loadFromSource();
+        else if (definition.getSource() != null) result = loadFromSource(all);
         else result = loadFromCheckList();
         return sorted(result);
     }
@@ -42,7 +50,7 @@ public class FieldCheckDatasource extends TermDatasource {
         return termList;
     }
 
-    private TermList loadFromSource() {
+    private TermList loadFromSource(boolean all) {
         SourceLayer sourceLayer = LayerHelper.sourceLayer();
         Ref sourceRef = definition.getSource();
         CheckFieldProperty.SelectProperty checkDefinition = definition.getSelect();
@@ -51,7 +59,7 @@ public class FieldCheckDatasource extends TermDatasource {
 
         String from = field.getFrom();
         if (from.isEmpty()) from = getSourceFrom(node, checkDefinition != null ? checkDefinition.getRoot() : null);
-        if (sourceId != null && !sourceId.isEmpty()) result = new TermList(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(from), true));
+        if (sourceId != null && !sourceId.isEmpty()) result = new TermList(sourceLayer.loadSourceTerms(sourceLayer.loadSource(sourceId), request(from), !all));
 
         return result;
     }

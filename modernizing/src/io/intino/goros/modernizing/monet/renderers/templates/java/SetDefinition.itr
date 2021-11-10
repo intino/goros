@@ -1,6 +1,10 @@
 def type(show & items) trigger(declaration)
 end
 
+def type(show & index) trigger(declaration)
+    private Node selectedChild;
+end
+
 def type(show & sharedprototypes)
 end
 
@@ -11,6 +15,97 @@ def type(show) trigger(declaration)
 end
 
 def type(show) trigger(hideToolbar)
+end
+
+def type(show & index & locations)
+    public void addAndSelect(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
+        select(node);
+    }
+
+    public void select(Node node) {
+        io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
+    }
+
+    public void selectSorting(String sorting, String mode) {
+        $definition+firstLowerCase~$view+firstUpperCase.sortings(sorting != null ? java.util.Collections.singletonList(io.intino.goros.unit.util.NodeHelper.sortingOf(sorting, mode)) : java.util.Collections.emptyList());
+    }
+
+    public void refresh(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId())), node);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
+            Node node = e.item();
+            org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
+            $componentType
+            [$attribute...[$NL]]
+        });
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
+        if ($definition+firstLowerCase~$view+firstUpperCase.source() == null) $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
+        else $definition+firstLowerCase~$view+firstUpperCase.reload();
+    }
+end
+
+def type(show & index)
+    public void addAndSelect(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
+        select(node);
+    }
+
+    public void select(Node node) {
+        io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
+    }
+
+    public void selectSorting(String sorting, String mode) {
+        $definition+firstLowerCase~$view+firstUpperCase.sortings(sorting != null ? java.util.Collections.singletonList(io.intino.goros.unit.util.NodeHelper.sortingOf(sorting, mode)) : java.util.Collections.emptyList());
+    }
+
+    public void refresh(Node node) {
+        $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId())), node);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
+            Node node = e.item();
+            org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
+            $componentType
+            [$picture]
+            [$title]
+            [$highlight...[$NL]]
+        });
+    }
+
+    @Override
+    public void refresh() {
+        super.refresh();
+        $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
+        if ($definition+firstLowerCase~$view+firstUpperCase.source() == null) $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
+        else $definition+firstLowerCase~$view+firstUpperCase.reload();
+    }
+
+    private void refreshDetailsDialog(Node node) {
+        this.selectedChild = node;
+        refreshDetailsDialog();
+    }
+
+    private void refreshDetailsDialog() {
+        org.monet.space.kernel.model.Reference reference = selectedChild.getReference("$reference");
+        [$title+details]
+        [$line...[$NL]]
+        [$lineBelow...[$NL]]
+        [$footer...[$NL]]
+    }
 end
 
 def type(show)
@@ -63,6 +158,12 @@ def type(componentType & items)
     $package.$module+lowerCase.box.ui.displays.rows.$definition+firstUpperCase~$view+firstUpperCase~Row row = e.component();
 end
 
+def type(componentType & index)
+    $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
+    item.detailsTrigger.bindTo(detailsDialog);
+    item.detailsTrigger.onOpen(e1 -> refreshDetailsDialog(node));
+end
+
 def type(componentType)
     $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
 end
@@ -80,33 +181,67 @@ def type(attribute & items)
 end
 
 def type(attribute & date)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 end
 
 def type(attribute & icon)
-    item.$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+    [$scope~.]$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 end
 
 def type(attribute & picture)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 end
 
 def type(attribute & real)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 end
 
 def type(attribute & integer)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 end
 
 def type(attribute & location)
     String title = io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code");
-    item.$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
-    item.$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))));
+    [$scope~.]$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
+    [$scope~.]$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))));
+end
+
+def type(attribute) trigger(details)
+    $name+firstLowerCase~Details.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end
 
 def type(attribute)
-    item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
+end
+
+def type(attribute & date)
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
+end
+
+def type(attribute & icon)
+    [$scope~.]$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+end
+
+def type(attribute & picture)
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+end
+
+def type(attribute & real)
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
+end
+
+def type(attribute & integer)
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
+end
+
+def type(attribute & location)
+    String title = io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code");
+    [$scope~.]$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
+    [$scope~.]$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))));
+end
+
+def type(attribute)
+    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 end
 
 def type(attribute)

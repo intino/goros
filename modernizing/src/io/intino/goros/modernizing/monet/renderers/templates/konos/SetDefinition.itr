@@ -64,7 +64,7 @@ end
 
 def type(nodeview & ownedprototypes) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
             Mold
                 Item(height=65px) $definition+firstLowerCase~$name+firstUpperCase~Item
@@ -75,14 +75,14 @@ end
 
 def type(nodeview & items) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10, format=bordered) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+        Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15, format=bordered) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
             [$attribute+mold...[$NL]]
 end
 
 def type(nodeview & index) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
+        List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
             Mold
                 Item(height=$height~px) $definition+firstLowerCase~$name+firstUpperCase~Item
@@ -93,21 +93,26 @@ def type(nodeview & index) trigger(template)
                                 Block(layout=Vertical Flexible)
                                     [$title]
                                     Block(layout=Vertical Flexible)
-                                        Block(layout=Horizontal Wrap, format=middleAirTop) lineBlock
-                                            [$line+labeled...[$NL]]
-                                        Block(layout=Horizontal Wrap, format=middleAirTop) lineBelowBlock
-                                            [$lineBelow+labeled...[$NL]]
                                         Block(layout=Horizontal Wrap, format=middleAirTop) highlightBlock
                                             [$highlight+highlight...[$NL]]
                                 Block(layout=Vertical End) as Relative(width=5%)
                                     [$icon]
-                        Block(format=catalogIndexFooterItemStyle) footerBlock
-                            [$footer+labeled...[$NL]]
+                                    MaterialIconButton(title="Detalles", icon="MoreHoriz", size=Small) detailsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver)
+
+        Block(format=spaced) detailsDialog as Popover
+            [$title+details]
+            Block(layout=Vertical Flexible)
+                Block(layout=Vertical, format=middleAirTop) lineBlock
+                    [$line+labeled...[$NL]]
+                Block(layout=Vertical, format=middleAirTop) lineBelowBlock
+                    [$lineBelow+labeled...[$NL]]
+            Block(format=catalogIndexFooterItemStyle) footerBlock
+                [$footer+labeled...[$NL]]
 end
 
 def type(nodeview & locations) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=10) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
+        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
             Zoom(defaultZoom = 6, min = 1, max = 18)
             Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
             noItemsMessage = "No hay elementos"
@@ -171,6 +176,10 @@ def type(attribute) trigger(mold)
     Mold
         Heading $shortName+firstLowerCase~Heading > Text(value="$label")
         Item(height=25px,width=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase
+end
+
+def type(attribute) trigger(details)
+    Text(format=h4 airBottom) $name+firstLowerCase~Details
 end
 
 def type(attribute & location) trigger(title)

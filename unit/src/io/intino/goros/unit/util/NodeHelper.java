@@ -324,16 +324,45 @@ public class NodeHelper {
         return checkList;
     }
 
+    public static List<String> selectionOf(List<Term> termList, CheckList checkList) {
+        return checkList.getAll().stream().filter(Check::isChecked).map(c -> {
+            Term term = termOf(termList, c);
+            return term != null ? term.getLabel() : null;
+        }).filter(Objects::nonNull).collect(toList());
+    }
+
+    private static Term termOf(List<Term> source, Check check) {
+        return source.stream().filter(t -> t.getKey().equals(check.getCode())).findFirst().orElse(null);
+    }
+
     public static List<String> selectionOf(CheckList checkList) {
         return checkList.getAll().stream().filter(Check::isChecked).map(Check::getLabel).collect(toList());
+    }
+
+    public static List<String> selectionOf(List<Term> source, List<Term> terms) {
+        return terms.stream().map(t -> {
+            Term term = findTerm(t, source);
+            return term != null ? term.getLabel() : null;
+        }).filter(Objects::nonNull).collect(toList());
     }
 
     public static List<String> selectionOf(List<Term> terms) {
         return terms.stream().map(Term::getLabel).collect(toList());
     }
 
+    public static List<String> selectionOf(List<Term> source, Term term) {
+        if (term == null) return emptyList();
+        Term selected = findTerm(term, source);
+        return singletonList(selected != null ? selected.getLabel() : term.getLabel());
+    }
+
     public static List<String> selectionOf(Term term) {
         return term != null ? singletonList(term.getLabel()) : Collections.emptyList();
+    }
+
+    private static Term findTerm(Term term, List<Term> source) {
+        if (term == null) return null;
+        return source.stream().filter(t -> t.getKey().equals(term.getKey())).findFirst().orElse(term);
     }
 
     public static String getContainerContain(Node node, String code) {

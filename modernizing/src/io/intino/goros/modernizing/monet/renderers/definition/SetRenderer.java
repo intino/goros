@@ -81,24 +81,24 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	private int calculateIndexHeight(SetDefinition.SetViewProperty viewProperty) {
 		SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty index = viewProperty.getShow().getIndex();
-		return calculateAttributesHeight(viewProperty, index.getWithView());
+		return calculateAttributesHeight(viewProperty, index.getWithView(), false);
 	}
 
 	private int calculateLocationsHeight(SetDefinition.SetViewProperty viewProperty) {
 		LocationsProperty locations = viewProperty.getShow().getLocations();
-		return calculateAttributesHeight(viewProperty, locations.getWithView());
+		return calculateAttributesHeight(viewProperty, locations.getWithView(), true);
 	}
 
-	protected int calculateAttributesHeight(SetDefinition.SetViewProperty viewProperty, Ref withView) {
+	protected int calculateAttributesHeight(SetDefinition.SetViewProperty viewProperty, Ref withView, boolean full) {
 		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
 		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		if (show.getPicture() != null) return 165;
-		int size = 100;
-		size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
-		size += show.getLineBelow().size() > 0 ? (17*countLines(show.getLineBelow().size())) : 0;
+		int size = 60;
+		if (full) size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
+		if (full) size += show.getLineBelow().size() > 0 ? (17*countLines(show.getLineBelow().size())) : 0;
 		size += show.getHighlight().size() > 0 ? (17*countLines(show.getHighlight().size())) : 0;
-		size += show.getFooter().size() > 0 ? (17*countLines(show.getFooter().size())) : 0;
+		if (full) size += show.getFooter().size() > 0 ? (17*countLines(show.getFooter().size())) : 0;
 		return size;
 	}
 
@@ -186,10 +186,10 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 	}
 
 	private void addItemsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
-		builder.add("attribute", attributeTitleFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 30));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_DESCRIPTION, "Descripción", 30));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_CREATE_DATE, "Fecha creación", 15));
-		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_UPDATE_DATE, "Fecha actualización", 15));
+		builder.add("attribute", attributeTitleFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_LABEL, "Título", 30, "row"));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_DESCRIPTION, "Descripción", 30, "row"));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_CREATE_DATE, "Fecha creación", 15, "row"));
+		builder.add("attribute", attributeFrame(viewProperty, DescriptorDefinition.ATTRIBUTE_UPDATE_DATE, "Fecha actualización", 15, "row"));
 	}
 
 	private boolean isLocations(SetDefinition.SetViewProperty viewProperty) {
@@ -198,32 +198,33 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	private void addDescriptorAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		DescriptorDefinition definition = new DescriptorDefinition();
-		addIndexViewAttribute("title", attributeTitleFrame(viewProperty, definition, new Ref("label"), 1), builder);
-		addIndexViewAttribute("line", attributeFrame(viewProperty, definition, new Ref("create_date"), 1), builder);
+		addIndexViewAttribute("title", attributeTitleFrame(viewProperty, definition, new Ref("label"), 1, "item"), builder);
+		addIndexViewAttribute("line", attributeFrame(viewProperty, definition, new Ref("create_date"), 1, "item"), builder);
 	}
 
 	private void addIndexAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty index = viewProperty.getShow().getIndex();
-		addIndexViewAttributes(viewProperty, index.getWithView(), builder);
+		addIndexViewAttributes(viewProperty, index.getWithView(), builder, true);
 	}
 
 	private void addLocationsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
 		LocationsProperty locations = viewProperty.getShow().getLocations();
-		addIndexViewAttributes(viewProperty, locations.getWithView(), builder);
+		addIndexViewAttributes(viewProperty, locations.getWithView(), builder, false);
+		builder.add("locations");
 	}
 
-	private void addIndexViewAttributes(SetDefinition.SetViewProperty viewProperty, Ref withView, FrameBuilder builder) {
+	private void addIndexViewAttributes(SetDefinition.SetViewProperty viewProperty, Ref withView, FrameBuilder builder, boolean useNullScope) {
 		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
 		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		int countAttributes = RendererHelper.countAttributes(indexView);
-		addIndexViewAttribute("title", show.getTitle() != null ? attributeTitleFrame(viewProperty, definition, show.getTitle(), countAttributes) : attributeFrame(viewProperty, definition, new Ref("label"), countAttributes), builder);
-		if (show.getPicture() != null) addIndexViewAttribute("picture", attributeFrame(viewProperty, definition, show.getPicture(), countAttributes), builder);
-		if (show.getIcon() != null) addIndexViewAttribute("icon", attributeFrame(viewProperty, definition, show.getIcon(), countAttributes), builder);
-		show.getHighlight().forEach(h -> addIndexViewAttribute("highlight", attributeFrame(viewProperty, definition, h, countAttributes), builder));
-		show.getLine().forEach(l -> addIndexViewAttribute("line", attributeFrame(viewProperty, definition, l, countAttributes), builder));
-		show.getLineBelow().forEach(lb -> addIndexViewAttribute("lineBelow", attributeFrame(viewProperty, definition, lb, countAttributes), builder));
-		show.getFooter().forEach(f -> addIndexViewAttribute("footer", attributeFrame(viewProperty, definition, f, countAttributes), builder));
+		addIndexViewAttribute("title", show.getTitle() != null ? attributeTitleFrame(viewProperty, definition, show.getTitle(), countAttributes, "item") : attributeFrame(viewProperty, definition, new Ref("label"), countAttributes, "item"), builder);
+		if (show.getPicture() != null) addIndexViewAttribute("picture", attributeFrame(viewProperty, definition, show.getPicture(), countAttributes, "item"), builder);
+		if (show.getIcon() != null) addIndexViewAttribute("icon", attributeFrame(viewProperty, definition, show.getIcon(), countAttributes, "item"), builder);
+		show.getHighlight().forEach(h -> addIndexViewAttribute("highlight", attributeFrame(viewProperty, definition, h, countAttributes, "item"), builder));
+		show.getLine().forEach(l -> addIndexViewAttribute("line", attributeFrame(viewProperty, definition, l, countAttributes, useNullScope ? null : "item"), builder));
+		show.getLineBelow().forEach(lb -> addIndexViewAttribute("lineBelow", attributeFrame(viewProperty, definition, lb, countAttributes, useNullScope ? null : "item"), builder));
+		show.getFooter().forEach(f -> addIndexViewAttribute("footer", attributeFrame(viewProperty, definition, f, countAttributes, useNullScope ? null : "item"), builder));
 	}
 
 	private void addIndexViewAttribute(String section, FrameBuilder attributeFrame, FrameBuilder builder) {
@@ -272,12 +273,13 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return result;
 	}
 
-	private FrameBuilder attributeFrame(SetDefinition.SetViewProperty viewProperty, IndexDefinition definition, Ref attribute, int countAttributes) {
+	private FrameBuilder attributeFrame(SetDefinition.SetViewProperty viewProperty, IndexDefinition definition, Ref attribute, int countAttributes, String scope) {
 		AttributeProperty attributeProperty = definition.getAttribute(attribute.getValue());
 		FrameBuilder result = baseFrame().add("attribute");
 		result.add("reference", attributeProperty != null ? "reference" : "node.getReference()");
 		if (attributeProperty == null) attributeProperty = new DescriptorDefinition().getAttribute(attribute.getValue());
 		result.add(attributeProperty.getType().name().toLowerCase());
+		if (scope != null) result.add("scope", scope);
 		result.add("definition", nameOf(definition()));
 		result.add("view", nameOf(viewProperty));
 		result.add("name", normalize(attributeProperty.getName()));
@@ -290,15 +292,16 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return result;
 	}
 
-	private FrameBuilder attributeTitleFrame(SetDefinition.SetViewProperty viewProperty, IndexDefinition definition, Ref attribute, int countAttributes) {
-		FrameBuilder result = attributeFrame(viewProperty, definition, attribute, countAttributes);
+	private FrameBuilder attributeTitleFrame(SetDefinition.SetViewProperty viewProperty, IndexDefinition definition, Ref attribute, int countAttributes, String scope) {
+		FrameBuilder result = attributeFrame(viewProperty, definition, attribute, countAttributes, scope);
 		if (isLocations(viewProperty)) result.add("location");
 		return result;
 	}
 
-	private FrameBuilder attributeFrame(NodeViewProperty viewProperty, String key, String label, int width) {
+	private FrameBuilder attributeFrame(NodeViewProperty viewProperty, String key, String label, int width, String scope) {
 		FrameBuilder result = baseFrame().add("attribute");
 		result.add(typeOf(viewProperty));
+		if (scope != null) result.add("scope", scope);
 		result.add("reference", !viewProperty.getCode().equals(DescriptorDefinition.CODE) ? "reference" : "node.getReference()");
 		result.add("definition", nameOf(definition()));
 		result.add("view", nameOf(viewProperty));
@@ -310,8 +313,8 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return result;
 	}
 
-	private FrameBuilder attributeTitleFrame(NodeViewProperty viewProperty, String key, String label, int width) {
-		FrameBuilder result = attributeFrame(viewProperty, key, label, width);
+	private FrameBuilder attributeTitleFrame(NodeViewProperty viewProperty, String key, String label, int width, String scope) {
+		FrameBuilder result = attributeFrame(viewProperty, key, label, width, scope);
 		if (!(viewProperty instanceof SetDefinition.SetViewProperty)) return result;
 		if (isLocations((SetDefinition.SetViewProperty) viewProperty)) result.add("location");
 		return result;

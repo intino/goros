@@ -34,7 +34,7 @@ def type(process)
 
         Block(layout=Horizontal) header
             Block(layout=Vertical) headerToolbar as Relative(width=100%, offsetWidth=40px)
-                Selector viewSelector as Tabs
+                Selector viewSelector as Tabs(scrollButtons=Auto)
                     Text(value="Estado") state as Option
                     [$view+declaration...[$NL]]
             Block(layout=Horizontal EndJustified Center)

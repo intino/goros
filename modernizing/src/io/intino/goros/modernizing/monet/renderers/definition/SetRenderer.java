@@ -76,7 +76,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		if (show.getItems() != null) return 50;
 		if (show.getIndex() != null) return calculateIndexHeight(viewProperty);
 		if (show.getLocations() != null) return calculateLocationsHeight(viewProperty);
-		return 165;
+		return 124;
 	}
 
 	private int calculateIndexHeight(SetDefinition.SetViewProperty viewProperty) {
@@ -89,22 +89,23 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return calculateAttributesHeight(viewProperty, locations.getWithView(), true);
 	}
 
+	private static final int LineHeight = 7;
 	protected int calculateAttributesHeight(SetDefinition.SetViewProperty viewProperty, Ref withView, boolean full) {
 		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
 		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
-		if (show.getPicture() != null) return 165;
+		if (show.getPicture() != null) return 124;
 		int size = 60;
-		size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
-		if (full) size += show.getLineBelow().size() > 0 ? (17*countLines(show.getLineBelow().size())) : 0;
-		size += show.getHighlight().size() > 0 ? (17*countLines(show.getHighlight().size())) : 0;
-		if (full) size += show.getFooter().size() > 0 ? (17*countLines(show.getFooter().size())) : 0;
+		size += show.getLine().size() > 0 ? (LineHeight*countLines(show.getLine().size())) : 0;
+		if (full) size += show.getLineBelow().size() > 0 ? (LineHeight*countLines(show.getLineBelow().size())) : 0;
+		size += show.getHighlight().size() > 0 ? (LineHeight*countLines(show.getHighlight().size())) : 0;
+		if (full) size += show.getFooter().size() > 0 ? (LineHeight*countLines(show.getFooter().size())) : 0;
 		return size;
 	}
 
 	protected int countLines(int size) {
-		if (size <= 4) return 1;
-		return Math.round(size/4);
+		if (size <= 3) return 1;
+		return Math.round(size/3);
 	}
 
 	@Override

@@ -95,7 +95,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
 		if (show.getPicture() != null) return 165;
 		int size = 60;
-		if (full) size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
+		size += show.getLine().size() > 0 ? (17*countLines(show.getLine().size())) : 0;
 		if (full) size += show.getLineBelow().size() > 0 ? (17*countLines(show.getLineBelow().size())) : 0;
 		size += show.getHighlight().size() > 0 ? (17*countLines(show.getHighlight().size())) : 0;
 		if (full) size += show.getFooter().size() > 0 ? (17*countLines(show.getFooter().size())) : 0;
@@ -183,6 +183,16 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		else if (show.getIndex() != null) addIndexAttributes(viewProperty, builder);
 		else if (show.getOwnedPrototypes() != null) addDescriptorAttributes(viewProperty, builder);
 		else if (show.getLocations() != null) addLocationsAttributes(viewProperty, builder);
+		if (!hasDetails(show)) builder.add("hasDetails", "false");
+	}
+
+	protected boolean hasDetails(SetDefinitionBase.SetViewPropertyBase.ShowProperty showDefinition) {
+		if (showDefinition.getIndex() == null) return false;
+		Ref withView = showDefinition.getIndex().getWithView();
+		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
+		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());
+		IndexDefinitionBase.IndexViewProperty.ShowProperty show = indexView.getShow();
+		return show != null && (!show.getFooter().isEmpty() || !show.getLineBelow().isEmpty());
 	}
 
 	private void addItemsAttributes(SetDefinition.SetViewProperty viewProperty, FrameBuilder builder) {
@@ -222,7 +232,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		if (show.getPicture() != null) addIndexViewAttribute("picture", attributeFrame(viewProperty, definition, show.getPicture(), countAttributes, "item"), builder);
 		if (show.getIcon() != null) addIndexViewAttribute("icon", attributeFrame(viewProperty, definition, show.getIcon(), countAttributes, "item"), builder);
 		show.getHighlight().forEach(h -> addIndexViewAttribute("highlight", attributeFrame(viewProperty, definition, h, countAttributes, "item"), builder));
-		show.getLine().forEach(l -> addIndexViewAttribute("line", attributeFrame(viewProperty, definition, l, countAttributes, useNullScope ? null : "item"), builder));
+		show.getLine().forEach(l -> addIndexViewAttribute("line", attributeFrame(viewProperty, definition, l, countAttributes, "item"), builder));
 		show.getLineBelow().forEach(lb -> addIndexViewAttribute("lineBelow", attributeFrame(viewProperty, definition, lb, countAttributes, useNullScope ? null : "item"), builder));
 		show.getFooter().forEach(f -> addIndexViewAttribute("footer", attributeFrame(viewProperty, definition, f, countAttributes, useNullScope ? null : "item"), builder));
 	}

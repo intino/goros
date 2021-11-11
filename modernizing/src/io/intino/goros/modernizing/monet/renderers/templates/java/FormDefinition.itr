@@ -179,7 +179,6 @@ end
 
 def type(field & link & multiple) trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
-    private io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource $name+firstLowerCase~Source;
 end
 
 def type(field & multiple) trigger(declaration)
@@ -193,7 +192,6 @@ end
 
 def type(field & link) trigger(declaration)
     private Field$type+firstUpperCase $name+firstLowerCase~Field;
-    private io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource $name+firstLowerCase~Source;
 end
 
 def type(field) trigger(declaration)
@@ -207,7 +205,6 @@ end
 
 def type(field & link) trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-    $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode"));
 end
 
 def type(field & composite & multiple) trigger(update)
@@ -414,7 +411,7 @@ def type(field & link & multiple) trigger(init)
 end
 
 def type(field & link & multiple) trigger(refresh)
-    $name+firstLowerCase~.source($name+firstLowerCase~Source);
+    $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     $name+firstLowerCase.selection(io.intino.goros.unit.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase.readonly([$univocal ]$readonly);
 end
@@ -431,7 +428,7 @@ def type(field & link) trigger(init)
 end
 
 def type(field & link) trigger(refresh)
-    $name+firstLowerCase~.source($name+firstLowerCase~Source);
+    $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     else $name+firstLowerCase.selection(java.util.Collections.emptyList());
     $name+firstLowerCase~.readonly([$univocal ]$readonly);

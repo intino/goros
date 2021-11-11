@@ -93,17 +93,17 @@ def type(nodeview & index) trigger(template)
                                 Block(layout=Vertical Flexible)
                                     [$title]
                                     Block(layout=Vertical Flexible)
+                                        Block(layout=Horizontal Wrap, format=middleAirTop) lineBlock
+                                            [$line+labeled...[$NL]]
                                         Block(layout=Horizontal Wrap, format=middleAirTop) highlightBlock
                                             [$highlight+highlight...[$NL]]
                                 Block(layout=Vertical End) as Relative(width=5%)
                                     [$icon]
-                                    MaterialIconButton(title="Detalles", icon="MoreHoriz", size=Small) detailsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver)
+                                    MaterialIconButton(title="Detalles", icon="MoreHoriz", size=Small[, visible=$hasDetails]) detailsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver)
 
         Block(format=spaced) detailsDialog as Popover
             [$title+details]
             Block(layout=Vertical Flexible)
-                Block(layout=Vertical, format=middleAirTop) lineBlock
-                    [$line+labeled...[$NL]]
                 Block(layout=Vertical, format=middleAirTop) lineBelowBlock
                     [$lineBelow+labeled...[$NL]]
             Block(format=catalogIndexFooterItemStyle) footerBlock

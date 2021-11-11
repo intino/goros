@@ -82,6 +82,7 @@ def type(show & index)
             $componentType
             [$picture]
             [$title]
+            [$line...[$NL]]
             [$highlight...[$NL]]
         });
     }
@@ -102,7 +103,6 @@ def type(show & index)
     private void refreshDetailsDialog() {
         org.monet.space.kernel.model.Reference reference = selectedChild.getReference("$reference");
         [$title+details]
-        [$line...[$NL]]
         [$lineBelow...[$NL]]
         [$footer...[$NL]]
     }

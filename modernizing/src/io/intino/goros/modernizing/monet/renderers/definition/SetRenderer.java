@@ -89,7 +89,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return calculateAttributesHeight(viewProperty, locations.getWithView(), true);
 	}
 
-	private static final int LineHeight = 7;
+	private static final int LineHeight = 10;
 	protected int calculateAttributesHeight(SetDefinition.SetViewProperty viewProperty, Ref withView, boolean full) {
 		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
 		IndexDefinitionBase.IndexViewProperty indexView = definition.getView(withView.getValue());

@@ -23,13 +23,18 @@ import java.util.Locale;
 
 public abstract class TermDatasource {
     protected final UnitBox box;
-    protected final UISession session;
+    protected UISession session;
     protected final Node node;
 
     public TermDatasource(UnitBox box, UISession session, Node node) {
         this.box = box;
         this.session = session;
         this.node = node;
+    }
+
+    public TermDatasource session(UISession session) {
+        this.session = session;
+        return this;
     }
 
     public abstract List<Term> items();

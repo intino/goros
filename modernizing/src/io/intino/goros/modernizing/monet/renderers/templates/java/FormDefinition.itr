@@ -442,12 +442,14 @@ def type(field & select & multiple) trigger(init)
 end
 
 def type(field & select & multiple) trigger(refresh)
+    $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.getAll()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
 end
 
 def type(field & select & inline) trigger(refresh)
+    $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
@@ -471,6 +473,7 @@ def type(field & select) trigger(refreshMethod)
 end
 
 def type(field & select) trigger(refresh)
+    $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
     $name+firstLowerCase~.readonly([$univocal ]$readonly);

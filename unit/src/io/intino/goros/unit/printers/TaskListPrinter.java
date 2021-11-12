@@ -123,7 +123,7 @@ public class TaskListPrinter extends Printer {
 
 	private FrameBuilder attributeFrame(Task task, String column, String language) {
 		FrameBuilder result = attributeFrame(column, language);
-		String value = attributeValue(task, column, language).replace("&", "&amp;");
+		String value = attributeValue(task, column, language).replace("&nsbp;", " ").replace("&", "&amp;");
 		updateColumnDataSize(value, column);
 		result.add("value", !value.isEmpty() ? value : "-");
 		return result;
@@ -275,6 +275,7 @@ public class TaskListPrinter extends Printer {
 
 	protected byte[] generateDocument(String result) {
 		try {
+			result = result.replace("&amp;nbsp;", " ");
 			if (format.equalsIgnoreCase("pdf")) return LibraryPDF.create(new ByteArrayInputStream(result.getBytes("utf8"))).toByteArray();
 			if (format.equalsIgnoreCase("xls")) return result.replaceAll("\\\\n", "\r\n").getBytes("UTF-8");
 			return result.replaceAll("\\\\n", "\r\n").getBytes("UTF-16LE");

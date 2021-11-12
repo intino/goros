@@ -139,7 +139,6 @@ public class RendererHelper {
 	public static String dimensionTypeOf(AttributeProperty attributeProperty) {
 		AttributeProperty.TypeEnumeration type = attributeProperty.getType();
 		if (type == AttributeProperty.TypeEnumeration.DATE) return "DateRange";
-		if (type == AttributeProperty.TypeEnumeration.STRING) return "Search";
 		if (type == AttributeProperty.TypeEnumeration.BOOLEAN) return "Check";
 		return "Combo";
 	}

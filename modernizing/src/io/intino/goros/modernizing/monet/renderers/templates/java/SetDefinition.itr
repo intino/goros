@@ -39,7 +39,7 @@ def type(show & index & locations)
     public void init() {
         super.init();
         $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
-            Node node = e.item();
+            $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
             [$attribute...[$NL]]
@@ -77,7 +77,7 @@ def type(show & index)
     public void init() {
         super.init();
         $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
-            Node node = e.item();
+            $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
             [$picture]
@@ -130,7 +130,7 @@ def type(show)
     public void init() {
         super.init();
         $definition+firstLowerCase~$view+firstUpperCase.onAddItem(e -> {
-            Node node = e.item();
+            $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
             [$attribute...[$NL]]
@@ -152,6 +152,14 @@ end
 
 def type(datasourceAddType)
     node
+end
+
+def type(itemType & locations)
+    Node node = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(e.item());
+end
+
+def type(itemType)
+    Node node = e.item();
 end
 
 def type(componentType & items)

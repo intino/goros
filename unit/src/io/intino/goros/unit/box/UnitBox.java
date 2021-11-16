@@ -103,6 +103,8 @@ public class UnitBox extends AbstractBox {
 	private String normalizeParameterName(String key) {
 		if (key.equals("jdbc-datasource")) return "Jdbc.DataSource";
 		if (key.equals("jdbc-type")) return "Jdbc.Type";
+		if (key.equals("jdbc-max-active-connections")) return "Jdbc.MaxActiveConnections";
+		if (key.equals("jdbc-remove-abandoned-timeout")) return "Jdbc.RemoveAbandonedTimeout";
 		if (key.equals("jdbc-url")) return "Jdbc.Url";
 		if (key.equals("jdbc-user")) return "Jdbc.User";
 		if (key.equals("jdbc-password")) return "Jdbc.Password";

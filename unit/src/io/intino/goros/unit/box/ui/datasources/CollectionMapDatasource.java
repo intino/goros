@@ -23,7 +23,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public class CollectionMapDatasource extends MapDatasource<Node> {
+public class CollectionMapDatasource extends MapDatasource<String> {
     private final UnitBox box;
     private final UISession session;
     private final Node set;
@@ -37,7 +37,7 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
     }
 
     @Override
-    public List<PlaceMark<Node>> placeMarks(String condition, List<Filter> filters, BoundingBox boundingBox) {
+    public List<PlaceMark<String>> placeMarks(String condition, List<Filter> filters, BoundingBox boundingBox) {
         box.linkSession(session);
         SetDefinition definition = (SetDefinition) set.getDefinition();
         IndexDefinition indexDefinition = Dictionary.getInstance().getIndexDefinition(definition.getIndex().getValue());
@@ -56,16 +56,16 @@ public class CollectionMapDatasource extends MapDatasource<Node> {
         return groups.stream().map(o -> new Group().label(o)).collect(toList());
     }
 
-    public static PlaceMark<Node> placeMarkOf(Node node) {
+    public static PlaceMark<String> placeMarkOf(Node node) {
         String location = locationOf(node);
-        PlaceMark<Node> placeMark = PlaceMark.build(node.getLabel(), location);
-        placeMark.item(node);
+        PlaceMark<String> placeMark = PlaceMark.build(node.getLabel(), location);
+        placeMark.item(node.getId());
         return placeMark;
     }
 
-    public static PlaceMark<Node> placeMarkOf(Location location) {
-        PlaceMark<Node> placeMark = PlaceMark.build(location.getLabel(), wktOf(location));
-        placeMark.item(nodeOf(location));
+    public static PlaceMark<String> placeMarkOf(Location location) {
+        PlaceMark<String> placeMark = PlaceMark.build(location.getLabel(), wktOf(location));
+        placeMark.item(location.getNodeId());
         return placeMark;
     }
 

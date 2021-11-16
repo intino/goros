@@ -112,7 +112,7 @@ end
 
 def type(nodeview & locations) trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Map(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
+        Map(itemClass="java.lang.String", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
             Zoom(defaultZoom = 6, min = 1, max = 18)
             Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
             noItemsMessage = "No hay elementos"

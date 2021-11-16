@@ -125,6 +125,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add(typeOf(showProperty));
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));
+		result.add("itemType", itemTypeFrame(viewProperty));
 		result.add("componentType", componentTypeFrame(viewProperty));
 		result.add("datasourceType", datasourceType(showProperty));
 		result.add("datasourceAddType", datasourceAddType(showProperty));
@@ -151,6 +152,12 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	private void addItemsShow(SetDefinition.SetViewProperty viewProperty, SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty, FrameBuilder builder) {
 		builder.add("reference", DescriptorDefinition.CODE);
+	}
+
+	private FrameBuilder itemTypeFrame(SetDefinition.SetViewProperty viewProperty) {
+		FrameBuilder result = baseFrame().add("itemType");
+		result.add(typeOf(viewProperty));
+		return result;
 	}
 
 	private FrameBuilder componentTypeFrame(SetDefinition.SetViewProperty viewProperty) {

@@ -6,7 +6,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.5") documents as Platform
 	Code("io.intino.goros.documents")
 
 	Imports
-		Compile("org.siani.monet", "docservice", "2.0.0")
+		Compile("org.siani.monet", "docservice", "2.0.1")
 			Exclude ("org.siani.monet","servlet-api")
  		Compile("io.intino.alexandria", "logger4j", "1.0.1")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
@@ -85,6 +85,8 @@ RunConfiguration local-mysql
 	Argument("port", "9001")
 	Argument("jdbc-datasource", "jdbc/DocumentsDatabaseSource")
 	Argument("jdbc-type", "mysql")
+	Argument("jdbc-max-active-connections", "15")
+	Argument("jdbc-remove-abandoned-timeout", "300")
 	Argument("jdbc-url", "jdbc:mysql://localhost:3306/viasyobras-docservice?autoReconnect=true&useSSL=false")
 	Argument("jdbc-user", "root")
 	Argument("jdbc-password", "")

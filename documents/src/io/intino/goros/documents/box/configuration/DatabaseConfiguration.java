@@ -12,6 +12,8 @@ public class DatabaseConfiguration {
     private static final String DATABASE_URL = "jdbc-url";
     private static final String DATABASE_USER = "jdbc-user";
     private static final String DATABASE_PASSWORD = "jdbc-password";
+    private static final String DATABASE_MAX_ACTIVE_CONNECTIONS = "jdbc-max-active-connections";
+    private static final String DATABASE_REMOVE_ABANDONED_TIMEOUT = "jdbc-remove-abandoned-timeout";
 
     public static DatabaseConfiguration getInstance() {
         return instance;
@@ -36,6 +38,14 @@ public class DatabaseConfiguration {
 
     public String datasource() {
         return map.get(JDBC_DATASOURCE);
+    }
+
+    public int maxActiveConnections() {
+        return map.containsKey(DATABASE_MAX_ACTIVE_CONNECTIONS) ? Integer.parseInt(map.get(DATABASE_MAX_ACTIVE_CONNECTIONS)) : 15;
+    }
+
+    public int removeAbandonedTimeout() {
+        return map.containsKey(DATABASE_REMOVE_ABANDONED_TIMEOUT) ? Integer.parseInt(map.get(DATABASE_REMOVE_ABANDONED_TIMEOUT)) : 300;
     }
 
     public DatabaseType type() {

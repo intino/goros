@@ -6,10 +6,10 @@ Artifact(groupId = "io.intino.goros", version = "1.0.49") unit as Platform
 	Code("io.intino.goros.unit")
 
 	Imports
-		Compile("org.siani.monet", "space", "2.0.8")
+		Compile("org.siani.monet", "space", "2.0.9")
 			Exclude ("org.siani.monet", "servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
- 		Compile("io.intino.alexandria", "ui-framework", "4.14.14")
+ 		Compile("io.intino.alexandria", "ui-framework", "4.14.15")
 		Compile("io.intino.alexandria", "core-framework", "2.1.0")
 		Compile("io.intino.alexandria", "rest", "3.4.1")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
@@ -52,6 +52,8 @@ Artifact(groupId = "io.intino.goros", version = "1.0.49") unit as Platform
 	Parameter("jdbc-url")
 	Parameter("jdbc-user")
 	Parameter("jdbc-password")
+	Parameter("jdbc-max-active-connections")
+	Parameter("jdbc-remove-abandoned-timeout")
 
 	// Directories & urls
 	Parameter("services-request-max-elapsed-time", "120000") // Milliseconds

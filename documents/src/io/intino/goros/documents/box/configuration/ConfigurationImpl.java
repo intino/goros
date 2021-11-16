@@ -24,6 +24,14 @@ public class ConfigurationImpl implements Configuration {
 		return database.datasource();
 	}
 
+	public int getJDBCMaxActiveConnections() {
+		return database.maxActiveConnections();
+	}
+
+	public int getJDBCRemoveAbandonedTimeout() {
+		return database.removeAbandonedTimeout();
+	}
+
 	public String getString(String key) {
 
 		if (!existsParam(key))
@@ -93,6 +101,8 @@ public class ConfigurationImpl implements Configuration {
 	private static Map<String, String> keyMap = new HashMap<>() {{
 		put(JDBC_DATABASE, "jdbc-type");
 		put(JDBC_DATASOURCE, "jdbc-datasource");
+		put(JDBC_MAX_ACTIVE_CONNECTIONS, "jdbc-max-active-connections");
+		put(JDBC_REMOVE_ABANDONED_TIMEOUT, "jdbc-remove-abandoned-timeout");
 		put(PATH_TRUETYPE_FONTS, "true-type-fonts-path");
 		put(PATH_TEMP, "temp-path");
 		put(WORKQUEUE_THREADPOOL_SIZE, "workqueue-thread-pool-size");

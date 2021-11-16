@@ -199,8 +199,9 @@ public class NodeHelper {
         ClientOperation clientOperation = AgentUserClient.getInstance().getOperationForUser(Thread.currentThread().getId());
         String message = agentUserClientMessage();
 
+        if (dispatcher != null) dispatcher.accept(clientOperation);
+
         if (clientOperation != null) {
-            if (dispatcher != null) dispatcher.accept(clientOperation);
             if (message != null) actionable.notifyUser(successMessage, UserMessage.Type.Info);
         }
         else {

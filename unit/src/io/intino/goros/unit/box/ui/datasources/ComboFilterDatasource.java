@@ -9,6 +9,7 @@ import io.intino.goros.unit.box.UnitBox;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class ComboFilterDatasource extends PageDatasource<String> {
@@ -27,6 +28,7 @@ public class ComboFilterDatasource extends PageDatasource<String> {
 	@Override
 	public List<String> items(int start, int count, String condition, List<Filter> filters, List<String> sortings) {
 		List<Group> result = collection.source().groups(attribute);
+		result = condition != null ? result.stream().filter(g -> g.label().toLowerCase().contains(condition.toLowerCase())).collect(Collectors.toList()) : result;
 		int from = Math.min(start, result.size());
 		int end = Math.min(start + count, result.size());
 		return result.subList(from, end).stream().map(Group::label).collect(Collectors.toList());

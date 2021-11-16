@@ -188,15 +188,15 @@ def type(attribute & location) trigger(title)
 end
 
 def type(attribute) trigger(title)
-    $type+firstUpperCase~(value="Cargando...", format=h4[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase
+    $type+firstUpperCase~(value="Cargando...", format=h4[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase
 end
 
 def type(attribute) trigger(labeled)
-    $type+firstUpperCase~(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase as Labeled("$label")
+    $type+firstUpperCase~(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase as Labeled("$label")
 end
 
 def type(attribute) trigger(highlight)
-    $type+firstUpperCase(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase as Highlighted(backgroundColor="#CD3E2D", textColor="white")
+    $type+firstUpperCase(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase as Highlighted(backgroundColor="#CD3E2D", textColor="white")
 end
 
 def type(attribute) trigger(picture)

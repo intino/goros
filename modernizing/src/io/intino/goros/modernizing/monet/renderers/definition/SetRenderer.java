@@ -300,6 +300,8 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("type", RendererHelper.attributeTypeOf(attributeProperty));
 		result.add("width", countAttributes > 0 ? Math.round(100.0/countAttributes) : 0);
 		if (RendererHelper.attributeTypeOf(attributeProperty).equalsIgnoreCase("Text")) result.add("cropWithEllipsis",140);
+		String pattern = RendererHelper.dimensionPatternOf(attributeProperty);
+		if (pattern != null) result.add("pattern", pattern);
 		return result;
 	}
 

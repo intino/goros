@@ -2,7 +2,9 @@ package io.intino.goros.modernizing.monet.renderers;
 
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import org.monet.metamodel.*;
+import org.monet.metamodel.AttributeProperty.PrecisionEnumeration;
 
+import javax.management.Attribute;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -141,6 +143,19 @@ public class RendererHelper {
 		if (type == AttributeProperty.TypeEnumeration.DATE) return "DateRange";
 		if (type == AttributeProperty.TypeEnumeration.BOOLEAN) return "Check";
 		return "Combo";
+	}
+
+	public static String dimensionPatternOf(AttributeProperty attributeProperty) {
+		AttributeProperty.TypeEnumeration type = attributeProperty.getType();
+		if (type != AttributeProperty.TypeEnumeration.DATE) return null;
+		PrecisionEnumeration precision = attributeProperty.getPrecision();
+		if (precision == null) return "DD/MM/YYYY";
+		if (precision == PrecisionEnumeration.YEARS) return "YYYY";
+		else if (precision == PrecisionEnumeration.MONTHS) return "MM/YYYY";
+		else if (precision == PrecisionEnumeration.DAYS) return "DD/MM/YYYY";
+		else if (precision == PrecisionEnumeration.HOURS) return "DD/MM/YYYY HH";
+		else if (precision == PrecisionEnumeration.MINUTES) return "DD/MM/YYYY HH:mm";
+		return "DD/MM/YYYY HH:mm:ss";
 	}
 
 	public static int countAttributes(IndexDefinitionBase.IndexViewProperty viewProperty) {

@@ -746,6 +746,10 @@ def type(setdefinition & embedded)
         }
 
         private void dispatch(org.monet.space.kernel.model.ClientOperation operation) {
+            if (operation == null) {
+                refreshView();
+                return;
+            }
             String name = operation.getName().toLowerCase();
             String view = name.equals("shownodeview") ? operation.getData().get("IdView").toString() : null;
             String mode = operation.getData().get("Mode") != null ? operation.getData().get("Mode").toString() : null;

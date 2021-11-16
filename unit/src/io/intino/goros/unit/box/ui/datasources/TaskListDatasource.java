@@ -2,7 +2,6 @@ package io.intino.goros.unit.box.ui.datasources;
 
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.Group;
-import io.intino.alexandria.ui.model.datasource.PageDatasource;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.I18n;
@@ -12,7 +11,6 @@ import io.intino.goros.unit.box.ui.datasources.model.task.TaskNatureGrouping;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskUrgentGrouping;
 import io.intino.goros.unit.util.AccountHelper;
 import io.intino.goros.unit.util.LayerHelper;
-import io.intino.goros.unit.util.NodeHelper;
 import io.intino.goros.unit.util.TaskHelper;
 import org.monet.space.kernel.model.*;
 
@@ -23,10 +21,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-public class TaskListDatasource extends PageDatasource<Task> {
-    private final UnitBox box;
-    private final UISession session;
-    private final Account account;
+public class TaskListDatasource extends TaskDatasource {
     private final Inbox inbox;
 
     public static final String FolderGrouping = "folder";
@@ -48,9 +43,7 @@ public class TaskListDatasource extends PageDatasource<Task> {
     }
 
     public TaskListDatasource(UnitBox box, UISession session, Inbox inbox) {
-        this.box = box;
-        this.session = session;
-        this.account = AccountHelper.account(session);
+        super(box, session);
         this.inbox = inbox;
     }
 

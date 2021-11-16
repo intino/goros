@@ -4,6 +4,7 @@ import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.UITemplate;
 import io.intino.itrules.FrameBuilder;
+import org.monet.bpi.BusinessUnit;
 import org.monet.metamodel.*;
 
 import java.io.File;
@@ -29,6 +30,7 @@ public class UIRenderer extends Renderer {
 	private FrameBuilder buildFrame() {
 		FrameBuilder result = baseFrame();
 		result.add("ui");
+		//result.add("title", BusinessUnit.getLabel());
 		Definition desktopDefinition = definitionList.stream().filter(d -> d instanceof DesktopDefinition).findFirst().orElse(null);
 		if (desktopDefinition != null) result.add("defaultDesktop", nameOf(desktopDefinition));
 		addRootDefinitions(result);

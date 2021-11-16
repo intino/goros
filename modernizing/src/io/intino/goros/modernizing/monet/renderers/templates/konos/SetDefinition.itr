@@ -52,7 +52,7 @@ def type(setdefinition)
                 Block(layout=Vertical Flexible) as Relative(height=100%)
                     [$view+page...[$NL]]
 
-            Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
+            Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
                 Transition(direction=Left)
                 [$view+filter...[$NL]]
 
@@ -143,9 +143,10 @@ def type(nodeview) trigger(template)
 end
 
 def type(nodeview) trigger(filterTemplate)
-    Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate
+    Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate as Relative(height=100%)
         Link(title="Resetear filtros", format=doubleAirBottom) reset
-        [$dimension...[$NL]]
+        Block content
+            [$dimension...[$NL]]
 end
 
 def type(dimension)

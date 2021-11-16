@@ -290,6 +290,12 @@ def type(collectionview & filter)
             reset.onExecute(e -> resetFilters());
         }
 
+        @Override
+        public void refresh() {
+            super.refresh();
+            content.autoSize(true);
+        }
+
         private void updateFilters() {
             [$dimension+updateCall...[$NL]]
         }

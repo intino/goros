@@ -12,7 +12,9 @@ Template listFilterTemplate
 
 Template comboFilterTemplate
 	Text(format=body2) label
-	Selector options as ComboBox(multipleSelection=true, placeholder="Seleccione una opción")
+	Selector options as CollectionBox(multipleSelection=true)
+		List(itemClass="java.lang.String") comboFilterTemplateList as Selectable
+			Mold > Item(height = 30px) comboFilterTemplateMold > Text option
 
 Template checkFilterTemplate
 	Selector(format=body2) selector as CheckBox

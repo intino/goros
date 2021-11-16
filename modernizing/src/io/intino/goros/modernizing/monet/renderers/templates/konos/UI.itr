@@ -5,7 +5,7 @@ def type(ui)
     use Tasks
     use Theme
 
-    Service $module+firstUpperCase~Elements as UI(port="{port}", title="{$title}", favicon = "{$favicon}")
+    Service $module+firstUpperCase~Elements as UI(port="{port}", title="$title", favicon = "$favicon")
         googleApiKey = "{mobile-google-api-key}"
 
     	Authentication(by = "")

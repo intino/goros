@@ -1,11 +1,12 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.components.Collection;
-import io.intino.alexandria.ui.model.datasource.Group;
+import io.intino.alexandria.ui.displays.components.SelectorCollectionBox;
+import io.intino.alexandria.ui.displays.events.AddItemEvent;
 import io.intino.goros.unit.box.UnitBox;
+import io.intino.goros.unit.box.ui.datasources.ComboFilterDatasource;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskFolderGrouping;
-
-import java.util.List;
+import io.intino.goros.unit.box.ui.displays.items.ComboFilterTemplateMold;
 
 public class ComboFilterTemplate extends AbstractComboFilterTemplate<UnitBox> {
     private String _label;
@@ -52,6 +53,8 @@ public class ComboFilterTemplate extends AbstractComboFilterTemplate<UnitBox> {
     @Override
     public void init() {
         super.init();
+        comboFilterTemplateList.onAddItem(this::refresh);
+        options.valueProvider(element -> (String) element);
         options.onSelect(e -> {
             if (!applyFilters) return;
             collection.filter(attribute, e.selection());
@@ -65,9 +68,13 @@ public class ComboFilterTemplate extends AbstractComboFilterTemplate<UnitBox> {
     }
 
     private void updateOptions() {
-        options.clear();
-        List<Group> groups = collection.source().groups(attribute);
-        groups.forEach(g -> options.add(g.label()));
+        comboFilterTemplateList.source(new ComboFilterDatasource(box(), session(), collection, attribute));
+    }
+
+    private void refresh(AddItemEvent event) {
+        String value = event.item();
+        ComboFilterTemplateMold mold = event.component();
+        mold.option.value(value);
     }
 
 }

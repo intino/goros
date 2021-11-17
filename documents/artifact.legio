@@ -6,7 +6,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.7") documents as Platform
 	Code("io.intino.goros.documents")
 
 	Imports
-		Compile("org.siani.monet", "docservice", "2.0.1")
+		Compile("org.siani.monet", "docservice", "2.0.2")
 			Exclude ("org.siani.monet","servlet-api")
  		Compile("io.intino.alexandria", "logger4j", "1.0.1")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
@@ -39,6 +39,9 @@ Artifact(groupId = "io.intino.goros", version = "1.0.7") documents as Platform
 	Parameter("jdbc-url")
 	Parameter("jdbc-user")
 	Parameter("jdbc-password")
+	Parameter("jdbc-max-active-connections")
+	Parameter("jdbc-max-idle-connections")
+	Parameter("jdbc-remove-abandoned-timeout")
 
 	// Directories & urls
 	Parameter("true-type-fonts-path", "/Users/rlopez/.monetintinodemo/docservice")

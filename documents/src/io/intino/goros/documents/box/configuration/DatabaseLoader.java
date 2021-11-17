@@ -1,8 +1,6 @@
 package io.intino.goros.documents.box.configuration;
 
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import io.intino.alexandria.logger.Logger;
-import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
@@ -61,8 +59,8 @@ public class DatabaseLoader {
         p.setPassword(configuration.password());
         p.setDriverClassName(driver);
         p.setMaxActive(configuration.maxActiveConnections());
-        p.setMaxIdle(configuration.maxIdle());
-        p.setInitialSize(configuration.maxIdle());
+        p.setMaxIdle(configuration.maxIdleConnections());
+        p.setInitialSize(configuration.maxIdleConnections());
         p.setMaxWait(30000);
         p.setRemoveAbandoned(true);
         p.setRemoveAbandonedTimeout(configuration.removeAbandonedTimeout());

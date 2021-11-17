@@ -102,6 +102,7 @@ public class ConfigurationImpl implements Configuration {
 		put(JDBC_DATABASE, "jdbc-type");
 		put(JDBC_DATASOURCE, "jdbc-datasource");
 		put(JDBC_MAX_ACTIVE_CONNECTIONS, "jdbc-max-active-connections");
+		put(JDBC_MAX_IDLE_CONNECTIONS, "jdbc-max-idle-connections");
 		put(JDBC_REMOVE_ABANDONED_TIMEOUT, "jdbc-remove-abandoned-timeout");
 		put(PATH_TRUETYPE_FONTS, "true-type-fonts-path");
 		put(PATH_TEMP, "temp-path");

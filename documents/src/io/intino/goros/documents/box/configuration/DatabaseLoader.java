@@ -61,7 +61,8 @@ public class DatabaseLoader {
         p.setPassword(configuration.password());
         p.setDriverClassName(driver);
         p.setMaxActive(configuration.maxActiveConnections());
-        p.setMaxIdle(2);
+        p.setMaxIdle(configuration.maxIdle());
+        p.setInitialSize(configuration.maxIdle());
         p.setMaxWait(30000);
         p.setRemoveAbandoned(true);
         p.setRemoveAbandonedTimeout(configuration.removeAbandonedTimeout());

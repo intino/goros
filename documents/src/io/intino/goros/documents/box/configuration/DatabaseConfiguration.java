@@ -13,6 +13,7 @@ public class DatabaseConfiguration {
     private static final String DATABASE_USER = "jdbc-user";
     private static final String DATABASE_PASSWORD = "jdbc-password";
     private static final String DATABASE_MAX_ACTIVE_CONNECTIONS = "jdbc-max-active-connections";
+    private static final String DATABASE_MAX_IDLE = "jdbc-max-idle";
     private static final String DATABASE_REMOVE_ABANDONED_TIMEOUT = "jdbc-remove-abandoned-timeout";
 
     public static DatabaseConfiguration getInstance() {
@@ -42,6 +43,10 @@ public class DatabaseConfiguration {
 
     public int maxActiveConnections() {
         return map.containsKey(DATABASE_MAX_ACTIVE_CONNECTIONS) ? Integer.parseInt(map.get(DATABASE_MAX_ACTIVE_CONNECTIONS)) : 15;
+    }
+
+    public int maxIdle() {
+        return map.containsKey(DATABASE_MAX_IDLE) ? Integer.parseInt(map.get(DATABASE_MAX_IDLE)) : 2;
     }
 
     public int removeAbandonedTimeout() {

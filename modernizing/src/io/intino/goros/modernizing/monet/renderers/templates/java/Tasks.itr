@@ -3,7 +3,7 @@ def type(tasks & nodetasks)
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Node;
-    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
+    import io.intino.goros.unit.box.ui.datasources.NodeTasksDatasource;
 
     public class NodeTasksTemplate extends AbstractNodeTasksTemplate<$boxName+firstUpperCase~Box> {
         private Node node;
@@ -42,6 +42,7 @@ def type(tasks & nodetasks)
         @Override
         public void refresh() {
             super.refresh();
+            tasks.source(new NodeTasksDatasource(box().unit(), session(), node, node.getDefinition().getNodeView(view)));
             tasks.refresh();
         }
 
@@ -52,7 +53,6 @@ def type(tasks & inbox)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
-    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
 
     public class $inboxType+firstUpperCase~Template extends Abstract$inboxType+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private String folder;
@@ -103,6 +103,7 @@ def type(tasks & embedded)
     public class TasksEmbeddedTemplate extends AbstractTasksEmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private String view;
         private TaskListDatasource.Inbox inbox;
+        private TaskListDatasource source;
         private Task selectedTask;
         private boolean readonly = true;
         private java.util.function.Consumer<Long> itemsCountListener;
@@ -123,6 +124,11 @@ def type(tasks & embedded)
 
         public TasksEmbeddedTemplate inbox(TaskListDatasource.Inbox inbox) {
             this.inbox = inbox;
+            return this;
+        }
+
+        public TasksEmbeddedTemplate source(TaskListDatasource source) {
+            this.source = source;
             return this;
         }
 
@@ -205,7 +211,7 @@ def type(tasks & embedded)
             tableView.onShow(e -> {
                 bindCurrentViewTo(tableView.tableViewStamp.tasksTable);
                 if (searchBox != null) searchBox.bindTo(tableView.tableViewStamp.tasksTable);
-                tableView.tableViewStamp.inbox(inbox);
+                tableView.tableViewStamp.source(source);
                 tableView.tableViewStamp.readonly(readonly);
                 tableView.tableViewStamp.refresh();
                 showFilters();
@@ -217,7 +223,7 @@ def type(tasks & embedded)
             listView.onShow(e -> {
                 bindCurrentViewTo(listView.listViewStamp.tasksList);
                 if (searchBox != null) searchBox.bindTo(listView.listViewStamp.tasksList);
-                listView.listViewStamp.inbox(inbox);
+                listView.listViewStamp.source(source);
                 listView.listViewStamp.readonly(readonly);
                 listView.listViewStamp.refresh();
                 showFilters();
@@ -373,6 +379,7 @@ def type(tasks)
     import io.intino.alexandria.ui.displays.events.Event;
     import io.intino.alexandria.ui.displays.events.SelectionEvent;
     import io.intino.alexandria.ui.displays.events.actionable.ToggleEvent;
+    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
     import io.intino.goros.unit.util.Formatters;
 
@@ -456,6 +463,7 @@ def type(tasks)
         private void refreshContent() {
             content.view(view);
             content.inbox(inbox);
+            content.source(new TaskInboxDatasource(box().unit(), session(), inbox));
             content.readonly(readonly);
             content.refresh();
         }

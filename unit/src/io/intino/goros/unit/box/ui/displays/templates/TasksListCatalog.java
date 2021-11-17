@@ -3,14 +3,12 @@ package io.intino.goros.unit.box.ui.displays.templates;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
 import io.intino.goros.unit.box.ui.displays.items.TasksListItem;
-import io.intino.goros.unit.box.ui.displays.rows.TasksTableRow;
 import io.intino.goros.unit.util.DisplayHelper;
 import io.intino.goros.unit.util.LayerHelper;
 import io.intino.goros.unit.util.TaskHelper;
 import org.monet.space.kernel.model.Task;
 
 public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
-    private TaskListDatasource.Inbox inbox;
     private boolean readonly = true;
     private Task selected = null;
 
@@ -18,10 +16,8 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
         super(box);
     }
 
-    public TasksListCatalog inbox(TaskListDatasource.Inbox inbox) {
-        if (this.inbox == inbox) return this;
-        this.inbox = inbox;
-        tasksList.source(new TaskListDatasource(box(), session(), inbox));
+    public TasksListCatalog source(TaskListDatasource source) {
+        tasksList.source(source);
         return this;
     }
 

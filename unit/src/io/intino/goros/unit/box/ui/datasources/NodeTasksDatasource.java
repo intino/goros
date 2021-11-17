@@ -14,7 +14,7 @@ import org.monet.space.kernel.model.TaskList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NodeTasksDatasource extends TaskDatasource {
+public class NodeTasksDatasource extends TaskListDatasource {
     private final Node node;
     private final NodeViewProperty view;
 

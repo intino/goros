@@ -9,7 +9,6 @@ import io.intino.goros.unit.util.TaskHelper;
 import org.monet.space.kernel.model.Task;
 
 public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
-    private TaskListDatasource.Inbox inbox;
     private boolean readonly = true;
     private Task selected = null;
 
@@ -17,10 +16,8 @@ public class TasksTableCatalog extends AbstractTasksTableCatalog<UnitBox> {
         super(box);
     }
 
-    public TasksTableCatalog inbox(TaskListDatasource.Inbox inbox) {
-        if (this.inbox == inbox) return this;
-        this.inbox = inbox;
-        tasksTable.source(new TaskListDatasource(box(), session(), inbox));
+    public TasksTableCatalog source(TaskListDatasource source) {
+        tasksTable.source(source);
         return this;
     }
 

@@ -2,7 +2,7 @@ package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.components.Collection;
 import io.intino.goros.unit.box.UnitBox;
-import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
+import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskFolderGrouping;
 import org.monet.space.kernel.model.Task;
 
@@ -63,7 +63,7 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
 
     private void udpateFolder() {
         folder.label(translate("Folder"));
-        folder.attribute(TaskListDatasource.FolderGrouping);
+        folder.attribute(TaskInboxDatasource.FolderGrouping);
         folder.multipleSelection(false);
         folder.bindTo(collection);
         folder.refresh();
@@ -71,7 +71,7 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
 
     private void udpateNature() {
         nature.label(translate("Nature"));
-        nature.attribute(TaskListDatasource.NatureGrouping);
+        nature.attribute(TaskInboxDatasource.NatureGrouping);
         nature.multipleSelection(false);
         nature.bindTo(collection);
         nature.refresh();
@@ -79,14 +79,14 @@ public class TasksFiltersTemplate extends AbstractTasksFiltersTemplate<UnitBox> 
 
     private void udpateUrgent() {
         urgent.label(translate("Urgents"));
-        urgent.attribute(TaskListDatasource.UrgentGrouping);
+        urgent.attribute(TaskInboxDatasource.UrgentGrouping);
         urgent.bindTo(collection);
         urgent.refresh();
     }
 
     private void updateType() {
         type.label(translate("Type"));
-        type.attribute(TaskListDatasource.TypeGrouping);
+        type.attribute(TaskInboxDatasource.TypeGrouping);
         type.multipleSelection(false);
         type.bindTo(collection);
         type.refresh();

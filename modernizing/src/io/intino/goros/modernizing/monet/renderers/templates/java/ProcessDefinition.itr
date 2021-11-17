@@ -5,8 +5,8 @@ def type(process & embedded)
     import io.intino.alexandria.ui.displays.components.Collection;
     import org.monet.space.kernel.model.Node;
     import org.monet.space.kernel.model.Task;
-    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
-    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
+    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource;
+    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox;
     import io.intino.goros.unit.util.DisplayHelper;
 
     import java.util.List;
@@ -381,7 +381,7 @@ def type(process)
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Task;
-    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
+    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox;
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Task task;

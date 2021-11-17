@@ -53,6 +53,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.50") unit as Platform
 	Parameter("jdbc-user")
 	Parameter("jdbc-password")
 	Parameter("jdbc-max-active-connections")
+	Parameter("jdbc-max-idle-connections")
 	Parameter("jdbc-remove-abandoned-timeout")
 
 	// Directories & urls

@@ -34,12 +34,12 @@ public class NodeTasksDatasource extends TaskListDatasource {
 
     @Override
     public long itemCount(String condition, List<Filter> filters) {
-        return load(node).getTotalCount();
+        return load(node).get().size();
     }
 
     private TaskList load(Node node) {
         box.linkSession(session);
-        return LayerHelper.taskLayer().loadTasks(node, Strings.ALL, Strings.ALL);
+        return node.getLinkedTasks();
     }
 
     @Override
@@ -48,8 +48,6 @@ public class NodeTasksDatasource extends TaskListDatasource {
     }
 
     private List<Task> toList(TaskList taskList) {
-        List<Task> result = new ArrayList<>();
-        for (Task task : taskList) result.add(task);
-        return result;
+        return new ArrayList<>(taskList.get().values());
     }
 }

@@ -261,6 +261,7 @@ public class NodeHelper {
     }
 
     public static void dispatchOperation(DisplayRouteDispatcher dispatcher, UISession session, ClientOperation operation) {
+        if (operation == null) return;
         Soul soul = session.client().soul();
         dispatcher.dispatch(soul, operationPath(operation));
     }

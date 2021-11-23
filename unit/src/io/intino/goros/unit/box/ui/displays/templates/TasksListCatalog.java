@@ -11,12 +11,15 @@ import org.monet.space.kernel.model.Task;
 public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
     private boolean readonly = true;
     private Task selected = null;
+    private TaskListDatasource source;
 
     public TasksListCatalog(UnitBox box) {
         super(box);
     }
 
     public TasksListCatalog source(TaskListDatasource source) {
+        if (this.source == source) return this;
+        this.source = source;
         tasksList.source(source);
         return this;
     }

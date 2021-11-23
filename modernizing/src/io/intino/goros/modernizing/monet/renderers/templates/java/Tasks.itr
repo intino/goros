@@ -389,6 +389,8 @@ def type(tasks)
         private String view;
         private String folder;
         private String sorting;
+        private String sortingMode;
+        private TaskInboxDatasource source;
         private TaskListDatasource.Inbox inbox;
         private boolean readonly = true;
 
@@ -463,9 +465,14 @@ def type(tasks)
         private void refreshContent() {
             content.view(view);
             content.inbox(inbox);
-            content.source(new TaskInboxDatasource(box().unit(), session(), inbox));
+            content.source(source());
             content.readonly(readonly);
             content.refresh();
+        }
+
+        private TaskInboxDatasource source() {
+            if (source == null) source = new TaskInboxDatasource(box().unit(), session(), inbox);
+            return source;
         }
 
         private void refreshDownloadDialog() {
@@ -504,6 +511,16 @@ def type(tasks)
             sortingsBlock.visible(sortingList.size() > 0);
             sortings.clear();
             sortingList.forEach(s -> sortings.add(s));
+            sortingsMode.select(defaultSortingMode());
+            sortings.select(defaultSorting());
+        }
+
+        private String defaultSorting() {
+            return sorting != null ? sorting : "Fecha de creación";
+        }
+
+        private String defaultSortingMode() {
+            return sortingMode != null ? sortingMode : "Descendente";
         }
 
         private void selectSortingMode(SelectionEvent e) {
@@ -514,7 +531,8 @@ def type(tasks)
         }
 
         private void selectSorting(SelectionEvent e) {
-            selectSorting(sorting, (String) e.selection().get(0));
+            sortingMode = (String) e.selection().get(0);
+            selectSorting(sorting, sortingMode);
         }
 
         private void selectSorting(String sorting, String mode) {

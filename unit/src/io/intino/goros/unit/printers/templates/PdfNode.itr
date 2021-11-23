@@ -110,7 +110,7 @@ end
 
 def type(reference) trigger(column)
     [$attribute+column...[$NL]]
-    <fo:table-column column-width="$width%"/>
+    <fo:table-column column-width="$width~%"/>
 end
 
 def type(reference) trigger(header)
@@ -126,7 +126,7 @@ def type(reference)
 end
 
 def type(attribute) trigger(column)
-    <fo:table-column column-width="$width%"/>
+    <fo:table-column column-width="$width~%"/>
 end
 
 def type(attribute) trigger(header)

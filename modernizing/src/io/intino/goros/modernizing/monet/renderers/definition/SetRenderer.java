@@ -8,6 +8,7 @@ import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
 import io.intino.itrules.Template;
 import org.monet.metamodel.*;
+import org.monet.metamodel.SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty.SortModeEnumeration;
 import org.monet.metamodel.SetDefinitionBase.SetViewPropertyBase.ShowProperty.LocationsProperty;
 import org.monet.metamodel.internal.DescriptorDefinition;
 import org.monet.metamodel.internal.Ref;
@@ -130,7 +131,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		result.add("datasourceType", datasourceType(showProperty));
 		result.add("datasourceAddType", datasourceAddType(showProperty));
 		if (showProperty.getItems() != null) addItemsShow(viewProperty, showProperty, result);
-		else if (showProperty.getIndex() != null) addIndexShow(viewProperty, showProperty, result);
+		else if (showProperty.getIndex() != null) addIndexShow(viewProperty, showProperty, result, builder);
 		else if (showProperty.getOwnedPrototypes() != null) addIndexOwnedPrototypes(viewProperty, showProperty, result);
 		else if (showProperty.getLocations() != null) addLocationsShow(viewProperty, showProperty, result);
 		addAttributes(viewProperty, result);
@@ -168,8 +169,30 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		return result;
 	}
 
-	private void addIndexShow(SetDefinition.SetViewProperty viewProperty, SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty, FrameBuilder builder) {
-		addReferenceShow(showProperty.getIndex().getWithView(), builder);
+	private void addIndexShow(SetDefinition.SetViewProperty viewProperty, SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty, FrameBuilder result, FrameBuilder builder) {
+		SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty index = showProperty.getIndex();
+		addReferenceShow(index.getWithView(), result);
+		addDefaultSorting(index.getWithView(), index.getSortBy(), builder);
+		addDefaultSortingMode(index.getWithView(), index.getSortMode(), builder);
+	}
+
+	protected void addDefaultSorting(Ref withView, Ref sortBy, FrameBuilder builder) {
+		if (sortBy == null) {
+			builder.add("defaultSorting", "Título");
+			return;
+		}
+		IndexDefinition definition = dictionary.getIndexDefinition(withView.getDefinition());
+		AttributeProperty attribute = definition.getAttribute(sortBy.getValue());
+		String label = attribute.getName().equalsIgnoreCase("FechaCreacion") ? "Fecha de creación" : clean(attribute.getLabel());
+		builder.add("defaultSorting", label);
+	}
+
+	protected void addDefaultSortingMode(Ref withView, SortModeEnumeration mode, FrameBuilder builder) {
+		builder.add("defaultSortingMode", mode != null ? modeOf(mode) : "Ascendente");
+	}
+
+	private String modeOf(SortModeEnumeration mode) {
+		return mode == SortModeEnumeration.ASC ? "Ascendente" : "Descendente";
 	}
 
 	private void addIndexOwnedPrototypes(SetDefinition.SetViewProperty viewProperty, SetDefinitionBase.SetViewPropertyBase.ShowProperty showProperty, FrameBuilder builder) {

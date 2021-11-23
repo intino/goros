@@ -82,7 +82,7 @@ def type(ui & app)
     import org.monet.space.kernel.model.*;
     import org.monet.space.office.ApplicationOffice;
     import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource;
-    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox;
+    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
     import io.intino.goros.unit.util.AccountHelper;
     import io.intino.goros.unit.util.LayerHelper;
 
@@ -121,6 +121,8 @@ def type(ui & app)
                 checkFederation();
             });
             box().notifier().onTaskCreated(this, this::refreshTasksCount);
+            box().notifier().onTaskAssigned(this, this::refreshTasksCount);
+            box().notifier().onTaskUnAssigned(this, this::refreshTasksCount);
             box().notifier().onTaskStateChange(this, this::refreshTasksCount);
             refresh();
         }
@@ -135,6 +137,8 @@ def type(ui & app)
         public void remove() {
             super.remove();
             box().notifier().unTaskCreated(this);
+            box().notifier().unTaskAssigned(this);
+            box().notifier().unTaskUnAssigned(this);
             box().notifier().unTaskStateChange(this);
         }
 

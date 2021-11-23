@@ -3,6 +3,7 @@ package io.intino.goros.unit.printers;
 import io.intino.alexandria.logger.Logger;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.printers.templates.*;
+import io.intino.goros.unit.util.Formatters;
 import io.intino.goros.unit.util.LayerHelper;
 import io.intino.itrules.Frame;
 import io.intino.itrules.FrameBuilder;
@@ -239,7 +240,7 @@ public class TaskListPrinter extends Printer {
 			return LibraryDate.getDateAndTimeString(task.getInternalUpdateDate(), Language.getCurrent(), Language.getCurrentTimeZone(), LibraryDate.Format.NUMERIC, false, "/");
 
 		if (attributeCode.equals(TaskListPrinter.Attribute.State))
-			return box.translatorService().translate(task.getState(), language);
+			return box.translatorService().translate(Formatters.firstUpperCase(task.getState()), language);
 
 		if (attributeCode.equals(TaskListPrinter.Attribute.Urgent))
 			return box.translatorService().translate(task.isUrgent() ? "Yes" : "No", language);;

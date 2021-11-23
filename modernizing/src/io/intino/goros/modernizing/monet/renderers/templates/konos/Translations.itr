@@ -4,4 +4,6 @@ def type(translations)
     Translator(language = Spanish)
     	Translation("Operation executed", "Operación ejecutada correctamente")
 	    Translation("Operation canceled", "Operación cancelada")
+	    Translation("true", "Sí")
+	    Translation("false", "No")
 end

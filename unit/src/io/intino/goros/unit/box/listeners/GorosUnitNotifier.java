@@ -10,6 +10,8 @@ import java.util.function.Consumer;
 
 public class GorosUnitNotifier {
 	private Map<String, Consumer<Task>> taskCreatedListeners = new HashMap<>();
+	private Map<String, Consumer<Task>> taskAssignedListeners = new HashMap<>();
+	private Map<String, Consumer<Task>> taskUnAssignedListeners = new HashMap<>();
 	private Map<String, Consumer<Task>> taskStateChangeListeners = new HashMap<>();
 
 	public GorosUnitNotifier onTaskCreated(Display display, Consumer<Task> listener) {
@@ -20,6 +22,28 @@ public class GorosUnitNotifier {
 	public GorosUnitNotifier unTaskCreated(Display display) {
 		if (!taskCreatedListeners.containsKey(idOf(display))) return this;
 		taskCreatedListeners.remove(idOf(display));
+		return this;
+	}
+
+	public GorosUnitNotifier onTaskAssigned(Display display, Consumer<Task> listener) {
+		taskAssignedListeners.put(idOf(display), listener);
+		return this;
+	}
+
+	public GorosUnitNotifier unTaskAssigned(Display display) {
+		if (!taskAssignedListeners.containsKey(idOf(display))) return this;
+		taskAssignedListeners.remove(idOf(display));
+		return this;
+	}
+
+	public GorosUnitNotifier onTaskUnAssigned(Display display, Consumer<Task> listener) {
+		taskUnAssignedListeners.put(idOf(display), listener);
+		return this;
+	}
+
+	public GorosUnitNotifier unTaskUnAssigned(Display display) {
+		if (!taskUnAssignedListeners.containsKey(idOf(display))) return this;
+		taskUnAssignedListeners.remove(idOf(display));
 		return this;
 	}
 
@@ -38,6 +62,16 @@ public class GorosUnitNotifier {
 	public void notifyTaskCreated(Task task) {
 		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
 		taskCreatedListeners.values().forEach(l -> l.accept(loadedTask));
+	}
+
+	public void notifyTaskAssigned(Task task) {
+		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
+		taskAssignedListeners.values().forEach(l -> l.accept(loadedTask));
+	}
+
+	public void notifyTaskUnAssigned(Task task) {
+		Task loadedTask = ComponentPersistence.getInstance().getTaskLayer().loadTask(task.getId());
+		taskUnAssignedListeners.values().forEach(l -> l.accept(loadedTask));
 	}
 
 	public void notifyTaskStateChange(Task task) {

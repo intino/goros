@@ -105,7 +105,7 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 
 	protected int countLines(int size) {
 		if (size <= 3) return 1;
-		return Math.round(size/3);
+		return Math.round(size/3) + (size % 3 != 0 ? 1 : 0);
 	}
 
 	@Override

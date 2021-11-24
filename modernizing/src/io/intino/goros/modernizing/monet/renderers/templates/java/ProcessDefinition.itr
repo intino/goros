@@ -6,7 +6,7 @@ def type(process & embedded)
     import org.monet.space.kernel.model.Node;
     import org.monet.space.kernel.model.Task;
     import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource;
-    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox;
+    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
     import io.intino.goros.unit.util.DisplayHelper;
 
     import java.util.List;
@@ -16,6 +16,7 @@ def type(process & embedded)
         private Task task;
         private Inbox inbox;
         private boolean readonly = true;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode;
         private java.util.function.Consumer<Task> changeListener;
         private java.util.function.Consumer<Task> abortListener;
         private java.util.function.Consumer<Task> showCollectionListener;
@@ -91,10 +92,13 @@ def type(process & embedded)
             description.visible(value);
         }
 
-        public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
-            showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
-            showCollectionMenu.visible(value == io.intino.goros.unit.box.ui.ViewMode.Compact);
-            content.autoSize(value == null || value == io.intino.goros.unit.box.ui.ViewMode.Full);
+        public void viewMode(io.intino.goros.unit.box.ui.ViewMode value) {
+            this.viewMode = value;
+        }
+
+        public void showCollectionVisibility() {
+            showCollectionBack.visible(viewMode == io.intino.goros.unit.box.ui.ViewMode.Full);
+            showCollectionMenu.visible(viewMode == io.intino.goros.unit.box.ui.ViewMode.Compact);
         }
 
         @Override
@@ -114,6 +118,7 @@ def type(process & embedded)
         @Override
         public void refresh() {
             super.refresh();
+            content.autoSize(viewMode == null || viewMode == io.intino.goros.unit.box.ui.ViewMode.Compact);
             refreshToolbar();
             refreshSelector();
             refreshView();
@@ -145,7 +150,7 @@ def type(process & embedded)
         }
 
         private void refreshView() {
-            if (stateView.isVisible()) refreshStateView();
+            if (stateView.isVisible()) viewSelector.select("state");
             [$view+refreshCall...[$NL]]
         }
 
@@ -381,7 +386,7 @@ def type(process)
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
     import org.monet.space.kernel.model.Task;
-    import io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox;
+    import io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox;
 
     public class $name+firstUpperCase~Template extends Abstract$name+firstUpperCase~Template<$boxName+firstUpperCase~Box> {
         private Task task;
@@ -447,7 +452,7 @@ def type(view) trigger(initCall)
 end
 
 def type(view) trigger(refreshCall)
-    if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+    if ($name+firstLowerCase~View.isVisible()) viewSelector.select("$name+firstLowerCase");
 end
 
 def type(view & shortcut) trigger(refreshSelectorCall)

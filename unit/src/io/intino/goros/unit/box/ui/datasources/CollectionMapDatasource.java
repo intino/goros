@@ -26,13 +26,21 @@ import static java.util.stream.Collectors.toList;
 public class CollectionMapDatasource extends MapDatasource<String> {
     private final UnitBox box;
     private final UISession session;
-    private final Node set;
-    private final NodeViewProperty view;
+    private Node set;
+    private NodeViewProperty view;
 
     public CollectionMapDatasource(UnitBox box, UISession session, Node set, String view) {
         this.box = box;
         this.session = session;
         this.set = set;
+        this.view = set.getDefinition().getNodeView(view);
+    }
+
+    public void node(Node node) {
+        this.set = node;
+    }
+
+    public void view(String view) {
         this.view = set.getDefinition().getNodeView(view);
     }
 

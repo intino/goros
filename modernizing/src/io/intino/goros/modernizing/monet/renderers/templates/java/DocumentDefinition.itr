@@ -10,6 +10,7 @@ def type(documentdefinition & embedded)
     public class $name+firstUpperCase~EmbeddedTemplate extends Abstract$name+firstUpperCase~EmbeddedTemplate<$boxName+firstUpperCase~Box> {
         private Node node;
         private boolean readonly = false;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode;
         [$toolbar+editableDeclaration]
         [$toolbar+navigableDeclaration]
 

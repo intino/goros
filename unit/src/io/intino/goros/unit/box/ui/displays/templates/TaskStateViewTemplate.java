@@ -1,6 +1,7 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.components.Layer;
+import io.intino.alexandria.ui.utils.DelayerUtil;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.TaskHelper;
 import org.monet.metamodel.*;
@@ -38,12 +39,13 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
     @Override
     public void init() {
         super.init();
-        box().notifier().onTaskStateChange(this, this::update);
+        box().notifier().unTaskStateChange(this);
+        box().notifier().onTaskStateChange(this, this::updateDelayed);
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void unregister() {
+        super.unregister();
         box().notifier().unTaskStateChange(this);
     }
 
@@ -179,6 +181,11 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
         sendResponseView.sendResponseViewStamp.task(task);
         sendResponseView.sendResponseViewStamp.property(action);
         sendResponseView.sendResponseViewStamp.refresh();
+    }
+
+    private void updateDelayed(Task task) {
+        if (this.task != null && !task.getId().equals(this.task.getId())) update(task);
+        else DelayerUtil.execute(this, e -> update(task), 500);
     }
 
     private void update(Task task) {

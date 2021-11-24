@@ -12,6 +12,7 @@ def type(nodedefinition & embedded)
         private Node node;
         private Revision revision;
         private boolean readonly = false;
+        private io.intino.goros.unit.box.ui.ViewMode viewMode;
         [$toolbar+editableDeclaration]
         [$toolbar+navigableDeclaration]
 
@@ -79,9 +80,10 @@ def type(nodedefinition & embedded)
         @Override
         public void refresh() {
             super.refresh();
+            content.autoSize(viewMode == null || viewMode == io.intino.goros.unit.box.ui.ViewMode.Compact);
             if (revision != null) io.intino.goros.unit.util.DisplayHelper.selectNotSystemView(viewSelector, node);
             refreshToolbar();
-            refreshViewsVisibility();
+            //refreshViewsVisibility();
             refreshView();
         }
 
@@ -392,10 +394,12 @@ def type(toolbar & collectable) trigger(navigableMethods)
         label.visible(value);
         description.visible(value);
     }
-    public void showCollectionVisibility(io.intino.goros.unit.box.ui.ViewMode value) {
-        showCollectionBack.visible(value == io.intino.goros.unit.box.ui.ViewMode.Full);
-        showCollectionMenu.visible(value == io.intino.goros.unit.box.ui.ViewMode.Compact);
-        content.autoSize(value == null || value == io.intino.goros.unit.box.ui.ViewMode.Full);
+    public void viewMode(io.intino.goros.unit.box.ui.ViewMode value) {
+        this.viewMode = value;
+    }
+    public void showCollectionVisibility() {
+        showCollectionBack.visible(viewMode == io.intino.goros.unit.box.ui.ViewMode.Full);
+        showCollectionMenu.visible(viewMode == io.intino.goros.unit.box.ui.ViewMode.Compact);
     }
     private void notifyShowCollection() {
         if (showCollectionListener == null) return;
@@ -476,7 +480,7 @@ def type(nodeview & visibleWhenEmbedded) trigger(refreshCall)
 end
 
 def type(nodeview) trigger(refreshCall)
-    if ($name+firstLowerCase~View.isVisible()) refresh$name+firstUpperCase~View();
+    if ($name+firstLowerCase~View.isVisible()) viewSelector.select("$name+firstLowerCase");
 end
 
 def type(nodeview & visibleWhenEmbedded) trigger(refreshVisibilityCall)

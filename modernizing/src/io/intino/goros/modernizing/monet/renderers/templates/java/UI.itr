@@ -257,7 +257,7 @@ def type(ui & app)
         private boolean initializationTaskOpened() {
             Task task = io.intino.goros.unit.util.LayerHelper.taskLayer().getCurrentInitializerTask();
             if (task == null) return false;
-            if (canResolveInitializerTask()) openInitializationTask(task.getId(), io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox.TaskBoard.name());
+            if (canResolveInitializerTask()) openInitializationTask(task.getId(), io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox.TaskBoard.name());
             else openUpdateRequiredPage();
             return true;
         }
@@ -433,7 +433,7 @@ def type(definition & process) trigger(method)
     private void open$name+firstUpperCase(Task task, String inbox) {
         openView(View.$name+firstUpperCase);
         if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp != null) {
-            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.inbox(io.intino.goros.unit.box.ui.datasources.TaskInboxDatasource.Inbox.from(inbox));
+            $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.inbox(io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox.from(inbox));
             $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(task.getId());
         }
     }

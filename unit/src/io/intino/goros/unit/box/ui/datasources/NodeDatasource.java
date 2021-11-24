@@ -17,8 +17,8 @@ import java.util.List;
 public abstract class NodeDatasource extends PageDatasource<Node> {
     private final UnitBox box;
     private final UISession session;
-    private final Node node;
-    private final NodeViewProperty view;
+    private Node node;
+    private NodeViewProperty view;
     private final String type;
 
     public NodeDatasource(UnitBox box, UISession session, Node node, NodeViewProperty view, String type) {
@@ -27,6 +27,14 @@ public abstract class NodeDatasource extends PageDatasource<Node> {
         this.node = node;
         this.view = view;
         this.type = type;
+    }
+
+    public void node(Node node) {
+        this.node = node;
+    }
+
+    public void view(String view) {
+        this.view = node.getDefinition().getNodeView(view);
     }
 
     @Override

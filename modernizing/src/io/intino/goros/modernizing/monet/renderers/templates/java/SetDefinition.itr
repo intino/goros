@@ -51,7 +51,11 @@ def type(show & index & locations)
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
         if ($definition+firstLowerCase~$view+firstUpperCase.source() == null) $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
-        else $definition+firstLowerCase~$view+firstUpperCase.reload();
+        else {
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).node(node);
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).view(view);
+            $definition+firstLowerCase~$view+firstUpperCase.reload();
+        }
     }
 end
 
@@ -92,7 +96,11 @@ def type(show & index)
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
         if ($definition+firstLowerCase~$view+firstUpperCase.source() == null) $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
-        else $definition+firstLowerCase~$view+firstUpperCase.reload();
+        else {
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).node(node);
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).view(view);
+            $definition+firstLowerCase~$view+firstUpperCase.reload();
+        }
     }
 
     private void refreshDetailsDialog(Node node) {
@@ -142,7 +150,11 @@ def type(show)
         super.refresh();
         $definition+firstLowerCase~$view+firstUpperCase.allowMultiSelection(!readonly);
         if ($definition+firstLowerCase~$view+firstUpperCase.source() == null) $definition+firstLowerCase~$view+firstUpperCase.source(new io.intino.goros.unit.box.ui.datasources.$datasourceType~(box().unit(), session(), node, view));
-        else $definition+firstLowerCase~$view+firstUpperCase.reload();
+        else {
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).node(node);
+            ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).view(view);
+            $definition+firstLowerCase~$view+firstUpperCase.reload();
+        }
     }
 end
 
@@ -258,7 +270,6 @@ def type(collectionview & filter)
 
         public $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
             this.collection = collection;
-            updateFilters();
             return this;
         }
 
@@ -272,6 +283,7 @@ def type(collectionview & filter)
         public void refresh() {
             super.refresh();
             content.autoSize(true);
+            updateFilters();
         }
 
         private void updateFilters() {
@@ -380,6 +392,7 @@ def type(setdefinition & embedded)
     import org.monet.space.kernel.components.layers.NodeLayer;
     import org.monet.space.kernel.model.Node;
     import org.monet.space.kernel.model.Revision;
+    import io.intino.goros.unit.box.ui.ViewMode;
     import io.intino.goros.unit.util.*;
 
     import java.util.Collections;
@@ -863,6 +876,7 @@ def type(setdefinition)
             refreshContent();
             viewSelector.visible(viewSelector.options().size() > 1);
             if (viewSelector.selection().size() <= 0) io.intino.goros.unit.util.DisplayHelper.selectDefaultView(viewSelector, node);
+            else viewSelector.select(viewSelector.selection().get(0));
         }
 
         private void initToolbar() {
@@ -1065,7 +1079,10 @@ def type(collectionview & sharedprototypes) trigger(refreshCall)
 end
 
 def type(collectionview) trigger(refreshCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
+        $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
+    }
 end
 
 def type(collectionview & ownedprototypes) trigger(isPrototypeView)
@@ -1209,6 +1226,7 @@ def type(add) trigger(initCall)
         });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.onDispatchOperation(this::dispatch);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(viewMode);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
         nodeAdded = false;
@@ -1220,15 +1238,26 @@ def type(add) trigger(bindCall)
 end
 
 def type(add) trigger(showCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(viewMode);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(ViewMode.Full);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+    }
 end
 
 def type(add) trigger(enableCollapseCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible ? viewMode : null);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(!visible ? viewMode : null);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+    }
 end
 
 def type(add) trigger(hideCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(null);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(null);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+    }
 end
 
 def type(add) trigger(ifEditingCall)

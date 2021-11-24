@@ -96,6 +96,7 @@ def type(tasks & embedded)
     import org.monet.space.kernel.components.ComponentPersistence;
     import org.monet.space.kernel.model.Task;
     import io.intino.goros.unit.box.ui.datasources.TaskListDatasource;
+    import io.intino.goros.unit.box.ui.ViewMode;
 
     import java.util.List;
     import java.util.function.Consumer;
@@ -431,6 +432,7 @@ def type(tasks)
             label.value(translate(inbox == io.intino.goros.unit.box.ui.datasources.TaskListDatasource.Inbox.TaskBoard ? "Tasks" : "My tasks"));
             refreshContent();
             if (viewSelector.selection().size() <= 0) viewSelector.select(view);
+            else viewSelector.select(viewSelector.selection().get(0));
         }
 
         private void initToolbar() {
@@ -590,6 +592,7 @@ def type(process) trigger(init)
             showViews();
         });
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showLabel(true);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(viewMode);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
     });
@@ -604,15 +607,26 @@ def type(process) trigger(bind)
 end
 
 def type(process) trigger(enableCollapseCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(!visible ? viewMode : null);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(!visible ? viewMode : null);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+    }
 end
 
 def type(process) trigger(showCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(viewMode);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(ViewMode.Full);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+    }
 end
 
 def type(process) trigger(hideCollectionCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility(null);
+    if ($name+firstLowerCase~View.isVisible()) {
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(null);
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
+        $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
+    }
 end
 
 def type(process) trigger(selectedView)

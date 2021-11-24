@@ -28,7 +28,7 @@ public class TaskPlaceSendResponseTemplate extends AbstractTaskPlaceSendResponse
         super.init();
         sendingView.onShow(e -> refreshSendingView());
         failureView.onShow(e -> {
-            failureView.retry.onExecute(e1 -> retry());
+            failureView.retryBlock.retry.onExecute(e1 -> retry());
             refreshFailureView();
         });
     }
@@ -54,9 +54,11 @@ public class TaskPlaceSendResponseTemplate extends AbstractTaskPlaceSendResponse
     }
 
     private void retry() {
-        retry.readonly(true);
+        failureView.retryBlock.retry.readonly(true);
+        failureView.retryBlock.loadingRetry.visible(true);
         task.getProcess().resume();
-        retry.readonly(false);
+        failureView.retryBlock.loadingRetry.visible(false);
+        failureView.retryBlock.retry.readonly(false);
     }
 
 }

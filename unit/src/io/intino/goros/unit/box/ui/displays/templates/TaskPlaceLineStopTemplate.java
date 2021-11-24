@@ -52,7 +52,9 @@ public class TaskPlaceLineStopTemplate extends AbstractTaskPlaceLineStopTemplate
 
     private void select() {
         label.readonly(true);
+        loading.visible(true);
         selectListener.accept(property);
+        loading.visible(false);
         label.readonly(false);
     }
 

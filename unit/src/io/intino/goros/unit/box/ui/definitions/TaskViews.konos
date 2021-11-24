@@ -40,13 +40,16 @@ Template(layout=Vertical Flexible) taskPlaceDelegationTemplate as Relative(heigh
 		TemplateStamp(template=taskPlaceRoleTemplate) roles as Multiple
 		Block(format=doubleAirTop, visible=false) setupBlock
 			DisplayStamp(display=empty) setupFrame
-			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
+			Block(layout=Horizontal Center) setupToolbar
+				Block(format=airTop) solveSetupBlock as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
+				Block(format=airLeft, visible=false) loading as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 	Block failureView as Conditional
 		Block(layout=Horizontal, visible=false) lastSendingView
 			Text(value="Trying to send order. Last sent request was at", translate=true, format=middleAirRight)
 			Date(pattern="DD/MM/YYYY HH:mm:ss") failureDate
-		Block(layout=Horizontal, visible=false) tryingView
+		Block(layout=Horizontal Center, visible=false) tryingView
 			Link(title="Retry") retry as Action
+			Block(format=airLeft, visible=false) loadingRetry as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 
 Template(layout=Vertical Flexible, format=middleAirTop middleAirBottom) taskPlaceRoleTemplate as Relative(height=100%)
 	Link(title="") label as Action
@@ -64,7 +67,9 @@ Template(layout=Vertical Flexible) taskPlaceSendJobTemplate as Relative(height=1
 			Link(title="Unassigned", format=middleAirTop middleAirBottom) unAssignedRole as Action
 		Block(format=doubleAirTop, visible=false) setupBlock
 			DisplayStamp(display=empty) setupFrame
-			Block(format=airTop) setupToolbar as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
+			Block(layout=Horizontal Center) setupToolbar
+				Block(format=airTop) solveSetupBlock as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solveSetup as Action
+				Block(format=airLeft, visible=false) loading as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 	Block failureView as Conditional
 		Block(layout=Horizontal)
 			Text(value="Send order failure", translate=true, format=middleAirRight)
@@ -76,15 +81,18 @@ Template(layout=Vertical Flexible) taskPlaceLineTemplate as Relative(height=100%
 	Block loadingStops > Spinner
 	Block stopsBlock > TemplateStamp(template=taskPlaceLineStopTemplate) stops as Multiple(arrangement=Vertical)
 
-Template taskPlaceLineStopTemplate
+Template(layout=Horizontal Center) taskPlaceLineStopTemplate
 	Link(title="", format=middleAirTop middleAirBottom doubleAirLeft) label as Action
+	Block(format=airLeft, visible=false) loading as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 
 Template(layout=Vertical Flexible) taskPlaceEditionTemplate as Relative(height=100%)
 	Text(format=h5) label
 	DisplayStamp(display=empty) formFrame
 	Block(visible=false) noEditionBlock > Text(value="No form defined", translate=true)
 	Block(visible=false, format=airTop airBottom) solveErrorMessageBlock > Text(format=red) solveErrorMessage
-	Block as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solve as Action
+	Block(layout=Horizontal Center)
+		Block as Absolute(width=110px) > Button(title="Continue", highlight=Outline, size=Small) solve as Action
+		Block(format=airLeft, visible=false) loading as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 
 Template(layout=Vertical Flexible) taskPlaceEnrollTemplate as Relative(height=100%)
 	Text(value="Enroll", format=h5) label
@@ -105,7 +113,9 @@ Template(layout=Vertical Flexible) taskPlaceSendRequestTemplate as Relative(heig
 		Text(value="Sending request. Please, wait...", translate=true, format=grey)
 	Block failureView as Conditional
 		Text(value="There was an attempt to send a request that failed", translate=true)
-		Link(title="Retry") retry as Action
+		Block(layout=Horizontal Center) retryBlock
+			Link(title="Retry") retry as Action
+			Block(format=airLeft, visible=false) loadingRetry as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 
 Template(layout=Vertical Flexible) taskPlaceSendResponseTemplate as Relative(height=100%)
 	Text(value="SendResponse", format=h5) label
@@ -114,7 +124,9 @@ Template(layout=Vertical Flexible) taskPlaceSendResponseTemplate as Relative(hei
 		Text(value="Sending response. Please, wait...", translate=true, format=grey)
 	Block failureView as Conditional
 		Text(value="There was an attempt to send a response that failed", translate=true)
-		Link(title="Retry") retry as Action
+		Block(layout=Horizontal Center) retryBlock
+			Link(title="Retry") retry as Action
+			Block(format=airLeft, visible=false) loadingRetry as Absolute(width=50px) > Spinner(mode=Circle, size=15px)
 
 Template(layout=Vertical Flexible) taskHistoryTemplate as Relative(height=100%)
 	Block entriesBlock > TemplateStamp(template=taskHistoryEntryTemplate) entries as Multiple(arrangement=Vertical)

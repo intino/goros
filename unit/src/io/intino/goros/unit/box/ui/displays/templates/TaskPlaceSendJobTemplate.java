@@ -45,7 +45,7 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
         super.init();
         waitingView.onShow(e -> refreshWaitingView());
         pendingView.onShow(e -> {
-            pendingView.setupBlock.setupToolbar.solveSetup.onExecute(e1 -> setup());
+            pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.onExecute(e1 -> setup());
             pendingView.rolesSetupBlock.unAssignedRole.onExecute(e1 -> selectNone());
             refreshPendingView();
         });
@@ -90,7 +90,7 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
         pendingView.rolesSetupBlock.openRoles.address(path -> "/permisos");
         pendingView.rolesSetupBlock.openRoles.readonly(!RoleHelper.canAccessRoles(session()));
         pendingView.rolesSetupBlock.unAssignedRole.affirmed(translate(DisplayHelper.requireConfirmationMessage(property)));
-        pendingView.setupBlock.setupToolbar.solveSetup.readonly(roleList.getTotalCount() <= 0);
+        pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.readonly(roleList.getTotalCount() <= 0);
 
         if (roleList.getTotalCount() <= 0) {
             String label = Language.getInstance().getModelResource(roleDefinition().getLabel());
@@ -157,8 +157,10 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
     private void setup() {
         notifyUser(translate("Setting up job..."), UserMessage.Type.Loading);
         solveSetup.readonly(true);
+        loading.visible(true);
         fillOrder();
         task.getProcess().setupSendJobAction();
+        loading.visible(false);
         solveSetup.readonly(false);
         notifyUser(translate("Job setup"), UserMessage.Type.Success);
     }

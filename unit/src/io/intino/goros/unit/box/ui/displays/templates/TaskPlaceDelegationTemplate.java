@@ -45,7 +45,7 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
         super.init();
         waitingView.onShow(e -> refreshWaitingView());
         pendingView.onShow(e -> {
-            pendingView.setupBlock.setupToolbar.solveSetup.onExecute(e1 -> setup());
+            pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.onExecute(e1 -> setup());
             refreshPendingView();
         });
         failureView.onShow(e -> {
@@ -156,8 +156,10 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
     private void setup() {
         notifyUser(translate("Setting up delegation..."), UserMessage.Type.Loading);
         solveSetup.readonly(true);
+        loading.visible(true);
         fillOrder();
         task.getProcess().setupDelegationAction();
+        loading.visible(false);
         solveSetup.readonly(false);
         notifyUser(translate("Delegation setup"), UserMessage.Type.Success);
     }
@@ -213,7 +215,9 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
 
     private void retry() {
         failureView.tryingView.retry.readonly(true);
+        failureView.tryingView.loadingRetry.visible(true);
         task.getProcess().resume();
+        failureView.tryingView.loadingRetry.visible(false);
         failureView.tryingView.retry.readonly(false);
     }
 

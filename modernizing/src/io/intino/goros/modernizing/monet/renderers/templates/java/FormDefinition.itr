@@ -336,6 +336,7 @@ end
 
 def type(field & file & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
+        if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.fileOf(e.item())));
         ((io.intino.alexandria.ui.displays.components.FileEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
@@ -364,6 +365,7 @@ end
 
 def type(field & picture & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
+        if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.item())));
         ((io.intino.alexandria.ui.displays.components.ImageEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
@@ -518,6 +520,7 @@ end
 
 def type(field & node & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
+        if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(((FieldNode)e.item()).get()));
         ((io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate)e.component()).node(node).field($name+firstLowerCase~Field.getAsField(e.index())).refresh();
     });

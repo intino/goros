@@ -155,12 +155,12 @@ public class TaskPlaceDelegationTemplate extends AbstractTaskPlaceDelegationTemp
 
     private void setup() {
         notifyUser(translate("Setting up delegation..."), UserMessage.Type.Loading);
-        solveSetup.readonly(true);
-        loading.visible(true);
+        pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.readonly(true);
+        pendingView.setupBlock.setupToolbar.loading.visible(true);
         fillOrder();
         task.getProcess().setupDelegationAction();
-        loading.visible(false);
-        solveSetup.readonly(false);
+        pendingView.setupBlock.setupToolbar.loading.visible(false);
+        pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.readonly(false);
         notifyUser(translate("Delegation setup"), UserMessage.Type.Success);
     }
 

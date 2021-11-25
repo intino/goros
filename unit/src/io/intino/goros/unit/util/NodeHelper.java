@@ -311,6 +311,7 @@ public class NodeHelper {
     }
 
     public static NodeItem nodeItemOf(Link link) {
+        if (link == null) return null;
         NodeItem result = new NodeItem();
         result.addAttribute("id_node", link.getId());
         result.addAttribute("label", link.getLabel());
@@ -318,7 +319,7 @@ public class NodeHelper {
     }
 
     public static List<NodeItem> nodeItemsOf(List<Link> links) {
-        return links.stream().map(NodeHelper::nodeItemOf).collect(Collectors.toList());
+        return links.stream().map(NodeHelper::nodeItemOf).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public static CheckList checkListOf(CheckList checkList, List<String> selection) {

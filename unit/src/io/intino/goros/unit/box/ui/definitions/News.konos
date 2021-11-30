@@ -18,7 +18,7 @@ Template(layout=Vertical Flexible, format=smallAir) newsTemplate
 			List(itemClass="org.monet.space.kernel.model.news.Post", scrollingMark=false) newsList
 				noItemsMessage = "No hay noticias"
 				Mold
-					Item(height=80px) newsListItem
+					Item(height=110px) newsListItem
 						Block(layout=Vertical, format=catalogIndexReferenceStyle)
 							Text(mode=Uppercase, format=body2) type as Highlighted(textColor="white", backgroundColor="#001E3C")
 							Text(visible=false) title

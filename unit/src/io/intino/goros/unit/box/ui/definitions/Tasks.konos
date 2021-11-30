@@ -61,9 +61,10 @@ Template(layout=Vertical Flexible) tasksListCatalog as Relative(height=100%)
 		Text(value="Más información", format=h6 airBottom)
 		HtmlViewer comments
 
-Template(layout=Horizontal, format=air) tasksToolbarTemplate
-	//Button(title="Asignar...", highlight=Outline, size=Small, format=airRight) assign as Action
-	//Button(title="Desasignar...", highlight=Outline, size=Small, format=airRight) unAssign as Action
+Template(layout=Horizontal Center) tasksToolbarTemplate
+	Block(layout=Horizontal Center, visible=false) refreshToolbar
+		Text(value="Han llegado nuevas tareas", format=airRight)
+		Button(title="Actualizar", highlight=Outline, size=Small) refresh
 
 Template(format=fullWidth spaced) tasksFiltersTemplate
 	Link(title="Resetear filtros", format=doubleAirBottom) reset

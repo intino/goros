@@ -112,7 +112,9 @@ def type(ui & app)
             box().unit().initSession(session());
             initLoggedChecker();
             taskTrayLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskTrayIconLink.address(path -> path.replace(":folder", "Pendientes"));
             taskBoardLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskBoardIconLink.address(path -> path.replace(":folder", "Pendientes"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
             io.intino.goros.unit.util.DisplayHelper.initAgentSession(session());
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());
@@ -381,10 +383,12 @@ def type(definition & desktop) trigger(openHome)
 end
 
 def type(definition & container & environment) trigger(refreshDrawer)
+    $name+firstLowerCase~IconLink.address(this::setup$name+firstUpperCase~Link);
     $name+firstLowerCase~Link.address(this::setup$name+firstUpperCase~Link);
 end
 
 def type(definition & desktop) trigger(refreshDrawer)
+    $name+firstLowerCase~IconLink.address(path -> path.replace(":name", "$name+lowercase").replace(":mode", "default"));
     $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase").replace(":mode", "default"));
     $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
 end

@@ -5,6 +5,7 @@ import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.NewsDatasource;
 import io.intino.goros.unit.box.ui.displays.items.NewsListItem;
 import io.intino.goros.unit.graph.PostType;
+import io.intino.goros.unit.util.PathHelper;
 import org.monet.space.kernel.model.news.Post;
 
 public class NewsTemplate extends AbstractNewsTemplate<UnitBox> {
@@ -35,6 +36,7 @@ public class NewsTemplate extends AbstractNewsTemplate<UnitBox> {
         item.title.visible(post.getTarget() == null);
         item.titleLink.title(post.getTitle());
         item.titleLink.visible(post.getTarget() != null);
+        if (post.getTarget() != null) item.titleLink.address(path -> PathHelper.pathOf(post.getTarget()));
         item.date.value(post.getInternalCreateDate().toInstant());
         item.body.value(post.getBody());
     }

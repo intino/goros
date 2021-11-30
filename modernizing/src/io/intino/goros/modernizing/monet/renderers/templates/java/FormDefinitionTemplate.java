@@ -97,7 +97,7 @@ public class FormDefinitionTemplate extends Template {
 			rule().condition((type("field")), (trigger("refreshmethod"))),
 			rule().condition((allTypes("dependant","multiple")), (trigger("clear"))).output(mark("name", "firstLowerCase")).output(literal("Field.removeAll();")),
 			rule().condition((type("dependant")), (trigger("clear"))).output(mark("name", "firstLowerCase")).output(literal("Field.clear();")),
-			rule().condition((type("dependant")), (trigger("refresh"))).output(mark("name", "firstLowerCase")).output(literal(".readonly(")).output(mark("anchorName", "firstLowerCase")).output(literal(".selection().size() <= 0);\nrefresh")).output(mark("name", "firstUpperCase")).output(literal("();")),
+			rule().condition((type("dependant")), (trigger("refresh"))).output(mark("name", "firstLowerCase")).output(literal(".select();\n")).output(mark("name", "firstLowerCase")).output(literal(".readonly(")).output(mark("anchorName", "firstLowerCase")).output(literal(".selection().size() <= 0);\nrefresh")).output(mark("name", "firstUpperCase")).output(literal("();")),
 			rule().condition((allTypes("univocal","prototype"))).output(literal("isPrototype ||")),
 			rule().condition((type("univocal"))),
 			rule().condition((type("addProperties"))).output(literal("\"")).output(expression().output(mark("add", "label").multiple("; "))).output(literal("\", ")).output(expression().output(mark("add").multiple(" + \"; \" + "))),

@@ -558,6 +558,7 @@ def type(dependant) trigger(clear)
 end
 
 def type(dependant) trigger(refresh)
+    $name+firstLowerCase~.select();
     $name+firstLowerCase~.readonly($anchorName+firstLowerCase~.selection().size() <= 0);
     refresh$name+firstUpperCase~();
 end

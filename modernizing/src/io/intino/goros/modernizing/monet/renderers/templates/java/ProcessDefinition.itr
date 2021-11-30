@@ -183,6 +183,7 @@ def type(process & embedded)
         }
 
         private void notifyResume(Task task) {
+            refreshSelector();
             if (changeListener != null) changeListener.accept(task);
         }
 

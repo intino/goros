@@ -181,14 +181,8 @@ def type(tasks & embedded)
         @Override
         public void init() {
             super.init();
-            box().notifier().onTaskCreated(this, task -> refresh());
+            toolbar.onRefresh(e -> refresh());
             initViews();
-        }
-
-        @Override
-        public void remove() {
-            super.remove();
-            box().notifier().unTaskCreated(this);
         }
 
         public Collection currentCollection() {

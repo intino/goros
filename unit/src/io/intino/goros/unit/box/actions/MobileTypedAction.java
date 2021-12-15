@@ -1,7 +1,11 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.logger.Logger;
 import org.monet.space.kernel.utils.PersisterHelper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

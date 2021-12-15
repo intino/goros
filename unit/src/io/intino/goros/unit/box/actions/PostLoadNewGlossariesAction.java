@@ -1,7 +1,10 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.logger.Logger;
+import org.monet.mobile.exceptions.ActionException;
 import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.Response;
+import org.monet.mobile.service.errors.ServerError;
 import org.monet.mobile.service.requests.LoadNewGlossariesRequest;
 import org.monet.space.mobile.control.actions.ActionDoLoadNewGlossaries;
 import org.simpleframework.xml.Serializer;
@@ -15,8 +18,12 @@ public class PostLoadNewGlossariesAction extends MobileTypedAction {
         try {
             Response result = new Response(new ActionDoLoadNewGlossaries().execute(request(parameters(String.valueOf(ActionCode.LoadNewGlossaries), request)), response));
             writeResultInResponse(result);
-        } catch (Exception ignored) {
-        }
+		} catch (ActionException e) {
+			writeInResponse(e.getErrorResult());
+		} catch (Exception e) {
+			Logger.error(e);
+			writeInResponse((new ServerError()));
+		}
         return resource();
     }
 }

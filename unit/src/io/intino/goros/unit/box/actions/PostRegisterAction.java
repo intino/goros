@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.logger.Logger;
 import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.Response;
 import org.monet.space.mobile.control.actions.ActionDoRegister;
@@ -14,7 +15,7 @@ public class PostRegisterAction extends MobileTypedAction {
             writeResultInResponse(result);
             return resource();
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }

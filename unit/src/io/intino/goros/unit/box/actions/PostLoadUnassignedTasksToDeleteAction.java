@@ -1,11 +1,16 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.logger.Logger;
+import org.monet.mobile.exceptions.ActionException;
 import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.Response;
+import org.monet.mobile.service.errors.ServerError;
 import org.monet.mobile.service.requests.LoadUnassignedTasksToDeleteRequest;
 import org.monet.space.mobile.control.actions.ActionDoLoadUnassignedTasksToDelete;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+
+import java.nio.charset.StandardCharsets;
 
 public class PostLoadUnassignedTasksToDeleteAction extends MobileTypedAction {
 	public io.intino.alexandria.core.Box box;
@@ -15,8 +20,12 @@ public class PostLoadUnassignedTasksToDeleteAction extends MobileTypedAction {
         try {
             Response result = new Response(new ActionDoLoadUnassignedTasksToDelete().execute(request(parameters(String.valueOf(ActionCode.LoadAssignedTasksToDelete), request)), response));
             writeResultInResponse(result);
-        } catch (Exception ignored) {
-        }
+		} catch (ActionException e) {
+			writeInResponse(e.getErrorResult());
+		} catch (Exception e) {
+			Logger.error(e);
+			writeInResponse((new ServerError()));
+		}
         return resource();
     }
 }

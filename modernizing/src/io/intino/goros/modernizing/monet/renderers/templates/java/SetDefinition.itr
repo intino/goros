@@ -584,7 +584,11 @@ def type(setdefinition & embedded)
         }
 
         private void refreshCount(RefreshCountEvent event) {
-            if (itemsCountListener != null) itemsCountListener.accept(event.count());
+            refreshCount(event.count());
+        }
+
+        private void refreshCount(long count) {
+            if (itemsCountListener != null) itemsCountListener.accept(count);
         }
 
         private void refreshView() {
@@ -1038,6 +1042,7 @@ def type(collectionview) trigger(initCall)
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(node.isLocked() || readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
         showFilters(filtersView.$name+firstLowerCase~Filters);
+        refreshCount($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.itemCount());
         resetView();
     });
 end

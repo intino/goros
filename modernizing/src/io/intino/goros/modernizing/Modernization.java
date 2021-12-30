@@ -3,7 +3,6 @@ package io.intino.goros.modernizing;
 import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.xml.Xml;
 import io.intino.goros.modernizing.monet.util.StringUtil;
-import io.intino.itrules.formatters.StringFormatters;
 import org.w3c.dom.Node;
 
 import java.io.File;
@@ -92,10 +91,10 @@ public class Modernization {
 			Node moduleNode = root.child("module").get();
 			Node artifactNode = root.child("artifact") != null ? root.child("artifact").get() : null;
 			Node definitionsNode = root.child("definitions").get();
-			modernization.put("model", root.child("model").get().getTextContent());
+			modernization.put("model", absolutePathOf(file, root.child("model").get().getTextContent()));
 			modernization.put("project.name", projectNode.getAttributes().getNamedItem("name").getTextContent());
 			modernization.put("project.package", projectNode.getAttributes().getNamedItem("package").getTextContent());
-			modernization.put("project.directory", projectNode.getAttributes().getNamedItem("directory").getTextContent());
+			modernization.put("project.directory", absolutePathOf(file, projectNode.getAttributes().getNamedItem("directory").getTextContent()));
 			modernization.put("module.name", moduleNode.getAttributes().getNamedItem("name").getTextContent());
 			modernization.put("artifact.name", artifactNode != null ? artifactNode.getAttributes().getNamedItem("name").getTextContent() : "");
 			modernization.put("definitions.excluded", definitionsNode.getAttributes().getNamedItem("excluded").getTextContent());
@@ -104,6 +103,11 @@ public class Modernization {
 			Logger.error(e);
 			return null;
 		}
+	}
+
+	private static String absolutePathOf(File file, String relativeFile) {
+		if (!relativeFile.startsWith(".")) return relativeFile;
+		return file.getParentFile().getAbsolutePath() + "/" + relativeFile;
 	}
 
 }

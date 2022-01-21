@@ -286,13 +286,13 @@ def type(collectionview & filter)
             updateFilters();
         }
 
-        private void updateFilters() {
-            [$dimension+updateCall...[$NL]]
-        }
-
-        private void resetFilters() {
+        public void resetFilters() {
             [$dimension+clearCall...[$NL]]
             collection.clearFilters();
+        }
+
+        private void updateFilters() {
+            [$dimension+updateCall...[$NL]]
         }
 
         [$dimension+updateMethod...[$NL]]
@@ -628,6 +628,10 @@ def type(setdefinition & embedded)
             else currentCollection().removeFilter("titleTag");
         }
 
+        public void resetFilters() {
+            [$view+resetFiltersCall...[$NL]]
+        }
+
         private void refreshFilters() {
             if (!filtersView.isVisible()) return;
             [$view+refreshFiltersCall...[$NL]]
@@ -871,6 +875,7 @@ def type(setdefinition)
             initContent();
             viewSelector.onSelect(this::openView);
             DownloadDialog.onOpen(e -> refreshDownloadDialog());
+            resetFilters.onExecute(e -> content.resetFilters());
         }
 
         @Override
@@ -913,8 +918,18 @@ def type(setdefinition)
         }
 
         private void refreshCount(long countValue) {
+            refreshAppliedFilters();
             String label = DictionaryHelper.referenceLabel(node);
             count.value(Formatters.countMessage(countValue, label, label + " " + translate("available")));
+        }
+
+        private void refreshAppliedFilters() {
+            Collection<?, ?> collection = currentCollection();
+            List<io.intino.alexandria.ui.model.datasource.Filter> filters = collection.filters();
+            filtersAppliedBlock.visible(!filters.isEmpty());
+            if (filters.isEmpty()) return;
+            String message = NodeHelper.filtersMessage(node, filters);
+            filtersMessage.value(message);
         }
 
         private void refreshHeader() {
@@ -1106,6 +1121,13 @@ end
 
 def type(collectionview) trigger(refreshFiltersCall)
     if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
+end
+
+def type(collectionview & sharedprototypes) trigger(resetFiltersCall)
+end
+
+def type(collectionview) trigger(resetFiltersCall)
+    if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.resetFilters();
 end
 
 def type(collectionview & sharedprototypes) trigger(refreshNodeCall)

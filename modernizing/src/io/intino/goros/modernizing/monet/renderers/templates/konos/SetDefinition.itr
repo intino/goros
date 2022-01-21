@@ -19,15 +19,19 @@ def type(setdefinition)
                     Selector(format=body2 bold) sortings as ComboBox(placeholder="Seleccione una ordenación", view=TextView)
                     Selector(format=body2 bold airRight, visible=false) sortingsMode as ComboBox(placeholder="Tipo", view=TextView)
                     Link(format=body1, title="quitar", visible=false) removeSorting
-            Block(layout=Horizontal Center) rightToolbar
-                Block(format=relative doubleAirRight)
-                    SearchBox(collections = empty) search
-                    Block(format=filterByTitleStyle) > Selector(visible=false, format=body2) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
-                Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
-                    [$view+selector...[$NL]]
-                MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
-                MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
-                MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+            Block(layout=Vertical) rightToolbar
+                Block(layout=Horizontal Center)
+                    Block(format=relative doubleAirRight)
+                        SearchBox(collections = empty) search
+                        Block(format=filterByTitleStyle) > Selector(visible=false, format=body2) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
+                    Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
+                        [$view+selector...[$NL]]
+                    MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
+                    MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
+                    MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
+                Block(layout=Horizontal EndJustified, format=airRight, visible=false) filtersAppliedBlock
+                    Text(format=body2 bold, cropWithEllipsis=80Chars) filtersMessage
+                    Link(title="quitar", format=body2 airLeft) resetFilters
 
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 

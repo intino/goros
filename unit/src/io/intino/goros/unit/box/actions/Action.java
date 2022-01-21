@@ -25,4 +25,7 @@ public abstract class Action {
     protected Request request(Map<String, Object> parameters) {
         return new io.intino.goros.unit.box.services.Request(context, parameters);
     }
+
+    public void onMalformedRequest(Throwable e) {
+    }
 }

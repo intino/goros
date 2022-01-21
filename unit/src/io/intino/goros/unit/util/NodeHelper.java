@@ -570,6 +570,19 @@ public class NodeHelper {
         return null;
     }
 
+    public static String filtersMessage(Node node, List<Filter> filters) {
+        IndexDefinition definition = Dictionary.getInstance().getIndexDefinition(((SetDefinition)node.getDefinition()).getIndex().getValue());
+        return filters.stream().map(f -> filterMessage(definition, f)).collect(Collectors.joining(", "));
+    }
+
+    private static String filterMessage(IndexDefinition definition, Filter f) {
+        GroupFilter filter = (GroupFilter) f;
+        if (filter.groups().isEmpty()) return "";
+        AttributeProperty attributeDefinition = definition.getAttribute(filter.grouping());
+        if (attributeDefinition == null) return "";
+        return attributeDefinition.getLabel() + "(" + String.join(", ", filter.groups()) + ")";
+    }
+
     public static Set<String> getFieldFilters(Node node, FieldProperty fieldDefinition, boolean mask) {
         Set<String> filtersSet = new LinkedHashSet<>();
         ArrayList<Object> tagList = null;

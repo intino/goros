@@ -19,7 +19,7 @@
     "/showapi": {
       "post": {
         "description": "Shows the api",
-        "operationId": "SetupService_10_2_01338873132",
+        "operationId": "SetupService_10_2_01418897727",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -40,7 +40,7 @@
     "/getmajorversion": {
       "post": {
         "description": "Gets the major version",
-        "operationId": "SetupService_14_2_0844401408",
+        "operationId": "SetupService_14_2_11830799381",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -61,7 +61,7 @@
     "/getstatus": {
       "post": {
         "description": "Gets the status of the service",
-        "operationId": "SetupService_18_2_1993116306",
+        "operationId": "SetupService_18_2_12012473283",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -82,7 +82,7 @@
     "/run": {
       "post": {
         "description": "Runs the kernel",
-        "operationId": "SetupService_22_2_11857264205",
+        "operationId": "SetupService_22_2_0674501912",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -103,7 +103,7 @@
     "/putlabel": {
       "post": {
         "description": "Sets the label of the business unit",
-        "operationId": "SetupService_26_2_0205905391",
+        "operationId": "SetupService_26_2_11452125281",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -133,7 +133,7 @@
     "/putlogo": {
       "post": {
         "description": "Sets the logo of the business unit",
-        "operationId": "SetupService_31_2_1443538538",
+        "operationId": "SetupService_31_2_01820491118",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -163,7 +163,7 @@
     "/stop": {
       "post": {
         "description": "Stops the kernel",
-        "operationId": "SetupService_36_2_12006011588",
+        "operationId": "SetupService_36_2_0999331631",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -184,7 +184,7 @@
     "/updatemodel": {
       "post": {
         "description": "Updates the model",
-        "operationId": "SetupService_40_2_1495305381",
+        "operationId": "SetupService_40_2_11220701667",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -214,7 +214,7 @@
     "/executeconstructor": {
       "post": {
         "description": "Executes the constructor",
-        "operationId": "SetupService_45_2_11243925856",
+        "operationId": "SetupService_45_2_01373166399",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

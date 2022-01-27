@@ -1,5 +1,10 @@
 {
   "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "externa",
+    "description": "Geoservice API"
+  },
   "host": "",
   "basePath": "/",
   "schemes": [
@@ -19,7 +24,7 @@
     "/api/geoservice/definitions": {
       "get": {
         "description": "Get all georeferenced definition",
-        "operationId": "GeoService_8_2_14295488",
+        "operationId": "GeoService_11_2_0818426984",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -32,7 +37,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Return a list with all gereferenced definitions",
             "schema": {
               "$ref": "#/definitions/Definition"
             }
@@ -43,7 +48,7 @@
     "/api/geoservice/locations/{name}": {
       "get": {
         "description": "Get all points from a definition name or label",
-        "operationId": "GeoService_12_2_01184530087",
+        "operationId": "GeoService_15_2_1424015206",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -58,14 +63,14 @@
           {
             "name": "name",
             "in": "path",
-            "description": "",
+            "description": "Definition name or label.",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Return all points from a definition name or label",
             "schema": {
               "$ref": "#/definitions/Location"
             }
@@ -76,7 +81,7 @@
     "/api/geoservice/locations/{name}/{owner}": {
       "get": {
         "description": "Get all points from a definition name or label and from a specific owner",
-        "operationId": "GeoService_17_2_0948548731",
+        "operationId": "GeoService_20_2_11290699328",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -91,21 +96,21 @@
           {
             "name": "name",
             "in": "path",
-            "description": "",
+            "description": "Definition name or label.",
             "required": true,
             "type": "string"
           },
           {
             "name": "owner",
             "in": "path",
-            "description": "",
+            "description": "Id owner",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Return all points from a definition name or label and from a specific owner",
             "schema": {
               "$ref": "#/definitions/Location"
             }
@@ -116,7 +121,7 @@
     "/api/geoservice/location/{id}": {
       "get": {
         "description": "Get all points from a node id",
-        "operationId": "GeoService_23_2_1952808875",
+        "operationId": "GeoService_26_2_1947883738",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -131,14 +136,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "",
+            "description": "Node id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Return all points from a node id",
             "schema": {
               "$ref": "#/definitions/Location"
             }
@@ -149,7 +154,7 @@
     "/api/geoservice/image/{id}/{path}": {
       "get": {
         "description": "Get image from node",
-        "operationId": "GeoService_28_2_11993163490",
+        "operationId": "GeoService_31_2_11503081060",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -164,21 +169,21 @@
           {
             "name": "id",
             "in": "path",
-            "description": "",
+            "description": "Node id",
             "required": true,
             "type": "string"
           },
           {
             "name": "path",
             "in": "path",
-            "description": "",
+            "description": "File name",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Return image from node"
           }
         }
       }

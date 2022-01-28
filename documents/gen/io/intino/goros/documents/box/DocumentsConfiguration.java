@@ -41,6 +41,18 @@ public class DocumentsConfiguration extends io.intino.alexandria.core.BoxConfigu
 		return get("jdbc-password");
 	}
 
+	public String jdbcMaxActiveConnections() {
+		return get("jdbc-max-active-connections");
+	}
+
+	public String jdbcMaxIdleConnections() {
+		return get("jdbc-max-idle-connections");
+	}
+
+	public String jdbcRemoveAbandonedTimeout() {
+		return get("jdbc-remove-abandoned-timeout");
+	}
+
 	public String trueTypeFontsPath() {
 		return get("true-type-fonts-path");
 	}

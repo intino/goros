@@ -1,0 +1,53 @@
+dsl Konos
+
+Service GeoService as REST(host = "", port = "{port}")
+	title = "Geoservice API"
+	basePath = ""
+
+	Info(title = "externa", version = "1.0")
+		description = "Geoservice API"
+
+	Resource("/api/geoservice/definitions") definitions
+		Get(description = "Get all georeferenced definition")
+			Response as Object(Definition) List > description = "Return a list with all gereferenced definitions"
+
+	Resource("/api/geoservice/locations/:name") locations
+		Get(description = "Get all points from a definition name or label")
+			Parameter (in=path) name as Text > description = "Definition name or label."
+			Response as Object(Location) List > description = "Return all points from a definition name or label"
+
+	Resource("/api/geoservice/locations/:name/:owner") locationsByOwner
+		Get(description = "Get all points from a definition name or label and from a specific owner")
+			Parameter (in=path) name as Text > description = "Definition name or label."
+			Parameter (in=path) owner as Text > description = "Id owner"
+			Response as Object(Location) List > description = "Return all points from a definition name or label and from a specific owner"
+
+	Resource("/api/geoservice/location/:id") locationsFromNode
+		Get(description = "Get all points from a node id")
+			Parameter (in=path) id as Text > description = "Node id"
+			Response as Object(Location) List > description = "Return all points from a node id"
+
+	Resource("/api/geoservice/image/:id/:path") Images
+		Get(description = "Get image from node")
+			Parameter (in=path) id as Text > description = "Node id"
+			Parameter (in=path) path as Text > description = "File name"
+			Response as File > description = "Return image from node"
+
+Schema Location
+	Attribute name as Text
+	Attribute latitude as Real
+	Attribute longitude as Real
+	Attribute attributes as Object(Attribute) List
+
+Schema Attribute
+	Attribute name as Text
+	Attribute value as Text
+
+Schema Definition
+	Attribute name as Text
+
+Schema Locatable
+	Attribute label as Text
+	Attribute id as Text
+
+

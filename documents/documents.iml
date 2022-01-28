@@ -99,10 +99,9 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-servlet:9.4.8.v20171121" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-api:9.4.8.v20171121" level="project" />
     <orderEntry type="library" name="Intino: com.google.code.gson:gson:2.8.6" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:docservice:2.0.4" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:docservice:2.0.5" level="project" />
     <orderEntry type="library" name="Intino: net.sf.json-lib:json-lib:jdk15" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
     <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
-    <orderEntry type="library" name="Intino: net.sf.json-lib:json-lib:jdk15" level="project" />
   </component>
 </module>

@@ -57,7 +57,7 @@ public class GetLocationsAction {
 	private io.intino.goros.unit.box.schemas.Location changeType(org.monet.space.kernel.model.map.Location l) {
 		io.intino.goros.unit.box.schemas.Location result = new io.intino.goros.unit.box.schemas.Location();
 		List attributes = new ArrayList<>();
-
+		result.id(l.getNodeId());
 		for (var entry : l.getAttributes().entrySet()) {
 			io.intino.goros.unit.box.schemas.Attribute attribute = new io.intino.goros.unit.box.schemas.Attribute();
 			attribute.name(entry.getKey());

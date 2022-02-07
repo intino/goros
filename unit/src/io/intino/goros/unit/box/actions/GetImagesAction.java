@@ -40,14 +40,14 @@ public class GetImagesAction {
 	public String path;
 	public String id;
 
-	public io.intino.alexandria.Resource execute() {
+	public io.intino.alexandria.Resource execute() throws BadRequest {
 		HttpClient oHttpClient = new HttpClient();
 		GetMethod method;
 		Integer iStatus;
 		Boolean bDownload;
 		InputStream input;
 
-		if (id == null) return null;
+		if (id == null) throw new BadRequest("Id not found");
 		ComponentDocuments componentDocuments = ComponentDocuments.getInstance();
 
 		bDownload = componentDocuments.getSupportedFeatures().get(ComponentDocuments.Feature.DOWNLOAD);
@@ -55,7 +55,7 @@ public class GetImagesAction {
 
 		HashMap<String, String> parameters = new HashMap<String, String>();
 		String fileId = path;
-		String contentType;
+		if(!componentDocuments.existsDocument(fileId))  throw new BadRequest("Image not found");
 
 		try {
 			parameters.put(Parameter.ID, URLEncoder.encode(fileId, "UTF-8"));
@@ -73,8 +73,7 @@ public class GetImagesAction {
 		}
 
 		if (iStatus == HttpStatus.SC_NOT_FOUND || method.getResponseHeader("Content-Type") == null) {
-			input = AgentFilesystem.getInputStream(Configuration.getInstance().getNoPictureImageFile());
-			contentType = MimeTypes.getInstance().get("jpg");
+			throw new BadRequest("Image not found");
 		} else {
 			try {
 				input = method.getResponseBodyAsStream();
@@ -82,7 +81,6 @@ public class GetImagesAction {
 				e.printStackTrace();
 				return null;
 			}
-			contentType = method.getResponseHeader("Content-Type").getValue();
 		}
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -92,6 +90,6 @@ public class GetImagesAction {
 			e.printStackTrace();
 		}
 
-		return new Resource(LibraryFile.getFilename(fileId),contentType,output.toByteArray());
+		return new Resource(LibraryFile.getFilename(fileId),/*contentType*/null,output.toByteArray());
 	}
 }

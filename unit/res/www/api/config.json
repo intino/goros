@@ -9,8 +9,8 @@
       "name": "frontService"
     },
     {
-      "url": "./data/GeoService.json",
-      "name": "GeoService"
+      "url": "./data/geoService.json",
+      "name": "geoService"
     },
     {
       "url": "./data/mobileService.json",

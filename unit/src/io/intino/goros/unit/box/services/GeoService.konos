@@ -1,6 +1,6 @@
 dsl Konos
 
-Service GeoService as REST(host = "", port = "{port}")
+Service geoService as REST(host = "", port = "{port}")
 	title = "Geoservice API"
 	basePath = ""
 
@@ -13,12 +13,12 @@ Service GeoService as REST(host = "", port = "{port}")
 
 	Resource("/api/geoservice/locations/:name") locations
 		Get(description = "Get all points from a definition name or label")
-			Parameter (in=path) name as Text > description = "Definition name or label."
+			Parameter (in=path) name as Text > description = "Definition name or label"
 			Response as Object(Location) List > description = "Return all points from a definition name or label"
 
 	Resource("/api/geoservice/locations/:name/:owner") locationsByOwner
 		Get(description = "Get all points from a definition name or label and from a specific owner")
-			Parameter (in=path) name as Text > description = "Definition name or label."
+			Parameter (in=path) name as Text > description = "Definition name or label"
 			Parameter (in=path) owner as Text > description = "Id owner"
 			Response as Object(Location) List > description = "Return all points from a definition name or label and from a specific owner"
 
@@ -32,8 +32,10 @@ Service GeoService as REST(host = "", port = "{port}")
 			Parameter (in=path) id as Text > description = "Node id"
 			Parameter (in=path) path as Text > description = "File name"
 			Response as File > description = "Return image from node"
+			Exception(BadRequest)
 
 Schema Location
+	Attribute id as Text
 	Attribute name as Text
 	Attribute latitude as Real
 	Attribute longitude as Real

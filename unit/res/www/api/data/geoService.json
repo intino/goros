@@ -48,7 +48,7 @@
     "/api/geoservice/locations/{name}": {
       "get": {
         "description": "Get all points from a definition name or label",
-        "operationId": "GeoService_15_2_1424015206",
+        "operationId": "GeoService_15_2_0921503850",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -63,7 +63,7 @@
           {
             "name": "name",
             "in": "path",
-            "description": "Definition name or label.",
+            "description": "Definition name or label",
             "required": true,
             "type": "string"
           }
@@ -81,7 +81,7 @@
     "/api/geoservice/locations/{name}/{owner}": {
       "get": {
         "description": "Get all points from a definition name or label and from a specific owner",
-        "operationId": "GeoService_20_2_11290699328",
+        "operationId": "GeoService_20_2_0629204402",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -96,7 +96,7 @@
           {
             "name": "name",
             "in": "path",
-            "description": "Definition name or label.",
+            "description": "Definition name or label",
             "required": true,
             "type": "string"
           },
@@ -154,7 +154,7 @@
     "/api/geoservice/image/{id}/{path}": {
       "get": {
         "description": "Get image from node",
-        "operationId": "GeoService_31_2_11503081060",
+        "operationId": "GeoService_31_2_0874526850",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -184,6 +184,9 @@
         "responses": {
           "200": {
             "description": "Return image from node"
+          },
+          "400": {
+            "description": ""
           }
         }
       }
@@ -202,12 +205,16 @@
     },
     "Location": {
       "required": [
+        "id",
         "name",
         "latitude",
         "longitude",
         "attributes"
       ],
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },

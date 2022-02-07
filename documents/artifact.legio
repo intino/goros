@@ -1,12 +1,12 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.0.10") documents as Platform
+Artifact(groupId = "io.intino.goros", version = "1.0.11") documents as Platform
 	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
 	Box(language = "Konos", version = "8.14.6")
 	Code("io.intino.goros.documents")
 
 	Imports
-		Compile("org.siani.monet", "docservice", "2.0.5")
+		Compile("org.siani.monet", "docservice", "2.0.6")
 			Exclude ("org.siani.monet","servlet-api")
  		Compile("io.intino.alexandria", "logger4j", "1.0.1")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")

@@ -19,7 +19,7 @@
     "/Helo/": {
       "post": {
         "description": "Does Helo",
-        "operationId": "MobileService_10_2_12013015954",
+        "operationId": "MobileService_10_2_01203426294",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -49,7 +49,7 @@
     "/Register/": {
       "post": {
         "description": "Registers a device",
-        "operationId": "MobileService_15_2_11019701696",
+        "operationId": "MobileService_15_2_0606396232",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -79,7 +79,7 @@
     "/Unregister/": {
       "post": {
         "description": "Unregisters a device",
-        "operationId": "MobileService_20_2_02006221127",
+        "operationId": "MobileService_20_2_0443767695",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -109,7 +109,7 @@
     "/LoadNewDefinitions/": {
       "post": {
         "description": "Loads the new defintitions",
-        "operationId": "MobileService_25_2_01478507581",
+        "operationId": "MobileService_25_2_01363937029",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -139,7 +139,7 @@
     "/LoadNewGlossaries/": {
       "post": {
         "description": "Loads the new glossaries",
-        "operationId": "MobileService_30_2_0323201569",
+        "operationId": "MobileService_30_2_01333833705",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -169,7 +169,7 @@
     "/DownloadGlossary/": {
       "post": {
         "description": "Downloads the glossary",
-        "operationId": "MobileService_35_2_0670202787",
+        "operationId": "MobileService_35_2_133338645",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -199,7 +199,7 @@
     "/LoadNewAssignedTasks/": {
       "post": {
         "description": "Loads the new assigned tasks",
-        "operationId": "MobileService_40_2_01912861187",
+        "operationId": "MobileService_40_2_11232795317",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -229,7 +229,7 @@
     "/LoadNewAvailableTasks/": {
       "post": {
         "description": "Loads the new available tasks",
-        "operationId": "MobileService_45_2_1448437288",
+        "operationId": "MobileService_45_2_1857620768",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -259,7 +259,7 @@
     "/LoadAssignedTasksToDelete/": {
       "post": {
         "description": "Loads the assigned tasks to delete",
-        "operationId": "MobileService_50_2_15616809",
+        "operationId": "MobileService_50_2_11326583393",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -289,7 +289,7 @@
     "/LoadFinishedTasksToDelete/": {
       "post": {
         "description": "Loads the finished tasks to delete",
-        "operationId": "MobileService_55_2_11323952645",
+        "operationId": "MobileService_55_2_11491105981",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -319,7 +319,7 @@
     "/LoadUnassignedTasksToDelete/": {
       "post": {
         "description": "Loads the unassigned tasks to delete",
-        "operationId": "MobileService_60_2_01985887152",
+        "operationId": "MobileService_60_2_1133211976",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -349,7 +349,7 @@
     "/AssignTask/": {
       "post": {
         "description": "Assigns a task",
-        "operationId": "MobileService_65_2_01142485797",
+        "operationId": "MobileService_65_2_1130937875",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -379,7 +379,7 @@
     "/UnassignTask/": {
       "post": {
         "description": "Unassigns a task",
-        "operationId": "MobileService_70_2_1524715604",
+        "operationId": "MobileService_70_2_0524272564",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -409,7 +409,7 @@
     "/DownloadTaskPacked/": {
       "post": {
         "description": "Downloads a task packed",
-        "operationId": "MobileService_75_2_0764244340",
+        "operationId": "MobileService_75_2_11187303044",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -439,7 +439,7 @@
     "/UploadTaskPacked/": {
       "post": {
         "description": "Uploads a task packed",
-        "operationId": "MobileService_80_2_11947584852",
+        "operationId": "MobileService_80_2_0792218930",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -469,7 +469,7 @@
     "/PrepareUploadTask/": {
       "post": {
         "description": "Prepares an upload task",
-        "operationId": "MobileService_85_2_11121903015",
+        "operationId": "MobileService_85_2_0787331743",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -499,7 +499,7 @@
     "/UploadTaskFile/{id}/{extra}/": {
       "post": {
         "description": "Uploads a task file",
-        "operationId": "MobileService_90_2_1873851259",
+        "operationId": "MobileService_90_2_0113943887",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -543,7 +543,7 @@
     "/UploadTaskSchema/{id}/": {
       "post": {
         "description": "Uploads a task schema",
-        "operationId": "MobileService_97_2_0886542338",
+        "operationId": "MobileService_97_2_0645201485",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -580,7 +580,7 @@
     "/SyncChats/": {
       "post": {
         "description": "Synchronizes chats",
-        "operationId": "MobileService_103_2_01358741561",
+        "operationId": "MobileService_103_2_191314815",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

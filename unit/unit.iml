@@ -273,8 +273,8 @@
     <orderEntry type="library" name="Intino: dnie:MITyCLibTSA:1.1.7" level="project" />
     <orderEntry type="library" name="Intino: dnie:MITyCLibXADES:1.1.7" level="project" />
     <orderEntry type="library" name="Intino: dnie:xmlsec:1.4.2-ADSI" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.15.20" level="project" />
     <orderEntry type="module" module-name="unit-elements" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.15.26" level="project" />
     <orderEntry type="library" name="Intino: com.oracle.database.jdbc:ojdbc8:19.8.0.0" level="project" />
     <orderEntry type="library" name="Intino: mysql:mysql-connector-java:5.1.35" level="project" />
   </component>

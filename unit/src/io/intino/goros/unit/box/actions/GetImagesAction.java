@@ -92,4 +92,7 @@ public class GetImagesAction {
 
 		return new Resource(LibraryFile.getFilename(fileId),/*contentType*/null,output.toByteArray());
 	}
+
+	public void onMalformedRequest(Throwable e) {
+	}
 }

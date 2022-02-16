@@ -37,4 +37,6 @@ public class GetDefinitionsAction {
 		return false;
 	}
 
+	public void onMalformedRequest(Throwable e) {
+	}
 }

@@ -156,12 +156,12 @@ public class TaskPlaceSendJobTemplate extends AbstractTaskPlaceSendJobTemplate<U
 
     private void setup() {
         notifyUser(translate("Setting up job..."), UserMessage.Type.Loading);
-        solveSetup.readonly(true);
-        loading.visible(true);
+        pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.readonly(true);
+        pendingView.setupBlock.setupToolbar.loading.visible(true);
         fillOrder();
         task.getProcess().setupSendJobAction();
-        loading.visible(false);
-        solveSetup.readonly(false);
+        pendingView.setupBlock.setupToolbar.loading.visible(false);
+        pendingView.setupBlock.setupToolbar.solveSetupBlock.solveSetup.readonly(false);
         notifyUser(translate("Job setup"), UserMessage.Type.Success);
     }
 

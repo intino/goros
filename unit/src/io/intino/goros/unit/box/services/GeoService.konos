@@ -44,6 +44,7 @@ Schema Location
 Schema Attribute
 	Attribute name as Text
 	Attribute value as Text
+	Attribute label as Text
 
 Schema Definition
 	Attribute name as Text

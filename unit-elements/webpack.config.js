@@ -31,7 +31,7 @@ module.exports = {
         'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js'
     },
     output: {
-        path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
+        path: "/Users/mperez/Documents/goros/out/production/unit-elements/www/unit-elements",
         publicPath: '$basePath/unit-elements/',
         filename: "[name].js"
     },
@@ -43,7 +43,7 @@ module.exports = {
     },
     plugins: [
         new CircularDependencyPlugin({
-            failOnError: false,
+            failOnError: true,
             allowAsyncCycles: false,
             cwd: process.cwd(),
         }),

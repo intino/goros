@@ -5,6 +5,7 @@ import org.monet.http.Request;
 import org.monet.space.kernel.components.ComponentFederation;
 import org.monet.space.kernel.components.ComponentPersistence;
 import org.monet.space.kernel.components.layers.*;
+import org.monet.space.kernel.model.Node;
 import org.monet.space.office.configuration.Configuration;
 
 import java.io.IOException;

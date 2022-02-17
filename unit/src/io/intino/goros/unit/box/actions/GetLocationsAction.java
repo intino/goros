@@ -73,4 +73,7 @@ public class GetLocationsAction {
 		result.longitude(l.getGeometry().getCentroid().getCoordinate().y);
 		return result;
 	}
+
+	public void onMalformedRequest(Throwable e) {
+	}
 }

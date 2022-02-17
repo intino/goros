@@ -424,8 +424,19 @@ def type(field & link) trigger(init)
         save(b -> {
             [$dependant+clear...[$NL]]
             $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.linkOf(e.selection()));
+            open$name+firstUpperCase~.readonly($name+firstLowerCase~Field.get() == null);
         });
         [$dependant+refresh...[$NL]]
+    });
+    open$name+firstUpperCase~.onOpen(e -> {
+        org.monet.bpi.types.Link link = $name+firstLowerCase~Field.get();
+        if (link == null) return;
+        Node<?> node = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(link.getId());
+        open$name+firstUpperCase~.address(path -> io.intino.goros.unit.util.PathHelper.pathOf(node));
+		e.layer().title(node.getLabel());
+		AppTemplate template = new AppTemplate(box());
+		e.layer().template(template);
+		template.embedded(true);
     });
 end
 
@@ -434,6 +445,7 @@ def type(field & link) trigger(refresh)
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     else $name+firstLowerCase.selection(java.util.Collections.emptyList());
     $name+firstLowerCase~.readonly([$univocal ]$readonly);
+    open$name+firstUpperCase~.readonly($name+firstLowerCase~Field.get() == null);
 end
 
 def type(field & select & multiple) trigger(init)

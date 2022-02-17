@@ -72,4 +72,6 @@ public class GetLocationsByOwnerAction {
 		return result;
 	}
 
+	public void onMalformedRequest(Throwable e) {
+	}
 }

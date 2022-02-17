@@ -59,4 +59,6 @@ public class GetLocationsFromNodeAction {
 		return result;
 	}
 
+	public void onMalformedRequest(Throwable e) {
+	}
 }

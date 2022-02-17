@@ -139,7 +139,9 @@ def type(field & link & multiple)
 end
 
 def type(field & link)
-    Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, placeholder="Seleccione un valor") Labeled("$label") Readonly
+    Block(layout=Horizontal Flexible Center)
+        Block(layout=Vertical Flexible) > Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, placeholder="Seleccione un valor") Labeled("$label") Readonly
+        Link(title="Abrir", format=airTop airLeft) open~$name+firstUpperCase as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
 end
 
 def type(field & select & multiple)

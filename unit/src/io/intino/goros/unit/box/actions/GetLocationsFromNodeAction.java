@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import io.intino.goros.unit.box.schemas.*;
+import org.monet.metamodel.IndexDefinition;
+import org.monet.metamodel.NodeDefinition;
 import org.monet.space.kernel.components.ComponentPersistence;
 import org.monet.space.kernel.components.layers.NodeLayer;
 import org.monet.space.kernel.model.Dictionary;
@@ -28,20 +30,25 @@ public class GetLocationsFromNodeAction {
 		Node node = nodeLayer.loadNode(id);
 		if(node == null) return null;
 
+		String code = node.getCode();
+
 		org.monet.space.kernel.model.map.Location location = node.getLocation();
 		List<org.monet.space.kernel.model.map.Location> result = new ArrayList<>();
 		result.add(location);
 
-		return result.stream().map(this::changeType).collect(Collectors.toList());
+		NodeDefinition nodeDefinition = Dictionary.getInstance().getNodeDefinition(code);
+		IndexDefinition indexDefinition = Dictionary.getInstance().locateIndex(nodeDefinition);
+		return result.stream().map((org.monet.space.kernel.model.map.Location l) -> changeType(l,indexDefinition)).collect(Collectors.toList());
 	}
 
-	private io.intino.goros.unit.box.schemas.Location changeType(org.monet.space.kernel.model.map.Location l) {
+	private io.intino.goros.unit.box.schemas.Location changeType(org.monet.space.kernel.model.map.Location l, IndexDefinition indexDefinition) {
 		io.intino.goros.unit.box.schemas.Location result = new io.intino.goros.unit.box.schemas.Location();
 		List attributes = new ArrayList<>();
 
 		for (var entry : l.getAttributes().entrySet()) {
 			io.intino.goros.unit.box.schemas.Attribute attribute = new io.intino.goros.unit.box.schemas.Attribute();
 			attribute.name(entry.getKey());
+			attribute.label(indexDefinition.getAttribute(entry.getKey()).getLabel().toString());
 			attribute.value(entry.getValue());
 			attributes.add(attribute);
 		}

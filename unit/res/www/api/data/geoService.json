@@ -24,7 +24,7 @@
     "/api/geoservice/definitions": {
       "get": {
         "description": "Get all georeferenced definition",
-        "operationId": "GeoService_11_2_11638470545",
+        "operationId": "GeoService_11_2_0818426984",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -48,7 +48,7 @@
     "/api/geoservice/locations/{name}": {
       "get": {
         "description": "Get all points from a definition name or label",
-        "operationId": "GeoService_15_2_11829404076",
+        "operationId": "GeoService_15_2_0921503850",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -81,7 +81,7 @@
     "/api/geoservice/locations/{name}/{owner}": {
       "get": {
         "description": "Get all points from a definition name or label and from a specific owner",
-        "operationId": "GeoService_20_2_01666480691",
+        "operationId": "GeoService_20_2_0629204402",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -121,7 +121,7 @@
     "/api/geoservice/location/{id}": {
       "get": {
         "description": "Get all points from a node id",
-        "operationId": "GeoService_26_2_11344281850",
+        "operationId": "GeoService_26_2_1947883738",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -154,7 +154,7 @@
     "/api/geoservice/image/{id}/{path}": {
       "get": {
         "description": "Get image from node",
-        "operationId": "GeoService_31_2_1161846886",
+        "operationId": "GeoService_31_2_0874526850",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

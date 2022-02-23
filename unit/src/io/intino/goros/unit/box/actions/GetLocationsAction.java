@@ -37,7 +37,9 @@ public class GetLocationsAction {
 
 		List<org.monet.space.kernel.model.map.Location> result = new ArrayList<>();
 		locations.forEach(result::add);
-		return result.stream().map(this::changeType).collect(Collectors.toList());
+		NodeDefinition nodeDefinition = Dictionary.getInstance().getNodeDefinition(code);
+		IndexDefinition indexDefinition = Dictionary.getInstance().locateIndex(nodeDefinition);
+		return result.stream().map((org.monet.space.kernel.model.map.Location l) -> changeType(l,indexDefinition)).collect(Collectors.toList());
 	}
 
 	private boolean sameName(org.monet.metamodel.Definition definition, String name) {
@@ -54,13 +56,14 @@ public class GetLocationsAction {
 		return false;
 	}
 
-	private io.intino.goros.unit.box.schemas.Location changeType(org.monet.space.kernel.model.map.Location l) {
+	private io.intino.goros.unit.box.schemas.Location changeType(org.monet.space.kernel.model.map.Location l, IndexDefinition indexDefinition) {
 		io.intino.goros.unit.box.schemas.Location result = new io.intino.goros.unit.box.schemas.Location();
 		List attributes = new ArrayList<>();
 		result.id(l.getNodeId());
 		for (var entry : l.getAttributes().entrySet()) {
 			io.intino.goros.unit.box.schemas.Attribute attribute = new io.intino.goros.unit.box.schemas.Attribute();
 			attribute.name(entry.getKey());
+			attribute.label(indexDefinition.getAttribute(entry.getKey()).getLabel().toString());
 			attribute.value(entry.getValue());
 			attributes.add(attribute);
 		}

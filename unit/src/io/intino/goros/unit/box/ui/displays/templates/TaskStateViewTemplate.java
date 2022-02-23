@@ -130,7 +130,7 @@ public class TaskStateViewTemplate extends AbstractTaskStateViewTemplate<UnitBox
     private void refreshLineView(PlaceProperty property) {
         LineActionProperty action = property.getLineActionProperty();
         lineView.visible(action != null && TaskHelper.isAlive(task));
-        if (action == null) return;
+        if (!lineView.isVisible()) return;
         lineView.lineViewStamp.task(task);
         lineView.lineViewStamp.property(action);
         lineView.lineViewStamp.onResume(e -> refresh());

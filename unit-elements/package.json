@@ -1,6 +1,6 @@
 {
     "name": "unit-elements",
-    "version": "1.1.20",
+    "version": "1.1.21",
     "description": "",
     "main": "src/App.js",
     "scripts": {
@@ -25,6 +25,7 @@
         "html-webpack-plugin": "^3.2.0",
         "jss": "^9.8.7",
         "prop-types": "^15.7.2",
+        "fsevents": "^2.1.2",
         "style-loader": "^0.23.1",
         "styled-components": "^4.3.1",
         "webpack": "^4.34.0",

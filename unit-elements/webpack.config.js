@@ -27,11 +27,11 @@ module.exports = {
         ]
     },
     entry : {
-        'gorosInstallTemplate' : './gen/apps/GorosInstallTemplate.js',
-        'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js'
+        'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js',
+        'gorosInstallTemplate' : './gen/apps/GorosInstallTemplate.js'
     },
     output: {
-        path: "/Users/mperez/Documents/goros/out/production/unit-elements/www/unit-elements",
+        path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
         publicPath: '$basePath/unit-elements/',
         filename: "[name].js"
     },
@@ -43,7 +43,7 @@ module.exports = {
     },
     plugins: [
         new CircularDependencyPlugin({
-            failOnError: true,
+            failOnError: false,
             allowAsyncCycles: false,
             cwd: process.cwd(),
         }),
@@ -54,16 +54,16 @@ module.exports = {
         new HtmlWebPackPlugin({
             hash: true,
             title: "Test UI",
-            chunks: ['gorosInstallTemplate'],
-            template: "./src/gorosInstallTemplate.html",
-            filename: "./gorosInstallTemplate.html"
+            chunks: ['gorosAppTemplate'],
+            template: "./src/gorosAppTemplate.html",
+            filename: "./gorosAppTemplate.html"
         }),
         new HtmlWebPackPlugin({
             hash: true,
             title: "Test UI",
-            chunks: ['gorosAppTemplate'],
-            template: "./src/gorosAppTemplate.html",
-            filename: "./gorosAppTemplate.html"
+            chunks: ['gorosInstallTemplate'],
+            template: "./src/gorosInstallTemplate.html",
+            filename: "./gorosInstallTemplate.html"
         })
     ]
 };

@@ -1,4 +1,4 @@
-package io.intino.goros.unit.graph;
+package io.intino.goros.unit.model;
 
 public enum PostType {
 	ServiceOrder("Service order"), ServiceResponse("Service response"), Info("Info"),

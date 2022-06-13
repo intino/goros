@@ -4,7 +4,7 @@ import io.intino.alexandria.ui.displays.events.AddItemEvent;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.NewsDatasource;
 import io.intino.goros.unit.box.ui.displays.items.NewsListItem;
-import io.intino.goros.unit.graph.PostType;
+import io.intino.goros.unit.model.PostType;
 import io.intino.goros.unit.util.PathHelper;
 import org.monet.space.kernel.model.news.Post;
 

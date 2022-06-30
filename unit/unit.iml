@@ -273,10 +273,9 @@
     <orderEntry type="library" name="Intino: dnie:MITyCLibXADES:1.1.7" level="project" />
     <orderEntry type="library" name="Intino: dnie:xmlsec:1.4.2-ADSI" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.15.26" level="project" />
-    <orderEntry type="module" module-name="unit-elements" />
     <orderEntry type="library" name="Intino: org.siani.monet:space:2.0.20" level="project" />
     <orderEntry type="library" name="Intino: io.intino.goros:shared:1.0.0" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:servlet-api:1.0" level="project" />
     <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
+    <orderEntry type="module" module-name="unit-elements" />
   </component>
 </module>

@@ -5,6 +5,7 @@ import io.intino.goros.unit.box.UnitBox;
 import io.intino.alexandria.exceptions.*;
 
 import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -46,6 +47,16 @@ public class GetImagesAction {
 		Integer iStatus;
 		Boolean bDownload;
 		InputStream input;
+		String requestUrl = context.requestUrl();
+		try{
+			requestUrl = URLDecoder.decode(context.requestUrl(), "UTF-8");
+		}catch (UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+
+		String service = "/image/" + id +"/";
+		path = requestUrl.substring(requestUrl.indexOf(service)+service.length(),requestUrl.length());
+
 
 		if (id == null) throw new BadRequest("Id not found");
 		ComponentDocuments componentDocuments = ComponentDocuments.getInstance();

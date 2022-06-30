@@ -19,7 +19,7 @@
     "/document/": {
       "get": {
         "description": "Document operation",
-        "operationId": "DocService_8_2_0935826017",
+        "operationId": "DocService_8_2_11243639672",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -260,7 +260,7 @@
       },
       "post": {
         "description": "Document operation",
-        "operationId": "DocService_42_2_11389947791",
+        "operationId": "DocService_42_2_0378230534",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -503,7 +503,7 @@
     "/preview/": {
       "get": {
         "description": "Previews document",
-        "operationId": "DocService_78_2_0538362498",
+        "operationId": "DocService_78_2_11291695315",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -552,7 +552,7 @@
       },
       "post": {
         "description": "Previews document",
-        "operationId": "DocService_84_2_11818610516",
+        "operationId": "DocService_84_2_1354063351",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -603,7 +603,7 @@
     "/download/": {
       "get": {
         "description": "Download document",
-        "operationId": "DocService_92_2_11043604678",
+        "operationId": "DocService_92_2_01081028628",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -645,7 +645,7 @@
       },
       "post": {
         "description": "Download document",
-        "operationId": "DocService_97_2_1604221208",
+        "operationId": "DocService_97_2_11881554808",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",

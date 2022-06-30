@@ -43,7 +43,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.codehaus.plexus:plexus-utils:2.0.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.sonatype.sisu:sisu-inject-plexus:2.2.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.sonatype.sisu:sisu-inject-bean:2.2.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Intino: org.sonatype.sisu:sisu-guice:3.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.sonatype.aether:aether-impl:1.13.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.apache.maven:maven-aether-provider:3.0.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Intino: org.apache.maven:maven-model:3.0.5" level="project" />

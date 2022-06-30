@@ -1,5 +1,6 @@
 dsl Legio
 
+
 Artifact("io.intino.goros", "1.0.5") shifter
 	Imports
 		Test("junit", "junit", "4.13")

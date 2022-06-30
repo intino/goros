@@ -5,6 +5,7 @@ Artifact(groupId = "io.intino.goros", version = "1.0.11") documents as Platform
 	Box(language = "Konos", version = "8.14.6")
 	Code("io.intino.goros.documents")
 
+
 	Imports
 		Compile("org.siani.monet", "docservice", "2.0.6")
 			Exclude ("org.siani.monet","servlet-api")

@@ -9,7 +9,7 @@ Artifact(groupId = "io.intino.goros.modernizing", version = "1.1.6") monet
 		Compile("org.simpleframework", "simple-xml", "2.7.1")
 		Compile("javax.xml.bind", "jaxb-api", "2.3.0-b170201.1204")
         Compile("javax.activation", "activation", "1.1")
-        Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.0-b170127.1453")
+        Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("commons-io", "commons-io", "2.7")
 
 		Test(groupId = "junit", artifactId = "junit", version = "LATEST")

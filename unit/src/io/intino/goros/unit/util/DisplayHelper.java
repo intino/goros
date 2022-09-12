@@ -3,6 +3,7 @@ package io.intino.goros.unit.util;
 import io.intino.alexandria.ui.displays.components.*;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
+import org.monet.bpi.types.Link;
 import org.monet.metamodel.*;
 import org.monet.space.kernel.agents.AgentSession;
 import org.monet.space.kernel.constants.ApplicationInterface;
@@ -173,6 +174,10 @@ public class DisplayHelper {
 
 	public static SelectorCollectionBox.ValueProvider linkValueProvider() {
 		return nodeItem -> ((NodeItem)nodeItem).getAttribute("value");
+	}
+
+	public static Link findLink(List<Link> links, String value) {
+		return links.stream().filter(l -> l.getLabel().equals(value)).findFirst().orElse(null);
 	}
 
 	public static String translation(Object label) {

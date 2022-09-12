@@ -1,8 +1,8 @@
 {
   "urls": [
     {
-      "url": "./data/backService.json",
-      "name": "backService"
+      "url": "./data/mobileService.json",
+      "name": "mobileService"
     },
     {
       "url": "./data/frontService.json",
@@ -13,15 +13,15 @@
       "name": "geoService"
     },
     {
-      "url": "./data/mobileService.json",
-      "name": "mobileService"
+      "url": "./data/backService.json",
+      "name": "backService"
     },
     {
       "url": "./data/setupService.json",
       "name": "setupService"
     }
   ],
-  "title": "Backservice API",
+  "title": "Mobile API",
   "subtitle": "",
   "background": "",
   "color": "",

@@ -31,7 +31,7 @@ module.exports = {
         'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js'
     },
     output: {
-        path: "/Users/sfalcon/projects/goros/out/production/unit-elements/www/unit-elements",
+        path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
         publicPath: '$basePath/unit-elements/',
         filename: "[name].js"
     },

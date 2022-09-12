@@ -136,6 +136,7 @@ end
 
 def type(field & link & multiple)
     Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, multipleSelection=true, placeholder="Seleccione un valor") Labeled("$label") Readonly
+    Link(title="") $name+firstLowerCase~Trigger as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
 end
 
 def type(field & link)

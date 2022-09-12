@@ -179,6 +179,7 @@ end
 
 def type(field & link & multiple) trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
+    private org.monet.space.kernel.model.Node<?> $name+firstLowerCase~Selected;
 end
 
 def type(field & multiple) trigger(declaration)
@@ -406,10 +407,23 @@ end
 
 def type(field & link & multiple) trigger(init)
     $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
+    $name+firstLowerCase~.onOpen(e -> {
+        org.monet.bpi.types.Link link = io.intino.goros.unit.util.DisplayHelper.findLink($name+firstLowerCase~Field.getAll(), e.value());
+        if (link == null) return;
+        $name+firstLowerCase~Selected = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(link.getId());
+        $name+firstLowerCase~Trigger.address(path -> io.intino.goros.unit.util.PathHelper.pathOf($name+firstLowerCase~Selected));
+        $name+firstLowerCase~Trigger.openLayer();
+    });
     $name+firstLowerCase~.onSelect(e -> save(b -> {
         $name+firstLowerCase~Field.removeAll();
         $name+firstLowerCase~Field.addNewAll(io.intino.goros.unit.util.NodeHelper.linksOf(e.selection()));
     }));
+    $name+firstLowerCase~Trigger.onOpen(e1 -> {
+        e1.layer().title($name+firstLowerCase~Selected.getLabel());
+        AppTemplate template = new AppTemplate(box());
+        e1.layer().template(template);
+        template.embedded(true);
+    });
 end
 
 def type(field & link & multiple) trigger(refresh)

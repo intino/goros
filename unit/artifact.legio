@@ -1,17 +1,17 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.1.28") unit as Platform
-	Model(language = "Meta", version = "3.0.1", sdk = "4.1.1")
-	Box(language = "Konos", version = "8.18.10")
+Artifact(groupId = "io.intino.goros", version = "1.2.0") unit as Platform
+	Model(language = "Meta", version = "3.0.1", sdkVersion = "4.1.1")
+	Box(language = "Konos", version = "9.4.2")
 	Code("io.intino.goros.unit")
 
 	Imports
 		Compile("org.siani.monet", "space", "2.0.20")
 			Exclude ("org.siani.monet", "servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.0.4")
- 		Compile("io.intino.alexandria", "ui-framework", "4.15.26")
-		Compile("io.intino.alexandria", "core-framework", "2.1.0")
-		Compile("io.intino.alexandria", "rest", "3.4.1")
+ 		Compile("io.intino.alexandria", "ui-framework", "4.19.13")
+		Compile("io.intino.alexandria", "core-framework", "2.1.1")
+		Compile("io.intino.alexandria", "rest", "3.6.4")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 			Exclude ("org.apache.tomcat", "servlet-api")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
@@ -23,6 +23,7 @@ Artifact(groupId = "io.intino.goros", version = "1.1.28") unit as Platform
 
 		Test("junit", "junit", "4.13")
 		Web(groupId = "io.intino.goros", artifactId = "unit-elements", version = "1.1.28")
+		Web(groupId = "io.intino.goros", artifactId = "unit-elements", version = "1.2.0")
 
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.unit.box.Main")
 		attachSources = true

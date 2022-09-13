@@ -278,5 +278,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Intino: log4j:log4j:1.2.14" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.19.15" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.0" level="project" />
+    <orderEntry type="module" module-name="unit-elements" />
   </component>
 </module>

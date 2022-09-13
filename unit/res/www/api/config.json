@@ -5,6 +5,10 @@
       "name": "mobileService"
     },
     {
+      "url": "./data/fmsService.json",
+      "name": "fmsService"
+    },
+    {
       "url": "./data/frontService.json",
       "name": "frontService"
     },

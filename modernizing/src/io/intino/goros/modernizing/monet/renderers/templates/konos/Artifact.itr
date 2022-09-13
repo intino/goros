@@ -2,8 +2,8 @@ def type(artifact)
     dsl Legio
 
     Artifact(groupId = "$package", version = "1.0.0") model as Product
-        Model(language = "Unit", version = "1.0.0-SNAPSHOT", sdkVersion = "4.1.2")
-        Box(language = "Konos", version = "9.4.2")
+        Model(language = "Unit", version = "1.2.2", sdkVersion = "4.1.2")
+        Box(language = "Konos", version = "9.4.5")
 
         Imports
             Compile("io.intino.alexandria", "ui-framework", "4.19.13")

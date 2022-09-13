@@ -1,0 +1,31 @@
+dsl Konos
+
+Service fmsService as REST(host = "", port = "{port}")
+	title = "Fmsservice API"
+	basePath = ""
+
+	//AuthenticatedWithToken
+
+	Resource("/servlet/fms") fmsServiceDispatcher // Compatibility mode with links from pdf files
+		Get(description = "Dispatchs operation")
+			Parameter(in=query) op as Text
+			Parameter(in=query) id as Text
+			Parameter(in=query) nid as Text
+			Parameter(in=query) f as Text
+			Parameter(in=query) thumb as Text
+			Response as File
+
+	Resource("/servlet/fms/image") downloadImage // Compatibility mode with links from pdf files
+		Get(description = "Downloads image")
+			Parameter(in=query) id as Text
+			Parameter(in=query) nodeId as Text
+			Parameter(in=query) filename as Text
+			Parameter(in=query) thumbnail as Text
+			Response as File
+
+	Resource("/servlet/fms/document") downloadDocument // Compatibility mode with links from pdf files
+		Get(description = "Downloads document")
+			Parameter(in=query) id as Text
+			Parameter(in=query) nodeId as Text
+			Parameter(in=query) filename as Text
+			Response as File

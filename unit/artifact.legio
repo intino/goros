@@ -118,10 +118,6 @@ Artifact(groupId = "io.intino.goros", version = "1.2.3") unit as Platform
 	Parameter("mail-admin-port", "465")
 	Parameter("mail-admin-secure", "true")
 
-Repository("monentia-maven")
-	Release("https://artifactory.monentia.es/artifactory/releases")
-	Snapshot("https://artifactory.monentia.es/artifactory/snapshots")
-
 Repository(identifier = "intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")
 	Snapshot("https://artifactory.intino.io/artifactory/snapshots")

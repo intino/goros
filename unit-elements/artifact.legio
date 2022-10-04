@@ -9,10 +9,6 @@ Artifact(groupId = "io.intino.goros", version = "1.2.3") unit-elements
 			Release("https://artifactory.intino.io/artifactory/release-libraries")
 			Snapshot("https://artifactory.intino.io/artifactory/snapshot-libraries")
 
-Repository("monentia-maven")
-	Release("https://artifactory.monentia.es/artifactory/libs-release-local")
-	Release("https://artifactory.monentia.es/artifactory/releases")
-
 Repository("intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")
 	Release("https://artifactory.intino.io/artifactory/release-frameworks")

@@ -572,15 +572,31 @@ public class NodeHelper {
 
     public static String filtersMessage(Node node, List<Filter> filters) {
         IndexDefinition definition = Dictionary.getInstance().getIndexDefinition(((SetDefinition)node.getDefinition()).getIndex().getValue());
-        return filters.stream().map(f -> filterMessage(definition, f)).collect(Collectors.joining(", "));
+        return filters.stream().map(f -> filterMessage(definition, f)).filter(Objects::nonNull).collect(Collectors.joining(", "));
     }
 
-    private static String filterMessage(IndexDefinition definition, Filter f) {
+    private static String filterMessage(IndexDefinition definition, Filter filter) {
+        if (filter instanceof GroupFilter) return groupFilterMessage(definition, filter);
+        else if (filter instanceof RangeFilter) return rangeFilterMessage(definition, filter);
+        return null;
+    }
+
+    private static String groupFilterMessage(IndexDefinition definition, Filter f) {
         GroupFilter filter = (GroupFilter) f;
         if (filter.groups().isEmpty()) return "";
         AttributeProperty attributeDefinition = definition.getAttribute(filter.grouping());
         if (attributeDefinition == null) return "";
         return attributeDefinition.getLabel() + "(" + String.join(", ", filter.groups()) + ")";
+    }
+
+    private static String rangeFilterMessage(IndexDefinition definition, Filter f) {
+        AttributeProperty attributeDefinition = definition.getAttribute(f.grouping());
+        if (attributeDefinition == null) return "";
+        RangeFilter rangeFilter = (RangeFilter)f;
+        if (rangeFilter.from() == null || rangeFilter.to() == null) return null;
+        String from = Formatters.shortDate(rangeFilter.from());
+        String to = Formatters.shortDate(rangeFilter.to());
+        return attributeDefinition.getLabel() + "(" + from + " - " + to + ")";
     }
 
     public static Set<String> getFieldFilters(Node node, FieldProperty fieldDefinition, boolean mask) {

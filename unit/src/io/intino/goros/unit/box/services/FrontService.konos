@@ -4,7 +4,7 @@ Service frontService as REST(host = "", port = "{port}")
 	title = "Front Service API"
 	basePath = "/service"
 
-	//AuthenticatedWithToken
+	Authentication as Bearer
 
 	Resource("/source/:source-name/") source
 		Post(description = "Executes an action and returns the result")

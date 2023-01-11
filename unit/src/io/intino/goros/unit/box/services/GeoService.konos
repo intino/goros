@@ -4,6 +4,8 @@ Service geoService as REST(host = "", port = "{port}")
 	title = "Geoservice API"
 	basePath = ""
 
+	Authentication as Bearer
+
 	Info(title = "externa", version = "1.0")
 		description = "Geoservice API"
 

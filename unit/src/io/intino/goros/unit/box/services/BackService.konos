@@ -4,7 +4,7 @@ Service backService as REST(host = "", port = "{port}")
 	title = "Backservice API"
 	basePath = ""
 
-	//AuthenticatedWithToken
+	Authentication as Bearer
 
 	Resource("/servlet/backservice") backServiceDispatcher // Compatibility with federation
 		Post(description = "Dispatchs operation")

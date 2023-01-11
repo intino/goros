@@ -4,7 +4,7 @@ Service mobileService as REST(host = "", port = "{port}")
 	title = "Mobile API"
 	basePath = "/mobile/api"
 
-	//AuthenticatedWithToken
+	Authentication as Bearer
 
 	Resource("/Helo/") helo
 		Post(description = "Does Helo")

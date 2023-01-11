@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box;
 
+import io.intino.alexandria.logger.Logger;
 import io.intino.alexandria.ui.services.AuthService;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.listeners.GorosUnitNotifier;
@@ -10,12 +11,19 @@ import org.monet.space.kernel.agents.AgentSession;
 import org.monet.space.kernel.model.BusinessUnit;
 import org.monet.space.kernel.model.Context;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toMap;
 
 public class UnitBox extends AbstractBox {
@@ -83,7 +91,7 @@ public class UnitBox extends AbstractBox {
 	}
 
 	public io.intino.alexandria.http.security.BasicAuthenticationValidator authenticationValidator() {
-		return token -> false;
+		return token -> token != null && !token.isEmpty() && loadAuthenticationTokens().contains(token);
 	}
 
 	public boolean isInstalled() {
@@ -117,6 +125,19 @@ public class UnitBox extends AbstractBox {
 			return new URL(url).getHost();
 		} catch (MalformedURLException e) {
 			return null;
+		}
+	}
+
+	private List<String> loadAuthenticationTokens() {
+		try {
+			if (!configuration.servicesAuthenticationTokens().isEmpty())
+				return List.of(configuration.servicesAuthenticationTokens().split(";"));
+			Path path = Path.of(configuration.servicesAuthenticationTokensFilename());
+			if (!path.toFile().exists()) return emptyList();
+			return Files.readAllLines(Path.of(configuration.servicesAuthenticationTokensFilename()));
+		} catch (IOException e) {
+			Logger.error(e);
+			return emptyList();
 		}
 	}
 

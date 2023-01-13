@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.backservice.control.actions.ActionAddNodeNote;
 import org.monet.space.backservice.control.constants.Parameter;
 
@@ -7,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PostAddNodeNoteAction extends BackServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String id;
+    public UnitBox box;
+    public String id;
     public String name;
     public String value;
 

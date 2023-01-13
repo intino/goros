@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.backservice.control.actions.ActionExecuteExporter;
 import org.monet.space.backservice.control.constants.Parameter;
 
@@ -8,8 +9,8 @@ import java.util.Map;
 
 
 public class PostExecuteExporterAction extends BackServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String exporter;
+    public UnitBox box;
+    public String exporter;
     public String scope;
 
     public io.intino.alexandria.Resource execute() {

@@ -4,8 +4,6 @@ Service fmsService as REST(host = "", port = "{port}")
 	title = "Fmsservice API"
 	basePath = ""
 
-	Authentication as Bearer
-
 	Resource("/servlet/fms") fmsServiceDispatcher // Compatibility mode with links from pdf files
 		Get(description = "Dispatchs operation")
 			Parameter(in=query) op as Text

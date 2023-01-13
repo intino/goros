@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.monet.space.frontservice.control.actions.ActionMailBox;
@@ -10,8 +11,8 @@ import java.util.Map;
 
 
 public class PostMailboxAction extends FrontServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String address;
+    public UnitBox box;
+    public String address;
     public String signaling;
     public io.intino.alexandria.Resource message;
     public String messageCode;

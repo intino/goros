@@ -1,29 +1,29 @@
 {
   "urls": [
-    {
-      "url": "./data/mobileService.json",
-      "name": "mobileService"
-    },
-    {
-      "url": "./data/fmsService.json",
-      "name": "fmsService"
-    },
-    {
-      "url": "./data/frontService.json",
-      "name": "frontService"
-    },
-    {
-      "url": "./data/geoService.json",
-      "name": "geoService"
-    },
-    {
-      "url": "./data/backService.json",
-      "name": "backService"
-    },
-    {
-      "url": "./data/setupService.json",
-      "name": "setupService"
-    }
+	{
+	  "url": "./data/mobileService.json",
+	  "name": "mobileService"
+	},
+	{
+	  "url": "./data/fmsService.json",
+	  "name": "fmsService"
+	},
+	{
+	  "url": "./data/frontService.json",
+	  "name": "frontService"
+	},
+	{
+	  "url": "./data/geoService.json",
+	  "name": "geoService"
+	},
+	{
+	  "url": "./data/backService.json",
+	  "name": "backService"
+	},
+	{
+	  "url": "./data/setupService.json",
+	  "name": "setupService"
+	}
   ],
   "title": "Mobile API",
   "subtitle": "",

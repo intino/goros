@@ -19,7 +19,7 @@
     "/servlet/fms": {
       "get": {
         "description": "Dispatchs operation",
-        "operationId": "FmsService_10_2_0145531325",
+        "operationId": "FmsService_8_2_0145531325",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -77,7 +77,7 @@
     "/servlet/fms/image": {
       "get": {
         "description": "Downloads image",
-        "operationId": "FmsService_19_2_0124979511",
+        "operationId": "FmsService_17_2_0124979511",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -128,7 +128,7 @@
     "/servlet/fms/document": {
       "get": {
         "description": "Downloads document",
-        "operationId": "FmsService_27_2_11551542585",
+        "operationId": "FmsService_25_2_11551542585",
         "consumes": [
           "text/plain; charset\u003dutf-8",
           " application/json",
@@ -170,15 +170,5 @@
       }
     }
   },
-  "definitions": {},
-  "securityDefinitions": {
-    "ouath2": {
-      "type": "oauth2"
-    }
-  },
-  "security": [
-    {
-      "bearer": []
-    }
-  ]
+  "definitions": {}
 }

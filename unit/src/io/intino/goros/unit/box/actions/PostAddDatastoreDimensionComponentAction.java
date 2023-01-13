@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.backservice.control.actions.ActionAddDatastoreDimensionComponent;
 import org.monet.space.backservice.control.constants.Parameter;
 
@@ -8,8 +9,8 @@ import java.util.Map;
 
 
 public class PostAddDatastoreDimensionComponentAction extends BackServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String name;
+    public UnitBox box;
+    public String name;
     public String dimension;
     public String data;
 

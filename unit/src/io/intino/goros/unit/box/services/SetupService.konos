@@ -4,7 +4,7 @@ Service setupService as REST(host = "", port = "{port}")
 	title = "Setup Service API"
 	basePath = "/setupservice"
 
-	Authentication as Bearer
+	Authentication as Custom
 
 	Resource("/showapi") showApi
 		Post(description = "Shows the api")

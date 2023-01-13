@@ -1,12 +1,13 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.Response;
 import org.monet.space.mobile.control.actions.ActionDoHelo;
 
 public class PostHeloAction extends MobileTypedAction {
-	public io.intino.alexandria.core.Box box;
-	public String request;
+    public UnitBox box;
+    public String request;
 
     public io.intino.alexandria.Resource execute() {
         try {

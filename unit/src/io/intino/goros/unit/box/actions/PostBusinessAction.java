@@ -1,5 +1,7 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.exceptions.Forbidden;
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.frontservice.control.actions.ActionBusinessService;
 import org.monet.space.frontservice.control.constants.Parameter;
 
@@ -8,7 +10,7 @@ import java.util.Map;
 
 
 public class PostBusinessAction extends FrontServiceAction {
-	public io.intino.alexandria.core.Box box;
+	public UnitBox box;
 	public String replyMailbox;
 	public String sourceUnit;
 	public String serviceName;

@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.backservice.control.actions.ActionLocateNode;
 import org.monet.space.backservice.control.constants.Parameter;
 
@@ -8,8 +9,8 @@ import java.util.Map;
 
 
 public class PostLocateNodeAction extends BackServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String code;
+    public UnitBox box;
+    public String code;
     public String depth;
 
     public java.lang.String execute() {

@@ -1,13 +1,14 @@
 package io.intino.goros.unit.box.actions;
 
 import io.intino.alexandria.logger.Logger;
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.mobile.exceptions.ActionException;
 import org.monet.mobile.service.ActionCode;
 import org.monet.mobile.service.errors.ServerError;
 import org.monet.space.mobile.control.actions.ActionDoUploadTaskPacked;
 
 public class PostUploadTaskPackedAction extends MobileNonTypedAction {
-	public io.intino.alexandria.core.Box box;
+	public UnitBox box;
 	public io.intino.alexandria.Resource request;
 
     public io.intino.alexandria.Resource execute() {

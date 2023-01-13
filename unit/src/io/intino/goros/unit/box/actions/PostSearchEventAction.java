@@ -8,7 +8,6 @@ import java.util.Map;
 
 
 public class PostSearchEventAction extends BackServiceAction {
-	public io.intino.alexandria.core.Box box;
 	public String type;
     public String from;
     public String to;

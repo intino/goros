@@ -56,6 +56,11 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
         refresh();
     }
 
+    @Override
+    public Editable<TemplateNotifier, UnitBox> focus() {
+        return this;
+    }
+
     public FieldNodeTemplate readonly(boolean readonly) {
         this.readonly = readonly;
         return this;

@@ -236,6 +236,11 @@ public class GorosOAuthAccessor implements AuthService {
     }
 
     @Override
+    public String logoutUrl() {
+        return "/api/logout";
+    }
+
+    @Override
     public void addPushListener(Token accessToken, FederationNotificationListener listener) throws CouldNotObtainInfo {
     }
 

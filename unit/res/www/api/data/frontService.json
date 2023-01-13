@@ -247,15 +247,5 @@
       }
     }
   },
-  "definitions": {},
-  "securityDefinitions": {
-    "ouath2": {
-      "type": "oauth2"
-    }
-  },
-  "security": [
-    {
-      "bearer": []
-    }
-  ]
+  "definitions": {}
 }

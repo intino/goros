@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.goros.unit.box.UnitBox;
 import org.monet.space.frontservice.control.actions.ActionSource;
 import org.monet.space.kernel.agents.AgentRestfullClient;
 
@@ -8,8 +9,8 @@ import java.util.Map;
 
 
 public class PostSourceAction extends FrontServiceAction {
-	public io.intino.alexandria.core.Box box;
-	public String count;
+    public UnitBox box;
+    public String count;
     public String startPos;
     public String searchText;
     public String filters;

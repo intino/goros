@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box;
 
+import org.monet.encrypt.CertificateVerifier;
 import org.monet.space.backservice.control.constants.Parameter;
 
 import java.util.ArrayList;
@@ -26,4 +27,5 @@ public class FrontServiceServiceAuthenticator {
 		Map<String, Object> result = new HashMap<>(params);
 		return new ArrayList<>(result.entrySet());
 	}
+
 }

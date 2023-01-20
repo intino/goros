@@ -35,7 +35,6 @@ public abstract class BackServiceAction extends Action {
     }
 
     private void initialize() {
-        String idSession = this.createSession();
         Context _context = Context.getInstance();
         Long idThread = Thread.currentThread().getId();
 
@@ -46,20 +45,8 @@ public abstract class BackServiceAction extends Action {
         } catch (MalformedURLException ignore) {
         }
         _context.setUserServerConfig(idThread, url.getHost(), url.getPath(), url.getPort());
-        _context.setSessionId(idThread, idSession);
         _context.setDatabaseConnectionType(idThread, Database.ConnectionTypes.AUTO_COMMIT);
         this.response = new Response(context);
     }
 
-    private String createSession() {
-        AgentSession agentSession = AgentSession.getInstance();
-        String idSession = UUID.randomUUID().toString();
-        org.monet.space.kernel.model.Session session = agentSession.get(idSession);
-
-        if (session == null) {
-            agentSession.add(idSession);
-        }
-
-        return idSession;
-    }
 }

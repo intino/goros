@@ -1,15 +1,12 @@
 package io.intino.goros.unit.box;
 
-import org.monet.encrypt.CertificateVerifier;
 import org.monet.space.backservice.control.constants.Parameter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.intino.goros.unit.util.LayerHelper.federationLayer;
 
-public class FrontServiceServiceAuthenticator {
+public class FrontServiceServiceAuthenticator extends GorosAuthenticator {
  	private UnitBox box;
 
  	public FrontServiceServiceAuthenticator(UnitBox box) {
@@ -20,12 +17,8 @@ public class FrontServiceServiceAuthenticator {
 		String signature = parameters.get(Parameter.SIGNATURE);
 		String timestamp = parameters.get(Parameter.TIMESTAMP);
 		if (signature == null || timestamp == null) return false;
+		initialize();
 		return federationLayer().validateRequest(signature, Long.valueOf(timestamp), toList(parameters)).isValid();
-	}
-
-	private ArrayList<Map.Entry<String, Object>> toList(Map<String, String> params) {
-		Map<String, Object> result = new HashMap<>(params);
-		return new ArrayList<>(result.entrySet());
 	}
 
 }

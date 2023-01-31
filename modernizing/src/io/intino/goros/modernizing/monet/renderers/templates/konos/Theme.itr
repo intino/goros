@@ -71,7 +71,7 @@ def type(theme)
     // COMMON
     Format("zIndex:'1'") visible
     Format("position:'relative'") relative
-    Format("height:'60px',width:'auto !important',marginRight:'15px'") minLogoSize
+    Format("minWidth:'72px',width:'auto !important',marginRight:'15px'") minLogoSize
     Format("width:'100%'") fullWidth
     Format("height:'100%'") fullHeight
     Format("minWidth:'48px'") minDrawerButtonSize

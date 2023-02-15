@@ -262,7 +262,6 @@
     <orderEntry type="library" name="Intino: io.intino.alexandria:driver-r:1.0.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:proxy:1.1.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.icod:standalone:1.0.2" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.22.13" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:http:1.5.11" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:exceptions:2.1.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:json:1.2.0" level="project" />
@@ -281,6 +280,8 @@
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-core:2.13.4" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.7.5" level="project" />
     <orderEntry type="module" module-name="unit-elements" />
-    <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.1" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.2" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.23.0" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:cli-framework:1.0.0" level="project" />
   </component>
 </module>

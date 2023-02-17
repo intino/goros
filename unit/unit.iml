@@ -279,9 +279,9 @@
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-annotations:2.13.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-core:2.13.4" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.7.5" level="project" />
-    <orderEntry type="module" module-name="unit-elements" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.23.0" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:cli-framework:1.0.0" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.3" level="project" />
+    <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.4" level="project" />
+    <orderEntry type="module" module-name="unit-elements" />
   </component>
 </module>

@@ -29,7 +29,7 @@ Service geoService as REST(host = "", port = "{port}")
 			Parameter (in=path) id as Text > description = "Node id"
 			Response as Object(Location) List > description = "Return all points from a node id"
 
-	Resource("/api/geoservice/image/:id/*") Images
+	Resource("/api/geoservice/image/:id/*") Images as Public
 		Get(description = "Get image from node")
 			Parameter (in=path) id as Text > description = "Node id"
 //			Parameter (in=path) path as Text > description = "File name"

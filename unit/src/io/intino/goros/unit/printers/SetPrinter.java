@@ -1,5 +1,6 @@
 package io.intino.goros.unit.printers;
 
+import io.intino.alexandria.ui.services.TranslatorService;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.LayerHelper;
 import io.intino.itrules.FrameBuilder;
@@ -154,7 +155,8 @@ public class SetPrinter extends NodePrinter {
 		if (attributeDefinition != null) return attributeDefinition;
 
 		attributeDefinition = new DescriptorDefinition().getAttribute(attribute);
-		attributeDefinition.setLabel(box.translatorService().translate("Code", language));
+		TranslatorService translatorService = box.translatorService();
+		attributeDefinition.setLabel(translatorService != null ? translatorService.translate("Code", language) : "Código");
 
 		return attributeDefinition;
 	}

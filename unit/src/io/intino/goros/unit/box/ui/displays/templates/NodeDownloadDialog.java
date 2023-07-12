@@ -104,7 +104,7 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         boolean exceeded = limitExceeded(countItems);
         downloadMessage.visible(exceeded);
         if (!exceeded) return;
-        downloadMessage.value(String.format("La descarga total es de %s. Por rendimiento, será incluirán %s para los formatos PDF ó XLS. Si desea descargar todos los elementos, seleccione la descarga en formato CSV.", Formatters.countMessage(countItems, "elemento", "elementos"), Formatters.countMessage(limit(), "elemento", "elementos")));
+        downloadMessage.value(String.format("La descarga total es de %s. Por rendimiento, se incluirán %s para los formatos PDF ó XLS. Si desea descargar todos los elementos, seleccione la descarga en formato CSV.", Formatters.countMessage(countItems, "elemento", "elementos"), Formatters.countMessage(limit(), "elemento", "elementos")));
     }
 
     private boolean check() {

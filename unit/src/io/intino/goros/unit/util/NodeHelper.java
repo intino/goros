@@ -70,6 +70,12 @@ public class NodeHelper {
         return PathHelper.nameOf(node.getDefinition());
     }
 
+    public static int countItems(Node node, NodeDataRequest request) {
+        IndexDefinition index = Dictionary.getInstance().getIndexDefinition(((SetDefinition)node.getDefinition()).getIndex().getValue());
+        request.setCodeReference(index.getCode());
+        return LayerHelper.nodeLayer().requestNodeListItemsCount(node.getId(), request);
+    }
+
 	public static InputStream download(UnitBox box, Node node, NodeDataRequest request, String format, List<String> columns, String language) {
         return new SetPrinter(box, node, request, format, columns).print(language);
     }

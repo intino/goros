@@ -1,5 +1,6 @@
 package io.intino.goros.unit.printers;
 
+import com.esotericsoftware.kryo.io.Input;
 import io.intino.alexandria.logger.Logger;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.printers.templates.CsvNodeTemplate;
@@ -10,11 +11,12 @@ import io.intino.itrules.Template;
 import org.monet.space.kernel.library.LibraryPDF;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.NodeDataRequest;
+import org.monet.space.office.presentation.user.renders.PrintRender;
+import org.monet.space.office.presentation.user.renders.RendersFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class NodePrinter extends Printer {
 	protected final UnitBox box;
@@ -34,7 +36,7 @@ public abstract class NodePrinter extends Printer {
 	public InputStream print(String language) {
 		Template template = template();
 		String result = template.render(build(language).toFrame());
-		return new ByteArrayInputStream(generateDocument(result));
+		return generateDocument(result);
 	}
 
 	protected abstract FrameBuilder build(String language);
@@ -49,16 +51,24 @@ public abstract class NodePrinter extends Printer {
 		return new CsvNodeTemplate();
 	}
 
-	protected byte[] generateDocument(String result) {
+	protected InputStream generateDocument(String result) {
 		try {
-			if (format.equalsIgnoreCase("pdf")) return LibraryPDF.create(new ByteArrayInputStream(result.getBytes("utf8"))).toByteArray();
-			if (format.equalsIgnoreCase("xls")) return result.replaceAll("\\\\n", "\r\n").getBytes("UTF-8");
-			return result.replaceAll("\\\\n", "\r\n").getBytes("UTF-16LE");
+			if (format.equalsIgnoreCase("pdf")) {
+				File output = File.createTempFile(UUID.randomUUID().toString(), ".pdf");
+				LibraryPDF.create(new ByteArrayInputStream(result.getBytes("utf8")), output);
+				return new FileInputStream(output);
+			}
+			if (format.equalsIgnoreCase("xls")) return streamOf(result.replaceAll("\\\\n", "\r\n").getBytes("UTF-8"));
+			return streamOf(result.replaceAll("\\\\n", "\r\n").getBytes("UTF-16LE"));
 		}
-		catch (UnsupportedEncodingException e) {
+		catch (IOException e) {
 			Logger.error(e);
-			return new byte[0];
+			return streamOf(new byte[0]);
 		}
+	}
+
+	private InputStream streamOf(byte[] bytes) {
+		return new ByteArrayInputStream(bytes);
 	}
 
 }

@@ -98,7 +98,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Intino: com.fasterxml.jackson.core:jackson-core:2.13.4" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:rest:3.7.5" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:cli-framework:1.0.0" level="project" />
-    <orderEntry type="module" module-name="unit-elements" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:4.23.3" level="project" />
     <orderEntry type="library" name="Intino: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Intino: avalon-framework:avalon-framework:4.1.5" level="project" />
@@ -283,5 +282,6 @@
     <orderEntry type="library" name="Intino: dnie:MITyCLibXADES:1.1.7" level="project" />
     <orderEntry type="library" name="Intino: dnie:xmlsec:1.4.2-ADSI" level="project" />
     <orderEntry type="library" name="Intino: org.siani.monet:space:2.1.5" level="project" />
+    <orderEntry type="module" module-name="unit-elements" />
   </component>
 </module>

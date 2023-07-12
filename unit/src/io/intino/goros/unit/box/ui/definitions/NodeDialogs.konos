@@ -11,6 +11,7 @@ Template(layout=Flexible) NodeDownloadDialog as Relative(height=100%)
 				Text(value="Formato de documento portátil (pdf)") pdf as Option
 				Text(value="Valores separados por coma (csv)") csv as Option
 				Text(value="Documento de Excel (xls)") xls as Option
+			Text(format=body2 red middleAirTop, visible=false) downloadMessage
 		Block(format=airBottom doubleAirTop) columnsBlock
 			Selector columnModeSelector as RadioBox Labeled("Indique las columnas de la cabecera del documento")
 				Text(value="Todas las columnas") allColumns as Option

@@ -8,7 +8,7 @@ def type(setdefinition)
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
-                Block(layout=Horizontal)
+                Block(layout=Horizontal Center)
                     [$desktop]
                     [$parent]
                     Text(value="$label", format=h4 bold) label

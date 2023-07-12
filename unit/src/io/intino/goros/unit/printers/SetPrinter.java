@@ -169,8 +169,6 @@ public class SetPrinter extends NodePrinter {
 
 	private FrameBuilder referencesFrame(int count, String language) {
 		FrameBuilder result = new FrameBuilder("references");
-		request.setStartPos(0);
-		request.setLimit(count);
 		Collection<Node> nodes = LayerHelper.nodeLayer().requestNodeListItems(node.getId(), request).values();
 		int pos = 0;
 		for (Node node : nodes) {
@@ -222,7 +220,7 @@ public class SetPrinter extends NodePrinter {
 		if (attributeDeclaration.getType() == AttributeProperty.TypeEnumeration.BOOLEAN)
 			value = value.toLowerCase().equals("true") ? "X" : "";
 
-		return value.replace("&", "&amp;");
+		return value.replace("&", "&amp;").replace("\n", " ");
 	}
 
 	private void updateColumnDataSize(String value, AttributeProperty attributeProperty) {
@@ -239,19 +237,12 @@ public class SetPrinter extends NodePrinter {
 		if (totalSize == 0) return;
 
 		totalSize = fixColumnsWithShortOrLongData(totalSize, language);
-		int maxColumnSize = maxColumnPercentageWith(columns.size());
 
 		for (String column : columns) {
 			AttributeProperty attributeDefinition = attributePropertyOf(column, language);
 			String code = attributeDefinition.getCode();
-			int wordLength = wordLength(Language.getInstance().getModelResource(attributeDefinition.getLabel()));
 			int dataSize = columnDataSizes.getOrDefault(code, 0);
-
-			if (dataSize > 0 && wordLength > dataSize)
-				dataSize = Math.min(wordLength, maxColumnSize);
-
 			int percentage = (dataSize*100)/totalSize;
-
 			columnPercentages.put(code, percentage);
 		}
 	}
@@ -281,7 +272,7 @@ public class SetPrinter extends NodePrinter {
 	private int fixColumnsWithShortOrLongData(int totalSize, String language) {
 
 		totalSize = fixShortDataColumns(totalSize, language);
-		totalSize = fixLongDataColumns(totalSize, language);
+		//totalSize = fixLongDataColumns(totalSize, language);
 
 		return totalSize;
 	}
@@ -293,12 +284,10 @@ public class SetPrinter extends NodePrinter {
 			int wordLength = this.wordLength(Language.getInstance().getModelResource(attributeDefinition.getLabel())) + 10;
 			int dataSize = columnDataSizes.getOrDefault(code, 0);
 
-			if (dataSize > 0 && wordLength > dataSize) {
-				columnDataSizes.put(code, wordLength);
-
-				totalSize = totalSize-dataSize;
-				dataSize = wordLength;
-				totalSize = totalSize+dataSize;
+			if (dataSize == 0 || wordLength > dataSize) {
+				int length = dataSize == 0 ? 5 : wordLength;
+				columnDataSizes.put(code, length);
+				totalSize = totalSize-dataSize+length;
 			}
 		}
 		return totalSize;

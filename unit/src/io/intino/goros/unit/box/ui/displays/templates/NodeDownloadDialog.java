@@ -13,7 +13,6 @@ import org.monet.space.kernel.model.NodeDataRequest;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -76,7 +75,10 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
     @Override
     public void init() {
         super.init();
-        format.onSelect(e -> refreshToolbar());
+        format.onSelect(e -> {
+            refreshDownloadMessage();
+            refreshToolbar();
+        });
         downloadCancel.onExecute(e -> terminateListener.accept(true));
         downloadAccept.onExecute(e -> accept());
         columnModeSelector.onSelect(e -> updateMode());
@@ -87,14 +89,44 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         super.refresh();
         format.select("pdf");
         columnModeSelector.select("allColumns");
+        refreshDownloadMessage();
         refreshColumns();
         refreshToolbar();
+    }
+
+    private void refreshDownloadMessage() {
+        boolean checkCount = format.selection().isEmpty() || !format.selection().get(0).equalsIgnoreCase("csv");
+        if (!checkCount) {
+            downloadMessage.visible(false);
+            return;
+        }
+        long countItems = totalItems(request());
+        boolean exceeded = limitExceeded(countItems);
+        downloadMessage.visible(exceeded);
+        if (!exceeded) return;
+        downloadMessage.value(String.format("La descarga total es de %s. Por rendimiento, será incluirán %s para los formatos PDF ó XLS. Si desea descargar todos los elementos, seleccione la descarga en formato CSV.", Formatters.countMessage(countItems, "elemento", "elementos"), Formatters.countMessage(limit(), "elemento", "elementos")));
     }
 
     private boolean check() {
         if (format.selection().size() <= 0) return false;
         if (allColumnsMode()) return true;
         return options.children(DownloadDialogOption.class).stream().anyMatch(c -> c.selectedColumn() != null);
+    }
+
+    private int totalItems(NodeDataRequest request) {
+        return NodeHelper.countItems(node, request);
+    }
+
+    private boolean limitExceeded(long countItems) {
+        long limit = limit();
+        boolean check = format.selection().isEmpty() || !format.selection().get(0).equals("csv");
+        if (!check) return false;
+        return limit != -1 && countItems >= limit;
+    }
+
+    private int limit() {
+        String limit = box().configuration().downloadNodesLimit();
+        return limit != null && !limit.isEmpty() ? Integer.parseInt(box().configuration().downloadNodesLimit()) : -1;
     }
 
     private UIFile accept() {
@@ -124,6 +156,9 @@ public class NodeDownloadDialog extends AbstractNodeDownloadDialog<UnitBox> {
         dataRequest.setCondition(condition);
         dataRequest.setGroupsBy(NodeHelper.groupsByOf(filters));
         if (sorting != null) dataRequest.setSortsBy(sortsByOf(singletonList(sortingOf(sorting, sortingMode))));
+        dataRequest.setStartPos(0);
+        int countItems = totalItems(dataRequest);
+        dataRequest.setLimit(limitExceeded(countItems) ? limit() : countItems);
         return dataRequest;
     }
 

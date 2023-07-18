@@ -8,7 +8,7 @@ def type(show & fields)
 end
 
 def type(show & location)
-    Text(value="TODO")
+    Block(layout=Vertical Flexible, format=spaced) as Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) locationViewStamp
 end
 
 def type(show & layout) trigger(use)

@@ -11,12 +11,12 @@ import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty.ShowProperty;
 import org.monet.metamodel.internal.*;
 
-import javax.swing.text.CompositeView;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toMap;
 
 public class FormRenderer extends NodeRenderer<FormDefinition> {
 

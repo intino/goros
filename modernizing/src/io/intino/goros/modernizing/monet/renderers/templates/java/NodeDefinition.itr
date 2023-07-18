@@ -698,6 +698,25 @@ def type(show & revisions)
 	}
 end
 
+def type(show & location) trigger(declaration)
+end
+
+def type(show & location)
+	@Override
+	public void refresh() {
+		super.refresh();
+		refreshLocationView();
+	}
+
+    private void refreshLocationView() {
+        if (node == null) return;
+        locationViewStamp.node(node);
+        locationViewStamp.readonly(node.isLocked() || readonly);
+        locationViewStamp.view(view);
+        locationViewStamp.refresh();
+    }
+end
+
 def type(desktop)
     desktopLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
 end

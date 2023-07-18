@@ -6,6 +6,8 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import io.intino.alexandria.ui.model.PlaceMark;
 import io.intino.alexandria.ui.model.datasource.*;
+import io.intino.alexandria.ui.model.locations.Point;
+import io.intino.alexandria.ui.model.locations.Polyline;
 import io.intino.alexandria.ui.services.push.UISession;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.LayerHelper;
@@ -18,7 +20,9 @@ import org.monet.space.kernel.model.map.GeometryHelper;
 import org.monet.space.kernel.model.map.Location;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -49,7 +53,8 @@ public class CollectionMapDatasource extends MapDatasource<String> {
         box.linkSession(session);
         SetDefinition definition = (SetDefinition) set.getDefinition();
         IndexDefinition indexDefinition = Dictionary.getInstance().getIndexDefinition(definition.getIndex().getValue());
-        return new ArrayList<>(LayerHelper.nodeLayer().loadLocationsInNode(set, boundingBoxOf(boundingBox), indexDefinition.getCode()).get().values().stream().map(CollectionMapDatasource::placeMarkOf).collect(toList()));
+        Map<String, Integer> cache = new HashMap<>();
+        return LayerHelper.nodeLayer().loadLocationsInNode(set, boundingBoxOf(boundingBox), indexDefinition.getCode()).get().values().stream().map(l -> fix(placeMarkOf(l), cache)).collect(java.util.stream.Collectors.toList());
     }
 
     @Override
@@ -124,6 +129,44 @@ public class CollectionMapDatasource extends MapDatasource<String> {
         CoordinateArraySequence sequence = new CoordinateArraySequence(coordinates);
 
         return new Polygon(new LinearRing(sequence, GeometryHelper.getFactory()), null, GeometryHelper.getFactory());
+    }
+
+    private PlaceMark<String> fix(PlaceMark<String> placeMark, Map<String, Integer> locations) {
+        String wkt = placeMark.location().toWkt();
+        locations.put(wkt, locations.containsKey(wkt) ? locations.get(wkt)+1 : 1);
+        if (locations.get(wkt) == 1) return placeMark;
+        double offset = locations.get(wkt)*0.00002;
+        fixPoint(placeMark, offset);
+        fixPolyline(placeMark, offset);
+        fixPolygon(placeMark, offset);
+        return placeMark;
+    }
+
+    private void fixPoint(PlaceMark<String> placeMark, double offset) {
+        if (!placeMark.location().isPoint()) return;
+        Point location = (Point) placeMark.location();
+        location.longitude(location.longitude()+offset);
+        location.latitude(location.latitude()+offset);
+    }
+
+    private void fixPolyline(PlaceMark<String> placeMark, double offset) {
+        if (!placeMark.location().isPolyline()) return;
+        Polyline location = (Polyline) placeMark.location();
+        List<Point> path = location.path();
+        if (path.isEmpty()) return;
+        path.get(0).longitude(path.get(0).longitude()+offset);
+        path.get(0).latitude(path.get(0).latitude()+offset);
+    }
+
+    private void fixPolygon(PlaceMark<String> placeMark, double offset) {
+        if (!placeMark.location().isPolygon()) return;
+        io.intino.alexandria.ui.model.locations.Polygon location = (io.intino.alexandria.ui.model.locations.Polygon) placeMark.location();
+        List<List<Point>> path = location.paths();
+        if (path.isEmpty()) return;
+        List<Point> points = path.get(0);
+        if (points.isEmpty()) return;
+        points.get(0).longitude(points.get(0).longitude()+offset);
+        points.get(0).latitude(points.get(0).latitude()+offset);
     }
 
 }

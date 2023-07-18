@@ -142,6 +142,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		result.add("view", nameOf(viewProperty));
 		result.add("definition", nameOf(definition()));
 		if (showProperty.getRecentTask() != null) addRecentTaskShow(viewProperty, showProperty, result);
+		else if (showProperty.getLocation() != null) addLocationShow(viewProperty, showProperty, result);
 		else if (showProperty.getLayout() != null) {
 			builder.add("updateFields", baseFrame().add("updateFields"));
 			addLayoutShow(viewProperty, result);
@@ -208,6 +209,10 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		ArrayList<Ref> taskList = showProperty.getRecentTask().getTask();
 		List<TaskDefinition> definitionList = taskList.size() <= 0 ? findTaskDefinitionsWith(definition()) : taskList.stream().map(ref -> dictionary.getTaskDefinition(ref.getValue())).collect(Collectors.toList());
 		definitionList.forEach(d -> addRecentTaskType(d, builder));
+	}
+
+	private void addLocationShow(FormViewProperty viewProperty, ShowProperty showProperty, FrameBuilder builder) {
+		// TODO
 	}
 
 	private void addFieldShow(FormViewProperty viewProperty, FrameBuilder builder) {

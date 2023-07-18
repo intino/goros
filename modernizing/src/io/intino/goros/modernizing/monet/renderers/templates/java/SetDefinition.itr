@@ -24,7 +24,7 @@ def type(show & index & locations)
     }
 
     public void select(Node node) {
-        io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId()))), 800);
+        io.intino.goros.unit.util.DisplayHelper.executeDelayed(b -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> matches(n, node.getId()))), 800);
     }
 
     public void selectSorting(String sorting, String mode) {
@@ -32,7 +32,7 @@ def type(show & index & locations)
     }
 
     public void refresh(Node node) {
-        $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> ((Node)n).getId().equals(node.getId())), node);
+        $definition+firstLowerCase~$view+firstUpperCase.refresh($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> matches(n, node.getId())), node);
     }
 
     @Override
@@ -56,6 +56,12 @@ def type(show & index & locations)
             ((io.intino.goros.unit.box.ui.datasources.$datasourceType)$definition+firstLowerCase~$view+firstUpperCase.source()).view(view);
             $definition+firstLowerCase~$view+firstUpperCase.reload();
         }
+    }
+
+    public boolean matches(Object node, String id) {
+        if (node instanceof String) return node.equals(id);
+        if (node instanceof Node) return ((Node<?>)node).getId().equals(id);
+        return false;
     }
 end
 
@@ -533,8 +539,13 @@ def type(setdefinition & embedded)
         }
 
         private void updateSelection(SelectionEvent selectionEvent) {
-            this.selection = selectionEvent.selection();
-            open(selectionEvent);
+            List<Object> selection = selectionEvent.selection();
+            this.selection = selection.stream().map(s -> s instanceof String ? load((String) s) : (Node<?>)s).collect(Collectors.toList());
+            open(this.selection);
+        }
+
+        private Node<?> load(String id) {
+            return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(id);
         }
 
         private void initFilters() {
@@ -678,9 +689,8 @@ def type(setdefinition & embedded)
             [$view+selectNodeCall...[$NL]]
         }
 
-        private void open(SelectionEvent event) {
+        private void open(List<Node> selection) {
             if (!readonly) return;
-            List<Node> selection = event.selection();
             open(selection.size() > 0 ? selection.get(0) : null);
         }
 

@@ -6,4 +6,7 @@ def type(translations)
 	    Translation("Operation canceled", "Operación cancelada")
 	    Translation("true", "Sí")
 	    Translation("false", "No")
+	    Translation("Address to search", "Dirección a buscar")
+	    Translation("Search", "Buscar")
+	    Translation("Address not found", "Dirección no encontrada")
 end

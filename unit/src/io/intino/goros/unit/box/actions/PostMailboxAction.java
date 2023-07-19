@@ -29,7 +29,7 @@ public class PostMailboxAction extends FrontServiceAction {
         if (address != null) paramMap.put(Parameter.ADDRESS, address);
         if (signaling != null) paramMap.put(Parameter.SIGNALING, signaling);
         if (message != null)
-            paramMap.put(Parameter.MESSAGE, new InputStreamBody(message.stream(), ContentType.APPLICATION_OCTET_STREAM));
+            paramMap.put(Parameter.MESSAGE, message.stream());
         if (messageCode != null) paramMap.put(Parameter.MESSAGE_CODE, messageCode);
         if (messageType != null) paramMap.put(Parameter.MESSAGE_TYPE, messageType);
         if (messageHash != null) paramMap.put(Parameter.MESSAGE_HASH, messageHash);

@@ -19,7 +19,7 @@ public class PostUpdateModelAction extends SetupServiceAction {
     @Override
     Map<String, Object> parameters() {
         HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put(Parameter.MODEL, new InputStreamBody(model.stream(), ContentType.APPLICATION_OCTET_STREAM));
+        paramMap.put(Parameter.MODEL, model.stream());
         return paramMap;
     }
 }

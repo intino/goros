@@ -14,7 +14,7 @@ public class XlsNodeTemplate extends Template {
 			rule().condition((type("references"))).output(expression().output(mark("reference").multiple("\n"))),
 			rule().condition((type("reference")), (trigger("header"))).output(literal("<Row ss:Index=\"4\" ss:AutoFitHeight=\"0\">\n  ")).output(expression().output(mark("attribute", "header").multiple("\n"))).output(literal("\n</Row>")),
 			rule().condition((type("reference"))).output(literal("<Row ss:AutoFitHeight=\"0\">\n  ")).output(expression().output(mark("attribute").multiple("\n"))).output(literal("\n</Row>")),
-			rule().condition((type("attribute")), (trigger("header"))).output(literal("<Cell ss:StyleID=\"s63\"><Data ss:Type=\"")).output(mark("type")).output(literal("\">")).output(mark("label")).output(literal("</Data></Cell>")),
+			rule().condition((type("attribute")), (trigger("header"))).output(literal("<Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">")).output(mark("label")).output(literal("</Data></Cell>")),
 			rule().condition((type("attribute"))).output(literal("<Cell ss:StyleID=\"s64\"><Data ss:Type=\"")).output(mark("type")).output(literal("\">")).output(mark("value")).output(literal("</Data></Cell>"))
 		);
 	}

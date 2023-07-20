@@ -122,7 +122,7 @@ def type(reference)
 end
 
 def type(attribute) trigger(header)
-    <Cell ss:StyleID="s63"><Data ss:Type="$type">$label</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">$label</Data></Cell>
 end
 
 def type(attribute)

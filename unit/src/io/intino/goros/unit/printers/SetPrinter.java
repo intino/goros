@@ -197,7 +197,7 @@ public class SetPrinter extends NodePrinter {
 		FrameBuilder result = attributeFrame(column, language);
 		AttributeProperty attributeProperty = attributePropertyOf(column, language);
 		ReferenceAttribute<?> attribute = reference.getAttribute(attributeProperty.getCode());
-		String value = valueOf(attribute, attributeProperty);
+		String value = valueOf(attribute, attributeProperty, language);
 		updateColumnDataSize(value, attributeProperty);
 		result.add("value", !value.isEmpty() ? value : "-");
 		return result;
@@ -211,7 +211,7 @@ public class SetPrinter extends NodePrinter {
 		return result;
 	}
 
-	private String valueOf(ReferenceAttribute<?> attribute, AttributeProperty attributeDeclaration) {
+	private String valueOf(ReferenceAttribute<?> attribute, AttributeProperty attributeDeclaration, String language) {
 		String value = attribute.getValueAsString();
 
 		if (attributeDeclaration.getType() == AttributeProperty.TypeEnumeration.PICTURE)

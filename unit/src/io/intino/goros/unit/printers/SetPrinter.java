@@ -207,8 +207,15 @@ public class SetPrinter extends NodePrinter {
 		AttributeProperty attributeProperty = attributePropertyOf(column, language);
 		FrameBuilder result = new FrameBuilder("attribute", attributeProperty.getType().toString().toLowerCase());
 		result.add("label", Language.getInstance().getModelResource(attributeProperty.getLabel(), language));
+		result.add("type", typeOf(attributeProperty));
 		result.add("width", columnPercentages.getOrDefault(attributeProperty.getCode(), 0));
 		return result;
+	}
+
+	private String typeOf(AttributeProperty attributeProperty) {
+		AttributeProperty.TypeEnumeration type = attributeProperty.getType();
+		if (type == AttributeProperty.TypeEnumeration.REAL || type == AttributeProperty.TypeEnumeration.INTEGER) return "Number";
+		return "String";
 	}
 
 	private String valueOf(ReferenceAttribute<?> attribute, AttributeProperty attributeDeclaration, String language) {

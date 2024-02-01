@@ -1,11 +1,11 @@
 {
     "name": "unit-elements",
-    "version": "1.3.24",
+    "version": "1.3.25",
     "description": "",
     "main": "src/App.js",
     "scripts": {
-        "build": "webpack --mode production",
-        "dev": "webpack --mode development --watch"
+        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
+        "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --watch"
     },
     "author": "",
     "license": "ISC",

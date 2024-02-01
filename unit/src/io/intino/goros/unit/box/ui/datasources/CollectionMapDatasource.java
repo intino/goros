@@ -132,6 +132,7 @@ public class CollectionMapDatasource extends MapDatasource<String> {
     }
 
     private PlaceMark<String> fix(PlaceMark<String> placeMark, Map<String, Integer> locations) {
+        if (placeMark.location() == null) return placeMark;
         String wkt = placeMark.location().toWkt();
         locations.put(wkt, locations.containsKey(wkt) ? locations.get(wkt)+1 : 1);
         if (locations.get(wkt) == 1) return placeMark;

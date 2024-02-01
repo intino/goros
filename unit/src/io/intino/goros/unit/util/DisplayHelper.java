@@ -14,6 +14,8 @@ import org.monet.space.kernel.model.*;
 import org.monet.space.kernel.model.User;
 import org.monet.space.office.ApplicationOffice;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -34,10 +36,19 @@ public class DisplayHelper {
 
 	public static void initContext(UnitBox box, UISession session, long thread) {
 		Context context = Context.getInstance();
-		context.setApplication(thread, "127.0.0.1", ApplicationOffice.NAME, ApplicationInterface.USER);
-		context.setUserServerConfig(thread, "localhost", "", Integer.valueOf(box.configuration().port()));
+		URL baseUrl = urlOf(session.browser().baseUrl());
+		context.setApplication(thread, baseUrl != null ? baseUrl.getHost() : "127.0.0.1", ApplicationOffice.NAME, ApplicationInterface.USER);
+		context.setUserServerConfig(thread, baseUrl != null ? baseUrl.getHost() : "localhost", session.browser().basePath(), Integer.valueOf(box.configuration().port()));
 		context.setSessionId(thread, session.id());
 		context.setDatabaseConnectionType(thread, Database.ConnectionTypes.AUTO_COMMIT);
+	}
+
+	private static URL urlOf(String url) {
+		try {
+			return new URL(url);
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 	public static String description(Task task, Function<String, String> translator) {

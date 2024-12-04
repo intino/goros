@@ -107,6 +107,7 @@ Artifact(groupId = "io.intino.goros", version = "1.3.25") unit as Platform
 	// Datawarehouse
 	Parameter("datawarehouse-upgrade-launch-on-start", "true")
 	Parameter("datawarehouse-upgrade-hour", "4")
+	Parameter("datawarehouse-disabled", "false")
 	Parameter("datawarehouse-dir")
 
 	// Sources

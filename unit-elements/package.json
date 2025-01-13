@@ -4,8 +4,8 @@
     "description": "",
     "main": "src/App.js",
     "scripts": {
-        "build": "env NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
-        "dev": "env NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --watch"
+        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
+        "dev": "webpack --mode development --watch"
     },
     "author": "",
     "license": "ISC",

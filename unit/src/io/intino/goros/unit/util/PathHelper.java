@@ -70,8 +70,9 @@ public class PathHelper {
 	}
 
 	private static String withRootPath(String path) {
-		String rootPath = Configuration.getInstance().getPath();
-		return rootPath != null && !rootPath.isEmpty() ? rootPath + "/" + path : "/" + path;
+		return "/" + path;
+//		String rootPath = Configuration.getInstance().getPath();
+//		return rootPath != null && !rootPath.isEmpty() ? rootPath + "/" + path : "/" + path;
 	}
 
 	private static String prefixOf(Definition definition, String basePackage) {

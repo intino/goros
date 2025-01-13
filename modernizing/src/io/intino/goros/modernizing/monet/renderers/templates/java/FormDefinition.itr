@@ -367,7 +367,7 @@ end
 def type(field & picture & multiple) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
-        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.item())));
+        save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.item(), $width, $height)));
         ((io.intino.alexandria.ui.displays.components.ImageEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
@@ -383,7 +383,7 @@ end
 
 def type(field & picture) trigger(init)
     $name+firstLowerCase~.onChange(e -> {
-        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.value())));
+        save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.value(), $width, $height)));
         $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
     });
 end

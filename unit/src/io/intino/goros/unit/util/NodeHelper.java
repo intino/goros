@@ -34,6 +34,7 @@ import org.monet.space.kernel.constants.LabelCode;
 import org.monet.space.kernel.constants.Strings;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
+import org.monet.space.kernel.utils.StreamHelper;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -499,6 +500,20 @@ public class NodeHelper {
             Logger.error(ex);
             return null;
         }
+    }
+
+    public static Picture pictureOf(Resource value, int width, int height) {
+        if (value == null) return null;
+        InputStream sourceStream = value.stream();
+        try {
+            String contentType = value.metadata().contentType();
+            ComponentDocuments.getInstance().uploadImage(value.name(), sourceStream, contentType, width, height);
+        } catch (Exception e) {
+            Logger.error(e);
+        } finally {
+            StreamHelper.close(sourceStream);
+        }
+        return new Picture(value.name());
     }
 
     public static Picture pictureOf(Resource value) {

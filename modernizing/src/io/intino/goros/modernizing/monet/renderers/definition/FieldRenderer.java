@@ -61,6 +61,7 @@ public class FieldRenderer extends Renderer {
 		addTextProperties(result);
 		addDateProperties(result);
 		addLinkProperties(result);
+		addPictureProperties(result);
 		addCompositeProperties(result);
 		addSelectProperties(result);
 		return result;
@@ -228,6 +229,14 @@ public class FieldRenderer extends Renderer {
 		builder.add("index", nameOf(definition));
 		builder.add("indexCode", definition.getCode());
 		builder.add("indexView", indexView(definition, viewProperty));
+	}
+
+	private void addPictureProperties(FrameBuilder builder) {
+		if (!fieldProperty.isPicture()) return;
+		PictureFieldProperty pictureField = (PictureFieldProperty) fieldProperty;
+		PictureFieldProperty.SizeProperty size = pictureField.getSize();
+		builder.add("width", size != null ? size.getWidth() : "-1");
+		builder.add("height", size != null ? size.getHeight() : "-1");
 	}
 
 	private String indexView(IndexDefinition definition, IndexDefinitionBase.IndexViewProperty viewProperty) {

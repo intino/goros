@@ -26,6 +26,8 @@ import org.monet.bpi.types.*;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.internal.Ref;
+import org.monet.space.fms.control.actions.ActionUploadImages;
+import org.monet.space.kernel.agents.AgentLogger;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
 import org.monet.space.kernel.components.ComponentDocuments;
@@ -34,8 +36,18 @@ import org.monet.space.kernel.constants.LabelCode;
 import org.monet.space.kernel.constants.Strings;
 import org.monet.space.kernel.model.Dictionary;
 import org.monet.space.kernel.model.*;
+import org.monet.space.kernel.utils.MimeTypes;
 import org.monet.space.kernel.utils.StreamHelper;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.Dimension;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,6 +57,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -507,7 +520,7 @@ public class NodeHelper {
         InputStream sourceStream = value.stream();
         try {
             String contentType = value.metadata().contentType();
-            ComponentDocuments.getInstance().uploadImage(value.name(), sourceStream, contentType, width, height);
+            ComponentDocuments.getInstance().uploadImage(value.name(), reduce(imageOf(sourceStream), value.metadata().contentType(), width, height), contentType, width, height);
         } catch (Exception e) {
             Logger.error(e);
         } finally {
@@ -752,6 +765,97 @@ public class NodeHelper {
             }
         }
         return taskTypes;
+    }
+
+    private static BufferedImage imageOf(InputStream imageStream) {
+        try {
+            byte[] imageBytes = StreamHelper.readBytes(imageStream);
+            return ImageIO.read(new ByteArrayInputStream(imageBytes));
+        } catch (IOException e) {
+            AgentLogger.getInstance().error(e);
+            return null;
+        }
+    }
+
+    private static InputStream reduce(BufferedImage image, String contentType, int width, int height) throws IOException {
+        ByteArrayOutputStream imageTempOutput = new ByteArrayOutputStream();
+        boolean alpha = hasAlpha(image, contentType);
+        BufferedImage bdest = new BufferedImage(width, height, alpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bdest.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        Transform transform = getScaleFactor(image.getWidth(), image.getHeight(), width, height);
+
+        if (transform == null) {
+            g.drawImage(image, 0, 0, null);
+        }
+        else if (transform.type == Transform.Type.SCALE) {
+            AffineTransform affineTransform = AffineTransform.getScaleInstance(transform.width, transform.height);
+            g.translate((width - (image.getWidth()*transform.width)) / 2, 0);
+            g.drawRenderedImage(image, affineTransform);
+        }
+        else if (transform.type == Transform.Type.TRANSLATE) {
+            g.drawImage(image, Double.valueOf(transform.width).intValue(), Double.valueOf(transform.height).intValue(), null);
+        }
+
+        g.dispose();
+        ImageIO.write(bdest, MimeTypes.getInstance().getExtension(contentType), imageTempOutput);
+
+        return new ByteArrayInputStream(imageTempOutput.toByteArray());
+    }
+
+    private static boolean hasAlpha(Image image, String contentType) {
+        PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
+        boolean alpha;
+        String extension = MimeTypes.getInstance().getExtension(contentType);
+
+        if (extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpe"))
+            return false;
+
+        try {
+            pg.grabPixels();
+            alpha = pg.getColorModel().hasAlpha();
+        }
+        catch(InterruptedException e) {
+            alpha = false;
+        }
+
+        return alpha;
+    }
+
+    private static Transform getScaleFactor(int width, int height, int boundaryWidth, int boundaryHeight) {
+        Dimension scaledDimension = getScaledDimension(width, height, boundaryWidth, boundaryHeight);
+        return new Transform(Transform.Type.SCALE, (double)scaledDimension.width/width, (double)scaledDimension.height/height);
+    }
+
+    public static Dimension getScaledDimension(int width, int height, int boundaryWidth, int boundaryHeight) {
+        int new_width = width;
+        int new_height = height;
+
+        if (width > boundaryWidth) {
+            new_width = boundaryWidth;
+            new_height = (new_width * height) / width;
+        }
+
+        if (new_height > boundaryHeight) {
+            new_height = boundaryHeight;
+            new_width = (new_height * width) / height;
+        }
+
+        return new Dimension(new_width, new_height);
+    }
+
+    private static class Transform {
+        enum Type { SCALE, TRANSLATE }
+
+        Transform.Type type;
+        double width;
+        double height;
+
+        public Transform(Transform.Type type, double width, double height) {
+            this.type = type;
+            this.width = width;
+            this.height = height;
+        }
     }
 
 }

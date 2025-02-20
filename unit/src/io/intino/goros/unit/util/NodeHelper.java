@@ -422,7 +422,9 @@ public class NodeHelper {
     }
 
     public static Instant instantOf(Reference reference, String attribute) {
-        return instantOf((Date) reference.getAttribute(attribute).getValue());
+        ReferenceAttribute<?> referenceAttribute = reference.getAttribute(attribute);
+        if (referenceAttribute == null) return null;
+        return instantOf((Date) referenceAttribute.getValue());
     }
 
     public static Instant instantOf(FieldDate field) {

@@ -4,7 +4,7 @@
     "description": "",
     "main": "src/App.js",
     "scripts": {
-        "build": "webpack --mode production",
+        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
         "dev": "webpack --mode development --watch"
     },
     "author": "",

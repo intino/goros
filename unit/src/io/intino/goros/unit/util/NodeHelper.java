@@ -314,7 +314,6 @@ public class NodeHelper {
     }
 
     public static Double numberOf(NodeItem node, String attribute) {
-
         String value = node.getAttribute(attribute);
         if (value == null || value.isEmpty()) return null;
         return Double.valueOf(value);

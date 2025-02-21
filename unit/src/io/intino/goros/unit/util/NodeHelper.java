@@ -26,7 +26,6 @@ import org.monet.bpi.types.*;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.internal.Ref;
-import org.monet.space.fms.control.actions.ActionUploadImages;
 import org.monet.space.kernel.agents.AgentLogger;
 import org.monet.space.kernel.agents.AgentNotifier;
 import org.monet.space.kernel.agents.AgentUserClient;
@@ -521,7 +520,8 @@ public class NodeHelper {
         InputStream sourceStream = value.stream();
         try {
             String contentType = value.metadata().contentType();
-            ComponentDocuments.getInstance().uploadImage(value.name(), reduce(imageOf(sourceStream), value.metadata().contentType(), width, height), contentType, width, height);
+            BufferedImage image = imageOf(sourceStream);
+            ComponentDocuments.getInstance().uploadImage(value.name(), image == null || isSmaller(image, width, height) ? sourceStream : reduce(image, value.metadata().contentType(), width, height), contentType, width, height);
         } catch (Exception e) {
             Logger.error(e);
         } finally {
@@ -776,6 +776,10 @@ public class NodeHelper {
             AgentLogger.getInstance().error(e);
             return null;
         }
+    }
+
+    private static boolean isSmaller(BufferedImage image, int width, int height) {
+        return image.getWidth() <= width && image.getHeight() <= height;
     }
 
     private static InputStream reduce(BufferedImage image, String contentType, int width, int height) throws IOException {

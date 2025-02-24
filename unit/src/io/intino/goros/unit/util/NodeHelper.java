@@ -521,7 +521,7 @@ public class NodeHelper {
         try {
             String contentType = value.metadata().contentType();
             BufferedImage image = imageOf(sourceStream);
-            ComponentDocuments.getInstance().uploadImage(value.name(), image == null || isSmaller(image, width, height) ? sourceStream : reduce(image, value.metadata().contentType(), width, height), contentType, width, height);
+            ComponentDocuments.getInstance().uploadImage(value.name(), image == null || isSmaller(image, width, height) ? streamOf(image, value.metadata().contentType()) : reduce(image, value.metadata().contentType(), width, height), contentType, width, height);
         } catch (Exception e) {
             Logger.error(e);
         } finally {
@@ -778,12 +778,17 @@ public class NodeHelper {
         }
     }
 
+    private static InputStream streamOf(BufferedImage image, String contentType) throws IOException {
+        ByteArrayOutputStream imageTempOutput = new ByteArrayOutputStream();
+        ImageIO.write(image, MimeTypes.getInstance().getExtension(contentType), imageTempOutput);
+        return new ByteArrayInputStream(imageTempOutput.toByteArray());
+    }
+
     private static boolean isSmaller(BufferedImage image, int width, int height) {
         return image.getWidth() <= width && image.getHeight() <= height;
     }
 
     private static InputStream reduce(BufferedImage image, String contentType, int width, int height) throws IOException {
-        ByteArrayOutputStream imageTempOutput = new ByteArrayOutputStream();
         boolean alpha = hasAlpha(image, contentType);
         BufferedImage bdest = new BufferedImage(width, height, alpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB);
         Graphics2D g = bdest.createGraphics();
@@ -803,9 +808,7 @@ public class NodeHelper {
         }
 
         g.dispose();
-        ImageIO.write(bdest, MimeTypes.getInstance().getExtension(contentType), imageTempOutput);
-
-        return new ByteArrayInputStream(imageTempOutput.toByteArray());
+        return streamOf(bdest, contentType);
     }
 
     private static boolean hasAlpha(Image image, String contentType) {

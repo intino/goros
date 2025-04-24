@@ -1,12 +1,10 @@
-def type(show & components) trigger(declaration)
+rule type(show, components) and trigger(declaration)
     private Node contain;
-end
 
-def type(show & components) trigger(hideToolbar)
-    [$component+hideToolbar...[$NL]]
-end
+rule type(show, components) and trigger(hideToolbar)
+    <<$component+hideToolbar...[$NL]>>
 
-def type(show & components)
+rule type(show, components)
 	public $definition+firstUpperCase~$view+firstUpperCase~ViewTemplate contain(Node contain) {
 		this.contain = contain;
 		return this;
@@ -15,25 +13,21 @@ def type(show & components)
 	@Override
 	public void refresh() {
 		super.refresh();
-		[$component...[$NL]]
+		<<$component...[$NL]>>
 	}
-end
 
-def type(component) trigger(hideToolbar)
+rule type(component) and trigger(hideToolbar)
     $name+firstLowerCase~$view+firstUpperCase~Stamp.hideToolbar();
-end
 
-def type(component & collection)
+rule type(component, collection)
     $name+firstLowerCase~$view+firstUpperCase~Stamp.node(contain);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.view("$viewCode");
     $name+firstLowerCase~$view+firstUpperCase~Stamp.toggleView(ToggleEvent.State.On);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.readonly(readonly);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.refresh();
-end
 
-def type(component)
+rule type(component)
     $name+firstLowerCase~$view+firstUpperCase~Stamp.node(contain);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.view("$viewCode");
     $name+firstLowerCase~$view+firstUpperCase~Stamp.readonly(readonly);
     $name+firstLowerCase~$view+firstUpperCase~Stamp.refresh();
-end

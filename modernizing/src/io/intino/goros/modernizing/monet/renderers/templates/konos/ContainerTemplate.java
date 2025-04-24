@@ -1,16 +1,19 @@
 package io.intino.goros.modernizing.monet.renderers.templates.konos;
 
-import io.intino.itrules.RuleSet;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Rule;
+import io.intino.itrules.template.Template;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainerTemplate extends Template {
 
-	@Override
-	protected RuleSet ruleSet() {
-		RuleSet result = new RuleSet();
-		new ContainerDefinitionTemplate().ruleSet().forEach(result::add);
-		new NodeDefinitionTemplate().ruleSet().forEach(result::add);
-		return result;
-	}
+    @Override
+    public List<Rule> ruleSet() {
+        List<Rule> result = new ArrayList<>();
+        result.addAll(new ContainerDefinitionTemplate().ruleSet());
+        result.addAll(new NodeDefinitionTemplate().ruleSet());
+        return result;
+    }
 
 }

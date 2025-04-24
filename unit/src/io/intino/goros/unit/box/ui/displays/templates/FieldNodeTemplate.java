@@ -4,6 +4,7 @@ import io.intino.alexandria.ui.displays.Display;
 import io.intino.alexandria.ui.displays.components.editable.Editable;
 import io.intino.alexandria.ui.displays.events.ChangeEvent;
 import io.intino.alexandria.ui.displays.events.ChangeListener;
+import io.intino.alexandria.ui.displays.events.ReadonlyListener;
 import io.intino.alexandria.ui.displays.notifiers.TemplateNotifier;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.DisplayHelper;
@@ -63,6 +64,11 @@ public class FieldNodeTemplate extends AbstractFieldNodeTemplate<UnitBox> implem
 
     public FieldNodeTemplate readonly(boolean readonly) {
         this.readonly = readonly;
+        return this;
+    }
+
+    @Override
+    public Editable<TemplateNotifier, UnitBox> onReadonly(ReadonlyListener listener) {
         return this;
     }
 

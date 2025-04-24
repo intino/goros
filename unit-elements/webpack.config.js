@@ -6,14 +6,20 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 module.exports = {
 	module: {
 		rules: [
+            {
+                test: /node_modules\/ace-linters*/,
+                use: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
+            },
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: "javascript/auto",
+                loader: "babel-loader"
+            },
 			{
 				test: /\.js$/,
 				exclude: /node_modules\/(?!(alexandria-ui-elements)\/).*/,
-				options: {
-					rootMode: "upward",
-					presets: ['@babel/preset-env'],
-					cacheDirectory: true
-				},
+				options: { rootMode: "upward", presets: ['@babel/preset-env'], cacheDirectory: true },
 				loader: "babel-loader"
 			},
 			{

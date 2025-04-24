@@ -1,4 +1,4 @@
-def type(node)
+rule type(node)
     <?xml version="1.0"?>
     <?mso-application progid="Excel.Sheet"?>
     <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:xalan="http://xml.apache.org/xalan">
@@ -68,9 +68,8 @@ def type(node)
       </WorksheetOptions>
      </Worksheet>
     </Workbook>
-end
 
-def type(content & empty)
+rule type(content, empty)
     <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="3" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="62.400000000000006" ss:DefaultRowHeight="14.55">
      <Column ss:AutoFitWidth="0" ss:Width="99.6"/>
      <Column ss:AutoFitWidth="0" ss:Width="57"/>
@@ -84,9 +83,8 @@ def type(content & empty)
        <Cell ss:StyleID="s64"><Data ss:Type="String">$noElementsMessage</Data></Cell>
      </Row>
     </Table>
-end
 
-def type(content)
+rule type(content)
     <Table ss:ExpandedColumnCount="$headerCount" ss:ExpandedRowCount="$referencesCount" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="62.400000000000006" ss:DefaultRowHeight="14.55">
      <Column ss:AutoFitWidth="0" ss:Width="99.6"/>
      <Column ss:AutoFitWidth="0" ss:Width="57"/>
@@ -99,32 +97,25 @@ def type(content)
      $header
      $references
     </Table>
-end
 
-def type(header)
-    [$reference+header...[$NL]]
-end
+rule type(header)
+    <<$reference+header...[$NL]>>
 
-def type(references)
-    [$reference...[$NL]]
-end
+rule type(references)
+    <<$reference...[$NL]>>
 
-def type(reference) trigger(header)
+rule type(reference) and trigger(header)
     <Row ss:Index="4" ss:AutoFitHeight="0">
-      [$attribute+header...[$NL]]
+      <<$attribute+header...[$NL]>>
     </Row>
-end
 
-def type(reference)
+rule type(reference)
     <Row ss:AutoFitHeight="0">
-      [$attribute...[$NL]]
+      <<$attribute...[$NL]>>
     </Row>
-end
 
-def type(attribute) trigger(header)
+rule type(attribute) and trigger(header)
     <Cell ss:StyleID="s63"><Data ss:Type="String">$label</Data></Cell>
-end
 
-def type(attribute)
+rule type(attribute)
     <Cell ss:StyleID="s64"><Data ss:Type="$type">$value</Data></Cell>
-end

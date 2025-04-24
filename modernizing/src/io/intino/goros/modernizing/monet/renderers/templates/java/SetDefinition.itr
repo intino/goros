@@ -1,23 +1,17 @@
-def type(show & items) trigger(declaration)
-end
+rule type(show, items) and trigger(declaration)
 
-def type(show & index) trigger(declaration)
+rule type(show, index) and trigger(declaration)
     private Node selectedChild;
-end
 
-def type(show & sharedprototypes)
-end
+rule type(show, sharedprototypes)
 
-def type(show & report)
-end
+rule type(show, report)
 
-def type(show) trigger(declaration)
-end
+rule type(show) and trigger(declaration)
 
-def type(show) trigger(hideToolbar)
-end
+rule type(show) and trigger(hideToolbar)
 
-def type(show & index & locations)
+rule type(show, index, locations)
     public void addAndSelect(Node node) {
         $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
         select(node);
@@ -42,7 +36,7 @@ def type(show & index & locations)
             $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
-            [$attribute...[$NL]]
+            <<$attribute...[$NL]>>
         });
     }
 
@@ -63,9 +57,8 @@ def type(show & index & locations)
         if (node instanceof Node) return ((Node<?>)node).getId().equals(id);
         return false;
     }
-end
 
-def type(show & index)
+rule type(show, index)
     public void addAndSelect(Node node) {
         $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
         select(node);
@@ -90,10 +83,10 @@ def type(show & index)
             $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
-            [$picture]
-            [$title]
-            [$line...[$NL]]
-            [$highlight...[$NL]]
+            <<$picture>>
+            <<$title>>
+            <<$line...[$NL]>>
+            <<$highlight...[$NL]>>
         });
     }
 
@@ -116,9 +109,9 @@ def type(show & index)
 
     private void refreshDetailsDialog() {
         org.monet.space.kernel.model.Reference reference = selectedChild.getReference("$reference");
-        [$title+details]
-        [$lineBelow...[$NL]]
-        [$footer...[$NL]]
+        <<$title+details>>
+        <<$lineBelow...[$NL]>>
+        <<$footer...[$NL]>>
     }
 
     public boolean matches(Object node, String id) {
@@ -126,9 +119,8 @@ def type(show & index)
         if (node instanceof Node) return ((Node<?>)node).getId().equals(id);
         return false;
     }
-end
 
-def type(show)
+rule type(show)
     public void addAndSelect(Node node) {
         $definition+firstLowerCase~$view+firstUpperCase.add($datasourceAddType);
         select(node);
@@ -153,7 +145,7 @@ def type(show)
             $itemType
             org.monet.space.kernel.model.Reference reference = node.getReference("$reference");
             $componentType
-            [$attribute...[$NL]]
+            <<$attribute...[$NL]>>
         });
     }
 
@@ -174,89 +166,69 @@ def type(show)
         if (node instanceof Node) return ((Node<?>)node).getId().equals(id);
         return false;
     }
-end
 
-def type(datasourceAddType & map)
+rule type(datasourceAddType, map)
     io.intino.goros.unit.box.ui.datasources.CollectionMapDatasource.placeMarkOf(node)
-end
 
-def type(datasourceAddType)
+rule type(datasourceAddType)
     node
-end
 
-def type(itemType & locations)
+rule type(itemType, locations)
     Node node = io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(e.item());
-end
 
-def type(itemType)
+rule type(itemType)
     Node node = e.item();
-end
 
-def type(componentType & items)
+rule type(componentType, items)
     $package.$module+lowerCase.box.ui.displays.rows.$definition+firstUpperCase~$view+firstUpperCase~Row row = e.component();
-end
 
-def type(componentType & index)
+rule type(componentType, index)
     $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
     item.detailsTrigger.bindTo(detailsDialog);
     item.detailsTrigger.onOpen(e1 -> refreshDetailsDialog(node));
-end
 
-def type(componentType)
+rule type(componentType)
     $package.$module+lowerCase.box.ui.displays.items.$definition+firstUpperCase~$view+firstUpperCase~Item item = e.component();
-end
 
-def type(attribute & items & date)
+rule type(attribute, items, date)
     row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
-end
 
-def type(attribute & items & picture)
+rule type(attribute, items, picture)
     row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
-end
 
-def type(attribute & items)
+rule type(attribute, items)
     row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
-end
 
-def type(attribute & date)
-    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
-end
+rule type(attribute, date)
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 
-def type(attribute & icon)
-    [$scope~.]$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
-end
+rule type(attribute, icon)
+    <<$scope~.>>$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 
-def type(attribute & picture)
-    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
-end
+rule type(attribute, picture)
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
 
-def type(attribute & real)
-    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
-end
+rule type(attribute, real)
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 
-def type(attribute & integer)
-    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
-end
+rule type(attribute, integer)
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));
 
-def type(attribute & location)
+rule type(attribute, location)
     String title = io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code");
-    [$scope~.]$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
-    [$scope~.]$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> matches(n, node.getId()))));
-end
+    <<$scope~.>>$name+firstLowerCase.title(title != null && !title.isEmpty() ? title : this.translate("No title"));
+    <<$scope~.>>$name+firstLowerCase.onExecute(e1 -> $definition+firstLowerCase~$view+firstUpperCase.select($definition+firstLowerCase~$view+firstUpperCase.findItem(n -> matches(n, node.getId()))));
 
-def type(attribute & boolean)
-    [$scope~.]$name+firstLowerCase.value(translate(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code")));
-end
+rule type(attribute, boolean)
+    <<$scope~.>>$name+firstLowerCase.value(translate(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code")));
 
-def type(attribute) trigger(details)
+rule type(attribute) and trigger(details)
     $name+firstLowerCase~Details.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
-end
 
-def type(attribute)
-    [$scope~.]$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
-end
+rule type(attribute)
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
 
-def type(collectionview & filter)
+rule type(collectionview, filter)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -305,96 +277,79 @@ def type(collectionview & filter)
         }
 
         public void resetFilters() {
-            [$dimension+clearCall...[$NL]]
+            <<$dimension+clearCall...[$NL]>>
             collection.clearFilters();
         }
 
         private void updateFilters() {
-            [$dimension+updateCall...[$NL]]
+            <<$dimension+updateCall...[$NL]>>
         }
 
-        [$dimension+updateMethod...[$NL]]
+        <<$dimension+updateMethod...[$NL]>>
     }
-end
 
-def type(dimension) trigger(updateCall)
+rule type(dimension) and trigger(updateCall)
     udpate$name+firstUpperCase();
-end
 
-def type(dimension) trigger(updateMethod)
+rule type(dimension) and trigger(updateMethod)
     private void udpate$name+firstUpperCase() {
         $name+firstLowerCase.label("$label");
         $name+firstLowerCase.attribute("$code");
         $name+firstLowerCase.bindTo(collection);
         $name+firstLowerCase.refresh();
     }
-end
 
-def type(dimension) trigger(clearCall)
+rule type(dimension) and trigger(clearCall)
     $name+firstLowerCase.clearSelection();
-end
 
-def type(sorting) trigger(codeRegistration)
+rule type(sorting) and trigger(codeRegistration)
     put("$view+firstLowerCase~_$label", "$code");
-end
 
-def type(sorting)
+rule type(sorting)
     "$label"
-end
 
-def type(addList) trigger(addCall)
-    [$add+addCall...[$NL]]
-end
+rule type(addList) and trigger(addCall)
+    <<$add+addCall...[$NL]>>
 
-def type(addList) trigger(addPrototypeCall)
-    [$addPrototype+addPrototypeCall...[$NL]]
-end
+rule type(addList) and trigger(addPrototypeCall)
+    <<$addPrototype+addPrototypeCall...[$NL]>>
 
-def type(add & prototype) trigger(addPrototypeCall)
+rule type(add, prototype) and trigger(addPrototypeCall)
     result.add("Añadir $label");
-end
 
-def type(add) trigger(addCall)
+rule type(add) and trigger(addCall)
     result.add("Añadir $label");
-end
 
-def type(addList) trigger(execute)
+rule type(addList) and trigger(execute)
     add.onExecute(e -> addNode($defaultAdd+option));
     addSplit.onExecute(e -> addNode(e.option()));
     addPrototype.onExecute(e -> addPrototype($defaultAddPrototype+option));
     addPrototypeSplit.onExecute(e -> addPrototype(e.option()));
-end
 
-def type(addList) trigger(refresh)
+rule type(addList) and trigger(refresh)
     add.visible(addOptions.size() <= 1 && !isPrototypeView && readonly && !node.getDefinition().isReadonly());
     addSplit.options(addOptions);
     addSplit.visible(!isPrototypeView && addOptions.size() > 1 && readonly && !node.getDefinition().isReadonly());
     addPrototype.visible(isPrototypeView);
     addPrototypeSplit.options(addPrototypeOptions);
     addPrototypeSplit.visible(isPrototypeView && addPrototypeOptions.size() > 1);
-end
 
-def type(addVisibility & visible)
+rule type(addVisibility, visible)
     readonly && !node.getDefinition().isReadonly()
-end
 
-def type(addVisibility)
+rule type(addVisibility)
     false
-end
 
-def type(add & prototype) trigger(toolbarTemplate)
+rule type(add, prototype) and trigger(toolbarTemplate)
     if (option.equals("Añadir $label")) result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addPrototype("$code", node);
-end
 
-def type(add) trigger(toolbarTemplate)
+rule type(add) and trigger(toolbarTemplate)
     if (option.equals("Añadir $label")) result = io.intino.goros.unit.util.LayerHelper.nodeLayer().addNode("$code", node);
-end
 
-def type(add) trigger(option)
+rule type(add) and trigger(option)
     "Añadir $label"
-end
 
-def type(setdefinition & embedded)
+rule type(setdefinition, embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -432,15 +387,15 @@ def type(setdefinition & embedded)
         private SearchBox<?, ?> searchBox;
         private SelectorCheckBox<?, ?> filterByTitle;
         private org.monet.space.kernel.model.ClientOperation layerOperation;
-        [$toolbar+editableDeclaration]
-        [$toolbar+navigableDeclaration]
+        <<$toolbar+editableDeclaration>>
+        <<$toolbar+navigableDeclaration>>
 
         public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
-        [$toolbar+editableEvents]
-        [$toolbar+navigableMethods]
+        <<$toolbar+editableEvents>>
+        <<$toolbar+navigableMethods>>
 
         public $name+firstUpperCase~EmbeddedTemplate node(Node node) {
             this.node = node;
@@ -449,7 +404,7 @@ def type(setdefinition & embedded)
 
         public void view(String view) {
             hideViews();
-            [$view+showViewCall...[$NL]]
+            <<$view+showViewCall...[$NL]>>
         }
 
         public $name+firstUpperCase~EmbeddedTemplate revision(org.monet.space.kernel.model.Revision revision) {
@@ -519,7 +474,7 @@ def type(setdefinition & embedded)
         }
 
         private void initToolbar() {
-            [$toolbar+editableInitCall]
+            <<$toolbar+editableInitCall>>
             edit.onExecute(e -> toggleEdition());
             openLayerTrigger.onOpen(e -> fillLayer(e.layer()));
         }
@@ -534,20 +489,20 @@ def type(setdefinition & embedded)
         }
 
         public Collection currentCollection() {
-            [$view+collection...[$NL]]
+            <<$view+collection...[$NL]>>
             return null;
         }
 
         private void initViews() {
             hideViews.onExecute(e -> hideViewsBlock());
-            [$view+initCall...[$NL]]
+            <<$view+initCall...[$NL]>>
             filtersView.onInit(e -> initFilters());
             filtersView.onShow(e -> showFilters());
-            [$toolbar+initViews]
+            <<$toolbar+initViews>>
         }
 
         private void clearSelection() {
-            [$view+clearSelectionCall...[$NL]]
+            <<$view+clearSelectionCall...[$NL]>>
         }
 
         private void updateSelection(SelectionEvent selectionEvent) {
@@ -561,17 +516,17 @@ def type(setdefinition & embedded)
         }
 
         private void initFilters() {
-            [$view+filter...[$NL]]
+            <<$view+filter...[$NL]>>
         }
 
         private void showFilters() {
-            [$view+showFilterCall...[$NL]]
+            <<$view+showFilterCall...[$NL]>>
         }
 
         private void showFilters(BlockConditional filtersBlock) {
             if (showFiltersListener != null) showFiltersListener.accept(true);
             if (!filtersView.isVisible()) return;
-            [$view+hideFilterCall...[$NL]]
+            <<$view+hideFilterCall...[$NL]>>
             filtersBlock.show();
             filtersBlock.refresh();
         }
@@ -581,28 +536,28 @@ def type(setdefinition & embedded)
             boolean isPrototypeView = isPrototypeView();
             List<String> addOptions = addOptions();
             List<String> addPrototypeOptions = addPrototypeOptions();
-            [$toolbar+editableRefreshCall]
-            [$toolbar+navigableRefreshCall]
+            <<$toolbar+editableRefreshCall>>
+            <<$toolbar+navigableRefreshCall>>
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(!embedded && node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
         }
 
         private boolean isPrototypeView() {
-            [$view+isPrototypeView...[$NL]]
+            <<$view+isPrototypeView...[$NL]>>
             return false;
         }
 
         private List<String> addOptions() {
             List<String> result = new java.util.ArrayList<>();
-            [$toolbar+editableAddCall]
+            <<$toolbar+editableAddCall>>
             node.getOwnedPrototypes().forEach(n -> result.add("Añadir " + n.getLabel()));
             return result;
         }
 
         private List<String> addPrototypeOptions() {
             List<String> result = new java.util.ArrayList<>();
-            [$toolbar+editableAddPrototypeCall]
+            <<$toolbar+editableAddPrototypeCall>>
             return result;
         }
 
@@ -615,15 +570,15 @@ def type(setdefinition & embedded)
         }
 
         private void refreshView() {
-            [$view+refreshCall...[$NL]]
+            <<$view+refreshCall...[$NL]>>
         }
 
         private void toggleEdition() {
             readonly = !readonly;
             if (!readonly) hideChildViews();
             clearSelection();
-            [$toolbar+editableCall]
-            [$view+readonlyCall...[$NL]]
+            <<$toolbar+editableCall>>
+            <<$view+readonlyCall...[$NL]>>
             refreshToolbar();
         }
 
@@ -652,16 +607,16 @@ def type(setdefinition & embedded)
         }
 
         public void resetFilters() {
-            [$view+resetFiltersCall...[$NL]]
+            <<$view+resetFiltersCall...[$NL]>>
         }
 
         private void refreshFilters() {
             if (!filtersView.isVisible()) return;
-            [$view+refreshFiltersCall...[$NL]]
+            <<$view+refreshFiltersCall...[$NL]>>
         }
 
         private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            [$toolbar+bindCall]
+            <<$toolbar+bindCall>>
         }
 
         private void toggleFiltersViewVisibility(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
@@ -694,11 +649,11 @@ def type(setdefinition & embedded)
         }
 
         private void refresh(Node node) {
-            [$view+refreshNodeCall...[$NL]]
+            <<$view+refreshNodeCall...[$NL]>>
         }
 
         private void addAndSelect(Node node) {
-            [$view+selectNodeCall...[$NL]]
+            <<$view+selectNodeCall...[$NL]>>
         }
 
         private void open(List<Node> selection) {
@@ -717,7 +672,7 @@ def type(setdefinition & embedded)
 
         private void refreshIfEditing() {
             if (selectedChild == null) return;
-            [$toolbar+ifEditingCall...[$NL]]
+            <<$toolbar+ifEditingCall...[$NL]>>
         }
 
         private $name+firstUpperCase~EmbeddedTemplate close() {
@@ -739,31 +694,31 @@ def type(setdefinition & embedded)
 
         private BlockConditional selectedNodeView() {
             if (selectedChild == null) return null;
-            [$toolbar+equals...[$NL]]
+            <<$toolbar+equals...[$NL]>>
             return null;
         }
 
         private void hideChildViews() {
-            [$toolbar+hideCall...[$NL]]
+            <<$toolbar+hideCall...[$NL]>>
             enableCollapse(false);
         }
 
         private void refreshCollapse() {
             viewsToolbar.visible(selectedChild != null);
             views.visible(true);
-            [$toolbar+hideCollectionCall]
+            <<$toolbar+hideCollectionCall>>
         }
 
         private void enableCollapse(boolean value) {
             boolean visible = value && views.isVisible();
             viewsToolbar.visible(visible);
-            [$toolbar+enableCollapseCall]
+            <<$toolbar+enableCollapseCall>>
         }
 
         private void showViewsBlock() {
             views.visible(true);
             enableCollapse(selectedChild != null);
-            [$toolbar+hideCollectionCall]
+            <<$toolbar+hideCollectionCall>>
         }
 
         private void dispatch(org.monet.space.kernel.model.ClientOperation operation) {
@@ -802,22 +757,22 @@ def type(setdefinition & embedded)
         }
 
         private void openChildView(String id, boolean readonly) {
-            [$toolbar+openChildViewCall...[$NL]]
+            <<$toolbar+openChildViewCall...[$NL]>>
         }
 
         private void hideViewsBlock() {
             views.visible(false);
             enableCollapse(selectedChild != null);
-            [$toolbar+showCollectionCall]
+            <<$toolbar+showCollectionCall>>
         }
 
         private void hideViews() {
-            [$view+hideViewCall...[$NL]]
+            <<$view+hideViewCall...[$NL]>>
         }
 
         private void resetView() {
             selectedChild = null;
-            [$toolbar+hideCall...[$NL]]
+            <<$toolbar+hideCall...[$NL]>>
             refreshCollapse();
         }
 
@@ -826,12 +781,11 @@ def type(setdefinition & embedded)
             return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId());
         }
 
-        [$toolbar+editableMethods]
+        <<$toolbar+editableMethods>>
 
     }
-end
 
-def type(setdefinition)
+rule type(setdefinition)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -855,14 +809,14 @@ def type(setdefinition)
         private boolean readonly = true;
         private String sorting;
         private String sortingMode;
-        [$toolbar+editableDeclaration]
+        <<$toolbar+editableDeclaration>>
 
         public $name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
         }
 
-        [$toolbar+editableEvents]
-        [$toolbar+navigableMethods]
+        <<$toolbar+editableEvents>>
+        <<$toolbar+navigableMethods>>
 
         public void open(String code, boolean readonly) {
             node(LayerHelper.nodeLayer().locateNode(code));
@@ -890,8 +844,8 @@ def type(setdefinition)
         @Override
         public void init() {
             super.init();
-            [$desktop]
-            [$parent]
+            <<$desktop>>
+            <<$parent>>
             initToolbar();
             initSortings();
             initContent();
@@ -984,7 +938,7 @@ def type(setdefinition)
         }
 
         private void finishEdition() {
-            [$toolbar+editableCall]
+            <<$toolbar+editableCall>>
         }
 
         private void toggleFilters(io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State state) {
@@ -996,18 +950,18 @@ def type(setdefinition)
         }
 
         private String selectedViewCode() {
-            [$view+selectViewCodeCall...[$NL]]
+            <<$view+selectViewCodeCall...[$NL]>>
             return null;
         }
 
         private static final java.util.Map<String, List<String>> sortingsMap = new java.util.HashMap<>() {{
-            [$view+registerSorting...[$NL]]
+            <<$view+registerSorting...[$NL]>>
         }};
         private static final java.util.Map<String, String> sortingsCodesMap = new java.util.HashMap<>() {{
-            [$view+registerSortingCode...[$NL]]
+            <<$view+registerSortingCode...[$NL]>>
         }};
         private void refreshSortings() {
-            [$view+refreshSortingCall...[$NL]]
+            <<$view+refreshSortingCall...[$NL]>>
         }
 
         private Collection currentCollection() {
@@ -1036,23 +990,23 @@ def type(setdefinition)
 
         private String defaultSorting() {
             if (sorting != null) return sorting;
-            [$view+defaultSortingCall...[$NL]]
+            <<$view+defaultSortingCall...[$NL]>>
             return "Título";
         }
 
         private String defaultSortingMode() {
             if (sortingMode != null) return sortingMode;
-            [$view+defaultSortingModeCall...[$NL]]
+            <<$view+defaultSortingModeCall...[$NL]>>
             return "Ascendente";
         }
 
         private void selectSorting(String sorting, String mode) {
             removeSorting.visible(sorting != null);
-            [$view+selectSortingCall...[$NL]]
+            <<$view+selectSortingCall...[$NL]>>
         }
 
         private String selectedSortingCode() {
-            [$view+selectedSortingCodeCall...[$NL]]
+            <<$view+selectedSortingCodeCall...[$NL]>>
             return "label";
         }
 
@@ -1061,12 +1015,10 @@ def type(setdefinition)
         }
 
     }
-end
 
-def type(collectionview & sharedprototypes) trigger(initCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(initCall)
 
-def type(collectionview) trigger(initCall)
+rule type(collectionview) and trigger(initCall)
     $name+firstLowerCase~View.onInit(e -> {
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onRefreshItemCount(this::refreshCount);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.onSelect(this::updateSelection);
@@ -1082,181 +1034,135 @@ def type(collectionview) trigger(initCall)
         refreshCount($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.itemCount());
         resetView();
     });
-end
 
-def type(collectionview & sharedprototypes) trigger(clearSelectionCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(clearSelectionCall)
 
-def type(collectionview) trigger(clearSelectionCall)
+rule type(collectionview) and trigger(clearSelectionCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~.selection(Collections.emptyList());
-end
 
-def type(collectionview & sharedprototypes) trigger(filter)
-end
+rule type(collectionview, sharedprototypes) and trigger(filter)
 
-def type(collectionview) trigger(filter)
+rule type(collectionview) and trigger(filter)
     filtersView.$name+firstLowerCase~Filters.onShow(e -> {
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.node(node);
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.readonly(node.isLocked() || readonly);
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.bindTo($name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase~);
         filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
     });
-end
 
-def type(collectionview & sharedprototypes) trigger(showFilterCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(showFilterCall)
 
-def type(collectionview) trigger(showFilterCall)
+rule type(collectionview) and trigger(showFilterCall)
     if ($name+firstLowerCase~View.isVisible()) showFilters(filtersView.$name+firstLowerCase~Filters);
-end
 
-def type(collectionview & sharedprototypes) trigger(hideFilterCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(hideFilterCall)
 
-def type(collectionview) trigger(hideFilterCall)
+rule type(collectionview) and trigger(hideFilterCall)
     filtersView.$name+firstLowerCase~Filters.hide();
-end
 
-def type(collectionview & sharedprototypes) trigger(refreshCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(refreshCall)
 
-def type(collectionview) trigger(refreshCall)
+rule type(collectionview) and trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
-end
 
-def type(collectionview & ownedprototypes) trigger(isPrototypeView)
+rule type(collectionview, ownedprototypes) and trigger(isPrototypeView)
     if ($name+firstLowerCase~View.isVisible()) return true;
-end
 
-def type(collectionview & sharedprototypes) trigger(isPrototypeView)
-end
+rule type(collectionview, sharedprototypes) and trigger(isPrototypeView)
 
-def type(collectionview) trigger(isPrototypeView)
+rule type(collectionview) and trigger(isPrototypeView)
     if ($name+firstLowerCase~View.isVisible()) return false;
-end
 
-def type(collectionview & sharedprototypes) trigger(refreshFiltersCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(refreshFiltersCall)
 
-def type(collectionview) trigger(refreshFiltersCall)
+rule type(collectionview) and trigger(refreshFiltersCall)
     if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.refresh();
-end
 
-def type(collectionview & sharedprototypes) trigger(resetFiltersCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(resetFiltersCall)
 
-def type(collectionview) trigger(resetFiltersCall)
+rule type(collectionview) and trigger(resetFiltersCall)
     if (filtersView.$name+firstLowerCase~Filters.isVisible()) filtersView.$name+firstLowerCase~Filters.$name+firstLowerCase~FiltersStamp.resetFilters();
-end
 
-def type(collectionview & sharedprototypes) trigger(refreshNodeCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(refreshNodeCall)
 
-def type(collectionview) trigger(refreshNodeCall)
+rule type(collectionview) and trigger(refreshNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh(node);
-end
 
-def type(collectionview & sharedprototypes) trigger(selectNodeCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(selectNodeCall)
 
-def type(collectionview) trigger(selectNodeCall)
+rule type(collectionview) and trigger(selectNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.addAndSelect(node);
-end
 
-def type(collectionview & sharedprototypes) trigger(selectViewCodeCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(selectViewCodeCall)
 
-def type(collectionview) trigger(selectViewCodeCall)
+rule type(collectionview) and trigger(selectViewCodeCall)
     if (content.$name+firstLowerCase~View.isVisible()) return content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view();
-end
 
-def type(collectionview & sharedprototypes) trigger(readonlyCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(readonlyCall)
 
-def type(collectionview) trigger(readonlyCall)
+rule type(collectionview) and trigger(readonlyCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly).refresh();
         $name+firstLowerCase~View.show();
     }
-end
 
-def type(collectionview & sharedprototypes) trigger(collection)
-end
+rule type(collectionview, sharedprototypes) and trigger(collection)
 
-def type(collectionview) trigger(collection)
+rule type(collectionview) and trigger(collection)
     if ($name+firstLowerCase~View.isVisible()) return $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.$definition+firstLowerCase~$name+firstUpperCase;
-end
 
-def type(collectionview & sharedprototypes) trigger(registerSorting)
-end
+rule type(collectionview, sharedprototypes) and trigger(registerSorting)
 
-def type(collectionview) trigger(registerSorting)
-    put("$name+firstLowerCase", List.of("Título","Fecha de creación"[,$sorting...[,]]));
-end
+rule type(collectionview) and trigger(registerSorting)
+    put("$name+firstLowerCase", List.of("Título","Fecha de creación"<<,$sorting...[,]>>));
 
-def type(collectionview & sharedprototypes) trigger(registerSortingCode)
-end
+rule type(collectionview, sharedprototypes) and trigger(registerSortingCode)
 
-def type(collectionview) trigger(registerSortingCode)
+rule type(collectionview) and trigger(registerSortingCode)
     put("$name+firstLowerCase~_Título", "label");
     put("$name+firstLowerCase~_Fecha de creación", "create_date");
-    [$sorting+codeRegistration...[$NL]]
-end
+    <<$sorting+codeRegistration...[$NL]>>
 
-def type(collectionview & sharedprototypes) trigger(refreshSortingCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(refreshSortingCall)
 
-def type(collectionview) trigger(refreshSortingCall)
+rule type(collectionview) and trigger(refreshSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) refreshSortings(sortingsMap.get("$name+firstLowerCase"));
-end
 
-def type(collectionview & sharedprototypes) trigger(selectSortingCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(selectSortingCall)
 
-def type(collectionview) trigger(selectSortingCall)
+rule type(collectionview) and trigger(selectSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) content.$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.selectSorting(selectedSortingCode(), mode);
-end
 
-def type(collectionview & sharedprototypes) trigger(defaultSortingCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(defaultSortingCall)
 
-def type(collectionview) trigger(defaultSortingCall)
+rule type(collectionview) and trigger(defaultSortingCall)
     if (content.$name+firstLowerCase~View.isVisible()) return "$defaultSorting";
-end
 
-def type(collectionview & sharedprototypes) trigger(defaultSortingModeCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(defaultSortingModeCall)
 
-def type(collectionview) trigger(defaultSortingModeCall)
+rule type(collectionview) and trigger(defaultSortingModeCall)
     if (content.$name+firstLowerCase~View.isVisible()) return "$defaultSortingMode";
-end
 
-def type(collectionview & sharedprototypes) trigger(selectedSortingCodeCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(selectedSortingCodeCall)
 
-def type(collectionview) trigger(selectedSortingCodeCall)
+rule type(collectionview) and trigger(selectedSortingCodeCall)
     if (content.$name+firstLowerCase~View.isVisible()) return sortingsCodesMap.get("$name+firstLowerCase~_"+sorting);
-end
 
-def type(collectionview & sharedprototypes) trigger(showViewCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(showViewCall)
 
-def type(collectionview) trigger(showViewCall)
+rule type(collectionview) and trigger(showViewCall)
     if (view.equals("$name+firstLowerCase") || view.equals("$code")) $name+firstLowerCase~View.show();
-end
 
 
-def type(collectionview & sharedprototypes) trigger(hideViewCall)
-end
+rule type(collectionview, sharedprototypes) and trigger(hideViewCall)
 
-def type(collectionview) trigger(hideViewCall)
+rule type(collectionview) and trigger(hideViewCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.hide();
-end
 
-def type(add) trigger(initCall)
+rule type(add) and trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> {
         bindCurrentViewTo(currentCollection());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.node(reloadSelected());
@@ -1280,80 +1186,66 @@ def type(add) trigger(initCall)
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
         nodeAdded = false;
     });
-end
 
-def type(add) trigger(bindCall)
+rule type(add) and trigger(bindCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
-end
 
-def type(add) trigger(showCollectionCall)
+rule type(add) and trigger(showCollectionCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(ViewMode.Full);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
     }
-end
 
-def type(add) trigger(enableCollapseCall)
+rule type(add) and trigger(enableCollapseCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(!visible ? viewMode : null);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
     }
-end
 
-def type(add) trigger(hideCollectionCall)
+rule type(add) and trigger(hideCollectionCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(null);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
     }
-end
 
-def type(add) trigger(ifEditingCall)
+rule type(add) and trigger(ifEditingCall)
     if (selectedChild.getCode().equals("$code") && $name+firstLowerCase~View.$name+firstLowerCase~Stamp.editing()) refresh(io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(selectedChild.getId()));
-end
 
-def type(add) trigger(equals)
+rule type(add) and trigger(equals)
     if (selectedChild.getCode().equals("$code")) return $name+firstLowerCase~View;
-end
 
-def type(add) trigger(hideCall)
+rule type(add) and trigger(hideCall)
     $name+firstLowerCase~View.hide();
-end
 
-def type(add) trigger(openChildViewCall)
+rule type(add) and trigger(openChildViewCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.openView(id, readonly);
-end
 
-def type(toolbar) trigger(editableAddCall)
+rule type(toolbar) and trigger(editableAddCall)
     $addList+addCall
-end
 
-def type(toolbar) trigger(editableAddPrototypeCall)
+rule type(toolbar) and trigger(editableAddPrototypeCall)
     $addList+addPrototypeCall
-end
 
-def type(toolbar) trigger(editableInitCall)
-    [$operationsGroup+editableInitCall]
-    [$operation+editableInitCall...[$NL]]
+rule type(toolbar) and trigger(editableInitCall)
+    <<$operationsGroup+editableInitCall>>
+    <<$operation+editableInitCall...[$NL]>>
     removeSelection.onExecute(this::removeSelection);
-    [$addList+execute]
-end
+    <<$addList+execute>>
 
-def type(toolbar) trigger(editableRefreshCall)
-    [$operationsGroup+editableRefreshCall]
-    [$operation+editableRefreshCall...[$NL]]
+rule type(toolbar) and trigger(editableRefreshCall)
+    <<$operationsGroup+editableRefreshCall>>
+    <<$operation+editableRefreshCall...[$NL]>>
     removeSelection.visible(!readonly && !node.getDefinition().isReadonly());
-    [$addList+refresh]
-end
+    <<$addList+refresh>>
 
-def type(toolbar & singleton) trigger(editableEvents)
+rule type(toolbar, singleton) and trigger(editableEvents)
     public void onFinishEdition(java.util.function.Consumer<Node> listener) {
         this.finishEditionListener = listener;
     }
-end
 
-def type(toolbar) trigger(editableEvents)
+rule type(toolbar) and trigger(editableEvents)
     public void onRemove(java.util.function.Consumer<Node> listener) {
         this.removeListener = listener;
     }
@@ -1361,12 +1253,11 @@ def type(toolbar) trigger(editableEvents)
     public void onFinishEdition(java.util.function.Consumer<Node> listener) {
         this.finishEditionListener = listener;
     }
-end
 
-def type(toolbar & singleton) trigger(selectedViewCode)
+rule type(toolbar, singleton) and trigger(selectedViewCode)
     private void addNode(String option) {
         Node result = null;
-        [$add+toolbarTemplate...[$NL]]
+        <<$add+toolbarTemplate...[$NL]>>
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
@@ -1380,7 +1271,7 @@ def type(toolbar & singleton) trigger(selectedViewCode)
     }
     private void addPrototype(String option) {
         Node result = null;
-        [$addPrototype+toolbarTemplate...[$NL]]
+        <<$addPrototype+toolbarTemplate...[$NL]>>
         if (result == null) return;
         nodeAdded = true;
         open(result);
@@ -1390,13 +1281,12 @@ def type(toolbar & singleton) trigger(selectedViewCode)
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
         if (searchBox != null) searchBox.bindTo(collection);
     }
-end
 
-def type(toolbar & singleton) trigger(editableMethods)
-    [$operationsGroup+editableMethods]
+rule type(toolbar, singleton) and trigger(editableMethods)
+    <<$operationsGroup+editableMethods>>
     private void addNode(String option) {
         Node result = null;
-        [$add+toolbarTemplate...[$NL]]
+        <<$add+toolbarTemplate...[$NL]>>
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
@@ -1410,7 +1300,7 @@ def type(toolbar & singleton) trigger(editableMethods)
     }
     private void addPrototype(String option) {
         Node result = null;
-        [$addPrototype+toolbarTemplate...[$NL]]
+        <<$addPrototype+toolbarTemplate...[$NL]>>
         if (result == null) return;
         nodeAdded = true;
         open(result);
@@ -1420,13 +1310,12 @@ def type(toolbar & singleton) trigger(editableMethods)
         toolbar.bindTo((io.intino.alexandria.ui.displays.components.collection.Selectable)collection);
         if (searchBox != null) searchBox.bindTo(collection);
     }
-end
 
-def type(toolbar) trigger(editableMethods)
-    [$operationsGroup+editableMethods]
+rule type(toolbar) and trigger(editableMethods)
+    <<$operationsGroup+editableMethods>>
     private void addNode(String option) {
         Node result = null;
-        [$add+toolbarTemplate...[$NL]]
+        <<$add+toolbarTemplate...[$NL]>>
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
@@ -1440,7 +1329,7 @@ def type(toolbar) trigger(editableMethods)
     }
     private void addPrototype(String option) {
         Node result = null;
-        [$addPrototype+toolbarTemplate...[$NL]]
+        <<$addPrototype+toolbarTemplate...[$NL]>>
         if (result == null) return;
         nodeAdded = true;
         open(result);
@@ -1459,44 +1348,33 @@ def type(toolbar) trigger(editableMethods)
         io.intino.goros.unit.util.LayerHelper.nodeLayer().deleteNode(node);
         if (removeListener != null) removeListener.accept(node);
     }
-end
 
-def type(toolbar) trigger(initViews)
-    [$add+initCall...[$NL]]
-end
+rule type(toolbar) and trigger(initViews)
+    <<$add+initCall...[$NL]>>
 
-def type(toolbar) trigger(bindCall)
-    [$add+bindCall...[$NL]]
-end
+rule type(toolbar) and trigger(bindCall)
+    <<$add+bindCall...[$NL]>>
 
-def type(toolbar) trigger(enableCollapseCall)
-    [$add+enableCollapseCall...[$NL]]
-end
+rule type(toolbar) and trigger(enableCollapseCall)
+    <<$add+enableCollapseCall...[$NL]>>
 
-def type(toolbar) trigger(showCollectionCall)
-    [$add+showCollectionCall...[$NL]]
-end
+rule type(toolbar) and trigger(showCollectionCall)
+    <<$add+showCollectionCall...[$NL]>>
 
-def type(toolbar) trigger(hideCollectionCall)
-    [$add+hideCollectionCall...[$NL]]
-end
+rule type(toolbar) and trigger(hideCollectionCall)
+    <<$add+hideCollectionCall...[$NL]>>
 
-def type(toolbar) trigger(equals)
-    [$add+equals...[$NL]]
-end
+rule type(toolbar) and trigger(equals)
+    <<$add+equals...[$NL]>>
 
-def type(toolbar) trigger(ifEditingCall)
-    [$add+ifEditingCall...[$NL]]
-end
+rule type(toolbar) and trigger(ifEditingCall)
+    <<$add+ifEditingCall...[$NL]>>
 
-def type(toolbar) trigger(hideCall)
-    [$add+hideCall...[$NL]]
-end
+rule type(toolbar) and trigger(hideCall)
+    <<$add+hideCall...[$NL]>>
 
-def type(toolbar) trigger(openChildViewCall)
-    [$add+openChildViewCall...[$NL]]
-end
+rule type(toolbar) and trigger(openChildViewCall)
+    <<$add+openChildViewCall...[$NL]>>
 
-def type(operation) trigger(executeMethodCall)
+rule type(operation) and trigger(executeMethodCall)
     if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), this::dispatch);
-end

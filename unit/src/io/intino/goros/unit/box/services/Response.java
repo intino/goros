@@ -1,12 +1,12 @@
 package io.intino.goros.unit.box.services;
 
-import io.intino.alexandria.http.spark.SparkContext;
+import io.intino.alexandria.http.server.AlexandriaHttpContext;
 import io.intino.alexandria.logger.Logger;
 
 import java.io.*;
 
 public class Response implements org.monet.http.Response {
-    private SparkContext context;
+    private AlexandriaHttpContext context;
     private FileOutputStream stream;
     private File tempFile;
     private String contentType;
@@ -14,11 +14,11 @@ public class Response implements org.monet.http.Response {
     private int status;
     private String encoding;
 
-    public Response(SparkContext context) {
+    public Response(AlexandriaHttpContext context) {
         this.context = context;
     }
 
-    public void setContext(SparkContext context) {
+    public void setContext(AlexandriaHttpContext context) {
         this.context = context;
     }
 

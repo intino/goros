@@ -1,16 +1,16 @@
-def type(setdefinition)
+rule type(setdefinition)
     dsl Konos
 
     use UI
     use Theme
-    [$toolbar+import]
+    <<$toolbar+import>>
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal Center)
-                    [$desktop]
-                    [$parent]
+                    <<$desktop>>
+                    <<$parent>>
                     Text(value="$label", format=h4 bold) label
                 Text(format=body2) count
                 Text(format=body2 grey) description
@@ -25,7 +25,7 @@ def type(setdefinition)
                         SearchBox(collections = empty) search
                         Block(format=filterByTitleStyle) > Selector(visible=false, format=body2) filterByTitle as CheckBox > Text(value="por título", format=body2 grey) as Option
                     Selector(format=viewSelectorStyle airRight) viewSelector as ComboBox(placeholder="Vista")
-                        [$view+selector...[$NL]]
+                        <<$view+selector...[$NL]>>
                     MaterialIconButton(title="Descargar...", icon = "Archive", format=airRight black) download as OpenDialog(dialog=DownloadDialog)
                     MaterialIconToggle(title="Cambiar de vista", icon = "ViewCarousel", format=airRight, size=Small, state=Off) toggleView as Option
                     MaterialIconToggle(title="Filtrar", icon = "FilterList", format=airRight, size=Small) filters as Option
@@ -54,19 +54,18 @@ def type(setdefinition)
                 Block(layout=Horizontal EndJustified, format=bottomBordered viewsToolbarStyle, visible=false) viewsToolbar
                     MaterialIconButton(icon="ChevronLeft", title="Ocultar listado", size=Small) hideViews
                 Block(layout=Vertical Flexible) as Relative(height=100%)
-                    [$view+page...[$NL]]
+                    <<$view+page...[$NL]>>
 
             Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
                 Transition(direction=Left)
-                [$view+filter...[$NL]]
+                <<$view+filter...[$NL]>>
 
-            [$toolbar+block]
+            <<$toolbar+block>>
 
-    [$view+template...[$NL]]
-    [$view+filterTemplate...[$NL]]
-end
+    <<$view+template...[$NL]>>
+    <<$view+filterTemplate...[$NL]>>
 
-def type(nodeview & ownedprototypes) trigger(template)
+rule type(nodeview, ownedprototypes) and trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
@@ -75,16 +74,14 @@ def type(nodeview & ownedprototypes) trigger(template)
                     Block(layout=Vertical, format=catalogIndexReferenceStyle)
                         Text label
                         Date createDate as Labeled("Creado el")
-end
 
-def type(nodeview & items) trigger(template)
+rule type(nodeview, items) and trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15, format=bordered) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
-            [$attribute+mold...[$NL]]
-end
+            <<$attribute+mold...[$NL]>>
 
-def type(nodeview & index) trigger(template)
+rule type(nodeview, index) and trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         List(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)
             noItemsMessage = "No hay elementos"
@@ -92,31 +89,30 @@ def type(nodeview & index) trigger(template)
                 Item(height=$height~px) $definition+firstLowerCase~$name+firstUpperCase~Item
                     Block(layout=Vertical, format=catalogIndexReferenceStyle)
                         Block(layout=Horizontal Flexible)
-                            [$picture]
+                            <<$picture>>
                             Block(layout=Horizontal Flexible, format=airLeft)
                                 Block(layout=Vertical Flexible)
-                                    [$title]
+                                    <<$title>>
                                     Block(layout=Vertical Flexible)
                                         Block(layout=Horizontal Wrap, format=middleAirTop) lineBlock
-                                            [$line+labeled...[$NL]]
+                                            <<$line+labeled...[$NL]>>
                                         Block(layout=Horizontal Wrap, format=middleAirTop) highlightBlock
-                                            [$highlight+highlight...[$NL]]
+                                            <<$highlight+highlight...[$NL]>>
                                 Block(layout=Vertical End) as Relative(width=5%)
-                                    [$icon]
-                                    MaterialIconButton(title="Detalles", icon="MoreHoriz", size=Small[, visible=$hasDetails]) detailsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver)
+                                    <<$icon>>
+                                    MaterialIconButton(title="Detalles", icon="MoreHoriz", size=Small<<, visible=$hasDetails>>) detailsTrigger as OpenPopover(popover=empty, triggerEvent=MouseOver)
 
         Block(format=spaced) detailsDialog as Popover
-            [$title+details]
+            <<$title+details>>
             Block(layout=Vertical Flexible)
                 Block(layout=Vertical, format=middleAirTop) lineBelowBlock
-                    [$lineBelow+labeled...[$NL]]
+                    <<$lineBelow+labeled...[$NL]>>
             Block(format=catalogIndexFooterItemStyle) footerBlock
-                [$footer+labeled...[$NL]]
-end
+                <<$footer+labeled...[$NL]>>
 
-def type(nodeview & locations) trigger(template)
+rule type(nodeview, locations) and trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        Map(itemClass="java.lang.String", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)[ $heatmap+firstUpperCase][ $clustermap+firstUpperCase]
+        Map(itemClass="java.lang.String", scrollingMark=false, pageSize=15) $definition+firstLowerCase~$name+firstUpperCase as Selectable(multiple=false)<< $heatmap+firstUpperCase>><< $clustermap+firstUpperCase>>
             Zoom(defaultZoom = 6, min = 1, max = 18)
             Center(latitude = 28.146773457066104, longitude = -15.418557420532238)
             noItemsMessage = "No hay elementos"
@@ -124,126 +120,101 @@ def type(nodeview & locations) trigger(template)
                 Item(height=$height~px) $definition+firstLowerCase~$name+firstUpperCase~Item
                     Block(layout=Vertical, format=catalogMapItemStyle)
                         Block(layout=Horizontal Flexible)
-                            [$picture]
+                            <<$picture>>
                             Block(layout=Horizontal Flexible, format=airLeft)
                                 Block(layout=Vertical Flexible)
-                                    [$title]
+                                    <<$title>>
                                     Block(layout=Vertical Flexible)
                                         Block(layout=Horizontal Wrap, format=middleAirTop) lineBlock
-                                            [$line+labeled...[$NL]]
+                                            <<$line+labeled...[$NL]>>
                                         Block(layout=Horizontal Wrap, format=middleAirTop) lineBelowBlock
-                                            [$lineBelow+labeled...[$NL]]
+                                            <<$lineBelow+labeled...[$NL]>>
                                         Block(layout=Horizontal Wrap, format=middleAirTop) highlightBlock
-                                            [$highlight+highlight...[$NL]]
+                                            <<$highlight+highlight...[$NL]>>
                                 Block(layout=Vertical End) as Relative(width=5%)
-                                    [$icon]
+                                    <<$icon>>
                         Block(format=catalogIndexFooterItemStyle) footerBlock
-                            [$footer+labeled...[$NL]]
-end
+                            <<$footer+labeled...[$NL]>>
 
-def type(nodeview) trigger(template)
+rule type(nodeview) and trigger(template)
     Template(layout=Vertical Flexible) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         Text(value="NOT IMPLEMENTED!!!")
-end
 
-def type(nodeview) trigger(filterTemplate)
+rule type(nodeview) and trigger(filterTemplate)
     Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate as Relative(height=100%)
         Link(title="Resetear filtros", format=doubleAirBottom) reset
         Block content
-            [$dimension...[$NL]]
-end
+            <<$dimension...[$NL]>>
 
-def type(dimension)
+rule type(dimension)
     Block(format=doubleAirBottom) > OwnerTemplateStamp(template="$type+firstUpperCase~FilterTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
-end
 
-def type(nodeview) trigger(filterTemplate)
+rule type(nodeview) and trigger(filterTemplate)
     Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate
         Text(value="NOT IMPLEMENTED!!!")
-end
 
-def type(nodeview) trigger(page)
+rule type(nodeview) and trigger(page)
     Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate, format=fullHeight) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview) trigger(filter)
+rule type(nodeview) and trigger(filter)
     Block(layout=Vertical Flexible) $name+firstLowerCase~Filters as Conditional > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate, format=fullHeight) $name+firstLowerCase~FiltersStamp
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(selector)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(selector)
 
-def type(nodeview) trigger(selector)
+rule type(nodeview) and trigger(selector)
     Text(value="$label") $name+firstLowerCase as Option
-end
 
-def type(attribute) trigger(mold)
+rule type(attribute) and trigger(mold)
     Mold
         Heading $shortName+firstLowerCase~Heading > Text(value="$label")
-        Item(height=25px,width=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."[, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase
-end
+        Item(height=25px,width=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."<<, cropWithEllipsis=$cropWithEllipsis Chars>>) $name+firstLowerCase
 
-def type(attribute) trigger(details)
+rule type(attribute) and trigger(details)
     Text(format=h4 airBottom) $name+firstLowerCase~Details
-end
 
-def type(attribute & location) trigger(title)
+rule type(attribute, location) and trigger(title)
     Link(title="Cargando...", format=h4) $name+firstLowerCase
-end
 
-def type(attribute) trigger(title)
-    $type+firstUpperCase~(value="Cargando...", format=h4[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase
-end
+rule type(attribute) and trigger(title)
+    $type+firstUpperCase~(value="Cargando...", format=h4<<, cropWithEllipsis=$cropWithEllipsis Chars>><<, pattern="$pattern">>) $name+firstLowerCase
 
-def type(attribute) trigger(labeled)
-    $type+firstUpperCase~(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase as Labeled("$label")
-end
+rule type(attribute) and trigger(labeled)
+    $type+firstUpperCase~(format=body2 doubleAirRight<<, cropWithEllipsis=$cropWithEllipsis Chars>><<, pattern="$pattern">>) $name+firstLowerCase as Labeled("$label")
 
-def type(attribute) trigger(highlight)
-    $type+firstUpperCase(format=body2 doubleAirRight[, cropWithEllipsis=$cropWithEllipsis Chars][, pattern="$pattern"]) $name+firstLowerCase as Highlighted(backgroundColor="#CD3E2D", textColor="white")
-end
+rule type(attribute) and trigger(highlight)
+    $type+firstUpperCase(format=body2 doubleAirRight<<, cropWithEllipsis=$cropWithEllipsis Chars>><<, pattern="$pattern">>) $name+firstLowerCase as Highlighted(backgroundColor="#CD3E2D", textColor="white")
 
-def type(attribute) trigger(picture)
+rule type(attribute) and trigger(picture)
     Block > Image(defaultValue="images/no-picture.jpg") $name+firstLowerCase as Absolute(width=96px,height=96px)
-end
 
-def type(attribute) trigger(icon)
+rule type(attribute) and trigger(icon)
     Icon(icon=empty, format=doubleAirRight) $name+firstLowerCase
-end
 
-def type(addList) trigger(import)
-    [$add+import...[$NL]]
-end
+rule type(addList) and trigger(import)
+    <<$add+import...[$NL]>>
 
-def type(add) trigger(import)
+rule type(add) and trigger(import)
     use $name+firstUpperCase
-end
 
-def type(addList) trigger(option)
-    SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addSplit as Action
+rule type(addList) and trigger(option)
+    SplitButton(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, options=<<$add+option...[ ]>>, defaultOption="Añadir Formulario 1", visible=false) addSplit as Action
     Button(title=$defaultAdd+option, highlight=Outline, size=Small, format=airRight, visible=false) add as Action
-    SplitButton(title=$defaultAddPrototype+option, highlight=Outline, size=Small, format=airRight, options=[$add+option...[ ]], defaultOption="Añadir Formulario 1", visible=false) addPrototypeSplit as Action
+    SplitButton(title=$defaultAddPrototype+option, highlight=Outline, size=Small, format=airRight, options=<<$add+option...[ ]>>, defaultOption="Añadir Formulario 1", visible=false) addPrototypeSplit as Action
     Button(title="Añadir", highlight=Outline, size=Small, format=airRight, visible=false) addPrototype as Action
-end
 
-def type(add & empty) trigger(option)
+rule type(add, empty) and trigger(option)
     ""
-end
 
-def type(add) trigger(option)
+rule type(add) and trigger(option)
     "Añadir $label"
-end
 
-def type(toolbar) trigger(block)
+rule type(toolbar) and trigger(block)
     $addList+block
-end
 
-def type(addList) trigger(block)
-    [$add+block...[$NL]]
-end
+rule type(addList) and trigger(block)
+    <<$add+block...[$NL]>>
 
-def type(add) trigger(block)
+rule type(add) and trigger(block)
     Block(layout=Vertical Flexible, format=smallAirLeft middleSpaced bordered) $name+firstLowerCase~View as Conditional Animated Relative(width=55%)
         Transition(direction=Left)
         TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) $name+firstLowerCase~Stamp
-end

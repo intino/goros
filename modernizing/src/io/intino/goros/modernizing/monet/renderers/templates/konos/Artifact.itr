@@ -1,13 +1,13 @@
-def type(artifact)
+rule type(artifact)
     dsl Legio
 
-    Artifact(groupId = "$package", version = "1.0.0") model as Product
-        Model(language = "Unit", version = "1.2.2", sdkVersion = "4.1.2")
-        Box(language = "Konos", version = "9.4.5")
+    Artifact(groupId = "$package", version = "1.0.0") model
+        Dsl(name="Konos", version="13.2.7") > Builder(generationPackage="box")
 
         Imports
-            Compile("io.intino.alexandria", "ui-framework", "4.19.13")
-            Compile("io.intino.alexandria", "core-framework", "2.1.0")
+            Compile("io.intino.goros", "unit", "1.3.32")
+            Compile("io.intino.alexandria", "ui-framework", "4.25.27)
+            Compile("io.intino.alexandria", "core-framework", "2.1.2")
 
             Web("$package", "model-elements", "1.0.0")
 
@@ -48,4 +48,3 @@ def type(artifact)
         Argument("mail-admin-password", "")
         Argument("is-debug-mode", "false")
         Argument("store-directory", "./temp/monetfederation/store")
-end

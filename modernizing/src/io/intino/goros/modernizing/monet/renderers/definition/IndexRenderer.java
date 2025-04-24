@@ -3,11 +3,12 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
+import io.intino.goros.modernizing.monet.renderers.Formatters;
 import io.intino.goros.modernizing.monet.renderers.RendererHelper;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.IndexTemplate;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
 import io.intino.itrules.formatters.StringFormatters;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
@@ -100,7 +101,7 @@ public class IndexRenderer extends DefinitionRenderer<IndexDefinition> {
 		resetAddedDisplays();
 		FrameBuilder viewFrame = viewFrame(view);
 		File file = new File(javaPackage() + nameOf(definition()) + StringFormatters.firstUpperCase().format(nameOf(view)) + "Table.java");
-		writeFrame(file, javaTemplate().render(viewFrame.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(javaTemplate()).addAll(Formatters.all).render(viewFrame.toFrame()));
 	}
 
 	private FrameBuilder viewFrame(IndexDefinitionBase.IndexViewProperty viewProperty) {

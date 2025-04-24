@@ -3,6 +3,7 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
+import io.intino.goros.modernizing.monet.renderers.Formatters;
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
 import org.monet.metamodel.*;
@@ -74,7 +75,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		resetAddedDisplays();
 		FrameBuilder builder = buildFrame().add("embedded");
 		File file = new File(javaPackage() + nameOf(definition()) + "EmbeddedTemplate.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(javaTemplate()).addAll(Formatters.all).render(builder.toFrame()));
 	}
 
 	protected void writeViewsTemplate() {
@@ -187,7 +188,7 @@ public abstract class NodeRenderer<D extends NodeDefinition> extends DefinitionR
 		resetAddedDisplays();
 		FrameBuilder viewFrame = viewFrame(view);
 		File file = new File(javaPackage() + nameOf(definition()) + StringUtil.firstUpperCase(nameOf(view)) + "ViewTemplate.java");
-		writeFrame(file, javaTemplate().render(viewFrame.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(javaTemplate()).addAll(Formatters.all).render(viewFrame.toFrame()));
 	}
 
 	private List<NodeDefinition> nodeDefinitions(NodeFieldProperty field) {

@@ -1,4 +1,4 @@
-def type(documentdefinition & embedded)
+rule type(documentdefinition, embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -11,8 +11,8 @@ def type(documentdefinition & embedded)
         private Node node;
         private boolean readonly = false;
         private io.intino.goros.unit.box.ui.ViewMode viewMode;
-        [$toolbar+editableDeclaration]
-        [$toolbar+navigableDeclaration]
+        <<$toolbar+editableDeclaration>>
+        <<$toolbar+navigableDeclaration>>
 
         public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
@@ -37,9 +37,9 @@ def type(documentdefinition & embedded)
             return this;
         }
 
-        [$toolbar+editableEvents]
-        [$toolbar+navigableEvents]
-        [$toolbar+navigableMethods]
+        <<$toolbar+editableEvents>>
+        <<$toolbar+navigableEvents>>
+        <<$toolbar+navigableMethods>>
 
         public void openView(String view) {
             openView(view, readonly);
@@ -73,8 +73,8 @@ def type(documentdefinition & embedded)
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
-            [$toolbar+editableRefreshCall]
-            [$toolbar+navigableRefreshCall]
+            <<$toolbar+editableRefreshCall>>
+            <<$toolbar+navigableRefreshCall>>
         }
 
         private void refreshView() {
@@ -83,7 +83,7 @@ def type(documentdefinition & embedded)
 
         private void initToolbar() {
             edit.onExecute(e -> toggleEdition());
-            [$toolbar+editableInitCall]
+            <<$toolbar+editableInitCall>>
         }
 
         private void initViews() {
@@ -99,10 +99,9 @@ def type(documentdefinition & embedded)
 
         private void toggleEdition() {
             readonly(!readonly);
-            [$toolbar+editableCall]
+            <<$toolbar+editableCall>>
             refresh();
         }
 
-        [$toolbar+editableMethods]
+        <<$toolbar+editableMethods>>
     }
-end

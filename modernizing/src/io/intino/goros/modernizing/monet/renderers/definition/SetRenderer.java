@@ -2,11 +2,12 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
+import io.intino.goros.modernizing.monet.renderers.Formatters;
 import io.intino.goros.modernizing.monet.renderers.RendererHelper;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.SetTemplate;
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.SetDefinitionBase.SetViewPropertyBase.ShowProperty.IndexProperty.SortModeEnumeration;
 import org.monet.metamodel.SetDefinitionBase.SetViewPropertyBase.ShowProperty.LocationsProperty;
@@ -392,6 +393,6 @@ public abstract class SetRenderer<D extends SetDefinition> extends NodeRenderer<
 		resetAddedDisplays();
 		FrameBuilder viewFrame = viewFrame(view).add("filter");
 		File file = new File(javaPackage() + nameOf(definition()) + StringUtil.firstUpperCase(nameOf(view)) + "FiltersTemplate.java");
-		writeFrame(file, javaTemplate().render(viewFrame.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(javaTemplate()).addAll(Formatters.all).render(viewFrame.toFrame()));
 	}
 }

@@ -4,11 +4,11 @@ import com.adobe.xmp.impl.Base64;
 import io.intino.goros.unit.box.I18n;
 import io.intino.goros.unit.box.ui.displays.templates.GorosAppTemplate;
 import io.intino.goros.unit.util.Formatters;
+import org.apache.commons.io.IOUtils;
 import org.monet.space.kernel.Kernel;
 import org.monet.space.kernel.components.ComponentFederation;
 import org.monet.space.kernel.exceptions.DataException;
 import org.monet.space.kernel.model.Banner;
-import spark.utils.IOUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -23,7 +23,7 @@ public class BannerPage extends AbstractBannerPage {
 	@Override
 	public String execute() {
 		try {
-			String content = IOUtils.toString(BannerPage.class.getResourceAsStream("/banner.tpl"));
+			String content = IOUtils.toString(BannerPage.class.getResourceAsStream("/banner.tpl"), "UTF-8");
 			return replaceMarks(content);
 		} catch (IOException e) {
 			return NoInfo;

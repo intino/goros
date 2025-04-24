@@ -1,18 +1,32 @@
 package io.intino.goros.modernizing.monet.renderers.templates.java;
 
-import io.intino.itrules.RuleSet;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Rule;
+import io.intino.itrules.template.Template;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static io.intino.itrules.template.condition.predicates.Predicates.*;
+import static io.intino.itrules.template.outputs.Outputs.*;
 
 public class ContainerDefinitionTemplate extends Template {
 
-	public RuleSet ruleSet() {
-		return new RuleSet().add(
-			rule().condition((allTypes("show","components")), (trigger("declaration"))).output(literal("private Node contain;")),
-			rule().condition((allTypes("show","components")), (trigger("hidetoolbar"))).output(expression().output(mark("component", "hideToolbar").multiple("\n"))),
-			rule().condition((allTypes("show","components"))).output(literal("public ")).output(mark("definition", "firstUpperCase")).output(mark("view", "firstUpperCase")).output(literal("ViewTemplate contain(Node contain) {\n\tthis.contain = contain;\n\treturn this;\n}\n\n@Override\npublic void refresh() {\n\tsuper.refresh();\n\t")).output(expression().output(mark("component").multiple("\n"))).output(literal("\n}")),
-			rule().condition((type("component")), (trigger("hidetoolbar"))).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.hideToolbar();")),
-			rule().condition((allTypes("component","collection"))).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.node(contain);\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.view(\"")).output(mark("viewCode")).output(literal("\");\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.toggleView(ToggleEvent.State.On);\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.readonly(readonly);\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.refresh();")),
-			rule().condition((type("component"))).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.node(contain);\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.view(\"")).output(mark("viewCode")).output(literal("\");\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.readonly(readonly);\n")).output(mark("name", "firstLowerCase")).output(mark("view", "firstUpperCase")).output(literal("Stamp.refresh();"))
-		);
+	public List<Rule> ruleSet() {
+		List<Rule> rules = new ArrayList<>();
+		rules.add(rule().condition(all(allTypes("show", "components"), trigger("declaration"))).output(literal("private Node contain;")));
+		rules.add(rule().condition(all(allTypes("show", "components"), trigger("hidetoolbar"))).output(expression().output(placeholder("component", "hideToolbar").multiple("\n"))));
+		rules.add(rule().condition(allTypes("show", "components")).output(literal("public ")).output(placeholder("definition", "firstUpperCase")).output(placeholder("view", "firstUpperCase")).output(literal("ViewTemplate contain(Node contain) {\n\tthis.contain = contain;\n\treturn this;\n}\n\n@Override\npublic void refresh() {\n\tsuper.refresh();\n\t")).output(expression().output(placeholder("component").multiple("\n"))).output(literal("\n}")));
+		rules.add(rule().condition(all(allTypes("component"), trigger("hidetoolbar"))).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.hideToolbar();")));
+		rules.add(rule().condition(allTypes("component", "collection")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.node(contain);\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.view(\"")).output(placeholder("viewCode")).output(literal("\");\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.toggleView(ToggleEvent.State.On);\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.readonly(readonly);\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.refresh();")));
+		rules.add(rule().condition(allTypes("component")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.node(contain);\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.view(\"")).output(placeholder("viewCode")).output(literal("\");\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.readonly(readonly);\n")).output(placeholder("name", "firstLowerCase")).output(placeholder("view", "firstUpperCase")).output(literal("Stamp.refresh();")));
+		return rules;
+	}
+
+	public String render(Object object) {
+		return new io.intino.itrules.Engine(this).render(object);
+	}
+
+	public String render(Object object, java.util.Map<String, io.intino.itrules.Formatter> formatters) {
+		return new io.intino.itrules.Engine(this).addAll(formatters).render(object);
 	}
 }

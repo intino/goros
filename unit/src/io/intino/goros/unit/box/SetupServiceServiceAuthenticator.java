@@ -12,18 +12,19 @@ import org.monet.space.kernel.model.BusinessUnit;
 import org.monet.space.kernel.model.UserInfo;
 
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.Map;
 
-public class SetupServiceServiceAuthenticator {
+public class SetupServiceServiceAuthenticator extends GorosAuthenticator {
  	private UnitBox box;
 
  	public SetupServiceServiceAuthenticator(UnitBox box) {
 		this.box = box;
 	}
 
-	public boolean isAuthenticated(Map<String, String> parameters) {
+	public boolean isAuthenticated(Map<String, List<String>> parameters) {
 		try {
-			String signature = parameters.get(Parameter.SIGNATURE);
+			String signature = value(parameters, Parameter.SIGNATURE);
 			if (signature == null) return false;
 			MasterLayer masterLayer = ComponentFederation.getMasterLayer();
 			byte[] signatureBytes = Base64.decodeBase64(signature);

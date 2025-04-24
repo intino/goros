@@ -1,4 +1,4 @@
-def type(desktopdefinition)
+rule type(desktopdefinition)
     dsl Konos
 
     use UI
@@ -19,31 +19,25 @@ def type(desktopdefinition)
 
     	Block(layout=Vertical CenterCenter Flexible, visible=true) loading > Spinner
         Block(layout=Vertical Wrap, visible=false) labels
-            [$view...[$NL]]
-end
+            <<$view...[$NL]>>
 
-def type(nodeview)
+rule type(nodeview)
     Block(layout=Vertical Flexible, format=desktopBlockStyle)
         Text(value="$label", format=h4 airBottom)
         $show
-end
 
-def type(show)
-    [$item...[$NL]]
-end
+rule type(show)
+    <<$item...[$NL]>>
 
-def type(item)
+rule type(item)
     Block(format=doubleAirBottom, visible=false) $name+firstLowerCase
         Link(title="$label", format=h5) $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType)
         Text(value="$description", format=description)
-end
 
-def type(toolbar) trigger(editable)
-    [$operationsGroup]
-    [$operation...[$NL]]
-end
+rule type(toolbar) and trigger(editable)
+    <<$operationsGroup>>
+    <<$operation...[$NL]>>
 
-def type(toolbar) trigger(editableRefreshCall)
-    [$operationsGroup+editableInitCall]
-    [$operation+editableRefreshCall...[$NL]]
-end
+rule type(toolbar) and trigger(editableRefreshCall)
+    <<$operationsGroup+editableInitCall>>
+    <<$operation+editableRefreshCall...[$NL]>>

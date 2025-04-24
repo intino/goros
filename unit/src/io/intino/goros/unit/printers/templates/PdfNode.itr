@@ -1,4 +1,4 @@
-def type(node)
+rule type(node)
     <?xml version='1.0' encoding='UTF-8'?>
     <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
@@ -53,16 +53,14 @@ def type(node)
 
       </fo:page-sequence>
     </fo:root>
-end
 
-def type(content & empty)
+rule type(content, empty)
     <fo:block font-size="20pt">$label</fo:block>
     <fo:block font-size="10pt" margin-bottom="3mm" color="#666666">$date</fo:block>
     $filters
     <fo:block>$noElementsMessage</fo:block>
-end
 
-def type(content)
+rule type(content)
     <fo:block font-size="20pt">$label</fo:block>
     <fo:block font-size="10pt" margin-bottom="2mm" color="#666666">$date</fo:block>
     $filters
@@ -72,76 +70,59 @@ def type(content)
         <fo:table-header>$header</fo:table-header>
         <fo:table-body>$references</fo:table-body>
     </fo:table>
-end
 
-def type(filters & empty)
-end
+rule type(filters, empty)
 
-def type(filters)
+rule type(filters)
     <fo:block background-color="#FAEDC3" font-size="12pt" margin-bottom="2mm" padding="1mm">
         $filtersMessage
-        [$filter...[$NL]]
+        <<$filter...[$NL]>>
     </fo:block>
-end
 
-def type(filter & lt)
-    <fo:block font-size="9pt" margin-left="4mm">$label anterior a [$value...[, ]], inclusive</fo:block>
-end
+rule type(filter, lt)
+    <fo:block font-size="9pt" margin-left="4mm">$label anterior a <<$value...[, ]>>, inclusive</fo:block>
 
-def type(filter & gt)
-    <fo:block font-size="9pt" margin-left="4mm">$label posterior a [$value...[, ]], inclusive</fo:block>
-end
+rule type(filter, gt)
+    <fo:block font-size="9pt" margin-left="4mm">$label posterior a <<$value...[, ]>>, inclusive</fo:block>
 
-def type(filter)
-    <fo:block font-size="9pt" margin-left="4mm">$label: [$value...[, ]]</fo:block>
-end
+rule type(filter)
+    <fo:block font-size="9pt" margin-left="4mm">$label: <<$value...[, ]>></fo:block>
 
-def type(header) trigger(columns)
-    [$reference+column...[$NL]]
-end
+rule type(header) and trigger(columns)
+    <<$reference+column...[$NL]>>
 
-def type(header)
-    [$reference+header...[$NL]]
-end
+rule type(header)
+    <<$reference+header...[$NL]>>
 
-def type(references)
-    [$reference...[$NL]]
-end
+rule type(references)
+    <<$reference...[$NL]>>
 
-def type(reference) trigger(column)
-    [$attribute+column...[$NL]]
+rule type(reference) and trigger(column)
+    <<$attribute+column...[$NL]>>
     <fo:table-column column-width="$width~%"/>
-end
 
-def type(reference) trigger(header)
+rule type(reference) and trigger(header)
     <fo:table-row background-color="#EFF7FF" margin-bottom="2mm" border-top="0.2mm solid #5E93B1" border-bottom="0.1mm solid #5E93B1">
-        [$attribute+header...[$NL]]
+        <<$attribute+header...[$NL]>>
     </fo:table-row>
-end
 
-def type(reference)
-    <fo:table-row[ background-color="#ddd"$odd+empty]>
-        [$attribute...[$NL]]
+rule type(reference)
+    <fo:table-row<< background-color="#ddd"$odd+empty>>~>
+        <<$attribute...[$NL]>>
     </fo:table-row>
-end
 
-def type(attribute) trigger(column)
+rule type(attribute) and trigger(column)
     <fo:table-column column-width="$width~%"/>
-end
 
-def type(attribute) trigger(header)
+rule type(attribute) and trigger(header)
     <fo:table-cell padding-left="0.5mm" padding-top="2mm" padding-bottom="2mm" wrap-option="wrap">
         <fo:block font-size="10pt" font-weight="bold">$label</fo:block>
     </fo:table-cell>
-end
 
-def type(attribute & picture)
+rule type(attribute, picture)
     <fo:table-cell padding-left="0.5mm" font-size="8pt" padding-top="2mm" padding-bottom="2mm"><fo:block><fo:external-graphic src="url('$value')" content-height="scale-to-fit" height="1.00in" content-width="1.00in" scaling="non-uniform"/></fo:block></fo:table-cell>
-end
 
-def type(attribute)
+rule type(attribute)
     <fo:table-cell padding-left="0.5mm" font-size="8pt" padding-top="2mm" padding-bottom="2mm"><fo:block>$value</fo:block></fo:table-cell>
-end
 
-def type(odd) trigger(empty)
-end
+rule type(odd) and trigger(empty)

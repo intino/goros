@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.http.server.AlexandriaHttpContext;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.alexandria.exceptions.*;
 
@@ -20,7 +21,7 @@ import org.monet.space.kernel.model.map.LocationList;
 
 public class GetLocationsFromNodeAction {
 	public UnitBox box;
-	public io.intino.alexandria.http.spark.SparkContext context;
+	public AlexandriaHttpContext context;
 	public String id;
 
 	public List<io.intino.goros.unit.box.schemas.Location> execute() {

@@ -1,10 +1,9 @@
 package io.intino.goros.documents.box.actions;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
+import io.intino.alexandria.Json;
 import io.intino.goros.documents.box.services.Response;
-import net.sf.json.JSONSerializer;
 import org.monet.docservice.core.Key;
 import org.monet.docservice.core.exceptions.ApplicationException;
 import org.monet.docservice.core.log.Logger;
@@ -108,7 +107,7 @@ public abstract class PreviewDocumentAction extends Action {
 			DocumentMetadata metadata = repository.getDocumentMetadata(document);
 
 			resp.setContentType(JSON_MIMETYPE);
-			resp.getWriter().print(JSONSerializer.toJSON(metadata).toString());
+			resp.getWriter().print(Json.toString(metadata));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ApplicationException("Error");

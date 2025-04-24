@@ -1,4 +1,4 @@
-def type(tasks & nodetasks)
+rule type(tasks, nodetasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -47,9 +47,8 @@ def type(tasks & nodetasks)
         }
 
     }
-end
 
-def type(tasks & inbox)
+rule type(tasks, inbox)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -81,9 +80,8 @@ def type(tasks & inbox)
         }
 
     }
-end
 
-def type(tasks & embedded)
+rule type(tasks, embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -225,7 +223,7 @@ def type(tasks & embedded)
             });
             filtersView.onInit(e -> initFilters());
             filtersView.onShow(e -> filtersView.tasksFiltersStamp.refresh());
-            [$process+init...[$NL]]
+            <<$process+init...[$NL]>>
         }
 
         private void refreshView() {
@@ -269,7 +267,7 @@ def type(tasks & embedded)
         }
 
         private void bindCurrentViewTo(io.intino.alexandria.ui.displays.components.Collection collection) {
-            [$process+bind...[$NL]]
+            <<$process+bind...[$NL]>>
         }
 
         private void initFilters() {
@@ -296,7 +294,7 @@ def type(tasks & embedded)
 
         private BlockConditional selectedTaskView() {
             if (selectedTask == null) return null;
-            [$process+selectedView...[$NL]]
+            <<$process+selectedView...[$NL]>>
             return null;
         }
 
@@ -335,38 +333,37 @@ def type(tasks & embedded)
         }
 
         private void hideChildViews() {
-            [$process+hide...[$NL]]
+            <<$process+hide...[$NL]>>
             enableCollapse(false);
         }
 
         private void refreshCollapse() {
             viewsToolbar.visible(selectedTask != null);
             views.visible(true);
-            [$process+hideCollectionCall...[$NL]]
+            <<$process+hideCollectionCall...[$NL]>>
         }
 
         private void enableCollapse(boolean value) {
             boolean visible = value && views.isVisible();
             viewsToolbar.visible(visible);
-            [$process+enableCollapseCall...[$NL]]
+            <<$process+enableCollapseCall...[$NL]>>
         }
 
         private void showViews() {
             views.visible(true);
             enableCollapse(selectedTask != null);
-            [$process+hideCollectionCall...[$NL]]
+            <<$process+hideCollectionCall...[$NL]>>
         }
 
         private void hideViews() {
             views.visible(false);
             enableCollapse(selectedTask != null);
-            [$toolbar+showCollectionCall...[$NL]]
+            <<$toolbar+showCollectionCall...[$NL]>>
         }
 
     }
-end
 
-def type(tasks)
+rule type(tasks)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -568,9 +565,8 @@ def type(tasks)
         }
 
     }
-end
 
-def type(process) trigger(init)
+rule type(process) and trigger(init)
     $name+firstLowerCase~View.onShow(e -> {
         bindCurrentViewTo(currentCollection());
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.task(reloadSelected());
@@ -590,39 +586,32 @@ def type(process) trigger(init)
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
         if ($name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectedView() == null) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.selectDefaultView();
     });
-end
 
-def type(process) trigger(hide)
+rule type(process) and trigger(hide)
     $name+firstLowerCase~View.hide();
-end
 
-def type(process) trigger(bind)
+rule type(process) and trigger(bind)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~Stamp.bindTo(collection);
-end
 
-def type(process) trigger(enableCollapseCall)
+rule type(process) and trigger(enableCollapseCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(!visible ? viewMode : null);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
     }
-end
 
-def type(process) trigger(showCollectionCall)
+rule type(process) and trigger(showCollectionCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(ViewMode.Full);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
     }
-end
 
-def type(process) trigger(hideCollectionCall)
+rule type(process) and trigger(hideCollectionCall)
     if ($name+firstLowerCase~View.isVisible()) {
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.viewMode(null);
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.showCollectionVisibility();
         $name+firstLowerCase~View.$name+firstLowerCase~Stamp.refresh();
     }
-end
 
-def type(process) trigger(selectedView)
+rule type(process) and trigger(selectedView)
     if (selectedTask.getCode().equals("$code")) return $name+firstLowerCase~View;
-end

@@ -1,19 +1,16 @@
-def type(indexdefinition)
+rule type(indexdefinition)
     dsl Konos
 
     use Theme
 
-    [$view...[$NL]]
-end
+    <<$view...[$NL]>>
 
-def type(view)
+rule type(view)
     Table(itemClass="org.monet.space.kernel.model.NodeItem", scrollingMark=false, pageSize=15, format=bordered) $definition+firstUpperCase~$name+firstUpperCase~Table as Selectable(multiple=false)
         noItemsMessage = "No hay elementos"
-        [$attribute...[$NL]]
-end
+        <<$attribute...[$NL]>>
 
-def type(attribute)
+rule type(attribute)
     Mold
         Heading $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Heading > Text(value="$label")
-        Item(height=25px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Item > $type+firstUpperCase(visible=true[, value="$value"][, cropWithEllipsis=$cropWithEllipsis Chars]) $name+firstLowerCase
-end
+        Item(height=25px,width=$width~%) $definition+firstLowerCase~$view+firstUpperCase~Table$name+firstUpperCase~Item > $type+firstUpperCase(visible=true<<, value="$value">><<, cropWithEllipsis=$cropWithEllipsis Chars>>) $name+firstLowerCase

@@ -1,7 +1,5 @@
 package io.intino.goros.unit.box.actions;
 
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.content.InputStreamBody;
 import org.monet.space.setupservice.control.actions.ActionUpdateModel;
 import org.monet.space.setupservice.control.constants.Parameter;
 
@@ -19,7 +17,7 @@ public class PostUpdateModelAction extends SetupServiceAction {
     @Override
     Map<String, Object> parameters() {
         HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put(Parameter.MODEL, model.stream());
+        paramMap.put(Parameter.MODEL, streamOf(model));
         return paramMap;
     }
 }

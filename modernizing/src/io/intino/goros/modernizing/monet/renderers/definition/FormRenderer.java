@@ -2,10 +2,11 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
+import io.intino.goros.modernizing.monet.renderers.Formatters;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.FormTemplate;
 import io.intino.goros.modernizing.monet.util.StringUtil;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty;
 import org.monet.metamodel.FormDefinitionBase.FormViewProperty.ShowProperty;
@@ -89,7 +90,7 @@ public class FormRenderer extends NodeRenderer<FormDefinition> {
 		resetAddedDisplays();
 		FrameBuilder viewFrame = compositeViewFrame(field, new FrameBuilder());
 		File file = new File(javaPackage() + nameOf(definition()) + StringUtil.firstUpperCase(field.getName()) + "Template.java");
-		writeFrame(file, new io.intino.goros.modernizing.monet.renderers.templates.java.FormTemplate().render(viewFrame.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(new io.intino.goros.modernizing.monet.renderers.templates.java.FormTemplate()).addAll(Formatters.all).render(viewFrame.toFrame()));
 		field.getCompositeFieldPropertyList().forEach(this::writeCompositeFieldTemplate);
 	}
 

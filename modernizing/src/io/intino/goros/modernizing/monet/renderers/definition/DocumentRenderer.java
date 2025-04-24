@@ -4,7 +4,7 @@ import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.DocumentTemplate;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 
 public class DocumentRenderer extends NodeRenderer<DocumentDefinition> {

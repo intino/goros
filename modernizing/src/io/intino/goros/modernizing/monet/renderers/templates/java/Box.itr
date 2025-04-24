@@ -1,6 +1,7 @@
-def type(box)
+rule type(box)
     package $package.$module+lowerCase.box;
 
+    import io.intino.alexandria.core.Box;
     import io.intino.alexandria.ui.services.AuthService;
     import io.intino.goros.unit.box.UnitBox;
     import io.intino.goros.unit.box.listeners.GorosUnitNotifier;
@@ -9,12 +10,22 @@ def type(box)
 
     public class $boxName+firstUpperCase~Box extends AbstractBox {
 
-        public $boxName+firstUpperCase~Box(String$[$] args) {
+        public $boxName+firstUpperCase~Box(String[] args) {
             super(args);
         }
 
         public $boxName+firstUpperCase~Box($boxName+firstUpperCase~Configuration configuration) {
             super(configuration);
+        }
+
+        @Override
+        protected void initJavaLogger() {
+        }
+
+        @Override
+        public Box put(Object o) {
+            if (o instanceof UnitBox) owner = (UnitBox) o;
+            return super.put(o);
         }
 
         public void beforeStart() {
@@ -42,4 +53,3 @@ def type(box)
             return null;
         }
     }
-end

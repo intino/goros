@@ -1,17 +1,17 @@
-def type(nodedefinition)
+rule type(nodedefinition)
     dsl Konos
 
-    [$view+use...[$NL]]
+    <<$view+use...[$NL]>>
     use UI
     use Theme
-    [$toolbar+import]
+    <<$toolbar+import>>
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
-                    [$desktop]
-                    [$parent]
+                    <<$desktop>>
+                    <<$parent>>
                     Text(value="$label", format=h4 bold) label
                 Text(format=body2 grey) description
 
@@ -31,49 +31,43 @@ def type(nodedefinition)
         Block(layout=Horizontal) header
             Block(layout=Vertical) headerToolbar as Relative(width=100%, offsetWidth=40px)
                 Selector viewSelector as Tabs(scrollButtons=Auto)
-                    [$view+declaration...[$NL]]
+                    <<$view+declaration...[$NL]>>
             Block(layout=Horizontal EndJustified Center)
                 MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) openContain as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)
-            [$view+page...[$NL]]
+            <<$view+page...[$NL]>>
 
-    [$view...[$NL]]
-    [$compositeView...[$NL]]
-end
+    <<$view...[$NL]>>
+    <<$compositeView...[$NL]>>
 
-def type(desktop)
+rule type(desktop)
     Link(title="$label", format=h4 middleAirRight) desktopLink as Action Addressable($module+firstUpperCase~Elements.$resourceType)
     Text(value="/", format=h4 middleAirRight)
-end
 
-def type(parent)
+rule type(parent)
     Link(title="$label", format=h4 middleAirRight) parentLink as Action Addressable($module+firstUpperCase~Elements.$resourceType)
     Text(value="/", format=h4 middleAirRight)
-end
 
-def type(toolbar) trigger(import)
+rule type(toolbar) and trigger(import)
     $addList+import
-end
 
-def type(toolbar & singleton) trigger(editable)
-    [$operationsGroup]
-    [$operation...[$NL]]
-    [$addList+option]
+rule type(toolbar, singleton) and trigger(editable)
+    <<$operationsGroup>>
+    <<$operation...[$NL]>>
+    <<$addList+option>>
     Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
-end
 
-def type(toolbar) trigger(editable)
-    [$operationsGroup]
-    [$operation...[$NL]]
-    [$addList+option]
+rule type(toolbar) and trigger(editable)
+    <<$operationsGroup>>
+    <<$operation...[$NL]>>
+    <<$addList+option>>
     Button(title="Copiar", size=Small, highlight=Outline, format=airRight, visible=false) copy as Action
     Button(title="Editar", size=Small, highlight=Outline, format=airRight) edit as Action
     Button(title="Eliminar", size=Small, highlight=Outline, visible=false) remove as Action Affirmed("Are you sure you want to remove element?")
-end
 
-def type(toolbar & collectable) trigger(navigableExpanded)
+rule type(toolbar, collectable) and trigger(navigableExpanded)
     Block(format=middleAirLeft middleAirRight)
         Block(layout=Horizontal Center StartJustified)
             MaterialIconButton(title="Mostrar listado", icon="ArrowBack", size=Small, format=middleAirRight, visible=false) showCollectionBack
@@ -83,207 +77,150 @@ def type(toolbar & collectable) trigger(navigableExpanded)
                     Text(format=bold, visible=false) label
                     Block(format=middleAirLeft, visible=false) prototypeAdvise > Text(value="Plantilla", mode=Uppercase, format=prototypeAdviseStyle)
                 Text(format=body2 grey, visible=false) description
-end
 
-def type(toolbar) trigger(navigableExpanded)
-end
+rule type(toolbar) and trigger(navigableExpanded)
 
-def type(toolbar & collectable) trigger(navigable)
+rule type(toolbar, collectable) and trigger(navigable)
     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
-end
 
-def type(toolbar) trigger(navigable)
-end
+rule type(toolbar) and trigger(navigable)
 
-def type(addList)
-end
+rule type(addList)
 
-def type(operationsGroup)
-    SplitButton(title = "Operaciones", options = [$operation+option...[ ]], defaultOption = "$defaultOperation", size=Small, format=airRight, visible=false) operaciones
-end
+rule type(operationsGroup)
+    SplitButton(title = "Operaciones", options = <<$operation+option...[ ]>>, defaultOption = "$defaultOperation", size=Small, format=airRight, visible=false) operaciones
 
-def type(operation & download)
-    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Download[ Affirmed("$confirmText")]
-end
+rule type(operation, download)
+    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Download<< Affirmed("$confirmText")>>
 
-def type(operation) trigger(option)
+rule type(operation) and trigger(option)
     "$label"
-end
 
-def type(operation)
-    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Action[ Affirmed("$confirmText")]
-end
+rule type(operation)
+    Button(title="$label", size=Small, highlight=Outline, format=airRight) $name+lowerCase as Action<< Affirmed("$confirmText")>>
 
-def type(nodeview & linksin) trigger(revisionDeclaration)
-end
+rule type(nodeview, linksin) and trigger(revisionDeclaration)
 
-def type(nodeview & linksout) trigger(revisionDeclaration)
-end
+rule type(nodeview, linksout) and trigger(revisionDeclaration)
 
-def type(nodeview & notes) trigger(revisionDeclaration)
-end
+rule type(nodeview, notes) and trigger(revisionDeclaration)
 
-def type(nodeview & location) trigger(revisionDeclaration)
-end
+rule type(nodeview, location) and trigger(revisionDeclaration)
 
-def type(nodeview & revisions) trigger(revisionDeclaration)
-end
+rule type(nodeview, revisions) and trigger(revisionDeclaration)
 
-def type(nodeview & tasks) trigger(revisionDeclaration)
-end
+rule type(nodeview, tasks) and trigger(revisionDeclaration)
 
-def type(nodeview & recenttask) trigger(revisionDeclaration)
-end
+rule type(nodeview, recenttask) and trigger(revisionDeclaration)
 
-def type(nodeview & visibleWhenEmbedded) trigger(revisionDeclaration)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(revisionDeclaration)
 
-def type(nodeview) trigger(revisionDeclaration)
+rule type(nodeview) and trigger(revisionDeclaration)
     Text(value="$label") $name+firstLowerCase as Option
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(declaration)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(declaration)
 
-def type(nodeview) trigger(declaration)
+rule type(nodeview) and trigger(declaration)
     Text(value="$label") $name+firstLowerCase as Option
-end
 
-def type(nodeview & linksin) trigger(revisionPage)
-end
+rule type(nodeview, linksin) and trigger(revisionPage)
 
-def type(nodeview & visibleWhenEmbedded) trigger(page)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(page)
 
-def type(nodeview & linksin) trigger(page)
+rule type(nodeview, linksin) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksInTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & linksout) trigger(revisionPage)
-end
+rule type(nodeview, linksout) and trigger(revisionPage)
 
-def type(nodeview & linksout) trigger(page)
+rule type(nodeview, linksout) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksOutTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & notes) trigger(revisionPage)
-end
+rule type(nodeview, notes) and trigger(revisionPage)
 
-def type(nodeview & notes) trigger(page)
+rule type(nodeview, notes) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeNotesTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & location) trigger(revisionPage)
-end
+rule type(nodeview, location) and trigger(revisionPage)
 
-def type(nodeview & location) trigger(page)
+rule type(nodeview, location) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & tasks) trigger(revisionPage)
-end
+rule type(nodeview, tasks) and trigger(revisionPage)
 
-def type(nodeview & tasks) trigger(page)
+rule type(nodeview, tasks) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=NodeTasksTemplate) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & recenttask) trigger(revisionPage)
-end
+rule type(nodeview, recenttask) and trigger(revisionPage)
 
-def type(nodeview & location) trigger(revisionPage)
-end
+rule type(nodeview, location) and trigger(revisionPage)
 
-def type(nodeview & locations) trigger(revisionPage)
-end
+rule type(nodeview, locations) and trigger(revisionPage)
 
-def type(nodeview & revisions) trigger(revisionPage)
-end
+rule type(nodeview, revisions) and trigger(revisionPage)
 
-def type(nodeview & linksin) trigger(use)
-end
+rule type(nodeview, linksin) and trigger(use)
 
-def type(nodeview & linksout) trigger(use)
-end
+rule type(nodeview, linksout) and trigger(use)
 
-def type(nodeview & location) trigger(use)
-end
+rule type(nodeview, location) and trigger(use)
 
-def type(nodeview & locations) trigger(use)
-end
+rule type(nodeview, locations) and trigger(use)
 
-def type(nodeview & revisions) trigger(use)
-end
+rule type(nodeview, revisions) and trigger(use)
 
-def type(nodeview & tasks) trigger(use)
+rule type(nodeview, tasks) and trigger(use)
     use Tasks
-end
 
-def type(nodeview) trigger(use)
+rule type(nodeview) and trigger(use)
     $show+use
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(revisionPage)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(revisionPage)
 
-def type(nodeview) trigger(revisionPage)
+rule type(nodeview) and trigger(revisionPage)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview) trigger(page)
+rule type(nodeview) and trigger(page)
     Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
-end
 
-def type(nodeview & linksin)
-end
+rule type(nodeview, linksin)
 
-def type(nodeview & linksout)
-end
+rule type(nodeview, linksout)
 
-def type(nodeview & tasks)
-end
+rule type(nodeview, tasks)
 
-def type(nodeview & notes)
-end
+rule type(nodeview, notes)
 
-def type(nodeview & location)
+rule type(nodeview, location)
     Template(layout=Vertical CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         $show
-end
 
-def type(nodeview & locations)
-end
+rule type(nodeview, locations)
 
-def type(nodeview & recenttask)
+rule type(nodeview, recenttask)
     Template(layout=Vertical CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         $show
-end
 
-def type(nodeview)
+rule type(nodeview)
     Template(layout=Horizontal CenterJustified) $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate as Relative(height=100%)
         $show
-end
 
-def type(show & recenttask) trigger(use)
-    [$tasktype+use...[$NL]]
-end
+rule type(show, recenttask) and trigger(use)
+    <<$tasktype+use...[$NL]>>
 
-def type(tasktype) trigger(use)
+rule type(tasktype) and trigger(use)
     use $name+firstUpperCase...[$NL]
-end
 
-def type(show & recenttask)
+rule type(show, recenttask)
 	Block(layout=Vertical Flexible CenterCenter, visible=false) noTaskMessage as Relative(height=100%)> Text(value="No hay tareas pendientes", format=h5, translate=true)
 	Block(format=dialog bordered) toolbarBlock > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
 	Block(layout=Vertical Flexible, visible=false) viewsBlock
-        [$tasktype...[$NL]]
-end
+        <<$tasktype...[$NL]>>
 
-def type(tasktype)
+rule type(tasktype)
     Block $name+firstLowerCase~View as Conditional > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) $name+firstLowerCase~ViewStamp
-end
 
-def type(show & revisions)
+rule type(show, revisions)
 	Block(layout=Vertical Flexible, format=bordered)
 		OwnerTemplateStamp(template="NodeRevisionsTemplate", owner=$module+firstUpperCase~Elements.goros) revisionsStamp
 
@@ -292,7 +229,5 @@ def type(show & revisions)
 	Block(format=smallAirLeft middleSpaced bordered, visible=false) revisionPage as Animated Relative(width=55%)
 		Transition(direction=Left)
 		TemplateStamp(template=$definition+firstUpperCase~EmbeddedTemplate) currentRevisionStamp
-end
 
-def type(show) trigger(use)
-end
+rule type(show) and trigger(use)

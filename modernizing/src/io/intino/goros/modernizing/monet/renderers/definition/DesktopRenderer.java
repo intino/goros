@@ -4,7 +4,7 @@ import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.DesktopTemplate;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 

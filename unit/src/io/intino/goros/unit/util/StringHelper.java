@@ -24,6 +24,20 @@ public class StringHelper {
 		return value.substring(0, 1).toLowerCase() + value.substring(1);
 	}
 
+	public static String camelCaseToSnakeCase(String string) {
+		if (string.isEmpty()) {
+			return string;
+		} else {
+			String result = String.valueOf(Character.toLowerCase(string.charAt(0)));
+
+			for(int i = 1; i < string.length(); ++i) {
+				result = result + (Character.isUpperCase(string.charAt(i)) ? "-" + Character.toLowerCase(string.charAt(i)) : string.charAt(i));
+			}
+
+			return result;
+		}
+	}
+
 	public static String snakeCaseToCamelCase(String string) {
 		if (string.isEmpty()) {
 			return string;

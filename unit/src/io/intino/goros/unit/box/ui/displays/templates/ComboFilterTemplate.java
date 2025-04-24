@@ -2,6 +2,7 @@ package io.intino.goros.unit.box.ui.displays.templates;
 
 import io.intino.alexandria.ui.displays.components.Collection;
 import io.intino.alexandria.ui.displays.components.SelectorCollectionBox;
+import io.intino.alexandria.ui.displays.events.AddCollectionItemEvent;
 import io.intino.alexandria.ui.displays.events.AddItemEvent;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.ComboFilterDatasource;
@@ -71,7 +72,7 @@ public class ComboFilterTemplate extends AbstractComboFilterTemplate<UnitBox> {
         comboFilterTemplateList.source(new ComboFilterDatasource(box(), session(), collection, attribute));
     }
 
-    private void refresh(AddItemEvent event) {
+    private void refresh(AddCollectionItemEvent event) {
         String value = event.item();
         ComboFilterTemplateMold mold = event.component();
         mold.option.value(value);

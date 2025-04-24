@@ -1,4 +1,4 @@
-def type(tasklist)
+rule type(tasklist)
     <?xml version='1.0' encoding='UTF-8'?>
     <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
@@ -53,15 +53,13 @@ def type(tasklist)
 
       </fo:page-sequence>
     </fo:root>
-end
 
-def type(content & empty)
+rule type(content, empty)
     <fo:block font-size="20pt" margin-bottom="5mm" >$label</fo:block>
     <fo:block font-size="10pt" margin-bottom="6mm" color="#666666">$date</fo:block>
     <fo:block>$noElementsMessage</fo:block>
-end
 
-def type(content)
+rule type(content)
     <fo:block font-size="20pt" margin-bottom="5mm" >$label</fo:block>
     <fo:block font-size="10pt" margin-bottom="6mm" color="#666666">$date</fo:block>
     <fo:table table-layout="fixed">
@@ -69,50 +67,39 @@ def type(content)
         <fo:table-header>$header</fo:table-header>
         <fo:table-body>$references</fo:table-body>
     </fo:table>
-end
 
-def type(header) trigger(columns)
-    [$reference+column...[$NL]]
-end
+rule type(header) and trigger(columns)
+    <<$reference+column...[$NL]>>
 
-def type(header)
-    [$reference+header...[$NL]]
-end
+rule type(header)
+    <<$reference+header...[$NL]>>
 
-def type(references)
-    [$reference...[$NL]]
-end
+rule type(references)
+    <<$reference...[$NL]>>
 
-def type(reference) trigger(column)
-    [$attribute+column...[$NL]]
+rule type(reference) and trigger(column)
+    <<$attribute+column...[$NL]>>
     <fo:table-column column-width="$width~%"/>
-end
 
-def type(reference) trigger(header)
+rule type(reference) and trigger(header)
     <fo:table-row background-color="#EFF7FF" margin-bottom="2mm" border-top="0.2mm solid #5E93B1" border-bottom="0.1mm solid #5E93B1">
-        [$attribute+header...[$NL]]
+        <<$attribute+header...[$NL]>>
     </fo:table-row>
-end
 
-def type(reference)
-    <fo:table-row[ background-color="#ddd"$odd+empty]>
-        [$attribute...[$NL]]
+rule type(reference)
+    <fo:table-row<< background-color="#ddd"$odd+empty>>~>
+        <<$attribute...[$NL]>>
     </fo:table-row>
-end
 
-def type(attribute) trigger(column)
+rule type(attribute) and trigger(column)
     <fo:table-column column-width="$width~%"/>
-end
 
-def type(attribute) trigger(header)
+rule type(attribute) and trigger(header)
     <fo:table-cell padding-left="0.5mm" padding-top="2mm" padding-bottom="2mm" wrap-option="wrap">
         <fo:block font-size="10pt" font-weight="bold">$label</fo:block>
     </fo:table-cell>
-end
 
-def type(attribute)
+rule type(attribute)
     <fo:table-cell padding-left="0.5mm" font-size="8pt" padding-top="2mm" padding-bottom="2mm"><fo:block>$value</fo:block></fo:table-cell>
-end
 
-def type(odd) trigger(empty)
-end
+rule type(odd) and trigger(empty)

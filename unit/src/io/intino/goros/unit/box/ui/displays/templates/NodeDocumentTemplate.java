@@ -3,9 +3,8 @@ package io.intino.goros.unit.box.ui.displays.templates;
 import io.intino.alexandria.MimeTypes;
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
-import io.intino.alexandria.ui.File;
 import io.intino.alexandria.ui.displays.UserMessage;
-import io.intino.alexandria.ui.spark.UIFile;
+import io.intino.alexandria.ui.server.UIFile;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.util.NodeHelper;
 import org.monet.space.kernel.components.ComponentDocuments;
@@ -13,11 +12,8 @@ import org.monet.space.kernel.exceptions.SystemException;
 import org.monet.space.kernel.model.Node;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class NodeDocumentTemplate extends AbstractNodeDocumentTemplate<UnitBox> {
     private Node node;
@@ -92,11 +88,15 @@ public class NodeDocumentTemplate extends AbstractNodeDocumentTemplate<UnitBox> 
     }
 
     private void replaceDocument() {
-        ComponentDocuments.getInstance().uploadDocument(node.getId(), newDocumentResource.stream(), newDocumentResource.metadata().contentType(), true);
-        editDocumentDialog.close();
-        editDocumentDialog.notifyUser(translate("Document saved successfully"), UserMessage.Type.Success);
-        refreshPreview();
-    }
+        try {
+            ComponentDocuments.getInstance().uploadDocument(node.getId(), newDocumentResource.stream(), newDocumentResource.metadata().contentType(), true);
+            editDocumentDialog.close();
+            editDocumentDialog.notifyUser(translate("Document saved successfully"), UserMessage.Type.Success);
+            refreshPreview();
+        } catch (IOException e) {
+            Logger.error(e);
+		}
+	}
 
     private void refreshPreview() {
         preview.value(file());

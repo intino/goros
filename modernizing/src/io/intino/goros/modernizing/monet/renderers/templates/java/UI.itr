@@ -1,4 +1,4 @@
-def type(ui & routedispatcher)
+rule type(ui, routedispatcher)
     package $package.$module+lowerCase.box.ui.displays;
 
     import $package.$module+lowerCase.box.ui.displays.templates.AppTemplate;
@@ -20,7 +20,7 @@ def type(ui & routedispatcher)
             AppTemplate display = soul.currentLayer(AppTemplate.class);
             if (mode != null && mode.equals("undefined")) mode = null;
             boolean readonly = mode != null && !mode.equalsIgnoreCase("edit");
-            [$definition+dispatchSingleton...[$NL]]
+            <<$definition+dispatchSingleton...[$NL]>>
         }
 
         @Override
@@ -29,14 +29,14 @@ def type(ui & routedispatcher)
             if (view != null && view.equals("undefined")) view = null;
             if (mode != null && mode.equals("undefined")) mode = null;
             boolean readonly = mode != null && !mode.equalsIgnoreCase("edit");
-            [$definition+dispatchInstance...[$NL]]
+            <<$definition+dispatchInstance...[$NL]>>
         }
 
         @Override
         public void dispatchTask(Soul soul, String name, String inbox, String task) {
             AppTemplate display = soul.currentLayer(AppTemplate.class);
             if (task != null && task.equals("undefined")) task = null;
-            [$definition+dispatchTask...[$NL]]
+            <<$definition+dispatchTask...[$NL]>>
         }
 
         @Override
@@ -64,9 +64,8 @@ def type(ui & routedispatcher)
             soul.currentLayer(AppTemplate.class).openNews();
         }
     }
-end
 
-def type(ui & app)
+rule type(ui, app)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -96,7 +95,7 @@ def type(ui & app)
         private boolean sessionClosedDialogOpened = false;
         private Instant lastCheck;
 
-        public enum View { Dashboard, Roles, TaskTray, TaskBoard, News, Trash[, $definition+declaration...[, ]] }
+        public enum View { Dashboard, Roles, TaskTray, TaskBoard, News, Trash<<, $definition+declaration...[, ]>> }
 
         public AppTemplate($boxName+firstUpperCase~Box box) {
             super(box);
@@ -111,10 +110,6 @@ def type(ui & app)
             }
             box().unit().initSession(session());
             initLoggedChecker();
-            taskTrayLink.address(path -> path.replace(":folder", "Pendientes"));
-            taskTrayIconLink.address(path -> path.replace(":folder", "Pendientes"));
-            taskBoardLink.address(path -> path.replace(":folder", "Pendientes"));
-            taskBoardIconLink.address(path -> path.replace(":folder", "Pendientes"));
             reloadPage.onExecute(e -> notifier.redirect(session().browser().requestUrl()));
             io.intino.goros.unit.util.DisplayHelper.initAgentSession(session());
             io.intino.goros.unit.util.DisplayHelper.initContext(box().unit(), session(), Thread.currentThread().getId());
@@ -133,6 +128,12 @@ def type(ui & app)
         public void refresh() {
             super.refresh();
             refreshDrawer();
+            taskTrayLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskTrayIconLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskBoardLink.address(path -> path.replace(":folder", "Pendientes"));
+            taskBoardIconLink.address(path -> path.replace(":folder", "Pendientes"));
+            newsLink.address(path -> path);
+            newsIconLink.address(path -> path);
         }
 
         @Override
@@ -154,11 +155,11 @@ def type(ui & app)
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
             if (false) {}
-            [$definition+openHome...[$NL]]
+            <<$definition+openHome...[$NL]>>
             else openForbiddenPage();
         }
 
-        [$definition+method...[$NL]]
+        <<$definition+method...[$NL]>>
 
         public void openForbiddenPage() {
             loading.visible(false);
@@ -208,7 +209,7 @@ def type(ui & app)
         private void refreshDrawer() {
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
-            [$definition+refreshDrawer...[$NL]]
+            <<$definition+refreshDrawer...[$NL]>>
             dashboard.visible(AccountHelper.hasRoles(dashboardRoles(showProperty), session()));
             roles.visible(showProperty.getTabRoles() != null && AccountHelper.hasRoles(showProperty.getTabRoles().getFor(), session()));
             taskTray.visible(showProperty.getTabTasktray() != null && AccountHelper.hasRoles(showProperty.getTabTasktray().getFor(), session()));
@@ -219,8 +220,8 @@ def type(ui & app)
             trash.visible(showProperty.getTabTrash() != null && AccountHelper.hasRoles(showProperty.getTabTrash().getFor(), session()));
         }
 
-        [$definition+rolesMethod...[$NL]]
-        [$definition+setupAddressMethod...[$NL]]
+        <<$definition+rolesMethod...[$NL]>>
+        <<$definition+setupAddressMethod...[$NL]>>
 
         private List<Ref> nodeDefinitionRoles(Distribution.ShowProperty showProperty, String code) {
             NodeDefinition definition = showProperty.getTabEnvironment().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getNodeDefinition(te.getValue())).filter(d -> d.getCode().equals(code)).findFirst().orElse(null);
@@ -279,7 +280,7 @@ def type(ui & app)
         }
 
         private BlockConditional blockOf(View view) {
-            [$definition+block...[$NL]]
+            <<$definition+block...[$NL]>>
             if (view == View.Dashboard) return dashboardPage;
             if (view == View.Roles) return rolesPage;
             if (view == View.TaskTray) return taskTrayPage;
@@ -296,7 +297,7 @@ def type(ui & app)
                 return false;
             }
             Task task = io.intino.goros.unit.util.LayerHelper.taskLayer().loadTask(id);
-            [$definition+taskInitialization...[$NL]]
+            <<$definition+taskInitialization...[$NL]>>
             return true;
         }
 
@@ -330,9 +331,8 @@ def type(ui & app)
         }
 
     }
-end
 
-def type(ui & header)
+rule type(ui, header)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -372,63 +372,50 @@ def type(ui & header)
             }
         }
     }
-end
 
-def type(definition & container & environment) trigger(openHome)
+rule type(definition, container, environment) and trigger(openHome)
     else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code"), null, true);
-end
 
-def type(definition & desktop) trigger(openHome)
+rule type(definition, desktop) and trigger(openHome)
     else if (AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session())) open$name+firstUpperCase~(true);
-end
 
-def type(definition & container & environment) trigger(refreshDrawer)
+rule type(definition, container, environment) and trigger(refreshDrawer)
     $name+firstLowerCase~IconLink.address(this::setup$name+firstUpperCase~Link);
     $name+firstLowerCase~Link.address(this::setup$name+firstUpperCase~Link);
-end
 
-def type(definition & desktop) trigger(refreshDrawer)
+rule type(definition, desktop) and trigger(refreshDrawer)
     $name+firstLowerCase~IconLink.address(path -> path.replace(":name", "$name+lowercase").replace(":mode", "default"));
     $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowercase").replace(":mode", "default"));
     $name+firstLowerCase.visible(AccountHelper.hasRoles($name+firstLowerCase~Roles(showProperty), session()));
-end
 
-def type(definition) trigger(refreshDrawer)
-end
+rule type(definition) and trigger(refreshDrawer)
 
-def type(definition & container & environment) trigger(rolesMethod)
+rule type(definition, container, environment) and trigger(rolesMethod)
     private List<Ref> $name+firstLowerCase~Roles(Distribution.ShowProperty showProperty) {
         return nodeDefinitionRoles(showProperty, "$code");
     }
-end
 
-def type(definition & desktop) trigger(rolesMethod)
+rule type(definition, desktop) and trigger(rolesMethod)
     private List<Ref> $name+firstLowerCase~Roles(Distribution.ShowProperty showProperty) {
         return nodeDefinitionRoles(showProperty, "$code");
     }
-end
 
-def type(definition & container & environment) trigger(setupAddressMethod)
+rule type(definition, container, environment) and trigger(setupAddressMethod)
     private String setup$name+firstUpperCase~Link(String path) {
         String id = io.intino.goros.unit.util.NodeHelper.getEnvironmentNodeId(io.intino.goros.unit.util.AccountHelper.account(session()), "$code");
         return path.replace(":name", "$name+lowercase").replace(":id", id != null ? id : "").replace(":view", "default").replace(":mode", "default");
     }
-end
 
-def type(definition) trigger(setupAddressMethod)
-end
+rule type(definition) and trigger(setupAddressMethod)
 
-def type(definition) trigger(rolesMethod)
-end
+rule type(definition) and trigger(rolesMethod)
 
-def type(definition & index) trigger(declaration)
-end
+rule type(definition, index) and trigger(declaration)
 
-def type(definition) trigger(declaration)
+rule type(definition) and trigger(declaration)
     $name+firstUpperCase
-end
 
-def type(definition & process) trigger(method)
+rule type(definition, process) and trigger(method)
     public void open$name+firstUpperCase(String task, String inbox) {
         if (openInitializationTask(task, inbox)) return;
         open$name+firstUpperCase(io.intino.goros.unit.util.LayerHelper.taskLayer().loadTask(task), inbox);
@@ -441,33 +428,27 @@ def type(definition & process) trigger(method)
             $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(task.getId());
         }
     }
-end
 
-def type(definition & index) trigger(method)
-end
+rule type(definition, index) and trigger(method)
 
-def type(definition & source) trigger(method)
+rule type(definition, source) and trigger(method)
     public void open$name+firstUpperCase() {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
         if ($name+firstLowerCase~Page.$name+firstLowerCase~Stamp == null) return;
-        [$sourceDesktop]
+        <<$sourceDesktop>>
         $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code");
     }
-end
 
-def type(sourceDesktop)
-    $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.desktop("$desktopLabel", "/elemento/$desktop+lowerCase");
-end
+rule type(sourceDesktop)
+    $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.desktop("$desktopLabel", "/elemento/$desktop+lowerCase~/default");
 
-def type(definition & process) trigger(taskInitialization)
+rule type(definition, process) and trigger(taskInitialization)
     if (task.getDefinition().getCode().equals("$code")) open$name+firstUpperCase(task, inbox);
-end
 
-def type(definition) trigger(taskInitialization)
-end
+rule type(definition) and trigger(taskInitialization)
 
-def type(definition & singleton) trigger(method)
+rule type(definition, singleton) and trigger(method)
     public void open$name+firstUpperCase(boolean readonly) {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
@@ -475,9 +456,8 @@ def type(definition & singleton) trigger(method)
             $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open("$code", readonly);
         }
     }
-end
 
-def type(definition) trigger(method)
+rule type(definition) and trigger(method)
     public void open$name+firstUpperCase(String id, String view, boolean readonly) {
         if (initializationTaskOpened()) return;
         openView(View.$name+firstUpperCase);
@@ -485,45 +465,32 @@ def type(definition) trigger(method)
             $name+firstLowerCase~Page.$name+firstLowerCase~Stamp.open(id, view, readonly);
         }
     }
-end
 
-def type(definition & process) trigger(dispatchTask)
+rule type(definition, process) and trigger(dispatchTask)
     if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(task, inbox);
-end
 
-def type(definition) trigger(dispatchTask)
-end
+rule type(definition) and trigger(dispatchTask)
 
-def type(definition & source) trigger(dispatchSingleton)
+rule type(definition, source) and trigger(dispatchSingleton)
     if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase();
-end
 
-def type(definition & singleton) trigger(dispatchSingleton)
+rule type(definition, singleton) and trigger(dispatchSingleton)
     if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(readonly);
-end
 
-def type(definition) trigger(dispatchSingleton)
-end
+rule type(definition) and trigger(dispatchSingleton)
 
-def type(definition & source) trigger(dispatchInstance)
-end
+rule type(definition, source) and trigger(dispatchInstance)
 
-def type(definition & process) trigger(dispatchInstance)
-end
+rule type(definition, process) and trigger(dispatchInstance)
 
-def type(definition & singleton) trigger(dispatchInstance)
-end
+rule type(definition, singleton) and trigger(dispatchInstance)
 
-def type(definition & index) trigger(dispatchInstance)
-end
+rule type(definition, index) and trigger(dispatchInstance)
 
-def type(definition) trigger(dispatchInstance)
+rule type(definition) and trigger(dispatchInstance)
     if (name.equalsIgnoreCase("$name")) display.open$name+firstUpperCase(id, view, readonly);
-end
 
-def type(definition & index) trigger(block)
-end
+rule type(definition, index) and trigger(block)
 
-def type(definition) trigger(block)
+rule type(definition) and trigger(block)
     if (view == View.$name+firstUpperCase) return $name+firstLowerCase~Page;
-end

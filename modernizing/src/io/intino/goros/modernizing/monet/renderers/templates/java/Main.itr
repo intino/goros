@@ -1,13 +1,15 @@
-def type(main)
+rule type(main)
     package $package.$module+lowerCase.box;
+
+    import io.intino.goros.unit.box.UnitBox;
 
     public class Main {
 
-        public static void main(String$[$] args) {
+        public static void main(String[] args) {
             $boxName+firstUpperCase~Box box = new $boxName+firstUpperCase~Box(args);
+            box.put(new UnitBox(args));
             box.start();
             Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
         }
 
     }
-end

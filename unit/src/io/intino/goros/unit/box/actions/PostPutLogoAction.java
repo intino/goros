@@ -17,7 +17,7 @@ public class PostPutLogoAction extends SetupServiceAction {
 	@Override
 	Map<String, Object> parameters() {
 		HashMap<String, Object> paramMap = new HashMap<>();
-		paramMap.put(Parameter.LOGO, logo.stream());
+		paramMap.put(Parameter.LOGO, streamOf(logo));
 		return paramMap;
 	}
 }

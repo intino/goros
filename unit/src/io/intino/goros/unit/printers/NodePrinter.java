@@ -1,18 +1,16 @@
 package io.intino.goros.unit.printers;
 
-import com.esotericsoftware.kryo.io.Input;
 import io.intino.alexandria.logger.Logger;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.printers.templates.CsvNodeTemplate;
 import io.intino.goros.unit.printers.templates.PdfNodeTemplate;
 import io.intino.goros.unit.printers.templates.XlsNodeTemplate;
+import io.intino.goros.unit.util.RendererFormatters;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.space.kernel.library.LibraryPDF;
 import org.monet.space.kernel.model.Node;
 import org.monet.space.kernel.model.NodeDataRequest;
-import org.monet.space.office.presentation.user.renders.PrintRender;
-import org.monet.space.office.presentation.user.renders.RendersFactory;
 
 import java.io.*;
 import java.util.List;
@@ -35,7 +33,7 @@ public abstract class NodePrinter extends Printer {
 
 	public InputStream print(String language) {
 		Template template = template();
-		String result = template.render(build(language).toFrame());
+		String result = new io.intino.itrules.Engine(template).addAll(RendererFormatters.all).render(build(language).toFrame());
 		return generateDocument(result);
 	}
 

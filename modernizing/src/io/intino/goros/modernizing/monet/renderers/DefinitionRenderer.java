@@ -3,7 +3,7 @@ package io.intino.goros.modernizing.monet.renderers;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
@@ -109,12 +109,12 @@ public abstract class DefinitionRenderer<D extends Definition> extends Renderer 
 
 	protected void writeJava(FrameBuilder builder) {
 		File file = new File(javaPackage() + nameOf(definition) + "Template.java");
-		writeFrame(file, javaTemplate().render(builder.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(javaTemplate()).addAll(Formatters.all).render(builder.toFrame()));
 	}
 
 	protected void writeKonos(FrameBuilder builder) {
 		File file = new File(konosPackage() + nameOf(definition) + ".konos");
-		writeFrame(file, konosTemplate().render(builder.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(konosTemplate()).addAll(Formatters.all).render(builder.toFrame()));
 	}
 
 	private NodeViewProperty findEmbeddedView(NodeDefinition definition) {

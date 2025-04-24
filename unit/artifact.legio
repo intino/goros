@@ -1,25 +1,24 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "1.3.32") unit as Platform
-	Model(language = "Meta", version = "3.0.1", sdkVersion = "4.2.0")
-	Box(language = "Konos", version = "10.4.4")
+Artifact(groupId = "io.intino.goros", version = "2.0.0") unit
+	Dsl(name="Konos", version="13.2.7") > Builder(generationPackage="box")
 	Code("io.intino.goros.unit")
 
 	Imports
 		Compile("org.siani.monet", "space", "2.1.13")
 			Exclude ("org.siani.monet", "servlet-api")
- 		Compile("io.intino.alexandria", "primitives", "1.0.4")
- 		Compile("io.intino.alexandria", "ui-framework", "4.25.27")
-		Compile("io.intino.alexandria", "core-framework", "2.1.2")
-		Compile("io.intino.alexandria", "rest", "3.9.0")
+ 		Compile("io.intino.alexandria", "primitives", "1.1.3")
+ 		Compile("io.intino.alexandria", "ui-framework", "6.3.10")
+		Compile("io.intino.alexandria", "core-framework", "2.2.2")
+		Compile("io.intino.alexandria", "rest", "4.1.11")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 			Exclude ("org.apache.tomcat", "servlet-api")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
-		Compile("io.intino.itrules", "engine", "1.0.0")
+		Compile("io.intino.itrules", "engine", "2.0.0")
 		Compile("io.intino.goros", "shared", "1.0.0")
-		Compile("io.intino.alexandria", "logger4j", "1.0.1")
+		Compile("io.intino.alexandria", "logger4j", "1.1.0")
 
-		Web("io.intino.goros", "unit-elements", "1.3.32")
+		Web("io.intino.goros", "unit-elements", "2.0.0")
 
 		Test("junit", "junit", "4.13")
 		Compile(groupId = "io.intino.alexandria", artifactId = "cli-framework", version = "1.0.0")
@@ -122,6 +121,7 @@ Artifact(groupId = "io.intino.goros", version = "1.3.32") unit as Platform
 	Parameter("mail-admin-password")
 	Parameter("mail-admin-port", "465")
 	Parameter("mail-admin-secure", "true")
+	Parameter(name = "federation-url")
 
 Repository(identifier = "intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")

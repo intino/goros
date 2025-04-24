@@ -1,4 +1,4 @@
-def type(documentdefinition)
+rule type(documentdefinition)
     dsl Konos
 
     use UI
@@ -8,8 +8,8 @@ def type(documentdefinition)
         Block(layout=Horizontal, format=headerSpaced) header
             Block(layout=Vertical Flexible)
                 Block(layout=Horizontal)
-                    [$desktop]
-                    [$parent]
+                    <<$desktop>>
+                    <<$parent>>
                     Text(value="$label", format=h4 bold) label
                 Text(format=body2 grey) description
 
@@ -26,4 +26,3 @@ def type(documentdefinition)
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)
             Block(layout=Vertical Flexible, format=spaced) previewView as Relative(height=100%) > OwnerTemplateStamp(template="NodeDocumentTemplate", owner=$module+firstUpperCase~Elements.goros) previewStamp
-end

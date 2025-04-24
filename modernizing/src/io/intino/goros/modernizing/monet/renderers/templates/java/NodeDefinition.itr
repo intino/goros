@@ -1,4 +1,4 @@
-def type(nodedefinition & embedded)
+rule type(nodedefinition, embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -13,8 +13,8 @@ def type(nodedefinition & embedded)
         private Revision revision;
         private boolean readonly = false;
         private io.intino.goros.unit.box.ui.ViewMode viewMode;
-        [$toolbar+editableDeclaration]
-        [$toolbar+navigableDeclaration]
+        <<$toolbar+editableDeclaration>>
+        <<$toolbar+navigableDeclaration>>
 
         public $name+firstUpperCase~EmbeddedTemplate($boxName+firstUpperCase~Box box) {
             super(box);
@@ -44,9 +44,9 @@ def type(nodedefinition & embedded)
             return this;
         }
 
-        [$toolbar+editableEvents]
-        [$toolbar+navigableEvents]
-        [$toolbar+navigableMethods]
+        <<$toolbar+editableEvents>>
+        <<$toolbar+navigableEvents>>
+        <<$toolbar+navigableMethods>>
 
         public void openView(String view) {
             openView(view, readonly);
@@ -94,17 +94,17 @@ def type(nodedefinition & embedded)
             edit.title(readonly ? "Editar" : "Finalizar edición");
             edit.highlight(readonly ? io.intino.alexandria.ui.displays.components.Actionable.Highlight.Outline : io.intino.alexandria.ui.displays.components.Actionable.Highlight.Fill);
             edit.visible(node.isEditable() && !node.getDefinition().isReadonly() && !node.isLocked());
-            [$toolbar+editableRefreshCall]
-            [$toolbar+navigableRefreshCall]
+            <<$toolbar+editableRefreshCall>>
+            <<$toolbar+navigableRefreshCall>>
         }
 
         private void refreshViewsVisibility() {
             String selectedView = selectedView();
-            [$view+refreshVisibilityCall...[$NL]]
+            <<$view+refreshVisibilityCall...[$NL]>>
         }
 
         private void refreshView() {
-            [$view+refreshCall...[$NL]]
+            <<$view+refreshCall...[$NL]>>
         }
 
         private void initToolbar() {
@@ -113,15 +113,15 @@ def type(nodedefinition & embedded)
             restore.onExecute(e -> restore());
             copy.onExecute(e -> copy());
             edit.onExecute(e -> toggleEdition());
-            [$toolbar+editableInitCall]
-            [$toolbar+navigableInitCall]
+            <<$toolbar+editableInitCall>>
+            <<$toolbar+navigableInitCall>>
         }
 
         private void initViews() {
-            [$view+initCall...[$NL]]
+            <<$view+initCall...[$NL]>>
         }
 
-        [$view+refreshMethod...[$NL]]
+        <<$view+refreshMethod...[$NL]>>
 
         private Node locateNode() {
             Node node = this.node;
@@ -132,7 +132,7 @@ def type(nodedefinition & embedded)
 
         private void toggleEdition() {
             readonly(!readonly);
-            [$toolbar+editableCall]
+            <<$toolbar+editableCall>>
             refresh();
         }
 
@@ -157,11 +157,10 @@ def type(nodedefinition & embedded)
             template.embedded(true);
         }
 
-        [$toolbar+editableMethods]
+        <<$toolbar+editableMethods>>
     }
-end
 
-def type(nodedefinition & singleton)
+rule type(nodedefinition, singleton)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -195,9 +194,9 @@ def type(nodedefinition & singleton)
         @Override
         public void init() {
             super.init();
-            [$desktop]
-            [$parent]
-            [$toolbar+removeListener]
+            <<$desktop>>
+            <<$parent>>
+            <<$toolbar+removeListener>>
         }
 
         @Override
@@ -210,9 +209,8 @@ def type(nodedefinition & singleton)
         }
 
     }
-end
 
-def type(nodedefinition)
+rule type(nodedefinition)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -244,7 +242,7 @@ def type(nodedefinition)
         public void refresh() {
             super.refresh();
             if (node == null) return;
-            [$parent+refresh]
+            <<$parent+refresh>>
             refreshHeader(node);
             refreshContent(node);
         }
@@ -262,31 +260,26 @@ def type(nodedefinition)
             else if (content.selectedView() == null) content.selectDefaultView();
         }
     }
-end
 
-def type(toolbar & singleton) trigger(editableInitCall)
-    [$operationsGroup+editableInitCall]
-    [$operation+editableInitCall...[$NL]]
-end
+rule type(toolbar, singleton) and trigger(editableInitCall)
+    <<$operationsGroup+editableInitCall>>
+    <<$operation+editableInitCall...[$NL]>>
 
-def type(toolbar & collectable) trigger(navigableInitCall)
+rule type(toolbar, collectable) and trigger(navigableInitCall)
     showCollectionBack.onExecute(e -> notifyShowCollection());
     showCollectionMenu.onExecute(e -> notifyShowCollection());
-end
 
-def type(toolbar & singleton) trigger(editableRefreshCall)
-    [$operationsGroup+editableRefreshCall]
-    [$operation+editableRefreshCall...[$NL]]
-end
+rule type(toolbar, singleton) and trigger(editableRefreshCall)
+    <<$operationsGroup+editableRefreshCall>>
+    <<$operation+editableRefreshCall...[$NL]>>
 
-def type(toolbar & singleton) trigger(editableEvents)
+rule type(toolbar, singleton) and trigger(editableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onFinishEdition(java.util.function.Consumer<Node> listener) {
         this.finishEditionListener = listener;
         return this;
     }
-end
 
-def type(toolbar & collectable) trigger(navigableEvents)
+rule type(toolbar, collectable) and trigger(navigableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onShowCollection(java.util.function.Consumer<Node> listener) {
         this.showCollectionListener = listener;
         return this;
@@ -295,61 +288,49 @@ def type(toolbar & collectable) trigger(navigableEvents)
         this.dispatchOperationListener = listener;
         return this;
     }
-end
 
-def type(toolbar) trigger(navigableEvents)
+rule type(toolbar) and trigger(navigableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onDispatchOperation(java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> listener) {
         this.dispatchOperationListener = listener;
         return this;
     }
-end
 
-def type(toolbar & singleton) trigger(editableMethods)
-    [$operationsGroup+editableMethods]
-end
+rule type(toolbar, singleton) and trigger(editableMethods)
+    <<$operationsGroup+editableMethods>>
 
-def type(toolbar & singleton) trigger(removeListener)
-end
+rule type(toolbar, singleton) and trigger(removeListener)
 
-def type(toolbar & singleton) trigger(editableDeclaration)
+rule type(toolbar, singleton) and trigger(editableDeclaration)
     private java.util.function.Consumer<Node> finishEditionListener;
-end
 
-def type(toolbar & collectable) trigger(navigableDeclaration)
+rule type(toolbar, collectable) and trigger(navigableDeclaration)
     private java.util.function.Consumer<Node> showCollectionListener;
     private java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> dispatchOperationListener;
-end
 
-def type(toolbar) trigger(navigableDeclaration)
+rule type(toolbar) and trigger(navigableDeclaration)
     private java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> dispatchOperationListener;
-end
 
-def type(toolbar) trigger(editableDeclaration)
+rule type(toolbar) and trigger(editableDeclaration)
     private java.util.function.Consumer<Node> finishEditionListener;
     private java.util.function.Consumer<Node> removeListener;
-end
 
-def type(toolbar) trigger(editableInitCall)
-    [$operationsGroup+editableInitCall]
-    [$operation+editableInitCall...[$NL]]
+rule type(toolbar) and trigger(editableInitCall)
+    <<$operationsGroup+editableInitCall>>
+    <<$operation+editableInitCall...[$NL]>>
     remove.onExecute(e -> removeNode());
-end
 
-def type(toolbar) trigger(editableRefreshCall)
-    [$operationsGroup+editableRefreshCall]
-    [$operation+editableRefreshCall...[$NL]]
+rule type(toolbar) and trigger(editableRefreshCall)
+    <<$operationsGroup+editableRefreshCall>>
+    <<$operation+editableRefreshCall...[$NL]>>
     remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly() && !io.intino.goros.unit.util.NodeHelper.isEnvironment(node));
-end
 
-def type(toolbar) trigger(editableCall)
+rule type(toolbar) and trigger(editableCall)
     if (readonly && finishEditionListener != null) finishEditionListener.accept(node);
-end
 
-def type(toolbar) trigger(removeListener)
+rule type(toolbar) and trigger(removeListener)
     content.onRemove(e -> PathHelper.dispatch(box().routeManager(), soul(), node.getMainNode()));
-end
 
-def type(toolbar) trigger(editableEvents)
+rule type(toolbar) and trigger(editableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onRemove(java.util.function.Consumer<Node> listener) {
         this.removeListener = listener;
         return this;
@@ -359,10 +340,9 @@ def type(toolbar) trigger(editableEvents)
         this.finishEditionListener = listener;
         return this;
     }
-end
 
-def type(toolbar) trigger(editableMethods)
-    [$operationsGroup+editableMethods]
+rule type(toolbar) and trigger(editableMethods)
+    <<$operationsGroup+editableMethods>>
     private void removeNode() {
         String message = io.intino.goros.unit.util.NodeHelper.canRemove(node);
         if (message != null) {
@@ -372,18 +352,15 @@ def type(toolbar) trigger(editableMethods)
         io.intino.goros.unit.util.LayerHelper.nodeLayer().deleteNode(node);
         if (removeListener != null) removeListener.accept(node);
     }
-end
 
-def type(toolbar & collectable) trigger(navigableRefreshCall)
+rule type(toolbar, collectable) and trigger(navigableRefreshCall)
     label.value(node.getLabel());
     description.value(io.intino.goros.unit.util.DisplayHelper.description(node, this::translate, org.monet.space.kernel.library.LibraryDate.Format.NUMERIC));
     prototypeAdvise.visible(node.isPrototype());
-end
 
-def type(toolbar) trigger(navigableRefreshCall)
-end
+rule type(toolbar) and trigger(navigableRefreshCall)
 
-def type(toolbar & collectable) trigger(navigableMethods)
+rule type(toolbar, collectable) and trigger(navigableMethods)
     public void bindTo(io.intino.alexandria.ui.displays.components.Collection collection) {
         previous.bindTo(collection);
         previous.visible(collection != null);
@@ -405,138 +382,111 @@ def type(toolbar & collectable) trigger(navigableMethods)
         if (showCollectionListener == null) return;
         showCollectionListener.accept(node);
     }
-end
 
-def type(toolbar) trigger(navigableMethods)
-end
+rule type(toolbar) and trigger(navigableMethods)
 
-def type(operationsGroup) trigger(editableMethods)
+rule type(operationsGroup) and trigger(editableMethods)
     private List<String> operacionesOptions() {
         java.util.List<String> result = new java.util.ArrayList<>();
-        [$operation+operacionesOptionsMethodCall...[$NL]]
+        <<$operation+operacionesOptionsMethodCall...[$NL]>>
         return result;
     }
 
     private void executeOperation(String option) {
-        [$operation+executeMethodCall...[$NL]]
+        <<$operation+executeMethodCall...[$NL]>>
     }
-end
 
-def type(operationsGroup) trigger(editableInitCall)
+rule type(operationsGroup) and trigger(editableInitCall)
     operaciones.onExecute(e -> executeOperation(e.option()));
-end
 
-def type(operation) trigger(operacionesOptionsMethodCall)
+rule type(operation) and trigger(operacionesOptionsMethodCall)
     if (io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype()) result.add("$label");
-end
 
-def type(operation) trigger(executeMethodCall)
+rule type(operation) and trigger(executeMethodCall)
     if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), dispatchOperationListener);
-end
 
-def type(operation & download) trigger(editableInitCall)
+rule type(operation, download) and trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.downloadOperation($name+lowerCase, node, "$name"));
-end
 
-def type(operation & confirmation) trigger(editableInitCall)
+rule type(operation, confirmation) and trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed"), $dispatchOperationListener));
     $name+lowerCase.onBeforeAffirmed(e -> io.intino.goros.unit.util.NodeHelper.isOperationConfirmationRequired(node, "$name"));
     $name+lowerCase.onCancelAffirmed(e -> io.intino.goros.unit.util.NodeHelper.cancelOperation(session(), $name+lowerCase, node, "$name", translate("Operation canceled"), $dispatchOperationListener));
-end
 
-def type(operation) trigger(editableInitCall)
+rule type(operation) and trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.executeOperation(session(), $name+lowerCase, node, "$name", translate("Operation executed"), $dispatchOperationListener));
-end
 
-def type(operationsGroup) trigger(editableRefreshCall)
+rule type(operationsGroup) and trigger(editableRefreshCall)
     operaciones.options(operacionesOptions());
     operaciones.visible(operacionesOptions().size() > 0);
-end
 
-def type(operation) trigger(editableRefreshCall)
+rule type(operation) and trigger(editableRefreshCall)
     $name+lowerCase.visible(io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype());
-end
 
-def type (dispatchOperationListener & collection)
+rule type (dispatchOperationListener, collection)
     this::dispatch
-end
 
-def type (dispatchOperationListener & singleton)
+rule type (dispatchOperationListener, singleton)
     box().routeManager().routeDispatcher()
-end
 
-def type (dispatchOperationListener)
+rule type (dispatchOperationListener)
     dispatchOperationListener
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(initCall)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(initCall)
 
-def type(nodeview) trigger(initCall)
+rule type(nodeview) and trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(refreshCall)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(refreshCall)
 
-def type(nodeview) trigger(refreshCall)
+rule type(nodeview) and trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) viewSelector.select("$name+firstLowerCase");
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(refreshVisibilityCall)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(refreshVisibilityCall)
 
-def type(nodeview & notVisibleOnRevision) trigger(refreshVisibilityCall)
+rule type(nodeview, notVisibleOnRevision) and trigger(refreshVisibilityCall)
     $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase") && revision == null);
-end
 
-def type(nodeview) trigger(refreshVisibilityCall)
+rule type(nodeview) and trigger(refreshVisibilityCall)
     $name+firstLowerCase~View.visible(selectedView != null && selectedView.equals("$name+firstLowerCase"));
-end
 
-def type(nodeview & visibleWhenEmbedded) trigger(refreshMethod)
-end
+rule type(nodeview, visibleWhenEmbedded) and trigger(refreshMethod)
 
-def type(nodeview) trigger(refreshMethod)
+rule type(nodeview) and trigger(refreshMethod)
     private void refresh$name+firstUpperCase~View() {
         Node node = locateNode();
         if (node == null) return;
-        [$contain+declaration]
+        <<$contain+declaration>>
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.node(node);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(node.isLocked() || readonly);
-        [$contain+call]
+        <<$contain+call>>
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.view("$code");
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
-        [$contain+open]
+        <<$contain+open>>
     }
 
-    [$contain]
-end
+    <<$contain>>
 
-def type(contain) trigger(declaration)
+rule type(contain) and trigger(declaration)
     Node contain = $name+firstLowerCase~ViewContain(node);
-end
 
-def type(contain) trigger(call)
+rule type(contain) and trigger(call)
     $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.contain(contain);
-end
 
-def type(contain) trigger(open)
+rule type(contain) and trigger(open)
     if (contain != null) {
         openContain.onOpen(e -> fillLayer(contain, e.layer()));
         openContain.address(path -> path.replace(":name", "$containName").replace(":id", contain.getId()).replace(":view", "$containView+firstLowerCase").replace(":mode", readonly ? "default" : "edit"));
     }
     openContain.visible(contain != null && contain.isSet());
-end
 
-def type(contain)
+rule type(contain)
     private Node $name+firstLowerCase~ViewContain(Node node) {
         if (this.revision != null) return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNodeRevision(io.intino.goros.unit.util.NodeHelper.getContainerContain(node, "$contain"), revision.getId());
         return io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.unit.util.NodeHelper.getContainerContain(node,"$contain"));
     }
-end
 
-def type(nodeView)
+rule type(nodeView)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -549,7 +499,7 @@ def type(nodeView)
 
     import static java.util.stream.Collectors.toList;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$boxName+firstUpperCase~Box>[ implements $implements] {
+    public class $definition+firstUpperCase~$name+firstUpperCase~ViewTemplate extends Abstract$definition+firstUpperCase~$name+firstUpperCase~ViewTemplate<$boxName+firstUpperCase~Box><< implements $implements>> {
         private Node node;
         private String view;
         private boolean readonly = false;
@@ -589,22 +539,18 @@ def type(nodeView)
         }
 
         $show
-        [$displayProvider]
+        <<$displayProvider>>
     }
-end
 
-def type(updateFields) trigger(call)
+rule type(updateFields) and trigger(call)
     updateFields();
-end
 
-def type(show) trigger(hideToolbar)
-end
+rule type(show) and trigger(hideToolbar)
 
-def type(show & recenttask) trigger(declaration)
+rule type(show, recenttask) and trigger(declaration)
     private org.monet.space.kernel.model.Task<?> task;
-end
 
-def type(show & recenttask)
+rule type(show, recenttask)
     @Override
     public void init() {
         super.init();
@@ -619,7 +565,7 @@ def type(show & recenttask)
 	}
 
 	private void initViews() {
-	    [$tasktype+initCall...[$NL]]
+	    <<$tasktype+initCall...[$NL]>>
 	}
 
 	@Override
@@ -645,40 +591,34 @@ def type(show & recenttask)
 	    hideViews();
 	    if (task == null) return;
 	    String code = task.getCode();
-	    [$tasktype+showCall...[$NL]]
+	    <<$tasktype+showCall...[$NL]>>
 	}
 
 	private void hideViews() {
-        [$tasktype+hideCall...[$NL]]
+        <<$tasktype+hideCall...[$NL]>>
 	}
 
-    [$tasktype+refreshMethod...[$NL]]
-end
+    <<$tasktype+refreshMethod...[$NL]>>
 
-def type(tasktype) trigger(initCall)
+rule type(tasktype) and trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View(task));
-end
 
-def type(tasktype) trigger(showCall)
+rule type(tasktype) and trigger(showCall)
     if (code.equals("$code")) $name+firstLowerCase~View.show();
-end
 
-def type(tasktype) trigger(hideCall)
+rule type(tasktype) and trigger(hideCall)
     $name+firstLowerCase~View.hide();
-end
 
-def type(tasktype) trigger(refreshMethod)
+rule type(tasktype) and trigger(refreshMethod)
 	private void refresh$name+firstUpperCase~View(org.monet.space.kernel.model.Task<?> task) {
 		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.task(task);
 		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(readonly);
 		$name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
 	}
-end
 
-def type(show & revisions) trigger(declaration)
-end
+rule type(show, revisions) and trigger(declaration)
 
-def type(show & revisions)
+rule type(show, revisions)
 	@Override
 	public void refresh() {
 		super.refresh();
@@ -696,12 +636,10 @@ def type(show & revisions)
 		currentRevisionStamp.readonly(node.isLocked() || readonly);
 		currentRevisionStamp.refresh();
 	}
-end
 
-def type(show & location) trigger(declaration)
-end
+rule type(show, location) and trigger(declaration)
 
-def type(show & location)
+rule type(show, location)
 	@Override
 	public void refresh() {
 		super.refresh();
@@ -715,17 +653,13 @@ def type(show & location)
         locationViewStamp.view(view);
         locationViewStamp.refresh();
     }
-end
 
-def type(desktop)
+rule type(desktop)
     desktopLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
-end
 
-def type(parent) trigger(refresh)
+rule type(parent) and trigger(refresh)
     parentLink.address(path -> path.replace(":name", io.intino.goros.unit.util.NodeHelper.nameOf(node.getParent())).replace(":mode", readonly ? "default" : "edit"));
     parentLink.title(node.getParent() != null ? node.getParent().getLabel() : "Inicio");
-end
 
-def type(parent)
+rule type(parent)
     parentLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "edit" : "default"));
-end

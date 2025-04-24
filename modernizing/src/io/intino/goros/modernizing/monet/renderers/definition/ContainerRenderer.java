@@ -4,12 +4,14 @@ import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.ContainerTemplate;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
-import org.monet.metamodel.*;
+import io.intino.itrules.template.Template;
+import org.monet.metamodel.ContainerDefinition;
+import org.monet.metamodel.ContainerDefinitionBase;
+import org.monet.metamodel.NodeDefinition;
+import org.monet.metamodel.NodeViewProperty;
 import org.monet.metamodel.internal.Ref;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ContainerRenderer extends NodeRenderer<ContainerDefinition> {
 

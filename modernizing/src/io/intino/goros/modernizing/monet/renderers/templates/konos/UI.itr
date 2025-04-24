@@ -1,7 +1,7 @@
-def type(ui)
+rule type(ui)
     dsl Konos
 
-    [$definition+use...[$NL]]
+    <<$definition+use...[$NL]>>
     use Tasks
     use Theme
 
@@ -28,13 +28,13 @@ def type(ui)
                 MaterialIconButton(title="open menu", icon="ChevronRight", format=airMenuRight) as OpenDrawer(drawer=drawer)
                 MaterialIconButton(title="minimize", icon="ChevronLeft", format=airMenuRight) as CloseDrawer(drawer=drawer)
             Divider
-            [$definition+declaration...[$NL]]
+            <<$definition+declaration...[$NL]>>
             Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Link(title="Cuadro de mando") as Action Addressable($module+firstUpperCase~Elements.singleton)
             Divider
             Block(layout=Horizontal Center, visible=false) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Link(title="Permisos") as Action Addressable($module+firstUpperCase~Elements.roles)
             Block(layout=Horizontal Center, visible=false) taskTray as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayIconLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Link(title="Mis tareas") taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray)
             Block(layout=Horizontal Center, visible=false) taskBoard as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Tareas", icon="PlaylistAddCheck", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskBoardIconLink as Action Addressable($module+firstUpperCase~Elements.taskBoard); Link(title="Tareas") taskBoardLink as Action Addressable($module+firstUpperCase~Elements.taskBoard)
-            Block(layout=Horizontal Center, visible=false) news as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.news); Link(title="Noticias") as Action Addressable($module+firstUpperCase~Elements.news)
+            Block(layout=Horizontal Center, visible=false) news as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Noticias", icon="Receipt", format=black middleAirLeft middleAirRight minDrawerButtonSize) newsIconLink as Action Addressable($module+firstUpperCase~Elements.news); Link(title="Noticias") newsLink as Action Addressable($module+firstUpperCase~Elements.news)
             Block(layout=Horizontal Center, visible=false) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Link(title="Papelera") as Action Addressable($module+firstUpperCase~Elements.trash)
 
         Block(layout=Vertical Flexible)
@@ -54,7 +54,7 @@ def type(ui)
             Block(layout=Vertical Flexible, visible=false) taskBoardPage as Conditional > TemplateStamp(template=TaskBoardTemplate) taskBoardStamp
             Block(layout=Vertical Flexible, visible=false) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
             Block(layout=Vertical Flexible, visible=false) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
-            [$definition+page...[$NL]]
+            <<$definition+page...[$NL]>>
 
         Dialog(title="Sesión cerrada") sessionClosedDialog as Modal
             Block
@@ -89,36 +89,26 @@ def type(ui)
                 Block
                     Divider
                     Button(title="Cerrar sesión") logoutButton as Action
-end
 
-def type(definition & index) trigger(use)
-end
+rule type(definition, index) and trigger(use)
 
-def type(definition & source) trigger(use)
-end
+rule type(definition, source) and trigger(use)
 
-def type(definition) trigger(use)
+rule type(definition) and trigger(use)
     use $name+firstUpperCase
-end
 
-def type(definition & container & environment) trigger(declaration)
+rule type(definition, container, environment) and trigger(declaration)
     Block(layout=Horizontal Center, visible=false) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~IconLink as Action Addressable($module+firstUpperCase~Elements.$resourceType); Link(title="$label") $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType)
-end
 
-def type(definition & desktop) trigger(declaration)
+rule type(definition, desktop) and trigger(declaration)
     Block(layout=Horizontal Center, visible=false) $name+firstLowerCase > AvatarIconButton(title="$label", color="black", highlight=Fill, format=black middleAirLeft middleAirRight minDrawerButtonSize) $name+firstLowerCase~IconLink as Action Addressable($module+firstUpperCase~Elements.$resourceType); Link(title="$label") $name+firstLowerCase~Link as Action Addressable($module+firstUpperCase~Elements.$resourceType)
-end
 
-def type(definition) trigger(declaration)
-end
+rule type(definition) and trigger(declaration)
 
-def type(definition & index) trigger(page)
-end
+rule type(definition, index) and trigger(page)
 
-def type(definition & source) trigger(page)
+rule type(definition, source) and trigger(page)
     Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~Stamp
-end
 
-def type(definition) trigger(page)
+rule type(definition) and trigger(page)
     Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > TemplateStamp(template=$name+firstUpperCase~Template) $name+firstLowerCase~Stamp
-end

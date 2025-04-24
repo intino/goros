@@ -1,39 +1,29 @@
-def type(node)
+rule type(node)
 	$content
-end
 
-def type(content & empty)
-end
+rule type(content, empty)
 
-def type(content)
+rule type(content)
     $header
     $references
-end
 
-def type(header)
-    [$reference+header...[$NL]]
-end
+rule type(header)
+    <<$reference+header...[$NL]>>
 
-def type(references)
-    [$reference...[$NL]]
-end
+rule type(references)
+    <<$reference...[$NL]>>
 
-def type(reference) trigger(header)
-    [$attribute+header...[;]]
-end
+rule type(reference) and trigger(header)
+    <<$attribute+header...[;]>>
 
-def type(reference)
-    [$attribute...[;]]
-end
+rule type(reference)
+    <<$attribute...[;]>>
 
-def type(attribute) trigger(header)
+rule type(attribute) and trigger(header)
     $label
-end
 
-def type(attribute)
+rule type(attribute)
     $value
-end
 
-def type(comma)
+rule type(comma)
     ;
-end

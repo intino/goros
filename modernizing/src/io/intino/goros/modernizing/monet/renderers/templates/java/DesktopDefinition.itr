@@ -1,4 +1,4 @@
-def type(desktopdefinition)
+rule type(desktopdefinition)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -53,47 +53,41 @@ def type(desktopdefinition)
         }
 
         private void initToolbar() {
-            [$toolbar+editableInitCall]
+            <<$toolbar+editableInitCall>>
         }
 
         private void refreshToolbar() {
-            [$toolbar+editableRefreshCall]
+            <<$toolbar+editableRefreshCall>>
         }
 
         private void refreshLabels() {
             loading.visible(true);
             labels.visible(false);
-            [$view+refreshCall...[$NL]]
+            <<$view+refreshCall...[$NL]>>
             loading.visible(false);
             labels.visible(true);
         }
 
-        [$view+refreshMethod...[$NL]]
-        [$toolbar+editableMethods]
+        <<$view+refreshMethod...[$NL]>>
+        <<$toolbar+editableMethods>>
     }
-end
 
-def type(nodeview) trigger(refreshCall)
+rule type(nodeview) and trigger(refreshCall)
     $show+refreshCall
-end
 
-def type(nodeview) trigger(refreshMethod)
+rule type(nodeview) and trigger(refreshMethod)
     $show+refreshMethod
-end
 
-def type(show) trigger(refreshCall)
-    [$item+refreshCall...[$NL]]
-end
+rule type(show) and trigger(refreshCall)
+    <<$item+refreshCall...[$NL]>>
 
-def type(show) trigger(refreshMethod)
-    [$item+refreshMethod...[$NL]]
-end
+rule type(show) and trigger(refreshMethod)
+    <<$item+refreshMethod...[$NL]>>
 
-def type(item) trigger(refreshCall)
+rule type(item) and trigger(refreshCall)
     refresh$name+firstUpperCase();
-end
 
-def type(item & thesaurus) trigger(refreshMethod)
+rule type(item, thesaurus) and trigger(refreshMethod)
     private void refresh$name+firstUpperCase() {
         Source<?> source = io.intino.goros.unit.util.SourceHelper.locateSource("$code");
         $name+firstLowerCase.visible(source != null);
@@ -101,9 +95,8 @@ def type(item & thesaurus) trigger(refreshMethod)
         $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase"));
         $name+firstLowerCase~Link.title(source.getLabel());
     }
-end
 
-def type(item) trigger(refreshMethod)
+rule type(item) and trigger(refreshMethod)
     private void refresh$name+firstUpperCase() {
         Node node = io.intino.goros.unit.util.NodeHelper.singleton("$code");
         $name+firstLowerCase.visible(node != null && AccountHelper.hasRoles(node.getDefinition(), session()));
@@ -111,13 +104,10 @@ def type(item) trigger(refreshMethod)
         $name+firstLowerCase~Link.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
         $name+firstLowerCase~Link.title(node.getLabel());
     }
-end
 
-def type(toolbar) trigger(editableInitCall)
-    [$operationsGroup+editableInitCall]
-    [$operation+editableInitCall...[$NL]]
-end
+rule type(toolbar) and trigger(editableInitCall)
+    <<$operationsGroup+editableInitCall>>
+    <<$operation+editableInitCall...[$NL]>>
 
-def type(operation) trigger(executeMethodCall)
+rule type(operation) and trigger(executeMethodCall)
     if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), box().routeManager().routeDispatcher());
-end

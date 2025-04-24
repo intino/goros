@@ -2,19 +2,19 @@ package io.intino.goros.unit.printers;
 
 import io.intino.alexandria.logger.Logger;
 import io.intino.goros.unit.box.UnitBox;
-import io.intino.goros.unit.printers.templates.*;
+import io.intino.goros.unit.printers.templates.CsvTaskListTemplate;
+import io.intino.goros.unit.printers.templates.PdfTaskListTemplate;
+import io.intino.goros.unit.printers.templates.XlsTaskListTemplate;
 import io.intino.goros.unit.util.Formatters;
 import io.intino.goros.unit.util.LayerHelper;
-import io.intino.itrules.Frame;
+import io.intino.goros.unit.util.RendererFormatters;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
-import org.monet.metamodel.AttributeProperty;
-import org.monet.metamodel.IndexDefinition;
-import org.monet.metamodel.SetDefinition;
-import org.monet.metamodel.internal.Ref;
+import io.intino.itrules.template.Template;
 import org.monet.space.kernel.library.LibraryDate;
 import org.monet.space.kernel.library.LibraryPDF;
-import org.monet.space.kernel.model.*;
+import org.monet.space.kernel.model.Account;
+import org.monet.space.kernel.model.Task;
+import org.monet.space.kernel.model.TaskSearchRequest;
 import org.monet.space.office.core.model.Language;
 import org.monet.space.office.presentation.user.renders.TaskListPrintRender;
 
@@ -22,8 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-
-import static org.monet.space.kernel.model.DefinitionType.map;
 
 public class TaskListPrinter extends Printer {
 	protected final UnitBox box;
@@ -44,7 +42,7 @@ public class TaskListPrinter extends Printer {
 
 	public InputStream print(String language) {
 		Template template = template();
-		String result = template.render(build(language).toFrame());
+		String result = new io.intino.itrules.Engine(template).addAll(RendererFormatters.all).render(build(language).toFrame());
 		return new ByteArrayInputStream(generateDocument(result));
 	}
 

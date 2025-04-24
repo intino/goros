@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.actions;
 
+import io.intino.alexandria.http.server.AlexandriaHttpContext;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.alexandria.exceptions.*;
 import java.time.*;
@@ -17,7 +18,7 @@ import org.monet.space.kernel.model.map.LocationList;
 
 public class GetLocationsByOwnerAction {
 	public UnitBox box;
-	public io.intino.alexandria.http.spark.SparkContext context;
+	public AlexandriaHttpContext context;
 	public String owner;
 	public String name;
 

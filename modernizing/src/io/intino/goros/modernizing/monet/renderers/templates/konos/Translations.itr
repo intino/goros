@@ -1,4 +1,4 @@
-def type(translations)
+rule type(translations)
     dsl Konos
 
     Translator(language = Spanish)
@@ -9,4 +9,3 @@ def type(translations)
 	    Translation("Address to search", "Dirección a buscar")
 	    Translation("Search", "Buscar")
 	    Translation("Address not found", "Dirección no encontrada")
-end

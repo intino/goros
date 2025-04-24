@@ -3,11 +3,11 @@ package io.intino.goros.modernizing.monet.renderers.definition;
 import io.intino.goros.modernizing.Modernization;
 import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
+import io.intino.goros.modernizing.monet.renderers.Formatters;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.ProcessDefinitionTemplate;
-import io.intino.itrules.Frame;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
 import io.intino.itrules.formatters.StringFormatters;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.*;
 import org.monet.metamodel.internal.Ref;
 
@@ -159,7 +159,7 @@ public abstract class ProcessRenderer<D extends ProcessDefinition> extends Defin
 		addTargetViews(builder);
 		addShortcutViews(builder);
 		addDisplayList(builder);
-		writeFrame(file, konosTemplate().render(builder.toFrame()));
+		writeFrame(file, new io.intino.itrules.Engine(konosTemplate()).addAll(Formatters.all).render(builder.toFrame()));
 	}
 
 	private void writeEmbeddedTemplate() {

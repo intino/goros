@@ -1,7 +1,8 @@
 package io.intino.goros.unit.box.services;
 
 import io.intino.alexandria.Resource;
-import io.intino.alexandria.http.spark.SparkContext;
+import io.intino.alexandria.http.server.AlexandriaHttpContext;
+import io.intino.alexandria.logger.Logger;
 import org.monet.space.kernel.model.Context;
 
 import java.io.ByteArrayInputStream;
@@ -13,14 +14,14 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Request implements org.monet.http.Request {
-    private final SparkContext context;
+    private final AlexandriaHttpContext context;
     private final Map<String, Object> parameters;
     private final InputStream inputStream;
 
-    public Request(SparkContext context, Map<String, Object> parameters) {
+    public Request(AlexandriaHttpContext context, Map<String, Object> parameters) {
         this.context = context;
         this.parameters = parameters;
-        this.inputStream = parameters.values().stream().filter(p -> p instanceof Resource).map(r -> ((Resource) r).stream()).findFirst().orElse(null);
+        this.inputStream = streamFrom(parameters);
     }
 
     @Override
@@ -89,4 +90,15 @@ public class Request implements org.monet.http.Request {
     public String getCharacterEncoding() {
         return null;
     }
+
+    private InputStream streamFrom(Map<String, Object> parameters) {
+        try {
+            Resource resource = parameters.values().stream().filter(p -> p instanceof Resource).map(p -> (Resource) p).findFirst().orElse(null);
+            return resource != null ? resource.stream() : null;
+        } catch (IOException e) {
+            Logger.error(e);
+            return null;
+		}
+	}
+
 }

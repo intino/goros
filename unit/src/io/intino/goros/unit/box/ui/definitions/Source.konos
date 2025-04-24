@@ -5,7 +5,7 @@ use Theme
 Template(layout=Vertical Flexible, format=smallAir) sourceTemplate
     Block(layout=Horizontal, format=bordered spaced) header
         Block(layout=Vertical Flexible)
-            Block(layout=Horizontal)
+            Block(layout=Horizontal Center)
                 Link(title="", format=h4 middleAirRight, visible=false) desktopLink as Action Addressable(empty)
                 Text(value="/", format=h4 middleAirRight, visible=false) desktopLinkSeparator
                 Text(format=h4 bold) label

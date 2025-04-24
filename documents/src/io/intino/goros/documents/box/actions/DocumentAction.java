@@ -79,12 +79,12 @@ public class DocumentAction extends io.intino.goros.documents.box.actions.Action
 			put("destinationDocumentId", destinationDocumentId);
 			put("signature", signature);
 			put("signField", signField);
-			put("templateData", templateData != null ? templateData.stream() : null);
+			put("templateData", templateData != null ? streamOf(templateData) : null);
 			put("copiedDocumentCode", copiedDocumentCode);
 			put("certificate", certificate);
 			put("templateCode", templateCode);
 			put("mimeType", mimeType);
-			put("documentData", documentData != null ? documentData.stream() : null);
+			put("documentData", documentData != null ? streamOf(documentData) : null);
 			put("signId", signId);
 			put("signFields", signFields);
 			put("asynchronous", asynchronous);

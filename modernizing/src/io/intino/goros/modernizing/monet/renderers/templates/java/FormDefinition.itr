@@ -1,72 +1,58 @@
-def type(show & fields) trigger(declaration)
-    [$field+declaration...[$NL]]
-end
+rule type(show, fields) and trigger(declaration)
+    <<$field+declaration...[$NL]>>
 
-def type(show & layout) trigger(declaration)
-    [$row+declaration...[$NL]]
-end
+rule type(show, layout) and trigger(declaration)
+    <<$row+declaration...[$NL]>>
 
-def type(layoutRow) trigger(declaration)
-    [$element+declaration...[$NL]]
-end
+rule type(layoutRow) and trigger(declaration)
+    <<$element+declaration...[$NL]>>
 
-def type(layoutElement & section) trigger(declaration)
-    [$row+declaration...[$NL]]
-end
+rule type(layoutElement, section) and trigger(declaration)
+    <<$row+declaration...[$NL]>>
 
-def type(layoutElement) trigger(declaration)
-    [$field+declaration]
-end
+rule type(layoutElement) and trigger(declaration)
+    <<$field+declaration>>
 
-def type(show & fields & composite) trigger(init)
-    [$field+init...[$NL]]
-end
+rule type(show, fields, composite) and trigger(init)
+    <<$field+init...[$NL]>>
 
-def type(show & fields & composite) trigger(refresh)
-    [$field+refresh...[$NL]]
-end
+rule type(show, fields, composite) and trigger(refresh)
+    <<$field+refresh...[$NL]>>
 
-def type(show & fields & composite) trigger(refreshMethod)
-    [$field+refreshMethod...[$NL]]
-end
+rule type(show, fields, composite) and trigger(refreshMethod)
+    <<$field+refreshMethod...[$NL]>>
 
-def type(show & fields & composite) trigger(update)
-    [$field+update...[$NL]]
-end
+rule type(show, fields, composite) and trigger(update)
+    <<$field+update...[$NL]>>
 
-def type(show & layout & composite) trigger(init)
-    [$row+init...[$NL]]
-end
+rule type(show, layout, composite) and trigger(init)
+    <<$row+init...[$NL]>>
 
-def type(show & layout & composite) trigger(refresh)
-    [$row+refresh...[$NL]]
-end
+rule type(show, layout, composite) and trigger(refresh)
+    <<$row+refresh...[$NL]>>
 
-def type(show & layout & composite) trigger(refreshMethod)
-    [$row+refreshMethod...[$NL]]
-end
+rule type(show, layout, composite) and trigger(refreshMethod)
+    <<$row+refreshMethod...[$NL]>>
 
-def type(show & layout & composite) trigger(update)
-    [$row+update...[$NL]]
-end
+rule type(show, layout, composite) and trigger(update)
+    <<$row+update...[$NL]>>
 
-def type(show) trigger(hideToolbar)
-end
+rule type(show) and trigger(hideToolbar)
 
-def type(show & layout)
+rule type(show, layout)
     @Override
     public void init() {
         super.init();
-        [$row+init...[$NL]]
+        <<$row+init...[$NL]>>
     }
 
     @Override
     public void refresh() {
         super.refresh();
-        [$row+refresh...[$NL]]
+        <<$row+refresh...[$NL]>>
     }
 
-    [$row+refreshMethod...[$NL]]
+    <<$row+refreshMethod...[$NL]>>
 
     private void save(java.util.function.Consumer<Boolean> consumer) {
         consumer.accept(true);
@@ -77,73 +63,60 @@ def type(show & layout)
     private void updateFields() {
         if (node == null) return;
         FormDatasource datasource = new FormDatasource(box().unit(), session(), node);
-        [$row+update...[$NL]]
+        <<$row+update...[$NL]>>
     }
-end
 
-def type(layoutRow) trigger(init)
-    [$element+init...[$NL]]
-end
+rule type(layoutRow) and trigger(init)
+    <<$element+init...[$NL]>>
 
-def type(layoutRow) trigger(refresh)
-    [$element+refresh...[$NL]]
-end
+rule type(layoutRow) and trigger(refresh)
+    <<$element+refresh...[$NL]>>
 
-def type(layoutRow) trigger(refreshMethod)
-    [$element+refreshMethod...[$NL]]
-end
+rule type(layoutRow) and trigger(refreshMethod)
+    <<$element+refreshMethod...[$NL]>>
 
-def type(layoutRow) trigger(update)
-    [$element+update...[$NL]]
-end
+rule type(layoutRow) and trigger(update)
+    <<$element+update...[$NL]>>
 
-def type(layoutElement & section) trigger(init)
-    [$row+init...[$NL]]
-end
+rule type(layoutElement, section) and trigger(init)
+    <<$row+init...[$NL]>>
 
-def type(layoutElement) trigger(init)
+rule type(layoutElement) and trigger(init)
     $field+init
-end
 
-def type(layoutElement & section) trigger(refresh)
-    [$row+refresh...[$NL]]
-end
+rule type(layoutElement, section) and trigger(refresh)
+    <<$row+refresh...[$NL]>>
 
-def type(layoutElement) trigger(refresh)
+rule type(layoutElement) and trigger(refresh)
     $field+refresh
-end
 
-def type(layoutElement & section) trigger(refreshMethod)
-    [$row+refreshMethod...[$NL]]
-end
+rule type(layoutElement, section) and trigger(refreshMethod)
+    <<$row+refreshMethod...[$NL]>>
 
-def type(layoutElement) trigger(refreshMethod)
+rule type(layoutElement) and trigger(refreshMethod)
     $field+refreshMethod
-end
 
-def type(layoutElement & section) trigger(update)
-    [$row+update...[$NL]]
-end
+rule type(layoutElement, section) and trigger(update)
+    <<$row+update...[$NL]>>
 
-def type(layoutElement) trigger(update)
+rule type(layoutElement) and trigger(update)
     $field+update
-end
 
-def type(show & fields)
+rule type(show, fields)
     @Override
     public void init() {
         super.init();
-        [$field+init...[$NL]]
+        <<$field+init...[$NL]>>
     }
 
     @Override
     public void refresh() {
         super.refresh();
         boolean isPrototype = node.isPrototype();
-        [$field+refresh...[$NL]]
+        <<$field+refresh...[$NL]>>
     }
 
-    [$field+refreshMethod...[$NL]]
+    <<$field+refreshMethod...[$NL]>>
 
     private void save(java.util.function.Consumer<Boolean> consumer) {
         consumer.accept(true);
@@ -154,11 +127,10 @@ def type(show & fields)
     private void updateFields() {
         if (node == null) return;
         FormDatasource datasource = new FormDatasource(box().unit(), session(), node);
-        [$field+update...[$NL]]
+        <<$field+update...[$NL]>>
     }
-end
 
-def type(displayProvider)
+rule type(displayProvider)
     @Override
     public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
         if (node != null && node.isDocument()) {
@@ -167,245 +139,202 @@ def type(displayProvider)
             display.readonly(readonly);
             return display;
         }
-        [$display...[$NL]]
+        <<$display...[$NL]>>
         return null;
     }
-end
 
-def type(field & select & multiple) trigger(declaration)
+rule type(field, select, multiple) and trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
     private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
-end
 
-def type(field & link & multiple) trigger(declaration)
+rule type(field, link, multiple) and trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
     private org.monet.space.kernel.model.Node<?> $name+firstLowerCase~Selected;
-end
 
-def type(field & multiple) trigger(declaration)
+rule type(field, multiple) and trigger(declaration)
     private FieldMultiple<Field$type+firstUpperCase~,$valueType> $name+firstLowerCase~Field;
-end
 
-def type(field & select) trigger(declaration)
+rule type(field, select) and trigger(declaration)
     private Field$type+firstUpperCase $name+firstLowerCase~Field;
     private io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource $name+firstLowerCase~Source;
-end
 
-def type(field & link) trigger(declaration)
+rule type(field, link) and trigger(declaration)
     private Field$type+firstUpperCase $name+firstLowerCase~Field;
-end
 
-def type(field) trigger(declaration)
+rule type(field) and trigger(declaration)
     private Field$type+firstUpperCase $name+firstLowerCase~Field;
-end
 
-def type(field & select) trigger(update)
+rule type(field, select) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
     $name+firstLowerCase~Source = new io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource(box().unit(), session(), node, $name+firstLowerCase~Field);
-end
 
-def type(field & link) trigger(update)
+rule type(field, link) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-end
 
-def type(field & composite & multiple) trigger(update)
+rule type(field, composite, multiple) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
     java.util.List<FieldComposite> $name+firstLowerCase~Fields = $name+firstLowerCase~Field.getAllFields();
     if ($name+firstLowerCase~ != null) {
         java.util.List<$definition+firstUpperCase$name+firstUpperCase~Template> $name+firstLowerCase~Children = $name+firstLowerCase~.children($definition+firstUpperCase$name+firstUpperCase~Template.class);
         for (int i=0; i<$name+firstLowerCase~Fields.size(); i++) if ($name+firstLowerCase~Children.size() > i) $name+firstLowerCase~Children.get(i).field($name+firstLowerCase~Fields.get(i));
     }
-end
 
-def type(field & composite) trigger(update)
+rule type(field, composite) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
     if ($name+firstLowerCase != null) $name+firstLowerCase.field($name+firstLowerCase~Field);
-end
 
-def type(field & link) trigger(update)
+rule type(field, link) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-end
 
-def type(field) trigger(update)
+rule type(field) and trigger(update)
     $name+firstLowerCase~Field = datasource.getField("$code");
-end
 
-def type(field & text & multiple) trigger(init)
+rule type(field, text, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(e.item())));
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & text & multiple) trigger(refresh)
+rule type(field, text, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & text) trigger(init)
+rule type(field, text) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(e.value())));
-end
 
-def type(field & text) trigger(refresh)
+rule type(field, text) and trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & number & multiple) trigger(init)
+rule type(field, number, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(new org.monet.bpi.types.Number((Double) e.item()))));
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & number & multiple) trigger(refresh)
+rule type(field, number, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().mapToDouble(n -> n != null ? n.doubleValue() : 0).boxed().collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & number) trigger(init)
+rule type(field, number) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(new org.monet.bpi.types.Number((Double) e.value()))));
-end
 
-def type(field & number) trigger(refresh)
+rule type(field, number) and trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get() != null ? $name+firstLowerCase~Field.get().doubleValue() : null);
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & boolean) trigger(init)
+rule type(field, boolean) and trigger(init)
     $name+firstLowerCase~.onToggle(e -> save(b -> $name+firstLowerCase~Field.set(e.state() == io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On)));
-end
 
-def type(field & boolean) trigger(refresh)
+rule type(field, boolean) and trigger(refresh)
     $name+firstLowerCase~.state($name+firstLowerCase~Field.get() ? io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.On : io.intino.alexandria.ui.displays.events.actionable.ToggleEvent.State.Off);
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & date & multiple) trigger(init)
+rule type(field, date, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.dateOf(e.item()))));
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & date & multiple) trigger(refresh)
+rule type(field, date, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? f.getValue().toInstant() : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & date) trigger(init)
+rule type(field, date) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.dateOf(e.value()))));
-end
 
-def type(field & date) trigger(refresh)
+rule type(field, date) and trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.instantOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & memo & multiple) trigger(init)
+rule type(field, memo, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(e.item())));
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & memo & multiple) trigger(refresh)
+rule type(field, memo, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll());
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & memo) trigger(init)
+rule type(field, memo) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> $name+firstLowerCase~Field.set(e.value())));
-end
 
-def type(field & memo) trigger(refresh)
+rule type(field, memo) and trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & serial) trigger(init)
-end
+rule type(field, serial) and trigger(init)
 
-def type(field & serial) trigger(refresh)
+rule type(field, serial) and trigger(refresh)
     $name+firstLowerCase~.value($name+firstLowerCase~Field.get());
     $name+firstLowerCase~.readonly(true);
-end
 
-def type(field & file & multiple) trigger(init)
+rule type(field, file, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.fileOf(e.item())));
         ((io.intino.alexandria.ui.displays.components.FileEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & file & multiple) trigger(refresh)
+rule type(field, file, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & file) trigger(init)
+rule type(field, file) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.fileOf(e.value())));
         $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
     });
-end
 
-def type(field & file) trigger(refresh)
+rule type(field, file) and trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & picture & multiple) trigger(init)
+rule type(field, picture, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.item(), $width, $height)));
         ((io.intino.alexandria.ui.displays.components.ImageEditable<?,?>)e.component()).value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.getAsField(e.index())));
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & picture & multiple) trigger(refresh)
+rule type(field, picture, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~.addAll($name+firstLowerCase~Field.getAll().stream().map(f -> f != null ? io.intino.goros.unit.util.NodeHelper.alexandriaFileOf(f) : null).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.onAdd(e -> save(b -> $name+firstLowerCase~Field.addNew(e.item())));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & picture) trigger(init)
+rule type(field, picture) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.pictureOf(e.value(), $width, $height)));
         $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field));
     });
-end
 
-def type(field & picture) trigger(refresh)
+rule type(field, picture) and trigger(refresh)
     $name+firstLowerCase~.value(io.intino.goros.unit.util.NodeHelper.alexandriaFileOf($name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & check) trigger(init)
+rule type(field, check) and trigger(init)
     $name+firstLowerCase~.onSelect(e -> save(b -> $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.checkListOf($name+firstLowerCase~Field.get(), e.selection()))));
-end
 
-def type(field & check) trigger(refresh)
+rule type(field, check) and trigger(refresh)
     $name+firstLowerCase~.clear();
     java.util.List<org.monet.bpi.types.Term> $name+firstLowercase~Terms = new io.intino.goros.unit.box.ui.datasources.FieldCheckDatasource(box().unit(), session(), node, $name+firstLowerCase~Field).allItems();
     $name+firstLowerCase~.addAll($name+firstLowercase~Terms.stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowercase~Terms, $name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & link & multiple) trigger(init)
+rule type(field, link, multiple) and trigger(init)
     $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
     $name+firstLowerCase~.onOpen(e -> {
         org.monet.bpi.types.Link link = io.intino.goros.unit.util.DisplayHelper.findLink($name+firstLowerCase~Field.getAll(), e.value());
@@ -424,23 +353,21 @@ def type(field & link & multiple) trigger(init)
         e1.layer().template(template);
         template.embedded(true);
     });
-end
 
-def type(field & link & multiple) trigger(refresh)
+rule type(field, link, multiple) and trigger(refresh)
     $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     $name+firstLowerCase.selection(io.intino.goros.unit.util.NodeHelper.nodeItemsOf($name+firstLowerCase~Field.getAll()));
-    $name+firstLowerCase.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase.readonly(<<$univocal >>$readonly);
 
-def type(field & link) trigger(init)
+rule type(field, link) and trigger(init)
     $name+firstLowerCase~.valueProvider(io.intino.goros.unit.util.DisplayHelper.linkValueProvider());
     $name+firstLowerCase~.onSelect(e -> {
         save(b -> {
-            [$dependant+clear...[$NL]]
+            <<$dependant+clear...[$NL]>>
             $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.linkOf(e.selection()));
             open$name+firstUpperCase~.readonly($name+firstLowerCase~Field.get() == null);
         });
-        [$dependant+refresh...[$NL]]
+        <<$dependant+refresh...[$NL]>>
     });
     open$name+firstUpperCase~.onOpen(e -> {
         org.monet.bpi.types.Link link = $name+firstLowerCase~Field.get();
@@ -452,74 +379,65 @@ def type(field & link) trigger(init)
 		e.layer().template(template);
 		template.embedded(true);
     });
-end
 
-def type(field & link) trigger(refresh)
+rule type(field, link) and trigger(refresh)
     $name+firstLowerCase~.source(new io.intino.goros.unit.box.ui.datasources.FieldLinkDatasource(box().unit(), session(), "$code", node, org.monet.space.kernel.model.Dictionary.getInstance().getIndexDefinition("$indexCode")));
     if ($name+firstLowerCase~Field.get() != null) $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.nodeItemOf($name+firstLowerCase~Field.get()));
     else $name+firstLowerCase.selection(java.util.Collections.emptyList());
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
     open$name+firstUpperCase~.readonly($name+firstLowerCase~Field.get() == null);
-end
 
-def type(field & select & multiple) trigger(init)
+rule type(field, select, multiple) and trigger(init)
     $name+firstLowerCase~.onSelect(e -> save(b -> {
         $name+firstLowerCase~Field.removeAll();
         $name+firstLowerCase~Field.addNewAll(io.intino.goros.unit.util.NodeHelper.termsOf($name+firstLowerCase~Source, e.selection()));
     }));
-end
 
-def type(field & select & multiple) trigger(refresh)
+rule type(field, select, multiple) and trigger(refresh)
     $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.getAll()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & select & inline) trigger(refresh)
+rule type(field, select, inline) and trigger(refresh)
     $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & select) trigger(init)
+rule type(field, select) and trigger(init)
     $name+firstLowerCase~.onSelect(e -> {
         save(b -> {
-            [$dependant+clear...[$NL]]
+            <<$dependant+clear...[$NL]>>
             $name+firstLowerCase~Field.set(io.intino.goros.unit.util.NodeHelper.termOf($name+firstLowerCase~Source, e.selection()));
         });
-        [$dependant+refresh...[$NL]]
+        <<$dependant+refresh...[$NL]>>
     });
-end
 
-def type(field & select) trigger(refreshMethod)
+rule type(field, select) and trigger(refreshMethod)
     private void refresh$name+firstUpperCase~() {
         $name+firstLowerCase~.clear();
         $name+firstLowerCase~.addAll($name+firstLowerCase~Source.items().stream().map(org.monet.bpi.types.Term::getLabel).collect(java.util.stream.Collectors.toList()));
     }
-end
 
-def type(field & select) trigger(refresh)
+rule type(field, select) and trigger(refresh)
     $name+firstLowerCase~Source.session(session());
     refresh$name+firstUpperCase~();
     $name+firstLowerCase~.selection(io.intino.goros.unit.util.NodeHelper.selectionOf($name+firstLowerCase~Source.allItems(), $name+firstLowerCase~Field.get()));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & composite & multiple) trigger(init)
+rule type(field, composite, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         save(b -> {});
         (($definition+firstUpperCase$name+firstUpperCase~Template)e.component()).node(node).field($name+firstLowerCase~Field.getAsField(e.index())).refresh();
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & composite & multiple) trigger(refresh)
+rule type(field, composite, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~Field.getAllFields().forEach(field -> {
-        $definition+firstUpperCase$name+firstUpperCase~Template display = $name+firstLowerCase~.add([$addProperties]).node(node).field(field).readonly(this.readonly);
+        $definition+firstUpperCase$name+firstUpperCase~Template display = $name+firstLowerCase~.add(<<$addProperties>>).node(node).field(field).readonly(this.readonly);
         display.refresh();
     });
     $name+firstLowerCase~.onAdd(e -> save(b -> {
@@ -527,37 +445,33 @@ def type(field & composite & multiple) trigger(refresh)
         $definition+firstUpperCase$name+firstUpperCase~Template display = e.component();
         display.node(node);
         display.field(fieldComposite);
-        display.readonly([$univocal ]$readonly);
+        display.readonly(<<$univocal >>$readonly);
         display.refresh();
     }));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field & composite) trigger(init)
+rule type(field, composite) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> {}));
-end
 
-def type(field & composite) trigger(refresh)
+rule type(field, composite) and trigger(refresh)
     $name+firstLowerCase~.node(node);
     $name+firstLowerCase~.field($name+firstLowerCase~Field);
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
     $name+firstLowerCase~.refresh();
-end
 
-def type(field & node & multiple) trigger(init)
+rule type(field, node, multiple) and trigger(init)
     $name+firstLowerCase~.onChange(e -> {
         if ($name+firstLowerCase~Field.getCount() <= e.index()) return;
         save(b -> $name+firstLowerCase~Field.getAsField(e.index()).set(((FieldNode)e.item()).get()));
         ((io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate)e.component()).node(node).field($name+firstLowerCase~Field.getAsField(e.index())).refresh();
     });
     $name+firstLowerCase~.onRemove(e -> save(b -> $name+firstLowerCase~Field.remove(e.index())));
-end
 
-def type(field & node & multiple) trigger(refresh)
+rule type(field, node, multiple) and trigger(refresh)
     $name+firstLowerCase~.clear();
     $name+firstLowerCase~.onAdd(null);
     $name+firstLowerCase~Field.getAllFields().forEach(field -> {
-        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = $name+firstLowerCase~.add([$addProperties]).node(node).field(field).readonly(this.readonly).displayProvider(this);
+        io.intino.goros.unit.box.ui.displays.templates.FieldNodeTemplate display = $name+firstLowerCase~.add(<<$addProperties>>).node(node).field(field).readonly(this.readonly).displayProvider(this);
         display.refresh();
     });
     $name+firstLowerCase~.onAdd(e -> save(b -> {
@@ -566,69 +480,55 @@ def type(field & node & multiple) trigger(refresh)
         display.node(node);
         display.field(fieldNode);
         display.displayProvider(this);
-        display.readonly([$univocal ]$readonly);
+        display.readonly(<<$univocal >>$readonly);
         display.refresh();
     }));
-    $name+firstLowerCase~.readonly([$univocal ]$readonly);
-end
+    $name+firstLowerCase~.readonly(<<$univocal >>$readonly);
 
-def type(field) trigger(refreshMethod)
-end
+rule type(field) and trigger(refreshMethod)
 
-def type(dependant & multiple) trigger(clear)
+rule type(dependant, multiple) and trigger(clear)
     $name+firstLowerCase~Field.removeAll();
-end
 
-def type(dependant) trigger(clear)
+rule type(dependant) and trigger(clear)
     $name+firstLowerCase~Field.clear();
-end
 
-def type(dependant) trigger(refresh)
+rule type(dependant) and trigger(refresh)
     $name+firstLowerCase~.select();
     $name+firstLowerCase~.readonly($anchorName+firstLowerCase~.selection().size() <= 0);
     refresh$name+firstUpperCase~();
-end
 
-def type(univocal & prototype)
+rule type(univocal, prototype)
     isPrototype ||
-end
 
-def type(univocal)
-end
+rule type(univocal)
 
-def type(addProperties)
-    "[$add+label...[; ]]", [$add...[ + "; " + ]]
-end
+rule type(addProperties)
+    "<<$add+label...[; ]>>", <<$add...[ + "; " + ]>>
 
-def type(addPropertiesItem) trigger(label)
+rule type(addPropertiesItem) and trigger(label)
     $label
-end
 
-def type(addPropertiesItem & date)
+rule type(addPropertiesItem, date)
     io.intino.goros.unit.util.NodeHelper.valueOrDefault(((Field~$type+firstUpperCase)field.getField("$code")))
-end
 
-def type(addPropertiesItem & link)
+rule type(addPropertiesItem, link)
     io.intino.goros.unit.util.NodeHelper.valueOrDefault(((Field~$type+firstUpperCase)field.getField("$code")))
-end
 
-def type(addPropertiesItem)
+rule type(addPropertiesItem)
     ((Field~$type+firstUpperCase)field.getField("$code")).get()
-end
 
-def type(field & node) trigger(init)
+rule type(field, node) and trigger(init)
     $name+firstLowerCase~.onChange(e -> save(b -> {}));
-end
 
-def type(field & node) trigger(refresh)
+rule type(field, node) and trigger(refresh)
     $name+firstLowerCase~.node(node);
     $name+firstLowerCase~.field($name+firstLowerCase~Field);
     $name+firstLowerCase~.readonly($readonly);
     $name+firstLowerCase~.displayProvider(this);
     $name+firstLowerCase~.refresh();
-end
 
-def type(compositeView)
+rule type(compositeView)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -640,12 +540,12 @@ def type(compositeView)
 
     import java.util.function.Consumer;
 
-    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$boxName+firstUpperCase~Box>[ implements $implements...[,]] {
+    public class $definition+firstUpperCase~$name+firstUpperCase~Template extends Abstract$definition+firstUpperCase~$name+firstUpperCase~Template<$boxName+firstUpperCase~Box><< implements $implements...[,]>> {
         private Node node;
         private FieldComposite field;
         private boolean readonly = false;
         private ChangeListener changeListener;
-        [$show+declaration]
+        <<$show+declaration>>
 
         public $definition+firstUpperCase~$name+firstUpperCase~Template($boxName+firstUpperCase~Box box) {
             super(box);
@@ -653,7 +553,11 @@ def type(compositeView)
 
         public $definition+firstUpperCase~$name+firstUpperCase~Template readonly(boolean readonly) {
             this.readonly = readonly;
-            [$editable+readonly]
+            <<$editable+readonly>>
+            return this;
+        }
+
+        public $definition+firstUpperCase~$name+firstUpperCase~Template onReadonly(io.intino.alexandria.ui.displays.events.ReadonlyListener listener) {
             return this;
         }
 
@@ -665,7 +569,7 @@ def type(compositeView)
             return !readonly;
         }
 
-        [$editable]
+        <<$editable>>
 
         public $definition+firstUpperCase~$name+firstUpperCase~Template node(Node node) {
             this.node = node;
@@ -686,16 +590,16 @@ def type(compositeView)
         @Override
         public void init() {
             super.init();
-            [$show+init]
+            <<$show+init>>
         }
 
         @Override
         public void refresh() {
             super.refresh();
-            [$show+refresh]
+            <<$show+refresh>>
         }
 
-        [$show+refreshMethod]
+        <<$show+refreshMethod>>
 
         private void save(java.util.function.Consumer<Boolean> consumer) {
             consumer.accept(true);
@@ -706,35 +610,31 @@ def type(compositeView)
         private void updateFields() {
             if (field == null) return;
             FieldCompositeDatasource datasource = new FieldCompositeDatasource(box().unit(), session(), field);
-            [$show+update]
+            <<$show+update>>
         }
 
-        [$displayProvider]
+        <<$displayProvider>>
     }
-end
 
-def type(compositeDisplayProvider)
+rule type(compositeDisplayProvider)
     @Override
     public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
-        [$display...[$NL]]
+        <<$display...[$NL]>>
         return null;
     }
-end
 
-def type(display)
+rule type(display)
     if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
         $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate(box());
         result.node(node);
         result.readonly(false);
         return result;
     }
-end
 
-def type(editable) trigger(readonly)
+rule type(editable) and trigger(readonly)
     if (field != null) refresh();
-end
 
-def type(editable)
+rule type(editable)
     @Override
     public boolean readonly() {
         return readonly;
@@ -744,4 +644,3 @@ def type(editable)
     public void reload() {
         refresh();
     }
-end

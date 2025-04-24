@@ -1,180 +1,137 @@
-def type(show & fields) trigger(use)
-    [$field+use...[$NL]]
-end
+rule type(show, fields) and trigger(use)
+    <<$field+use...[$NL]>>
 
-def type(show & fields)
+rule type(show, fields)
     Block content as Relative(width=90%)
-        [$field...[$NL]]
-end
+        <<$field...[$NL]>>
 
-def type(show & location)
+rule type(show, location)
     Block(layout=Vertical Flexible, format=spaced) as Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) locationViewStamp
-end
 
-def type(show & layout) trigger(use)
-    [$row+use...[$NL]]
-end
+rule type(show, layout) and trigger(use)
+    <<$row+use...[$NL]>>
 
-def type(show & layout)
-    Block(format=compositeFieldStyle)[ $absoluteFacet][ $relativeFacet]
-        [$row...[$NL]]
-end
+rule type(show, layout)
+    Block(format=compositeFieldStyle)<< $absoluteFacet>><< $relativeFacet>>
+        <<$row...[$NL]>>
 
-def type(layoutRow) trigger(use)
-    [$element+use...[$NL]]
-end
+rule type(layoutRow) and trigger(use)
+    <<$element+use...[$NL]>>
 
-def type(layoutRow)
+rule type(layoutRow)
     Block(layout=Horizontal Flexible)
-        [$element...[$NL]]
-end
+        <<$element...[$NL]>>
 
-def type(layoutElement & section) trigger(use)
-    [$row+use...[$NL]]
-end
+rule type(layoutElement, section) and trigger(use)
+    <<$row+use...[$NL]>>
 
-def type(layoutElement) trigger(use)
-    [$field+use]
-end
+rule type(layoutElement) and trigger(use)
+    <<$field+use>>
 
-def type(layoutElement & section)
+rule type(layoutElement, section)
     Block(layout=Vertical Flexible, format=compositeFieldStyle)
-        [Text(value="$label", format=h5 airBottom)]
-        [$row...[$NL]]
-end
+        <<Text(value="$label", format=h5 airBottom)>>
+        <<$row...[$NL]>>
 
-def type(layoutElement & space)
+rule type(layoutElement, space)
     Text(value=" ")
-end
 
-def type(layoutElement)
-    Block(format=airRight)[ $absoluteFacet][ $relativeFacet]
+rule type(layoutElement)
+    Block(format=airRight)<< $absoluteFacet>><< $relativeFacet>>
         $field
-end
 
-def type(absoluteFacet)
-    as Absolute([width=$width~px][$width+empty,][height=$height~px])
-end
+rule type(absoluteFacet)
+    as Absolute(<<width=$width~px>><<$width+empty,>><<height=$height~px>>)
 
-def type(relativeFacet)
-    as Relative([width=$width~%][$width+empty,][height=$height~%])
-end
+rule type(relativeFacet)
+    as Relative(<<width=$width~%>><<$width+empty,>><<height=$height~%>>)
 
-def trigger(empty)
-end
+rule trigger(empty)
 
-def type(field & link) trigger(use)
+rule type(field, link) and trigger(use)
     use $index+firstUpperCase
-end
 
-def type(field & composite) trigger(use)
-    [$field+use...[$NL]]
-end
+rule type(field, composite) and trigger(use)
+    <<$field+use...[$NL]>>
 
-def type(field) trigger(use)
-end
+rule type(field) and trigger(use)
 
-def type(field & text & multiple)
+rule type(field, text, multiple)
     Text(format=airBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Readonly > Count(min=$min, max=$max)
-end
 
-def type(field & text)
-    Text(format=airBottom[, mode=$textMode]) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
-end
+rule type(field, text)
+    Text(format=airBottom<<, mode=$textMode>>) $name+firstLowerCase as Editable(helperText="Rellene aquí el valor del campo") Labeled("$label") Readonly
 
-def type(field & number & multiple)
+rule type(field, number, multiple)
     Number(format=airBottom, min=$min, max=$max) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay medidas") Labeled("$label") Readonly
-end
 
-def type(field & number)
+rule type(field, number)
     Number(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
-end
 
-def type(field & boolean)
+rule type(field, boolean)
     Switch(format=airBottom, title="$label") $name+firstLowerCase as Action Readonly
-end
 
-def type(field & date & multiple)
-    Date(format=airBottom[, pattern="$pattern"]) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
-end
+rule type(field, date, multiple)
+    Date(format=airBottom<<, pattern="$pattern">>) $name+firstLowerCase as Editable Multiple("No ha indicado fechas") Labeled("$label") Readonly
 
-def type(field & date)
-    Date(format=airBottom[, pattern="$pattern"]) $name+firstLowerCase as Editable[(timePicker=$timePicker)] Labeled("$label") Readonly
-end
+rule type(field, date)
+    Date(format=airBottom<<, pattern="$pattern">>) $name+firstLowerCase as Editable<<(timePicker=$timePicker)>> Labeled("$label") Readonly
 
-def type(field & memo & multiple)
+rule type(field, memo, multiple)
     Text(format=airBottom) $name+firstLowerCase as Editable Multiple(noItemsMessage="No hay elementos") Labeled("$label") Memo Readonly > Count(min=$min, max=$max)
-end
 
-def type(field & memo)
+rule type(field, memo)
     Text(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Memo Readonly
-end
 
-def type(field & serial)
+rule type(field, serial)
     Text(format=airBottom) $name+firstLowerCase as Editable Labeled("$label") Readonly
-end
 
-def type(field & file & multiple)
+rule type(field, file, multiple)
     File(format=airBottom) $name+firstLowerCase as Editable(showPreview=false) Multiple(noItemsMessage="No hay documentos") Labeled("$label") Readonly
-end
 
-def type(field & file)
+rule type(field, file)
     File(format=airBottom) $name+firstLowerCase as Editable(showDropZone=true) Labeled("$label") Readonly
-end
 
-def type(field & picture & multiple)
+rule type(field, picture, multiple)
     Image(format=airBottom imageMultipleStyle) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly
-end
 
-def type(field & picture)
+rule type(field, picture)
     Image(format=airBottom, allowFullscreen=true) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)
-end
 
-def type(field & check)
+rule type(field, check)
     Selector(format=airBottom) $name+firstLowerCase as CheckBox(layout=Vertical) Labeled("$label") Readonly
-end
 
-def type(field & link & multiple)
+rule type(field, link, multiple)
     Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, multipleSelection=true, placeholder="Seleccione un valor") Labeled("$label") Readonly
     Link(title="") $name+firstLowerCase~Trigger as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
-end
 
-def type(field & link)
+rule type(field, link)
     Block(layout=Horizontal Flexible Center)
         Block(layout=Vertical Flexible) > Selector(format=airBottom) $name+firstLowerCase as CollectionBox(source=$index+firstUpperCase~$indexView+firstUpperCase~Table, placeholder="Seleccione un valor") Labeled("$label") Readonly
         Link(title="Abrir", format=airTop airLeft) open~$name+firstUpperCase as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
-end
 
-def type(field & select & multiple)
+rule type(field, select, multiple)
     Selector(format=airBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor", multipleSelection=true) Labeled("$label") Readonly
-end
 
-def type(field & select & inline)
+rule type(field, select, inline)
     Selector(format=airBottom) $name+firstLowerCase as ListBox Labeled("$label") Readonly
-end
 
-def type(field & select)
+rule type(field, select)
     Selector(format=airBottom) $name+firstLowerCase as ComboBox(placeholder="Seleccione un valor") Labeled("$label") Readonly
-end
 
-def type(field & composite & multiple)
+rule type(field, composite, multiple)
     TemplateStamp(format=airBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos", collapsed=true) Editable Labeled("$label")
-end
 
-def type(field & composite)
+rule type(field, composite)
     TemplateStamp(format=airBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase
-end
 
-def type(field & node & multiple)
+rule type(field, node, multiple)
     OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
-end
 
-def type(field & node)
+rule type(field, node)
     OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
-end
 
-def type(compositeView)
+rule type(compositeView)
     Template(format=compositeFieldStyle) $definition+firstUpperCase~$name+firstUpperCase~Template
         Text(format=h5 airBottom, value="$label")
         $show
-end

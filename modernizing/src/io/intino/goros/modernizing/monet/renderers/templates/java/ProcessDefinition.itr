@@ -1,4 +1,4 @@
-def type(process & embedded)
+rule type(process, embedded)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -134,7 +134,7 @@ def type(process & embedded)
 
         private void initViews() {
             stateView.onShow(e -> refreshStateView());
-            [$view+initCall...[$NL]]
+            <<$view+initCall...[$NL]>>
         }
 
         private void refreshToolbar() {
@@ -151,7 +151,7 @@ def type(process & embedded)
 
         private void refreshView() {
             if (stateView.isVisible()) viewSelector.select("state");
-            [$view+refreshCall...[$NL]]
+            <<$view+refreshCall...[$NL]>>
         }
 
         private void refreshStateView() {
@@ -162,10 +162,10 @@ def type(process & embedded)
             stateView.stateViewStamp.refresh();
         }
 
-        [$view+refreshViewMethod...[$NL]]
+        <<$view+refreshViewMethod...[$NL]>>
 
         private void refreshSelector() {
-            [$view+refreshSelectorCall...[$NL]]
+            <<$view+refreshSelectorCall...[$NL]>>
         }
 
         private void setupOpenInstance(Node<?> node) {
@@ -202,9 +202,8 @@ def type(process & embedded)
             showCollectionListener.accept(task);
         }
     }
-end
 
-def type(process & stateview)
+rule type(process, stateview)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -248,7 +247,7 @@ def type(process & stateview)
 
         @Override
         public io.intino.alexandria.ui.displays.Display displayFor(Node node, String view) {
-            [$display...[$NL]]
+            <<$display...[$NL]>>
             if (node.getDefinition().getCode().equals(TaskOrderDefinition.CODE)) {
                 TaskOrderTemplate result = new TaskOrderTemplate(box().unit());
                 result.node(node);
@@ -264,9 +263,8 @@ def type(process & stateview)
             template.embedded(true);
         }
     }
-end
 
-def type(process & view & target)
+rule type(process, view, target)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -302,7 +300,7 @@ def type(process & view & target)
         @Override
         public void init() {
             super.init();
-            [$show+initCall...[$NL]]
+            <<$show+initCall...[$NL]>>
         }
 
         @Override
@@ -314,17 +312,16 @@ def type(process & view & target)
 
         private void refreshView() {
             org.monet.space.kernel.model.Node node = task.getTarget();
-            [$show+hideCall...[$NL]]
+            <<$show+hideCall...[$NL]>>
             if (node == null) return;
             org.monet.metamodel.NodeDefinition definition = node.getDefinition();
-            [$show+showCall...[$NL]]
+            <<$show+showCall...[$NL]>>
         }
 
-        [$show...[$NL]]
+        <<$show...[$NL]>>
     }
-end
 
-def type(process & view & shortcut)
+rule type(process, view, shortcut)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -360,7 +357,7 @@ def type(process & view & shortcut)
         @Override
         public void init() {
             super.init();
-            [$show+initCall...[$NL]]
+            <<$show+initCall...[$NL]>>
         }
 
         @Override
@@ -372,17 +369,16 @@ def type(process & view & shortcut)
 
         private void refreshView() {
             org.monet.space.kernel.model.Node node = task.getShortcutInstance("$shortcut");
-            [$show+hideCall...[$NL]]
+            <<$show+hideCall...[$NL]>>
             if (node == null) return;
             org.monet.metamodel.NodeDefinition definition = node.getDefinition();
-            [$show+showCall...[$NL]]
+            <<$show+showCall...[$NL]>>
         }
 
-        [$show...[$NL]]
+        <<$show...[$NL]>>
     }
-end
 
-def type(process)
+rule type(process)
     package $package.$module+lowerCase.box.ui.displays.templates;
 
     import $package.$module+lowerCase.box.$boxName+firstUpperCase~Box;
@@ -437,36 +433,30 @@ def type(process)
             if (content.selectedView() == null) content.selectDefaultView();
         }
     }
-end
 
-def type(display)
+rule type(display)
     if (node.getDefinition().getCode().equals("$code") && (view == null || view.equals("$viewCode"))) {
         $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate result = new $package.$module+lowerCase.box.ui.displays.templates.$name+firstUpperCase~$viewName+firstUpperCase~ViewTemplate(box());
         result.node(node);
         result.readonly(false);
         return result;
     }
-end
 
-def type(view) trigger(initCall)
+rule type(view) and trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View());
-end
 
-def type(view) trigger(refreshCall)
+rule type(view) and trigger(refreshCall)
     if ($name+firstLowerCase~View.isVisible()) viewSelector.select("$name+firstLowerCase");
-end
 
-def type(view & shortcut) trigger(refreshSelectorCall)
+rule type(view, shortcut) and trigger(refreshSelectorCall)
     if (task.getShortcutInstance("$shortcut") != null) viewSelector.showOption("$name+firstLowerCase");
     else viewSelector.hideOption("$name+firstLowerCase");
-end
 
-def type(view & target) trigger(refreshSelectorCall)
+rule type(view, target) and trigger(refreshSelectorCall)
     if (task.getTarget() != null) viewSelector.showOption("$name+firstLowerCase");
     else viewSelector.hideOption("$name+firstLowerCase");
-end
 
-def type(view & shortcut) trigger(refreshViewMethod)
+rule type(view, shortcut) and trigger(refreshViewMethod)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         setupOpenInstance(task.getShortcutInstance("$shortcut"));
@@ -474,9 +464,8 @@ def type(view & shortcut) trigger(refreshViewMethod)
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(true);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
-end
 
-def type(view) trigger(refreshViewMethod)
+rule type(view) and trigger(refreshViewMethod)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         setupOpenInstance(task.getTarget());
@@ -484,34 +473,28 @@ def type(view) trigger(refreshViewMethod)
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.readonly(true);
         $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh();
     }
-end
 
-def type(view & shortcut) trigger(refreshView)
+rule type(view, shortcut) and trigger(refreshView)
     private void refresh$name+firstUpperCase~View() {
         if (task == null) return;
         org.monet.space.kernel.model.Node node = task.getShortcutInstance("$shortcut");
         if (node == null) return;
         org.monet.metamodel.NodeDefinition definition = node.getDefinition();
-        [$show...[$NL]]
+        <<$show...[$NL]>>
     }
-end
 
-def type(view & shortcut)
-end
+rule type(view, shortcut)
 
-def type(show) trigger(initCall)
+rule type(show) and trigger(initCall)
     $definitionName+firstLowerCase$viewName+firstUpperCase~Block.onShow(e -> refresh$definitionName+firstUpperCaseCase$viewName+firstUpperCase());
-end
 
-def type(show) trigger(hideCall)
+rule type(show) and trigger(hideCall)
     $definitionName+firstLowerCase$viewName+firstUpperCase~Block.hide();
-end
 
-def type(show) trigger(showCall)
+rule type(show) and trigger(showCall)
     if (definition.getCode().equals("$definitionCode")) $definitionName+firstLowerCase$viewName+firstUpperCase~Block.show();
-end
 
-def type(show & shortcut)
+rule type(show, shortcut)
     private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
         Node<?> node = task.getShortcutInstance("$shortcut");
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(node);
@@ -521,9 +504,8 @@ def type(show & shortcut)
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
     }
-end
 
-def type(show)
+rule type(show)
     private void refresh$definitionName+firstUpperCase$viewName+firstUpperCase() {
         Node<?> node = task.getTarget();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.node(node);
@@ -533,8 +515,6 @@ def type(show)
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.show();
         $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.refresh();
     }
-end
 
-def type(showContain)
+rule type(showContain)
     $definitionName+firstLowerCase$viewName+firstUpperCase~Block.$definitionName+firstLowerCase$viewName+firstUpperCase~Stamp.contain(io.intino.goros.unit.util.LayerHelper.nodeLayer().loadNode(io.intino.goros.unit.util.NodeHelper.getContainerContain(node,"$containDefinitionCode")));
-end

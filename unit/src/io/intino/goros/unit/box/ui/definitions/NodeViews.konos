@@ -71,7 +71,7 @@ Template(layout=Vertical Flexible, format=relative) nodeDocumentTemplate as Rela
 
 	Dialog(title="Modify document") editDocumentDialog as Relative(width=60%, height=60%)
 		Block as Relative(height=100%, offsetHeight=50px)
-			Stepper(position=Top) stepper
+			Wizard(position=Top) stepper
 				Step downloadStep as Labeled("Download document")
 					Block(layout=Vertical CenterCenter) as Relative(height=100%)
 						Text(value="Download document to edit it in your computer.", translate=true)

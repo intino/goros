@@ -21,7 +21,7 @@ public class PostSaveNodeFileAction extends BackServiceAction {
     Map<String, Object> parameters() {
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put(Parameter.NAME, name);
-        paramMap.put(Parameter.DATA, data.stream());
+        paramMap.put(Parameter.DATA, streamOf(data));
         return paramMap;
     }
 }

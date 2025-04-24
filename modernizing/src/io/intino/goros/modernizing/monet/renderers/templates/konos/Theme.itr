@@ -1,8 +1,8 @@
-def type(theme)
+rule type(theme)
     dsl Konos
 
     Theme
-        type = Normal
+        type = Light
 
         Typography
             fontSize = 11px
@@ -104,4 +104,3 @@ def type(theme)
     Format("background:'#FFC46A',padding:'1px 10px',borderRadius:'3px',fontSize:'7pt'") prototypeAdviseStyle
     Format("padding:'20px'") rolesDateDialog
     Format("width:'50%'") imageMultipleStyle
-end

@@ -1,5 +1,6 @@
 package io.intino.goros.unit.box.ui.displays.templates;
 
+import io.intino.alexandria.ui.displays.events.AddCollectionItemEvent;
 import io.intino.alexandria.ui.displays.events.AddItemEvent;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.NewsDatasource;
@@ -28,7 +29,7 @@ public class NewsTemplate extends AbstractNewsTemplate<UnitBox> {
         newsList.reload();
     }
 
-    private void refreshPost(AddItemEvent event) {
+    private void refreshPost(AddCollectionItemEvent event) {
         Post post = event.item();
         NewsListItem item = event.component();
         item.type.value(translate(typeOf(post).label()));

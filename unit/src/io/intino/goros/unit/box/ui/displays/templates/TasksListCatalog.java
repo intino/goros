@@ -48,7 +48,7 @@ public class TasksListCatalog extends AbstractTasksListCatalog<UnitBox> {
         taskComments.onOpen(e -> refreshTaskComments());
     }
 
-    private void refreshTask(io.intino.alexandria.ui.displays.events.AddItemEvent event) {
+    private void refreshTask(io.intino.alexandria.ui.displays.events.AddCollectionItemEvent event) {
         refreshTask(event.item(), event.component());
     }
 

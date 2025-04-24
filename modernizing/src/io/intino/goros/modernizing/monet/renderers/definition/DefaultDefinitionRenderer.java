@@ -5,7 +5,7 @@ import io.intino.goros.modernizing.monet.Dictionary;
 import io.intino.goros.modernizing.monet.renderers.templates.konos.DefaultTemplate;
 import io.intino.goros.modernizing.monet.renderers.DefinitionRenderer;
 import io.intino.itrules.FrameBuilder;
-import io.intino.itrules.Template;
+import io.intino.itrules.template.Template;
 import org.monet.metamodel.Definition;
 
 public class DefaultDefinitionRenderer extends DefinitionRenderer<Definition> {

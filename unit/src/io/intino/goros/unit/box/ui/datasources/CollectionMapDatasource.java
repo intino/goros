@@ -69,15 +69,17 @@ public class CollectionMapDatasource extends MapDatasource<String> {
         return groups.stream().map(o -> new Group().label(o)).collect(toList());
     }
 
-    public static PlaceMark<String> placeMarkOf(Node node) {
+    @SuppressWarnings("unchecked")
+	public static PlaceMark<String> placeMarkOf(Node node) {
         String location = locationOf(node);
-        PlaceMark<String> placeMark = PlaceMark.build(node.getLabel(), location);
+        PlaceMark<String> placeMark = (PlaceMark<String>) PlaceMark.build(node.getLabel(), location);
         placeMark.item(node.getId());
         return placeMark;
     }
 
-    public static PlaceMark<String> placeMarkOf(Location location) {
-        PlaceMark<String> placeMark = PlaceMark.build(location.getLabel(), wktOf(location));
+    @SuppressWarnings("unchecked")
+	public static PlaceMark<String> placeMarkOf(Location location) {
+        PlaceMark<String> placeMark = (PlaceMark<String>) PlaceMark.build(location.getLabel(), wktOf(location));
         placeMark.item(location.getNodeId());
         return placeMark;
     }

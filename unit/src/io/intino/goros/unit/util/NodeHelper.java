@@ -9,8 +9,8 @@ import io.intino.alexandria.ui.displays.components.Actionable;
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
 import io.intino.alexandria.ui.model.datasource.filters.RangeFilter;
+import io.intino.alexandria.ui.server.UIFile;
 import io.intino.alexandria.ui.services.push.UISession;
-import io.intino.alexandria.ui.spark.UIFile;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.FieldSelectDatasource;
 import io.intino.goros.unit.box.ui.datasources.model.Column;
@@ -39,8 +39,8 @@ import org.monet.space.kernel.utils.MimeTypes;
 import org.monet.space.kernel.utils.StreamHelper;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.Dimension;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
@@ -55,8 +55,8 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -517,22 +517,25 @@ public class NodeHelper {
 
     public static Picture pictureOf(Resource value, int width, int height) {
         if (value == null) return null;
-        InputStream sourceStream = value.stream();
+        InputStream sourceStream = null;
+        String name = withStamp(value.name());
         try {
+            sourceStream = value.stream();
             String contentType = value.metadata().contentType();
             BufferedImage image = imageOf(sourceStream);
-            ComponentDocuments.getInstance().uploadImage(value.name(), image == null || isSmaller(image, width, height) ? streamOf(image, value.metadata().contentType()) : reduce(image, value.metadata().contentType(), width, height), contentType, width, height);
+            ComponentDocuments.getInstance().uploadImage(name, image == null || isSmaller(image, width, height) ? streamOf(image, value.metadata().contentType()) : reduce(image, value.metadata().contentType(), width, height), contentType, width, height);
         } catch (Exception e) {
             Logger.error(e);
         } finally {
-            StreamHelper.close(sourceStream);
+            if (sourceStream != null) StreamHelper.close(sourceStream);
         }
-        return new Picture(value.name());
-    }
+        return new Picture(name);
+	}
 
     public static Picture pictureOf(Resource value) {
         if (value == null) return null;
-        return Picture.fromInputStream(value.name(), value.metadata().contentType(), value.stream());
+        String name = withStamp(value.name());
+        return Picture.fromInputStream(name, value.metadata().contentType(), ResourceHelper.streamOf(value));
     }
 
     public static Link linkOf(Node node, String attribute) {
@@ -576,8 +579,13 @@ public class NodeHelper {
     }
 
     public static File fileOf(Resource resource) {
-        return resource != null ? File.fromInputStream(resource.name(), resource.metadata().contentType(), resource.stream()) : null;
-    }
+        try {
+            return resource != null ? File.fromInputStream(withStamp(resource.name()), resource.metadata().contentType(), resource.stream()) : null;
+        } catch (IOException e) {
+			Logger.error(e);
+            return null;
+		}
+	}
 
     public static io.intino.alexandria.ui.File alexandriaFileOf(FieldFile file) {
         return alexandriaFileOf(file.get());
@@ -864,6 +872,14 @@ public class NodeHelper {
             this.width = width;
             this.height = height;
         }
+    }
+
+    private static String withStamp(String name) {
+        return stamp() + "-" + name;
+    }
+
+    private static String stamp() {
+        return Long.toString(System.currentTimeMillis() / 1000);
     }
 
 }

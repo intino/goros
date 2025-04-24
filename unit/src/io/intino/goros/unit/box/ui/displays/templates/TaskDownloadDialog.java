@@ -3,7 +3,7 @@ package io.intino.goros.unit.box.ui.displays.templates;
 import io.intino.alexandria.ui.displays.UserMessage;
 import io.intino.alexandria.ui.model.datasource.Filter;
 import io.intino.alexandria.ui.model.datasource.filters.GroupFilter;
-import io.intino.alexandria.ui.spark.UIFile;
+import io.intino.alexandria.ui.server.UIFile;
 import io.intino.goros.unit.box.UnitBox;
 import io.intino.goros.unit.box.ui.datasources.model.Column;
 import io.intino.goros.unit.box.ui.datasources.model.task.TaskFolderGrouping;

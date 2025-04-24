@@ -1,10 +1,10 @@
-def type(process)
+rule type(process)
     dsl Konos
 
     use UI
     use Theme
-    [$view+use...[$NL]]
-    [$display+use...[$NL]]
+    <<$view+use...[$NL]>>
+    <<$display+use...[$NL]>>
 
     Template(layout=Vertical Flexible, format=smallAir) $name+firstUpperCase~Template
         Block(layout=Horizontal, format=headerSpaced) header
@@ -36,52 +36,42 @@ def type(process)
             Block(layout=Vertical) headerToolbar as Relative(width=100%, offsetWidth=40px)
                 Selector viewSelector as Tabs(scrollButtons=Auto)
                     Text(value="Estado") state as Option
-                    [$view+declaration...[$NL]]
+                    <<$view+declaration...[$NL]>>
             Block(layout=Horizontal EndJustified Center)
                 MaterialIconButton(title="Abrir", icon="ZoomOutMap", size=Small, visible=false) openInstance as OpenLayer Addressable($module+firstUpperCase~Elements.instance)
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)
             Block(layout=Vertical Flexible) stateView as Conditional(header.headerToolbar.viewSelector.state) Relative(height=100%) > TemplateStamp(template=$name+firstUpperCase~StateViewTemplate) stateViewStamp
-            [$view+page...[$NL]]
+            <<$view+page...[$NL]>>
 
     Template(format=spaced) $name+firstUpperCase~StateViewTemplate as Relative(height=100%)
         Block as Conditional
-            [$display...[$NL]]
+            <<$display...[$NL]>>
         OwnerTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
 
-    [$view...[$NL]]
-end
+    <<$view...[$NL]>>
 
-def type(display) trigger(use)
+rule type(display) and trigger(use)
     use $name+firstUpperCase
-end
 
-def type(display)
+rule type(display)
     TemplateStamp(template=$name+firstUpperCase~$viewName~ViewTemplate)
-end
 
-def type(view) trigger(use)
-   [$show+use...[$NL]]
-end
+rule type(view) and trigger(use)
+   <<$show+use...[$NL]>>
 
-def type(view) trigger(declaration)
+rule type(view) and trigger(declaration)
     Text(value="$label") $name+firstLowerCase as Option
-end
 
-def type(view) trigger(page)
+rule type(view) and trigger(page)
     Block(layout=Vertical Flexible) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > TemplateStamp(template=$definition+firstUpperCase$name+firstUpperCase~ViewTemplate) $name+firstLowerCase~ViewStamp
-end
 
-def type(view)
+rule type(view)
     Template(format=spaced) $definition+firstUpperCase$name+firstUpperCase~ViewTemplate as Relative(height=100%)
-        [$show...[$NL]]
-end
+        <<$show...[$NL]>>
 
-def type(show) trigger(use)
+rule type(show) and trigger(use)
     use $definitionName+firstUpperCase
-end
 
-def type(show)
+rule type(show)
     Block(layout=Vertical Flexible) $definitionName+firstLowerCase$viewName+firstUpperCase~Block as Conditional Relative(height=100%) > TemplateStamp(template=$definitionName+firstUpperCase$viewName+firstUpperCase) $definitionName+firstLowerCase$viewName+firstUpperCase~Stamp
-end
-

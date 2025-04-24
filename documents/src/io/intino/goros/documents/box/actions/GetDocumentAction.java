@@ -6,4 +6,5 @@ public class GetDocumentAction extends DocumentAction {
 	public io.intino.alexandria.Resource execute() throws BadRequest {
 		return super.execute();
 	}
+
 }

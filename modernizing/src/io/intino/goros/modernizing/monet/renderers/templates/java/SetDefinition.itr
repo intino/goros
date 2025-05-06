@@ -194,7 +194,7 @@ rule type(attribute, items, date)
     row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 
 rule type(attribute, items, picture)
-    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+    row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.spaceUrlOf(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true), soul().baseAssetUrl()));
 
 rule type(attribute, items)
     row.$shortName+firstLowerCase~Item.$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.valueOf($reference, "$code"));
@@ -203,10 +203,10 @@ rule type(attribute, date)
     <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.instantOf($reference, "$code"));
 
 rule type(attribute, icon)
-    <<$scope~.>>$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+    <<$scope~.>>$name+firstLowerCase.icon(io.intino.goros.unit.util.NodeHelper.spaceUrlOf(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true), soul().baseAssetUrl()));
 
 rule type(attribute, picture)
-    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true));
+    <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.spaceUrlOf(io.intino.goros.unit.util.NodeHelper.urlOf($reference, "$code", true), soul().baseAssetUrl()));
 
 rule type(attribute, real)
     <<$scope~.>>$name+firstLowerCase.value(io.intino.goros.unit.util.NodeHelper.numberOf($reference, "$code"));

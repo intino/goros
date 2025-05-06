@@ -6,10 +6,10 @@ Service frontService as REST(host = "", port = "{port}")
 
 	Authentication as Custom
 
-	Resource("/source/:source-name/") source
+	Resource("/source/:source/") source
 		Post(description = "Executes an action and returns the result")
 			Parameter (in=query) action as Text
-			Parameter (in=path) source-name as Text
+			Parameter (in=path) source as Text
 			Parameter (in=query) mode as Text
 			Parameter (in=query) flatten as Text
 			Parameter (in=query) depth as Text
@@ -30,9 +30,9 @@ Service frontService as REST(host = "", port = "{port}")
 			Parameter (in=query) message-hash as Text
 			Response as Text
 
-	Resource("/business/:service-name/") business
+	Resource("/business/:service/") business
 		Post(description = "Receives tasks from another business unit")
-			Parameter (in=path) service-name as Text
+			Parameter (in=path) service as Text
 			Parameter (in=query) source-unit as Text
 			Parameter (in=query) reply-mailbox as Text
 			Parameter (in=query) start-date as Text

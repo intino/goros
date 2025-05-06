@@ -10,10 +10,10 @@ import java.util.Map;
 
 
 public class PostBusinessAction extends FrontServiceAction {
+	public String service;
 	public UnitBox box;
 	public String replyMailbox;
 	public String sourceUnit;
-	public String serviceName;
 	public String startDate;
 	public String endDate;
 	public String comments;
@@ -27,7 +27,7 @@ public class PostBusinessAction extends FrontServiceAction {
 	Map<String, Object> parameters() {
 		HashMap<String, Object> paramMap = new HashMap<>();
 		if (sourceUnit != null) paramMap.put(Parameter.SOURCE_UNIT, sourceUnit);
-		if (serviceName != null) paramMap.put(Parameter.SERVICE_NAME, serviceName);
+		if (service != null) paramMap.put(Parameter.SERVICE_NAME, service);
 		if (replyMailbox != null) paramMap.put(Parameter.REPLY_MAILBOX, replyMailbox);
 		if (startDate != null) paramMap.put(Parameter.START_DATE, startDate);
 		if (endDate != null) paramMap.put(Parameter.END_DATE, endDate);

@@ -93,7 +93,7 @@ rule type(field, file)
     File(format=airBottom) $name+firstLowerCase as Editable(showDropZone=true) Labeled("$label") Readonly
 
 rule type(field, picture, multiple)
-    Image(format=airBottom imageMultipleStyle) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly
+    Image(format=airBottom imageMultipleStyle, allowFullscreen=true) $name+firstLowerCase as Editable(showPreview=true) Multiple(noItemsMessage="No hay imágenes") Labeled("$label") Readonly
 
 rule type(field, picture)
     Image(format=airBottom, allowFullscreen=true) $name+firstLowerCase as Editable(showPreview=true) Labeled("$label") Readonly Absolute(width=150px,height=150px)

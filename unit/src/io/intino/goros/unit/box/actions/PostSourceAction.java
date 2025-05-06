@@ -9,7 +9,8 @@ import java.util.Map;
 
 
 public class PostSourceAction extends FrontServiceAction {
-    public UnitBox box;
+	public String source;
+	public UnitBox box;
     public String count;
     public String startPos;
     public String searchText;
@@ -18,7 +19,6 @@ public class PostSourceAction extends FrontServiceAction {
     public String depth;
     public String flatten;
     public String mode;
-    public String sourceName;
     public String action;
 
     public java.lang.String execute() {
@@ -28,7 +28,7 @@ public class PostSourceAction extends FrontServiceAction {
     @Override
     Map<String, Object> parameters() {
         HashMap<String, Object> paramMap = new HashMap<>();
-        if (sourceName != null) paramMap.put(AgentRestfullClient.RequestParameter.SOURCE_NAME, sourceName);
+        if (source != null) paramMap.put(AgentRestfullClient.RequestParameter.SOURCE_NAME, source);
         if (action != null) paramMap.put(AgentRestfullClient.RequestParameter.ACTION, action);
         if (startPos != null) paramMap.put(AgentRestfullClient.RequestParameter.START_POS, startPos);
         if (count != null) paramMap.put(AgentRestfullClient.RequestParameter.COUNT, count);

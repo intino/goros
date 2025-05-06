@@ -2,6 +2,7 @@ package io.intino.goros.unit.util;
 
 import io.intino.alexandria.Resource;
 import io.intino.alexandria.logger.Logger;
+import io.intino.alexandria.ui.Asset;
 import io.intino.alexandria.ui.Soul;
 import io.intino.alexandria.ui.displays.DisplayRouteDispatcher;
 import io.intino.alexandria.ui.displays.UserMessage;
@@ -446,6 +447,11 @@ public class NodeHelper {
 
     public static URL urlOf(FieldPicture field) {
         return urlOf(field.get(), false);
+    }
+
+    public static URL spaceUrlOf(URL url, URL baseUrl) {
+        if (url == null) return null;
+        return Asset.toResource(baseUrl, url).toUrl();
     }
 
     public static URL urlOf(Picture picture, boolean preview) {

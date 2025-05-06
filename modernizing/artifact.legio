@@ -12,7 +12,7 @@ Artifact(groupId = "io.intino.goros.modernizing", version = "2.1.0") monet
         Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("commons-io", "commons-io", "2.7")
 
-		Test(groupId = "junit", artifactId = "junit", version = "LATEST")
+		Test("junit", "junit", "4.13.1")
 
 	Package(mode = ModulesAndLibrariesExtracted) as Runnable("io.intino.goros.modernizing.Main")
 

@@ -24,9 +24,9 @@ rule type(ui)
 
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
-            Block(layout=Horizontal EndJustified Center) as Absolute(height=74px)
-                MaterialIconButton(title="open menu", icon="ChevronRight", format=airMenuRight) as OpenDrawer(drawer=drawer)
-                MaterialIconButton(title="minimize", icon="ChevronLeft", format=airMenuRight) as CloseDrawer(drawer=drawer)
+            Block(layout=Horizontal EndJustified Center) as Absolute(height=49px)
+                MaterialIconButton(title="open menu", icon="ChevronRight", format=airMenuRight smallAirTop) as OpenDrawer(drawer=drawer)
+                MaterialIconButton(title="minimize", icon="ChevronLeft", format=airMenuRight smallAirTop) as CloseDrawer(drawer=drawer)
             Divider
             <<$definition+declaration...[$NL]>>
             Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Link(title="Cuadro de mando") as Action Addressable($module+firstUpperCase~Elements.singleton)
@@ -38,7 +38,7 @@ rule type(ui)
             Block(layout=Horizontal Center, visible=false) trash > MaterialIconButton(title="Papelera", icon="Delete", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.trash); Link(title="Papelera") as Action Addressable($module+firstUpperCase~Elements.trash)
 
         Block(layout=Vertical Flexible)
-            Header(color="white", elevation=0, format=spaced bottomBordered) header as Absolute(height=80px)
+            Header(color="white", elevation=0, format=headerStyle) header as Absolute(height=55px)
                 TemplateStamp(template=HeaderTemplate)
 
             Block(layout=Vertical Flexible CenterCenter) loading > Spinner(format=secondary)
@@ -65,7 +65,7 @@ rule type(ui)
         Block(layout=Horizontal Flexible Center)
             Block(format=relative)
                 Link(title="", format=homeLink) as Action Addressable($module+firstUpperCase~Elements.home)
-                Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=60px)
+                Image(value="images/logo.png", format=minLogoSize) logo as Absolute(height=40px)
             Block
                 Text(format=h3 bold) title
                 Text(format=body2) subtitle

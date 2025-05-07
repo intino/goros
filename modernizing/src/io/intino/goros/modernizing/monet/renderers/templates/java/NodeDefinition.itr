@@ -100,11 +100,11 @@ rule type(nodedefinition, embedded)
 
         private void refreshViewsVisibility() {
             String selectedView = selectedView();
-            <<$view+refreshVisibilityCall...[$NL]>>
+            <<$view+refreshVisibilityCall...[$NL]~>>
         }
 
         private void refreshView() {
-            <<$view+refreshCall...[$NL]>>
+            <<$view+refreshCall...[$NL]~>>
         }
 
         private void initToolbar() {
@@ -118,10 +118,10 @@ rule type(nodedefinition, embedded)
         }
 
         private void initViews() {
-            <<$view+initCall...[$NL]>>
+            <<$view+initCall...[$NL]~>>
         }
 
-        <<$view+refreshMethod...[$NL]>>
+        <<$view+refreshMethod...[$NL]~>>
 
         private Node locateNode() {
             Node node = this.node;
@@ -155,6 +155,24 @@ rule type(nodedefinition, embedded)
             AppTemplate template = new AppTemplate(box());
             layer.template(template);
             template.embedded(true);
+        }
+
+        private java.util.function.Consumer<org.monet.space.kernel.model.ClientOperation> dispatchOperationListener() {
+            if (dispatchOperationListener != null) return dispatchOperationListener;
+            return operation -> {
+                if (operation == null) {
+                    refreshView();
+                    return;
+                }
+                String name = operation.getName().toLowerCase();
+                if (!name.equals("shownodeview")) return;
+                String id = operation.getData().get("Id").toString();
+                if (!node.getId().equals(id)) return;
+                String view = operation.getData().get("IdView").toString();
+                String mode = operation.getData().get("Mode") != null ? operation.getData().get("Mode").toString() : null;
+                boolean readonly = mode == null || !mode.contains("edit.html");
+                openView(view, readonly);
+            };
         }
 
         <<$toolbar+editableMethods>>
@@ -263,7 +281,7 @@ rule type(nodedefinition)
 
 rule type(toolbar, singleton) and trigger(editableInitCall)
     <<$operationsGroup+editableInitCall>>
-    <<$operation+editableInitCall...[$NL]>>
+    <<$operation+editableInitCall...[$NL]~>>
 
 rule type(toolbar, collectable) and trigger(navigableInitCall)
     showCollectionBack.onExecute(e -> notifyShowCollection());
@@ -271,7 +289,7 @@ rule type(toolbar, collectable) and trigger(navigableInitCall)
 
 rule type(toolbar, singleton) and trigger(editableRefreshCall)
     <<$operationsGroup+editableRefreshCall>>
-    <<$operation+editableRefreshCall...[$NL]>>
+    <<$operation+editableRefreshCall...[$NL]~>>
 
 rule type(toolbar, singleton) and trigger(editableEvents)
     public $definition+firstUpperCase~EmbeddedTemplate onFinishEdition(java.util.function.Consumer<Node> listener) {
@@ -316,12 +334,12 @@ rule type(toolbar) and trigger(editableDeclaration)
 
 rule type(toolbar) and trigger(editableInitCall)
     <<$operationsGroup+editableInitCall>>
-    <<$operation+editableInitCall...[$NL]>>
+    <<$operation+editableInitCall...[$NL]~>>
     remove.onExecute(e -> removeNode());
 
 rule type(toolbar) and trigger(editableRefreshCall)
     <<$operationsGroup+editableRefreshCall>>
-    <<$operation+editableRefreshCall...[$NL]>>
+    <<$operation+editableRefreshCall...[$NL]~>>
     remove.visible(!readonly && node.isEditable() && !node.isLocked() && !node.isSingleton() && !node.getDefinition().isReadonly() && !io.intino.goros.unit.util.NodeHelper.isEnvironment(node));
 
 rule type(toolbar) and trigger(editableCall)
@@ -388,12 +406,12 @@ rule type(toolbar) and trigger(navigableMethods)
 rule type(operationsGroup) and trigger(editableMethods)
     private List<String> operacionesOptions() {
         java.util.List<String> result = new java.util.ArrayList<>();
-        <<$operation+operacionesOptionsMethodCall...[$NL]>>
+        <<$operation+operacionesOptionsMethodCall...[$NL]~>>
         return result;
     }
 
     private void executeOperation(String option) {
-        <<$operation+executeMethodCall...[$NL]>>
+        <<$operation+executeMethodCall...[$NL]~>>
     }
 
 rule type(operationsGroup) and trigger(editableInitCall)
@@ -403,7 +421,7 @@ rule type(operation) and trigger(operacionesOptionsMethodCall)
     if (io.intino.goros.unit.util.AccountHelper.hasRoles(io.intino.goros.unit.util.NodeHelper.operation(node, "$name"), session()) && !node.isPrototype()) result.add("$label");
 
 rule type(operation) and trigger(executeMethodCall)
-    if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), dispatchOperationListener);
+    if (option.equals("$label")) io.intino.goros.unit.util.NodeHelper.executeOperation(session(), operaciones, node, "$name", translate("Operation executed"), dispatchOperationListener());
 
 rule type(operation, download) and trigger(editableInitCall)
     $name+lowerCase.onExecute(e -> io.intino.goros.unit.util.NodeHelper.downloadOperation($name+lowerCase, node, "$name"));
@@ -430,7 +448,7 @@ rule type (dispatchOperationListener, singleton)
     box().routeManager().routeDispatcher()
 
 rule type (dispatchOperationListener)
-    dispatchOperationListener
+    dispatchOperationListener()
 
 rule type(nodeview, visibleWhenEmbedded) and trigger(initCall)
 
@@ -565,7 +583,7 @@ rule type(show, recenttask)
 	}
 
 	private void initViews() {
-	    <<$tasktype+initCall...[$NL]>>
+	    <<$tasktype+initCall...[$NL]~>>
 	}
 
 	@Override
@@ -591,14 +609,14 @@ rule type(show, recenttask)
 	    hideViews();
 	    if (task == null) return;
 	    String code = task.getCode();
-	    <<$tasktype+showCall...[$NL]>>
+	    <<$tasktype+showCall...[$NL]~>>
 	}
 
 	private void hideViews() {
-        <<$tasktype+hideCall...[$NL]>>
+        <<$tasktype+hideCall...[$NL]~>>
 	}
 
-    <<$tasktype+refreshMethod...[$NL]>>
+    <<$tasktype+refreshMethod...[$NL]~>>
 
 rule type(tasktype) and trigger(initCall)
     $name+firstLowerCase~View.onShow(e -> refresh$name+firstUpperCase~View(task));
@@ -656,6 +674,7 @@ rule type(show, location)
 
 rule type(desktop)
     desktopLink.address(path -> path.replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit"));
+    desktopLink.onExecute(e -> notifier.dispatch(desktopLink.path().replace(":name", "$name+lowerCase").replace(":mode", readonly ? "default" : "edit")));
 
 rule type(parent) and trigger(refresh)
     parentLink.address(path -> path.replace(":name", io.intino.goros.unit.util.NodeHelper.nameOf(node.getParent())).replace(":mode", readonly ? "default" : "edit"));

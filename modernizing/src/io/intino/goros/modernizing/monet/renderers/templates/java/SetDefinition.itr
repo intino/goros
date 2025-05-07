@@ -733,7 +733,7 @@ rule type(setdefinition, embedded)
             String id = operation.getData().get("Id").toString();
             Node<?> target = (name.equals("shownode") || name.equals("shownodeview")) ? LayerHelper.nodeLayer().loadNode(id) : null;
             if (target != null && target.getParent() == node) {
-                refreshView();
+                //refreshView();
                 open(target);
             }
             else {

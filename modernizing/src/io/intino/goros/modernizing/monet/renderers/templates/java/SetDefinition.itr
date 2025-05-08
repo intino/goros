@@ -13,7 +13,7 @@ rule type(show) and trigger(hideToolbar)
 
 rule type(show, index, locations)
     public void addAndSelect(Node node) {
-        $definition+firstLowerCase~$view+firstUpperCase.insert(node, 0);
+        $definition+firstLowerCase~$view+firstUpperCase.insert($datasourceAddType, 0);
         select(node);
     }
 
@@ -60,7 +60,7 @@ rule type(show, index, locations)
 
 rule type(show, index)
     public void addAndSelect(Node node) {
-        $definition+firstLowerCase~$view+firstUpperCase.insert(node, 0);
+        $definition+firstLowerCase~$view+firstUpperCase.insert($datasourceAddType, 0);
         select(node);
     }
 
@@ -122,7 +122,7 @@ rule type(show, index)
 
 rule type(show)
     public void addAndSelect(Node node) {
-        $definition+firstLowerCase~$view+firstUpperCase.insert(node, 0);
+        $definition+firstLowerCase~$view+firstUpperCase.insert($datasourceAddType, 0);
         select(node);
     }
 

@@ -1261,9 +1261,9 @@ rule type(toolbar, singleton) and trigger(selectedViewCode)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
+        addAndSelect(result);
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
-        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1290,9 +1290,9 @@ rule type(toolbar, singleton) and trigger(editableMethods)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
+        addAndSelect(result);
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
-        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);
@@ -1319,9 +1319,9 @@ rule type(toolbar) and trigger(editableMethods)
         if (result == null) result = copyNode(option);
         if (result == null) return;
         nodeAdded = true;
+        addAndSelect(result);
         open(result);
         if (result.getDefinition().getDefaultView() != null) openChildView(result.getDefinition().getDefaultView().getCode());
-        addAndSelect(result);
     }
     private Node copyNode(String option) {
         Node prototype = this.node.getOwnedPrototypes().get().values().stream().filter(n -> ("Añadir " + n.getLabel()).equals(option)).findFirst().orElse(null);

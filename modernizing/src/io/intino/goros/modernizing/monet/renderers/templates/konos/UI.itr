@@ -49,11 +49,11 @@ rule type(ui)
                 Link(title="Intentar de nuevo", format=airTop) reloadPage as Action
 
             Block(layout=Vertical Flexible, visible=false) dashboardPage as Conditional > TemplateStamp(template=DashboardTemplate) dashboardStamp
-            Block(layout=Vertical Flexible, visible=false) rolesPage as Conditional > OwnerTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
+            Block(layout=Vertical Flexible, visible=false) rolesPage as Conditional > InheritTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
             Block(layout=Vertical Flexible, visible=false) taskTrayPage as Conditional > TemplateStamp(template=TaskTrayTemplate) taskTrayStamp
             Block(layout=Vertical Flexible, visible=false) taskBoardPage as Conditional > TemplateStamp(template=TaskBoardTemplate) taskBoardStamp
-            Block(layout=Vertical Flexible, visible=false) newsPage as Conditional > OwnerTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
-            Block(layout=Vertical Flexible, visible=false) trashPage as Conditional > OwnerTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
+            Block(layout=Vertical Flexible, visible=false) newsPage as Conditional > InheritTemplateStamp(template="NewsTemplate", owner=$module+firstUpperCase~Elements.goros) newsStamp
+            Block(layout=Vertical Flexible, visible=false) trashPage as Conditional > InheritTemplateStamp(template="TrashTemplate", owner=$module+firstUpperCase~Elements.goros) trashStamp
             <<$definition+page...[$NL]>>
 
         Dialog(title="Sesión cerrada") sessionClosedDialog as Modal
@@ -74,7 +74,7 @@ rule type(ui)
             User(mode=OnlyPhoto)
 
             Block(format=air autoOverflow) businessUnitsBlock as Popover Absolute(width=400px, height=300px)
-                OwnerTemplateStamp(template="BusinessUnitsTemplate", owner=$module+firstUpperCase~Elements.goros) businessUnitsStamp
+                InheritTemplateStamp(template="BusinessUnitsTemplate", owner=$module+firstUpperCase~Elements.goros) businessUnitsStamp
 
     Template(layout=Horizontal Flexible) DashboardTemplate
         Text(value="Cuadro Mando")
@@ -108,7 +108,7 @@ rule type(definition) and trigger(declaration)
 rule type(definition, index) and trigger(page)
 
 rule type(definition, source) and trigger(page)
-    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > OwnerTemplateStamp(template="SourceTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~Stamp
+    Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > InheritTemplateStamp(template="SourceTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~Stamp
 
 rule type(definition) and trigger(page)
     Block(layout=Vertical Flexible, visible=false) $name+firstLowerCase~Page as Conditional > TemplateStamp(template=$name+firstUpperCase~Template) $name+firstLowerCase~Stamp

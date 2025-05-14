@@ -6,7 +6,7 @@ rule type(show, fields)
         <<$field...[$NL]>>
 
 rule type(show, location)
-    Block(layout=Vertical Flexible, format=spaced) as Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) locationViewStamp
+    Block(layout=Vertical Flexible, format=spaced) as Relative(height=100%) > InheritTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) locationViewStamp
 
 rule type(show, layout) and trigger(use)
     <<$row+use...[$NL]>>
@@ -126,10 +126,10 @@ rule type(field, composite)
     TemplateStamp(format=airBottom, template=$definition+firstUpperCase~$name+firstUpperCase~Template) $name+firstLowerCase
 
 rule type(field, node, multiple)
-    OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
+    InheritTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase as Multiple(noItemsMessage="No hay elementos") Editable Labeled("$label")
 
 rule type(field, node)
-    OwnerTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
+    InheritTemplateStamp(format=airBottom, template="FieldNodeTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
 
 rule type(compositeView)
     Template(format=compositeFieldStyle) $definition+firstUpperCase~$name+firstUpperCase~Template

@@ -27,7 +27,7 @@ rule type(process)
                     Text(format=bold, visible=false) label
                     Text(format=body2 grey, visible=false) description
             Block(layout=Horizontal Flexible, format=middleAirBottom middleAirTop)
-                Block(layout=Horizontal Flexible) > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+                Block(layout=Horizontal Flexible) > InheritTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
                 Block(layout=Horizontal EndJustified)
                     MaterialIconButton(title="Anterior", icon="KeyboardArrowLeft", size=Small, format=airRight, visible=false) previous as SelectPreviousItem(collection=empty)
                     MaterialIconButton(title="Siguiente", icon="KeyboardArrowRight", size=Small, format=airRight, visible=false) next as SelectNextItem(collection=empty)
@@ -47,7 +47,7 @@ rule type(process)
     Template(format=spaced) $name+firstUpperCase~StateViewTemplate as Relative(height=100%)
         Block as Conditional
             <<$display...[$NL]>>
-        OwnerTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
+        InheritTemplateStamp(template="TaskStateViewTemplate", owner=$module+firstUpperCase~Elements.goros) state
 
     <<$view...[$NL]>>
 

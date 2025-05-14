@@ -36,7 +36,7 @@ rule type(setdefinition)
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=$name+firstUpperCase~EmbeddedTemplate) content
 
         Dialog(title="Descargar...") DownloadDialog as Relative(height=90%, width=60%)
-            OwnerTemplateStamp(template="NodeDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
+            InheritTemplateStamp(template="NodeDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
 
     Template(layout=Vertical Flexible) $name+firstUpperCase~EmbeddedTemplate as Relative(height=100%)
         Link(title="") openLayerTrigger as OpenLayer Addressable(empty)
@@ -147,7 +147,7 @@ rule type(nodeview) and trigger(filterTemplate)
             <<$dimension...[$NL]>>
 
 rule type(dimension)
-    Block(format=doubleAirBottom) > OwnerTemplateStamp(template="$type+firstUpperCase~FilterTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
+    Block(format=doubleAirBottom) > InheritTemplateStamp(template="$type+firstUpperCase~FilterTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase
 
 rule type(nodeview) and trigger(filterTemplate)
     Template(format=fullWidth spaced) $definition+firstUpperCase~$name+firstUpperCase~FiltersTemplate

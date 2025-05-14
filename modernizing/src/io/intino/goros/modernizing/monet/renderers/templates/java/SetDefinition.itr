@@ -653,6 +653,10 @@ rule type(setdefinition, embedded)
         }
 
         private void addAndSelect(Node node) {
+            <<$view+addAndSelectNodeCall...[$NL]>>
+        }
+
+        private void select(Node node) {
             <<$view+selectNodeCall...[$NL]>>
         }
 
@@ -733,7 +737,10 @@ rule type(setdefinition, embedded)
             String id = operation.getData().get("Id").toString();
             Node<?> target = (name.equals("shownode") || name.equals("shownodeview")) ? LayerHelper.nodeLayer().loadNode(id) : null;
             if (target != null && target.getParent() == node) {
-                //refreshView();
+                if (name.equals("shownode")) {
+                    refreshView();
+                    select(target);
+                }
                 open(target);
             }
             else {
@@ -1091,10 +1098,15 @@ rule type(collectionview, sharedprototypes) and trigger(refreshNodeCall)
 rule type(collectionview) and trigger(refreshNodeCall)
     if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.refresh(node);
 
+rule type(collectionview, sharedprototypes) and trigger(addAndSelectNodeCall)
+
+rule type(collectionview) and trigger(addAndSelectNodeCall)
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.addAndSelect(node);
+
 rule type(collectionview, sharedprototypes) and trigger(selectNodeCall)
 
 rule type(collectionview) and trigger(selectNodeCall)
-    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.addAndSelect(node);
+    if ($name+firstLowerCase~View.isVisible()) $name+firstLowerCase~View.$name+firstLowerCase~ViewStamp.select(node);
 
 rule type(collectionview, sharedprototypes) and trigger(selectViewCodeCall)
 

@@ -1,27 +1,27 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "2.1.2") unit
-	Dsl(name="Konos", version="13.3.5") > Builder(generationPackage="box")
+Artifact(groupId = "io.intino.goros", version = "2.1.3") unit
+	Dsl(name="Konos", version="13.4.1") > Builder(generationPackage="box")
 	Code("io.intino.goros.unit")
 
 	Imports
 		Compile("org.siani.monet", "space", "2.1.13")
 			Exclude ("org.siani.monet", "servlet-api")
  		Compile("io.intino.alexandria", "primitives", "1.1.3")
- 		Compile("io.intino.alexandria", "ui-framework", "6.4.6")
+ 		Compile("io.intino.alexandria", "ui-framework", "6.5.5")
 		Compile("io.intino.alexandria", "core-framework", "2.2.2")
-		Compile("io.intino.alexandria", "rest", "4.1.11")
+		Compile("io.intino.alexandria", "rest", "4.2.0")
 		Compile("org.apache.tomcat", "catalina", "6.0.43")
 			Exclude ("org.apache.tomcat", "servlet-api")
 		Compile("org.glassfish.jaxb", "jaxb-runtime", "2.3.2")
 		Compile("io.intino.itrules", "engine", "2.0.0")
 		Compile("io.intino.goros", "shared", "1.0.0")
 		Compile("io.intino.alexandria", "logger4j", "1.1.0")
+		Compile("io.intino.alexandria", "cli-framework", "1.0.0")
 
 		Web("io.intino.goros", "unit-elements", "2.1.2")
 
 		Test("junit", "junit", "4.13")
-		Compile(groupId = "io.intino.alexandria", artifactId = "cli-framework", version = "1.0.0")
 
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.intino.goros.unit.box.Main")
 		attachSources = true

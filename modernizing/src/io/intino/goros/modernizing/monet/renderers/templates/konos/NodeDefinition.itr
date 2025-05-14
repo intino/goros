@@ -129,22 +129,22 @@ rule type(nodeview, linksin) and trigger(revisionPage)
 rule type(nodeview, visibleWhenEmbedded) and trigger(page)
 
 rule type(nodeview, linksin) and trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksInTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > InheritTemplateStamp(template="NodeLinksInTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
 
 rule type(nodeview, linksout) and trigger(revisionPage)
 
 rule type(nodeview, linksout) and trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLinksOutTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > InheritTemplateStamp(template="NodeLinksOutTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
 
 rule type(nodeview, notes) and trigger(revisionPage)
 
 rule type(nodeview, notes) and trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeNotesTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > InheritTemplateStamp(template="NodeNotesTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
 
 rule type(nodeview, location) and trigger(revisionPage)
 
 rule type(nodeview, location) and trigger(page)
-    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > OwnerTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
+    Block(layout=Vertical Flexible, format=spaced) $name+firstLowerCase~View as Conditional(header.headerToolbar.viewSelector.$name+firstLowerCase) Relative(height=100%) > InheritTemplateStamp(template="NodeLocationTemplate", owner=$module+firstUpperCase~Elements.goros) $name+firstLowerCase~ViewStamp
 
 rule type(nodeview, tasks) and trigger(revisionPage)
 
@@ -213,7 +213,7 @@ rule type(tasktype) and trigger(use)
 
 rule type(show, recenttask)
 	Block(layout=Vertical Flexible CenterCenter, visible=false) noTaskMessage as Relative(height=100%)> Text(value="No hay tareas pendientes", format=h5, translate=true)
-	Block(format=dialog bordered) toolbarBlock > OwnerTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+	Block(format=dialog bordered) toolbarBlock > InheritTemplateStamp(template="TaskToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
 	Block(layout=Vertical Flexible, visible=false) viewsBlock
         <<$tasktype...[$NL]>>
 
@@ -222,7 +222,7 @@ rule type(tasktype)
 
 rule type(show, revisions)
 	Block(layout=Vertical Flexible, format=bordered)
-		OwnerTemplateStamp(template="NodeRevisionsTemplate", owner=$module+firstUpperCase~Elements.goros) revisionsStamp
+		InheritTemplateStamp(template="NodeRevisionsTemplate", owner=$module+firstUpperCase~Elements.goros) revisionsStamp
 
 	Block(layout=Vertical CenterCenter) selectRevisionPage as Relative(width=55%) > Text(value="Seleccione una revisión para ver su contenido", format=h5)
 

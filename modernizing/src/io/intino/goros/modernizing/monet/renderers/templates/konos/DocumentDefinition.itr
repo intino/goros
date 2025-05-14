@@ -25,4 +25,4 @@ rule type(documentdefinition)
                 $toolbar+navigable
 
         Block(layout=Vertical Flexible) content as Relative(height=100%)
-            Block(layout=Vertical Flexible, format=spaced) previewView as Relative(height=100%) > OwnerTemplateStamp(template="NodeDocumentTemplate", owner=$module+firstUpperCase~Elements.goros) previewStamp
+            Block(layout=Vertical Flexible, format=spaced) previewView as Relative(height=100%) > InheritTemplateStamp(template="NodeDocumentTemplate", owner=$module+firstUpperCase~Elements.goros) previewStamp

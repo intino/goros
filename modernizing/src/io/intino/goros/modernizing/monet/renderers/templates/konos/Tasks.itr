@@ -34,23 +34,23 @@ rule type(tasks)
         Block(layout=Horizontal Flexible, format=smallAirTop) > TemplateStamp(template=TasksEmbeddedTemplate) content
 
         Dialog(title="Descargar...") DownloadDialog as Relative(height=90%, width=60%)
-            OwnerTemplateStamp(template="TaskDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
+            InheritTemplateStamp(template="TaskDownloadDialog", owner=$module+firstUpperCase~Elements.goros) dialog
 
     Template(layout=Vertical Flexible) TasksEmbeddedTemplate as Relative(height=100%)
 
         Block(layout=Horizontal Flexible, format=smallAirTop)
             Block(layout=Vertical Flexible, format=bordered) views
                 Block(layout=Horizontal, format=bottomBordered viewsToolbarStyle)
-                    Block(layout=Vertical Flexible) > OwnerTemplateStamp(template="TasksToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
+                    Block(layout=Vertical Flexible) > InheritTemplateStamp(template="TasksToolbarTemplate", owner=$module+firstUpperCase~Elements.goros) toolbar
                     Block(layout=Horizontal EndJustified, visible=false) viewsToolbar
                         MaterialIconButton(icon="ChevronLeft", title="Ocultar listado", size=Small) hideViews
                 Block(layout=Vertical Flexible) as Relative(height=100%)
-                    Block(layout=Vertical Flexible) tableView as Conditional > OwnerTemplateStamp(template="TasksTableCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tableViewStamp
-                    Block(layout=Vertical Flexible) listView as Conditional > OwnerTemplateStamp(template="TasksListCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) listViewStamp
+                    Block(layout=Vertical Flexible) tableView as Conditional > InheritTemplateStamp(template="TasksTableCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tableViewStamp
+                    Block(layout=Vertical Flexible) listView as Conditional > InheritTemplateStamp(template="TasksListCatalog", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) listViewStamp
 
             Block(format=smallAirLeft middleSpaced bordered) filtersView as Conditional Animated Relative(width=30%)
                 Transition(direction=Left)
-                OwnerTemplateStamp(template="TasksFiltersTemplate", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tasksFiltersStamp
+                InheritTemplateStamp(template="TasksFiltersTemplate", format=fullHeight, owner=$module+firstUpperCase~Elements.goros) tasksFiltersStamp
 
             <<$process+block...[$NL]>>
 

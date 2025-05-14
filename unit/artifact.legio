@@ -19,7 +19,7 @@ Artifact(groupId = "io.intino.goros", version = "2.1.3") unit
 		Compile("io.intino.alexandria", "logger4j", "1.1.0")
 		Compile("io.intino.alexandria", "cli-framework", "1.0.0")
 
-		Web("io.intino.goros", "unit-elements", "2.1.2")
+		Web("io.intino.goros", "unit-elements", "2.1.3")
 
 		Test("junit", "junit", "4.13")
 

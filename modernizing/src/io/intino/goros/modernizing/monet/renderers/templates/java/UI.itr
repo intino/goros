@@ -63,6 +63,11 @@ rule type(ui, routedispatcher)
         public void dispatchNews(Soul soul) {
             soul.currentLayer(AppTemplate.class).openNews();
         }
+
+        @Override
+        public void dispatchDashboard(Soul soul) {
+            soul.currentLayer(AppTemplate.class).openDashboard();
+        }
     }
 
 rule type(ui, app)
@@ -134,6 +139,8 @@ rule type(ui, app)
             taskBoardIconLink.address(path -> path.replace(":folder", "Pendientes"));
             newsLink.address(path -> path);
             newsIconLink.address(path -> path);
+            dashboardLink.address(path -> path);
+            dashboardIconLink.address(path -> path);
         }
 
         @Override
@@ -210,7 +217,7 @@ rule type(ui, app)
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
             <<$definition+refreshDrawer...[$NL]>>
-            dashboard.visible(AccountHelper.hasRoles(dashboardRoles(showProperty), session()));
+            dashboard.visible(box().configuration().get("metabase-url") != null && !box().configuration().get("metabase-url").isEmpty());
             roles.visible(showProperty.getTabRoles() != null && AccountHelper.hasRoles(showProperty.getTabRoles().getFor(), session()));
             taskTray.visible(showProperty.getTabTasktray() != null && AccountHelper.hasRoles(showProperty.getTabTasktray().getFor(), session()));
             if (taskTray.isVisible()) taskTray.value(AccountHelper.aliveTaskTrayTasksCount(session()));

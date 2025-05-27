@@ -11,7 +11,7 @@ rule type(desktopdefinition)
                     Text(value="$label", format=h4 bold) label
                 Text(format=body2 grey) description
 
-        Block(layout=Horizontal, format=headerSpaced)
+        Block(layout=Horizontal, format=middleTopSpaced rightSpaced leftSpaced)
             Block(layout=Horizontal Flexible, format=middleAirTop middleAirBottom) toolbar
                 Block(layout=Vertical CenterJustified Flexible)
                     Block(layout=Horizontal)

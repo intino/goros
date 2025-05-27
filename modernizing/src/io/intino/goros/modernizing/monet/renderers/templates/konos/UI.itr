@@ -21,6 +21,7 @@ rule type(ui)
         Resource(path = "/permisos") roles as Page(AppTemplate) Confidential
         Resource(path = "/desechos") trash as Page(AppTemplate) Confidential
         Resource(path = "/noticias") news as Page(AppTemplate) Confidential
+        Resource(path = "/cuadro-mando") dashboard as Page(AppTemplate) Confidential
 
     Template(layout=Horizontal Flexible) AppTemplate as Relative(height=100%,width=100%)
         Block drawer as Drawer(variant=PersistentAndMini) Absolute(width=200px)
@@ -29,7 +30,7 @@ rule type(ui)
                 MaterialIconButton(title="minimize", icon="ChevronLeft", format=airMenuRight smallAirTop) as CloseDrawer(drawer=drawer)
             Divider
             <<$definition+declaration...[$NL]>>
-            Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Timeline", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.singleton); Link(title="Cuadro de mando") as Action Addressable($module+firstUpperCase~Elements.singleton)
+            Block(layout=Horizontal Center, visible=false) dashboard > MaterialIconButton(title="Cuadro de mando", icon="Dashboard", format=black middleAirLeft middleAirRight minDrawerButtonSize) dashboardIconLink as Action Addressable($module+firstUpperCase~Elements.dashboard); Link(title="Cuadro de mando") dashboardLink as Action Addressable($module+firstUpperCase~Elements.dashboard)
             Divider
             Block(layout=Horizontal Center, visible=false) roles > MaterialIconButton(title="Permisos", icon="People", format=black middleAirLeft middleAirRight minDrawerButtonSize) as Action Addressable($module+firstUpperCase~Elements.roles); Link(title="Permisos") as Action Addressable($module+firstUpperCase~Elements.roles)
             Block(layout=Horizontal Center, visible=false) taskTray as Badge(max=99, value=0, format=badgeBlock) > MaterialIconButton(title="Mis tareas", icon="HowToReg", format=black middleAirLeft middleAirRight minDrawerButtonSize) taskTrayIconLink as Action Addressable($module+firstUpperCase~Elements.taskTray); Link(title="Mis tareas") taskTrayLink as Action Addressable($module+firstUpperCase~Elements.taskTray)
@@ -48,7 +49,7 @@ rule type(ui)
                 Text(value="Hay una actualización pendiente. No se puede acceder en estos momentos. Inténtelo más tarde.", format=h4)
                 Link(title="Intentar de nuevo", format=airTop) reloadPage as Action
 
-            Block(layout=Vertical Flexible, visible=false) dashboardPage as Conditional > TemplateStamp(template=DashboardTemplate) dashboardStamp
+            Block(layout=Vertical Flexible, visible=false) dashboardPage as Conditional > InheritTemplateStamp(template="DashboardTemplate", owner=$module+firstUpperCase~Elements.goros) dashboardStamp
             Block(layout=Vertical Flexible, visible=false) rolesPage as Conditional > InheritTemplateStamp(template="RolesTemplate", owner=$module+firstUpperCase~Elements.goros) rolesStamp
             Block(layout=Vertical Flexible, visible=false) taskTrayPage as Conditional > TemplateStamp(template=TaskTrayTemplate) taskTrayStamp
             Block(layout=Vertical Flexible, visible=false) taskBoardPage as Conditional > TemplateStamp(template=TaskBoardTemplate) taskBoardStamp
@@ -75,9 +76,6 @@ rule type(ui)
 
             Block(format=air autoOverflow) businessUnitsBlock as Popover Absolute(width=400px, height=300px)
                 InheritTemplateStamp(template="BusinessUnitsTemplate", owner=$module+firstUpperCase~Elements.goros) businessUnitsStamp
-
-    Template(layout=Horizontal Flexible) DashboardTemplate
-        Text(value="Cuadro Mando")
 
     Template(layout=Vertical Flexible) ErrorTemplate as Relative(height=100%,width=100%)
         Block(layout=Vertical CenterCenter, format=grey) as Relative(height=100%,width=100%)

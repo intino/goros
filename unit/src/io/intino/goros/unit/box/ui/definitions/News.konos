@@ -7,7 +7,7 @@ use CatalogFilterTypes
 use Theme
 
 Template(layout=Vertical Flexible, format=smallAir) newsTemplate
-	Block(layout=Horizontal, format=bordered spaced) header
+	Block(layout=Horizontal, format=headerSpaced) header
 		Block(layout=Vertical Flexible)
 			Block(layout=Horizontal)
 				Text(value="News", format=h4 bold, translate=true) label

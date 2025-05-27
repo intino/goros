@@ -1,0 +1,13 @@
+dsl Konos
+
+use UI
+use Theme
+
+Template(layout=Vertical Flexible, format=smallAir) dashboardTemplate
+	Block(layout=Horizontal, format=headerSpaced) header
+		Block(layout=Vertical Flexible)
+			Block(layout=Horizontal)
+				Text(value="Dashboard", format=h4 bold, translate=true) label
+
+	Block(layout=Horizontal Flexible, format=smallAirTop)
+		Dashboard dashboardStamp as Metabase(url="", secretKey = "") Relative(height=100%, width=100%)

@@ -123,6 +123,11 @@ Artifact(groupId = "io.intino.goros", version = "2.1.3") unit
 	Parameter("mail-admin-secure", "true")
 	Parameter(name = "federation-url")
 
+	// Metabase
+	Parameter("metabase-url", "")
+	Parameter("metabase-dashboard-secret-key", "")
+	Parameter("metabase-dashboard-id", "")
+
 Repository(identifier = "intino-maven")
 	Release("https://artifactory.intino.io/artifactory/releases")
 	Snapshot("https://artifactory.intino.io/artifactory/snapshots")

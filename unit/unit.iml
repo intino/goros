@@ -252,8 +252,6 @@
     <orderEntry type="library" name="Intino: org.slf4j:slf4j-reload4j:2.0.12" level="project" />
     <orderEntry type="library" name="Intino: ch.qos.reload4j:reload4j:1.2.22" level="project" />
     <orderEntry type="library" name="Intino: io.intino.itrules:engine:2.0.0" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:6.5.13" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:http:2.2.7" level="project" />
     <orderEntry type="library" name="Intino: io.javalin:javalin:6.6.0" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty:jetty-server:11.0.25" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty:jetty-http:11.0.25" level="project" />
@@ -269,8 +267,8 @@
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-core-common:11.0.25" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-servlet:11.0.25" level="project" />
     <orderEntry type="library" name="Intino: org.eclipse.jetty.websocket:websocket-core-server:11.0.25" level="project" />
-    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:4.2.7" level="project" />
-    <orderEntry type="library" name="Intino: org.siani.monet:servlet-api:1.0" level="project" />
-    <orderEntry type="library" name="Intino: org.apache.tomcat:servlet-api:6.0.43" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:ui-framework:6.5.14" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:http:2.2.8" level="project" />
+    <orderEntry type="library" name="Intino: io.intino.alexandria:rest:4.2.8" level="project" />
   </component>
 </module>

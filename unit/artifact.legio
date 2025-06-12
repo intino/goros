@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact(groupId = "io.intino.goros", version = "2.1.6") unit
+Artifact(groupId = "io.intino.goros", version = "2.1.7") unit
 	Dsl(name="Konos", version="13.4.4") > Builder(generationPackage="box")
 	Code("io.intino.goros.unit")
 
@@ -19,7 +19,7 @@ Artifact(groupId = "io.intino.goros", version = "2.1.6") unit
 		Compile("io.intino.alexandria", "logger4j", "1.1.0")
 		Compile("io.intino.alexandria", "cli-framework", "1.0.0")
 
-		Web("io.intino.goros", "unit-elements", "2.1.6")
+		Web("io.intino.goros", "unit-elements", "2.1.7")
 
 		Test("junit", "junit", "4.13")
 

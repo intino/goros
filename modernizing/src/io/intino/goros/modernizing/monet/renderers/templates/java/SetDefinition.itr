@@ -727,7 +727,8 @@ rule type(setdefinition, embedded)
 
         private void dispatch(org.monet.space.kernel.model.ClientOperation operation) {
             if (operation == null) {
-                refreshView();
+                if (selectedChild != null) refresh(LayerHelper.nodeLayer().loadNode(selectedChild.getId()));
+                else refreshView();
                 return;
             }
             String name = operation.getName().toLowerCase();

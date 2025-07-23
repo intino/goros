@@ -217,7 +217,7 @@ rule type(ui, app)
             Distribution distribution = BusinessUnit.getInstance().getDistribution();
             Distribution.ShowProperty showProperty = distribution.getShow();
             <<$definition+refreshDrawer...[$NL]>>
-            dashboard.visible(box().configuration().get("metabase-url") != null && !box().configuration().get("metabase-url").isEmpty());
+            dashboard.visible(box().configuration().get("metabase-url") != null && !box().configuration().get("metabase-url").isEmpty() && AccountHelper.hasRoles(dashboardRoles(showProperty), session()));
             roles.visible(showProperty.getTabRoles() != null && AccountHelper.hasRoles(showProperty.getTabRoles().getFor(), session()));
             taskTray.visible(showProperty.getTabTasktray() != null && AccountHelper.hasRoles(showProperty.getTabTasktray().getFor(), session()));
             if (taskTray.isVisible()) taskTray.value(AccountHelper.aliveTaskTrayTasksCount(session()));

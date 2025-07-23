@@ -91,7 +91,9 @@ rule type(ui, app)
     import io.intino.goros.unit.util.LayerHelper;
 
     import java.time.Instant;
+    import java.util.Collection;
     import java.util.List;
+    import java.util.Objects;
 
     import static java.util.Collections.emptyList;
 
@@ -247,13 +249,9 @@ rule type(ui, app)
         }
 
         private List<Ref> dashboardRoles(Distribution.ShowProperty showProperty) {
-            return dashboardRoles(showProperty, "Dashboard");
-        }
-
-        private List<Ref> dashboardRoles(Distribution.ShowProperty showProperty, String name) {
-            DashboardDefinition definition = showProperty.getTabDashboard().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getDashboardDefinition(te.getDefinition())).filter(d -> d.getName().equals(name)).findFirst().orElse(null);
-            if (definition == null) return null;
-            return definition.getFor() != null ? definition.getFor().getRole() : emptyList();
+            List<DashboardDefinition> definitionList = showProperty.getTabDashboard().stream().map(te -> org.monet.space.kernel.model.Dictionary.getInstance().getDashboardDefinition(te.getDefinition())).toList();
+            if (definitionList.isEmpty()) return null;
+            return definitionList.stream().map(DashboardDefinitionBase::getFor).filter(Objects::nonNull).map(f -> f.getRole().stream().toList()).flatMap(Collection::stream).distinct().toList();
         }
 
         private void openView(View view) {

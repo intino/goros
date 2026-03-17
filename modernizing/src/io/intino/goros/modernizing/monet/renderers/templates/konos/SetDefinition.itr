@@ -167,7 +167,7 @@ rule type(nodeview) and trigger(selector)
 rule type(attribute) and trigger(mold)
     Mold
         Heading $shortName+firstLowerCase~Heading > Text(value="$label")
-        Item(height=25px,width=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."<<, cropWithEllipsis=$cropWithEllipsis Chars>>) $name+firstLowerCase
+        Item(height=25px,relativeWidth=$width~%) $shortName+firstLowerCase~Item > Text(value="Loading..."<<, cropWithEllipsis=$cropWithEllipsis Chars>>) $name+firstLowerCase
 
 rule type(attribute) and trigger(details)
     Text(format=h4 airBottom) $name+firstLowerCase~Details

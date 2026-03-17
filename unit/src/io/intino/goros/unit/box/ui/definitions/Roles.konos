@@ -34,28 +34,28 @@ Template(layout=Vertical Flexible) rolesTableCatalog as Relative(height=100%)
 		noItemsMessage = "No roles"
 		Mold
 			Heading rolesTableUserHeading > Text(value="User", translate=true)
-			Item(height=50px,width=25%) rolesTableUserItem
+			Item(height=50px,relativeWidth=25%) rolesTableUserItem
 				Block(layout=Vertical)
 					Block(layout=Flexible) > Text(value="Loading...", translate=true, format=airRight) user
 					Block(layout=EndJustified) > Text(format=body2 pillStyle) state as Highlighted(textColor="white", backgroundColor="transparent")
 		Mold
 			Heading rolesTableDefinitionHeading > Block(layout=Horizontal CenterJustified) > Text(value="Class", translate=true)
-			Item(height=50px,width=20%) rolesTableDefinitionItem > Block(layout=Horizontal CenterJustified) > Text definition
+			Item(height=50px,relativeWidth=20%) rolesTableDefinitionItem > Block(layout=Horizontal CenterJustified) > Text definition
 		Mold
 			Heading rolesTableTypeHeading > Block(layout=Horizontal CenterJustified) > Text(value="Type", translate=true)
-			Item(height=50px,width=10%) rolesTableTypeItem > Block(layout=Horizontal CenterJustified) > Text(format=centered) type
+			Item(height=50px,relativeWidth=10%) rolesTableTypeItem > Block(layout=Horizontal CenterJustified) > Text(format=centered) type
 		Mold
 			Heading rolesTableNatureHeading > Block(layout=Horizontal CenterJustified) > Text(value="Nature", translate=true)
-			Item(height=50px,width=10%) rolesTableNatureItem > Block(layout=Horizontal CenterJustified) > Text nature
+			Item(height=50px,relativeWidth=10%) rolesTableNatureItem > Block(layout=Horizontal CenterJustified) > Text nature
 		Mold
 			Heading rolesTableStartDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="Start date", translate=true)
-			Item(height=50px,width=15%) rolesTableStartDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") startDate
+			Item(height=50px,relativeWidth=15%) rolesTableStartDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") startDate
 		Mold
 			Heading rolesTableEndDateHeading > Block(layout=Horizontal CenterJustified) > Text(value="End date", translate=true)
-			Item(height=50px,width=15%) rolesTableEndDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") endDate
+			Item(height=50px,relativeWidth=15%) rolesTableEndDateItem > Block(layout=Horizontal CenterJustified) > Date(pattern="DD/MM/YYYY HH:mm") endDate
 		Mold
 			Heading rolesTableOperationsHeading
-			Item(height=50px,width=5%) rolesTableOperationsItem
+			Item(height=50px,relativeWidth=5%) rolesTableOperationsItem
 
 Template(layout=Horizontal, format=air) rolesToolbarTemplate
 	Button(title="Add role", size=Small, highlight=Outline) as OpenDialog(dialog=addRoleDialog)
@@ -76,10 +76,10 @@ Template(layout=Horizontal, format=air) rolesToolbarTemplate
 					noItemsMessage = "No users"
 					Mold
 						Heading addRoleUserTableFullnameHeading > Text(value="Fullname", translate=true)
-						Item(height=30px,width=40%) addRoleUserTableFullnameItem > Text(value="Loading...") fullName
+						Item(height=30px,relativeWidth=40%) addRoleUserTableFullnameItem > Text(value="Loading...") fullName
 					Mold
 						Heading addRoleUserTableEmailHeading > Text(value="Email", translate=true)
-						Item(height=30px,width=60%) addRoleUserTableEmailItem > Text(value="Loading...") email
+						Item(height=30px,relativeWidth=60%) addRoleUserTableEmailItem > Text(value="Loading...") email
 
 			Block(layout=Vertical Flexible) serviceRoleBlock as Conditional
 				SearchBox(collections = addRoleServiceTable)
@@ -87,10 +87,10 @@ Template(layout=Horizontal, format=air) rolesToolbarTemplate
 					noItemsMessage = "No service partners available"
 					Mold
 						Heading addRoleServiceTableLabelHeading > Text(value="Name", translate=true)
-						Item(height=30px,width=40%) addRoleServiceTableLabelItem > Text(value="Loading...") label
+						Item(height=30px,relativeWidth=40%) addRoleServiceTableLabelItem > Text(value="Loading...") label
 					Mold
 						Heading addRoleServiceTablePartnerHeading > Text(value="Partner", translate=true)
-						Item(height=30px,width=60%) addRoleServiceTablePartnerItem > Text(value="Loading...") partner
+						Item(height=30px,relativeWidth=60%) addRoleServiceTablePartnerItem > Text(value="Loading...") partner
 
 			Block(layout=Vertical Flexible) feederRoleBlock as Conditional
 				SearchBox(collections = addRoleFeederTable)
@@ -98,10 +98,10 @@ Template(layout=Horizontal, format=air) rolesToolbarTemplate
 					noItemsMessage = "No feeder partners available"
 					Mold
 						Heading addRoleFeederTableLabelHeading > Text(value="Name", translate=true)
-						Item(height=30px,width=40%) addRoleFeederTableLabelItem > Text(value="Loading...") label
+						Item(height=30px,relativeWidth=40%) addRoleFeederTableLabelItem > Text(value="Loading...") label
 					Mold
 						Heading addRoleFeederTablePartnerHeading > Text(value="Partner", translate=true)
-						Item(height=30px,width=60%) addRoleFeederTablePartnerItem > Text(value="Loading...") partner
+						Item(height=30px,relativeWidth=60%) addRoleFeederTablePartnerItem > Text(value="Loading...") partner
 		Divider
 		Block(layout=Horizontal EndJustified)
 			Button(title="Cancel", format=airRight) cancel as CloseDialog(dialog=addRoleDialog)

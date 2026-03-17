@@ -32,16 +32,16 @@ Template(layout=Vertical Flexible) trashTableCatalog as Relative(height=100%)
 		noItemsMessage = "No elements"
 		Mold
 			Heading trashTableTypeHeading > Text(value="Type", translate=true)
-			Item(height=30px,width=30%) trashTableTypeItem > Text(value="Loading...", translate=true) type
+			Item(height=30px,relativeWidth=30%) trashTableTypeItem > Text(value="Loading...", translate=true) type
 		Mold
 			Heading trashTableLabelHeading > Text(value="Title", translate=true)
-			Item(height=30px,width=40%) trashTableLabelItem > Text label
+			Item(height=30px,relativeWidth=40%) trashTableLabelItem > Text label
 		Mold
 			Heading trashTableDeleteDateHeading > Text(value="Delete date", translate=true)
-			Item(height=30px,width=20%) trashTableDeleteDateItem > Date(pattern="DD/MM/YYYY HH:mm:ss") deleteDate
+			Item(height=30px,relativeWidth=20%) trashTableDeleteDateItem > Date(pattern="DD/MM/YYYY HH:mm:ss") deleteDate
 		Mold
 			Heading trashTableOperationsHeading
-			Item(height=30px,width=10%) trashTableOperationsItem
+			Item(height=30px,relativeWidth=10%) trashTableOperationsItem
 				Block(layout=Horizontal EndJustified)
 					MaterialIconButton(title = "Restore", icon = "RestoreFromTrash", size=Small) restore as Action Affirmed(affirmText = "Are you sure you want to restore element from trash?")
 

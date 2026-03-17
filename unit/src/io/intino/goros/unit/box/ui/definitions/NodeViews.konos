@@ -10,30 +10,30 @@ Template nodeLinksInTemplate as Relative(height=100%)
 		noItemsMessage = "No hay elementos que lo relacionen"
 		Mold
 			Heading linksInTableLabelHeading > Text(value="Título")
-			Item(height=50px,width=40%) linksInTableLabelItem > Link(title="Cargando...") label as Action Addressable(addressableResource=empty)
+			Item(height=50px,relativeWidth=40%) linksInTableLabelItem > Link(title="Cargando...") label as Action Addressable(addressableResource=empty)
 		Mold
 			Heading linksInTableDescriptionHeading > Text(value="Descripción")
-			Item(height=50px,width=60%) linksInTableDescriptionItem > Text description
+			Item(height=50px,relativeWidth=60%) linksInTableDescriptionItem > Text description
 
 Template nodeLinksOutTemplate as Relative(height=100%)
 	Table(itemClass="org.monet.space.kernel.model.Node", scrollingMark=false, format=bordered) linksOutTable
 		noItemsMessage = "No hay elementos con los que se relacione"
 		Mold
 			Heading linksOutTableLabelHeading > Text(value="Título")
-			Item(height=50px,width=40%) linksOutTableLabelItem > Link(title="Loading...") label as Action Addressable(addressableResource=empty)
+			Item(height=50px,relativeWidth=40%) linksOutTableLabelItem > Link(title="Loading...") label as Action Addressable(addressableResource=empty)
 		Mold
 			Heading linksOutTableDescriptionHeading > Text(value="Descripción")
-			Item(height=50px,width=60%) linksOutTableDescriptionItem > Text description
+			Item(height=50px,relativeWidth=60%) linksOutTableDescriptionItem > Text description
 
 Template nodeRevisionsTemplate as Relative(height=100%)
 	Table(itemClass="org.monet.space.kernel.model.Revision", scrollingMark=false, format=bordered) nodeRevisionsTable as Selectable(multiple=false)
 		noItemsMessage = "No hay versiones del elemento registradas"
 		Mold
 			Heading nodeRevisionsTableLabelHeading > Text(value="Título")
-			Item(height=50px,width=80%) nodeRevisionsTableLabelItem > Date label > mode = FromNow
+			Item(height=50px,relativeWidth=80%) nodeRevisionsTableLabelItem > Date label > mode = FromNow
 		Mold
 			Heading nodeRevisionsTableOperationsHeading > Block(layout=Horizontal EndJustified) > Text(value="Operaciones")
-			Item(height=50px,width=20%) nodeRevisionsTableOperationsItem
+			Item(height=50px,relativeWidth=20%) nodeRevisionsTableOperationsItem
 				Block(layout=Horizontal EndJustified)
 					MaterialIconButton(title="Restaurar", icon="Restore") restore as Action Affirmed("¿Está seguro que quiere restaurar esta revisión?")
 
@@ -44,13 +44,13 @@ Template(layout=Horizontal) nodeNotesTemplate as Relative(height=100%)
 			noItemsMessage = "No se han registrado notas"
 			Mold
 				Heading nodeNotesTableNameHeading > Text(value="Nombre")
-				Item(height=30px,width=30%) nodeNotesTableNameItem > Text name
+				Item(height=30px,relativeWidth=30%) nodeNotesTableNameItem > Text name
 			Mold
 				Heading nodeNotesTableValueHeading > Text(value="Valor")
-				Item(height=30px,width=60%) nodeNotesTableValueItem > Text value
+				Item(height=30px,relativeWidth=60%) nodeNotesTableValueItem > Text value
 			Mold
 				Heading nodeNotesTableOperationsHeading
-				Item(height=30px,width=10%) nodeNotesTableOperationsItem
+				Item(height=30px,relativeWidth=10%) nodeNotesTableOperationsItem
 					Block(layout=Horizontal EndJustified)
 						MaterialIconButton(title="Eliminar nota", icon="Clear", size=Small) remove as Action Affirmed("¿Está seguro que quiere borrar la nota?")
 

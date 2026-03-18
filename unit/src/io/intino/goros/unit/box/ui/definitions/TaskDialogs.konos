@@ -18,10 +18,10 @@ Template(layout=Horizontal) taskToolbarTemplate
 				noItemsMessage = "No hay usuarios"
 				Mold
 					Heading assignTaskDialogTableFullnameHeading > Text(value="Fullname", translate=true)
-					Item(height=30px,relativeWidth=16%) assignTaskDialogTableFullnameItem > Text(value="Loading...") fullName
+					Item(height=30px,width=16%) assignTaskDialogTableFullnameItem > Text(value="Loading...") fullName
 				Mold
 					Heading assignTaskDialogTableEmailHeading > Text(value="Email", translate=true)
-					Item(height=30px,relativeWidth=16%) assignTaskDialogTableEmailItem > Text(value="Loading...") email
+					Item(height=30px,width=16%) assignTaskDialogTableEmailItem > Text(value="Loading...") email
 			Text(format=doubleAirTop doubleAirBottom greyBackground) reason as Memo Editable Labeled("Reason")
 		Divider
 		Block(layout=Horizontal EndJustified)

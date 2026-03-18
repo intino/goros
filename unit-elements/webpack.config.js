@@ -7,11 +7,6 @@ module.exports = {
 	module: {
 		rules: [
             {
-                test: /\.js$/,
-                include: [ /node_modules\/highcharts/ ],
-                use: { loader: 'babel-loader' }
-            },
-            {
                 test: /node_modules\/ace-linters*/,
                 use: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
             },
@@ -38,8 +33,8 @@ module.exports = {
 		]
 	},
 	entry : {
-		'gorosInstallTemplate' : './gen/apps/GorosInstallTemplate.js',
-		'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js'
+		'gorosAppTemplate' : './gen/apps/GorosAppTemplate.js',
+		'gorosInstallTemplate' : './gen/apps/GorosInstallTemplate.js'
 	},
 	output: {
 		path: "/Users/mcaballero/Proyectos/goros/out/production/unit-elements/www/unit-elements",
@@ -65,16 +60,16 @@ module.exports = {
 		new HtmlWebPackPlugin({
 			hash: true,
 			title: "Test UI",
-			chunks: ['gorosInstallTemplate'],
-			template: "./src/gorosInstallTemplate.html",
-			filename: "./gorosInstallTemplate.html"
+			chunks: ['gorosAppTemplate'],
+			template: "./src/gorosAppTemplate.html",
+			filename: "./gorosAppTemplate.html"
 		}),
 		new HtmlWebPackPlugin({
 			hash: true,
 			title: "Test UI",
-			chunks: ['gorosAppTemplate'],
-			template: "./src/gorosAppTemplate.html",
-			filename: "./gorosAppTemplate.html"
+			chunks: ['gorosInstallTemplate'],
+			template: "./src/gorosInstallTemplate.html",
+			filename: "./gorosInstallTemplate.html"
 		})
 	]
 };
